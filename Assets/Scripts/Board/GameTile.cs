@@ -6,11 +6,44 @@ public class GameTile : MonoBehaviour
 {
     [SerializeField] private Transform _pointer;
 
+    public GameTile GrowPathNorth() => GrowPathTo(_north, Direction.South);
+    public GameTile GrowPathEast() => GrowPathTo(_east, Direction.West);
+    public GameTile GrowPathSouth() => GrowPathTo(_south, Direction.North);
+    public GameTile GrowPathWest() => GrowPathTo(_west, Direction.East);
+
+    public bool IsAlternative { get; set; }
+
+    private int _distance;
     public bool HasPath => _distance != int.MaxValue;
+
+    private GameTileContent _content;
+
+    public Vector3 ExitPoint { get; private set; }
+
+    public Direction PathDirection { get; private set; }
+
+    public GameTile NextTileOnPath => _nextOnPath;
+
+
+
+    public GameTileContent Content
+    {
+        get => _content;
+        set
+        {
+            if (_content != null)
+            {
+                _content.Recycle();
+            }
+
+            _content = value;
+            _content.transform.localPosition = transform.localPosition;
+        }
+    }
 
     private GameTile _north, _east, _west, _south;
     private GameTile _nextOnPath;
-    private int _distance;
+    
 
     private Quaternion _northRotation = Quaternion.Euler(90f, 0f, 0f);
     private Quaternion _eastRotation = Quaternion.Euler(90f, 90f, 0f);
@@ -41,18 +74,6 @@ public class GameTile : MonoBehaviour
         _nextOnPath = null;
     }
 
-    private GameTile GrowPathTo(GameTile neighbor)
-    {
-        if(HasPath == false || neighbor == null || neighbor.HasPath)
-        {
-            return null;
-        }
-
-        neighbor._distance = _distance + 1;
-        neighbor._nextOnPath = this;
-        return neighbor;
-    }
-
     public void ShowPath()
     {
         if(_distance == 0)
@@ -69,8 +90,17 @@ public class GameTile : MonoBehaviour
             _westRotation;
     }
 
-    public GameTile GrowPathNorth() => GrowPathTo(_north);
-    public GameTile GrowPathEast() => GrowPathTo(_east);
-    public GameTile GrowPathSouth() => GrowPathTo(_south);
-    public GameTile GrowPathWest() => GrowPathTo(_west);
+    private GameTile GrowPathTo(GameTile neighbor, Direction direction)
+    {
+        if (HasPath == false || neighbor == null || neighbor.HasPath)
+        {
+            return null;
+        }
+
+        neighbor._distance = _distance + 1;
+        neighbor._nextOnPath = this;
+        neighbor.ExitPoint = neighbor.transform.localPosition + direction.GetHalfVector();
+        neighbor.PathDirection = direction;
+        return neighbor.Content.Type != GameTileContentType.Wall ? neighbor : null;
+    }
 }
