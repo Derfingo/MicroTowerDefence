@@ -1,27 +1,31 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class InitializationGame : MonoBehaviour
 {
     [SerializeField] private GameTileContentFactory _contentFactory;
     [SerializeField] private EnemyFactory _enemyFactory;
+    [SerializeField] private TileBuilder _tileBuilder;
     [SerializeField] private GameBoard _board;
+    [SerializeField] private Camera _camera;
     [Space]
     [SerializeField, Range(0.1f, 10f)] private float _spawnSpeed;
 
     private readonly EnemyCollection _enemies = new();
-
-    private Vector2Int _boardSize;
     private float _spawnProgress;
     private bool _isSpawning;
 
     private void Start()
     {
-        _boardSize = new Vector2Int (10, 10);
-        _board.Initialize(_boardSize, _contentFactory);
+        BoardData boardData = BoardData.GetInitial(new Vector2Int(10, 10));
+        _board.Initialize(boardData, _contentFactory);
+        _tileBuilder.Initialize(_contentFactory, _camera, _board);
         _isSpawning = false;
+
+        BeginNewGame();
     }
 
     private void Update()
@@ -42,6 +46,18 @@ public class InitializationGame : MonoBehaviour
 
             _enemies.GameUpdate();
         }
+    }
+
+    private void BeginNewGame()
+    {
+        Cleanup();
+        _tileBuilder.Enable();
+    }
+
+    private void Cleanup()
+    {
+        _tileBuilder.Disable();
+        _board.Clear();
     }
 
     private void SpawnEnemy()

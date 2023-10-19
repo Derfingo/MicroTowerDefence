@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 
 public class GameBoard : MonoBehaviour
 {
-    [SerializeField] private TileBuilder _mouseClickDetection;
+    [SerializeField] private TileBuilder _tileBuilder;
     [SerializeField] private Transform _ground;
     [SerializeField] private Transform _pointers;
     [SerializeField] private GameTile _tilePrefab;
@@ -21,38 +22,38 @@ public class GameBoard : MonoBehaviour
 
     public int SpawnPointCount => _spawnPoints.Count;
 
-    public void Initialize(Vector2Int size, GameTileContentFactory contentFactory)
-    {
-        _size = size;
-        Vector2 offset = new((size.x - 1) * 0.5f, (size.y - 1) * 0.5f);
-        _tiles = new GameTile[size.x * size.y];
-        _contentFactory = contentFactory;
+    private BoardData _boardData;
+    public byte X => _boardData.X;
+    public byte Y => _boardData.Y;
 
-        for (int i = 0, y = 0; y < size.y; y++)
+    public void Initialize(BoardData boardData, GameTileContentFactory contentFactory)
+    {
+        _boardData = boardData;
+        _contentFactory = contentFactory;
+        var offset = new Vector2((X - 1) * 0.5f, (Y - 1) * 0.5f);
+
+        _tiles = new GameTile[X * Y];
+
+        for (int i = 0, y = 0; y < Y; y++)
         {
-            for (int x = 0; x < size.x; x++, i++)
+            for (int x = 0; x < X; x++, i++)
             {
-                GameTile tile = _tiles[i] = Instantiate(_tilePrefab);
-                tile.transform.SetParent(_pointers, false);
+                var tile = _tiles[i] = Instantiate(_tilePrefab);
+                tile.BoardPosition = new Vector2Int(x, y);
+                tile.transform.SetParent(transform, false);
                 tile.transform.localPosition = new Vector3(x - offset.x, 0f, y - offset.y);
 
                 if (x > 0)
-                {
                     GameTile.MakeEastWestNeighbors(tile, _tiles[i - 1]);
-                }
 
                 if (y > 0)
-                {
-                    GameTile.MakeNorthSouthNeighbors(tile, _tiles[i - size.x]);
-                }
+                    GameTile.MakeNorthSouthNeighbors(tile, _tiles[i - X]);
 
                 tile.IsAlternative = (x & 1) == 0;
                 if ((y & 1) == 0)
                 {
-                    tile.IsAlternative = !tile.IsAlternative;
+                    tile.IsAlternative = tile.IsAlternative == false;
                 }
-
-                tile.Content = _contentFactory.Get(GameTileContentType.Empty);
             }
         }
 
@@ -152,18 +153,17 @@ public class GameBoard : MonoBehaviour
         return true;
     }
 
-    public GameTile GetTile(Ray ray)
+    public GameTile GetTile(Vector3 position)
     {
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            int x = (int)(hit.point.x + _size.x * 0.5f);
-            int y = (int)(hit.point.z + _size.y * 0.5f);
-            if (x >= 0 && x < _size.x && y >= 0 && y < _size.y)
-            {
-                return _tiles[x + y * _size.x];
-            }
-        }
+        var x = (int)(position.x + X * 0.5f);
+        var y = (int)(position.z + Y * 0.5f);
+        return GetTile(x, y);
+    }
 
+    private GameTile GetTile(int x, int y)
+    {
+        if (x >= 0 && x < X && y >= 0 && y < Y)
+            return _tiles[x + y * X];
         return null;
     }
 
@@ -192,12 +192,14 @@ public class GameBoard : MonoBehaviour
         _spawnPoints.Clear();
         _contentToUpdate.Clear();
 
-        foreach (var tile in _tiles)
+        for (var i = 0; i < _boardData.Content.Length; i++)
         {
-            tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+            ForceBuild(_tiles[i], _contentFactory.Get(_boardData.Content[i]));
         }
 
-        TryBuild(_tiles[^1], _contentFactory.Get(GameTileContentType.Destination));
-        TryBuild(_tiles[0], _contentFactory.Get(GameTileContentType.Spawn));
+        FindPath();
     }
+
+    public GameTileContentType[] GetAllContentTypes => _tiles.Select(t => t.Content.Type).ToArray();
 }
+

@@ -5,73 +5,72 @@ using UnityEngine;
 
 public class TileBuilder : MonoBehaviour
 {
-    [SerializeField] private Camera _camera;
-    [SerializeField] private GameBoard _board;
-    [SerializeField] private GameTileContentFactory _contentFactory;
+    [SerializeField] private List<BuildButton> _buttons;
 
-    public Ray TouchRay => _camera.ScreenPointToRay(Input.mousePosition);
+    private GameTileContentFactory _contentFactory;
+    private Camera _camera;
+    private GameBoard _gameBoard;
+
+    private bool _isEnabled;
+
+    private Ray TouchRay => _camera.ScreenPointToRay(Input.mousePosition);
+
+    private GameTileContent _tempTile;
+
+    private void Awake()
+    {
+        _buttons.ForEach(b => b.AddListener(OnBuildingSelected));
+    }
+
+    public void Initialize(GameTileContentFactory contentFactory, Camera camera, GameBoard gameBoard)
+    {
+        _contentFactory = contentFactory;
+        _camera = camera;
+        _gameBoard = gameBoard;
+    }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (_isEnabled == false || _tempTile == null)
+            return;
+
+        var plane = new Plane(Vector3.up, Vector3.zero);
+        if (plane.Raycast(TouchRay, out var position))
         {
-            HandleTouchWall();
+            _tempTile.transform.position = TouchRay.GetPoint(position);
         }
-        else if (Input.GetMouseButtonDown(1))
+
+        if (Input.GetMouseButtonUp(0))
         {
-            HandleTouchDestination();
-        }
-        else if (Input.GetKeyDown(KeyCode.Space))
-        {
-            HandelTouchSpawn();
-        }
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
-            HandleTouchNone();
+            var tile = _gameBoard.GetTile(_tempTile.transform.localPosition);
+            if (tile != null && _gameBoard.TryBuild(tile, _tempTile))
+            {
+                // spend money
+                // record tile
+            }
+            else
+            {
+                Destroy(_tempTile.gameObject);
+                Debug.Log("null");
+            }
+
+            _tempTile = null;
         }
     }
 
-    private void HandleTouchWall()
+    public void Enable()
     {
-        GameTile tile = _board.GetTile(TouchRay);
-        if (tile != null)
-        {
-            GameTileContent content = _contentFactory.Get(GameTileContentType.Wall);
-            _board.TryBuild(tile, content);
-            Debug.Log("Left click");
-        }
+        _isEnabled = true;
     }
 
-    private void HandleTouchDestination()
+    public void Disable()
     {
-        GameTile tile = _board.GetTile(TouchRay);
-        if (tile != null)
-        {
-            var content = _contentFactory.Get(GameTileContentType.Destination);
-            _board.TryBuild(tile, content);
-            Debug.Log("Right click");
-        }
+        _isEnabled = false;
     }
 
-    private void HandelTouchSpawn()
+    private void OnBuildingSelected(GameTileContentType type)
     {
-        GameTile tile = _board.GetTile(TouchRay);
-        if (tile != null)
-        {
-            var content = _contentFactory.Get(GameTileContentType.Spawn);
-            _board.TryBuild(tile, content);
-            Debug.Log("Space");
-        }
-    }
-
-    private void HandleTouchNone()
-    {
-        GameTile tile = _board.GetTile(TouchRay);
-        if (tile != null)
-        {
-            var content = _contentFactory.Get(GameTileContentType.None);
-            _board.TryBuild(tile, content);
-            Debug.Log("E");
-        }
+        //TODO check money
+        _tempTile = _contentFactory.Get(type);
     }
 }

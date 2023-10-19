@@ -12,6 +12,7 @@ public class GameTile : MonoBehaviour
     public GameTile GrowPathWest() => GrowPathTo(_west, Direction.East);
 
     public bool IsAlternative { get; set; }
+    public Vector2Int BoardPosition { get; set; }
 
     private int _distance;
     public bool HasPath => _distance != int.MaxValue;
@@ -19,7 +20,6 @@ public class GameTile : MonoBehaviour
     private GameTileContent _content;
 
     public Vector3 ExitPoint { get; private set; }
-
     public Direction PathDirection { get; private set; }
 
     public GameTile NextTileOnPath => _nextOnPath;
@@ -43,7 +43,6 @@ public class GameTile : MonoBehaviour
 
     private GameTile _north, _east, _west, _south;
     private GameTile _nextOnPath;
-    
 
     private Quaternion _northRotation = Quaternion.Euler(90f, 0f, 0f);
     private Quaternion _eastRotation = Quaternion.Euler(90f, 90f, 0f);

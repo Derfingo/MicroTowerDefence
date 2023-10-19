@@ -16,11 +16,10 @@ public class GameTileContent : MonoBehaviour
     }
 }
 
-public enum GameTileContentType
+public enum GameTileContentType : byte
 {
-    Empty,
-    Destination,
-    Wall,
-    Spawn,
-    None
+    Empty = 0,
+    Destination = 1,
+    Wall = 51,
+    Spawn = 2
 }
