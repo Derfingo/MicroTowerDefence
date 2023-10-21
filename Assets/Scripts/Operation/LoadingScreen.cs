@@ -8,10 +8,14 @@ using UnityEngine.UI;
 
 public class LoadingScreen : MonoBehaviour
 {
-    [SerializeField] private Canvas _canvas;
-    [SerializeField] private Slider _progressFill;
-    [SerializeField] private TextMeshProUGUI _loadingInfo;
-    [SerializeField] private float _barSpeed;
+    [SerializeField]
+    private Canvas _canvas;
+    [SerializeField]
+    private Slider _progressFill;
+    [SerializeField]
+    private TextMeshProUGUI _loadingInfo;
+    [SerializeField]
+    private float _barSpeed;
 
     private float _toFill;
     private Coroutine _progressBarRoutine;
@@ -19,17 +23,13 @@ public class LoadingScreen : MonoBehaviour
     public async void Load(Queue<ILoadingOperation> loadingOperations, Action onComplete)
     {
         _canvas.enabled = true;
-
         foreach (var operation in loadingOperations)
         {
             ResetFill();
             _loadingInfo.text = operation.GetName;
 
             if (_progressBarRoutine != null)
-            {
                 StopCoroutine(_progressBarRoutine);
-            }
-                
             _progressBarRoutine = StartCoroutine(UpdateProgressBar());
 
             await operation.Load(OnProgress);
@@ -37,6 +37,7 @@ public class LoadingScreen : MonoBehaviour
         }
 
         StopCoroutine(_progressBarRoutine);
+
         _canvas.enabled = false;
         onComplete?.Invoke();
     }
@@ -58,7 +59,6 @@ public class LoadingScreen : MonoBehaviour
         {
             await Task.Delay(1);
         }
-
         await Task.Delay(TimeSpan.FromSeconds(0.3f));
     }
 
@@ -67,10 +67,7 @@ public class LoadingScreen : MonoBehaviour
         while (true)
         {
             if (_progressFill.value < _toFill)
-            {
                 _progressFill.value += Time.deltaTime * _barSpeed;
-            }
-
             yield return null;
         }
     }

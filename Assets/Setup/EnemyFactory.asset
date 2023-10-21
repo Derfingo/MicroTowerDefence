@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 6033740692477537779, guid: 021f05e117ceff64ab74035e1bab29a3, type: 3}
   _scale:
-    _min: 1
-    _max: 1
+    _min: 0.2
+    _max: 0.8
   _pathOffset:
-    _min: 0
-    _max: 0
+    _min: -0.2
+    _max: 0.2
   _speed:
-    _min: 1
-    _max: 1
+    _min: 0.5
+    _max: 1.2

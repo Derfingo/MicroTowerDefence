@@ -40,7 +40,7 @@ public class GameBoard : MonoBehaviour
             {
                 var tile = _tiles[i] = Instantiate(_tilePrefab);
                 tile.BoardPosition = new Vector2Int(x, y);
-                tile.transform.SetParent(transform, false);
+                tile.transform.SetParent(_ground, false);
                 tile.transform.localPosition = new Vector3(x - offset.x, 0f, y - offset.y);
 
                 if (x > 0)

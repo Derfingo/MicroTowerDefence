@@ -6,6 +6,8 @@ public class AppStartup : MonoBehaviour
 {
     private void Start()
     {
-        
+        var loadingOperations = new Queue<ILoadingOperation>();
+        loadingOperations.Enqueue(new MenuLoadingOperation());
+        Debug.Log("boot");
     }
 }

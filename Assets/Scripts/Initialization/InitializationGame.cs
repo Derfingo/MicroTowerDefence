@@ -20,7 +20,7 @@ public class InitializationGame : MonoBehaviour
 
     private void Start()
     {
-        BoardData boardData = BoardData.GetInitial(new Vector2Int(10, 10));
+        BoardData boardData = BoardData.GetInitial(new Vector2Int(11, 11));
         _board.Initialize(boardData, _contentFactory);
         _tileBuilder.Initialize(_contentFactory, _camera, _board);
         _isSpawning = false;
