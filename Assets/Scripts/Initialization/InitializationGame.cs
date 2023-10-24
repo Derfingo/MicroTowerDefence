@@ -30,7 +30,7 @@ public class InitializationGame : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             _isSpawning = !_isSpawning;
         }
