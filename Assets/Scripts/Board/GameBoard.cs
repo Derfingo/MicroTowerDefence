@@ -187,6 +187,14 @@ public class GameBoard : MonoBehaviour
         }
     }
 
+    public void GameUpdate()
+    {
+        for (int i = 0; i < _contentToUpdate.Count; i++)
+        {
+            _contentToUpdate[i].GameUpdate();
+        }
+    }
+
     public void Clear()
     {
         _spawnPoints.Clear();

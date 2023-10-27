@@ -9,12 +9,16 @@ public class InitializationGame : MonoBehaviour
     [SerializeField] private GameTileContentFactory _contentFactory;
     [SerializeField] private EnemyFactory _enemyFactory;
     [SerializeField] private TileBuilder _tileBuilder;
+    [SerializeField] private WarFactory _warFactory;
     [SerializeField] private GameBoard _board;
     [SerializeField] private Camera _camera;
     [Space]
     [SerializeField, Range(0.1f, 10f)] private float _spawnSpeed;
 
-    private readonly EnemyCollection _enemies = new();
+    private static InitializationGame _instance;
+
+    private readonly GameBehaviourCollection _enemies = new();
+    private readonly GameBehaviourCollection _nonEnemies = new();
     private float _spawnProgress;
     private bool _isSpawning;
 
@@ -26,6 +30,25 @@ public class InitializationGame : MonoBehaviour
         _isSpawning = false;
 
         BeginNewGame();
+    }
+
+    public static Shell SpawnShell()
+    {
+        Shell shell = _instance._warFactory.Shell;
+        _instance._nonEnemies.Add(shell);
+        return shell;
+    }
+
+    public static Explosion SpawnExplosion()
+    {
+        Explosion explosion = _instance._warFactory.Explosion;
+        _instance._nonEnemies.Add(explosion);
+        return explosion;
+    }
+
+    private void OnEnable()
+    {
+        _instance = this;
     }
 
     private void Update()
@@ -45,7 +68,11 @@ public class InitializationGame : MonoBehaviour
             }
 
             _enemies.GameUpdate();
+            Physics.SyncTransforms();
         }
+
+        _board.GameUpdate();
+        _nonEnemies.GameUpdate();
     }
 
     private void BeginNewGame()

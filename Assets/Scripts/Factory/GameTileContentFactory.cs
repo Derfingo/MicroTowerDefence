@@ -8,6 +8,8 @@ public class GameTileContentFactory : GameObjectFactory
     [SerializeField] private GameTileContent _emptyPrefab;
     [SerializeField] private GameTileContent _wallPrefab;
     [SerializeField] private GameTileContent _spawnPrefab;
+    [Space]
+    [SerializeField] private Tower[] _towerPrefabs;
 
     public void Reclaim(GameTileContent content)
     {
@@ -24,6 +26,12 @@ public class GameTileContentFactory : GameObjectFactory
             GameTileContentType.Spawn => Get(_spawnPrefab),
             _ => null,
         };
+    }
+
+    public Tower Get(TowerType type)
+    {
+        Tower prefab = _towerPrefabs[(int) type];
+        return Get(prefab);
     }
 
     private T Get<T>(T prefab) where T : GameTileContent

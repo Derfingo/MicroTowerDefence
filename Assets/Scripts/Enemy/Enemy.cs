@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using TreeEditor;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : GameBehaviour
 {
     [SerializeField] Transform _model;
 
     public EnemyFactory OriginFactory { get; set; }
+    public float Health { get; private set; }
+    public float Scale { get; private set; }
 
     private GameTile _tileFrom, _tileTo;
     private Vector3 _positionFrom, _positionTo;
@@ -24,6 +26,8 @@ public class Enemy : MonoBehaviour
         _model.localScale = new Vector3(scale, scale, scale);
         _pathOffset = pathOffset;
         _speed = speed;
+        Scale = scale;
+        Health = 100f * scale;
     }
 
     public void SpawnOn(GameTile tile)
@@ -57,8 +61,13 @@ public class Enemy : MonoBehaviour
         _progressFactor = 2f * _speed;
     }
 
-    public bool GameUpdate()
+    public override bool GameUpdate()
     {
+        if (Health <= 0f)
+        {
+            OriginFactory.Reclaim(this);
+            return false;
+        }
         _progress += Time.deltaTime * _progressFactor;
         while (_progress >= 1)
         {
@@ -84,6 +93,11 @@ public class Enemy : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        Health -= damage;
     }
 
     private void PrepareNextState()
