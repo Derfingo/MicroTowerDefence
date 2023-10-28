@@ -23,7 +23,7 @@ public class Shell : WarEntity
         Vector3 p = _launchPoint + _launchVelocity * _age;
         p.y -= 0.5f * 9.81f * _age * _age;
 
-        if (p.y <= 0f)
+        if (p.y <= 0.01f)
         {
             InitializationGame.SpawnExplosion().Initialize(_targetPoint, _blastRadius, _damage);
             OriginFactory.Reclaim(this);
@@ -36,7 +36,7 @@ public class Shell : WarEntity
         d.y -= 9.81f * _age;
         transform.localRotation = Quaternion.LookRotation(d);
 
-        InitializationGame.SpawnExplosion().Initialize(p, 0.1f);
+        InitializationGame.SpawnExplosion().Initialize(p, 0.01f);
 
         return true;
     }

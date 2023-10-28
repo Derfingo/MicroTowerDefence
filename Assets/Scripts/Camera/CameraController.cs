@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private Transform cameraTransform;
-    [SerializeField] private float moveSpeed = 0.1f;
-    [SerializeField] private float moveTime = 10f;
-    [SerializeField] private float rotationAmount = 2.5f;
-    [SerializeField] private Vector3 zoomAmount = new(0, -0.3f, 0.3f);
+    [SerializeField] private Transform _cameraTransform;
+    [SerializeField] private float _moveSpeed = 0.1f;
+    [SerializeField] private float _moveTime = 10f;
+    [SerializeField] private float _rotationAmount = 2.5f;
+    [SerializeField] private Vector3 _zoomAmount = new(0, -0.3f, 0.3f);
 
-    public Vector3 target;
-    public Vector3 zoom;
-    public Quaternion rotation;
+    public Vector3 _target;
+    public Vector3 _zoom;
+    public Quaternion _rotation;
 
     private void Start()
     {
-        target = transform.position;
-        rotation = transform.rotation;
-        zoom = cameraTransform.localPosition;
+        _target = transform.position;
+        _rotation = transform.rotation;
+        _zoom = _cameraTransform.localPosition;
     }
 
     private void Update()
@@ -32,13 +32,13 @@ public class CameraController : MonoBehaviour
     {
         if (Input.mouseScrollDelta.y != 0)
         {
-            zoom += Input.mouseScrollDelta.y * zoomAmount;
+            _zoom += Input.mouseScrollDelta.y * _zoomAmount;
         }
         if (Input.GetMouseButton(1))
         {
             float delta = Input.GetAxis("Mouse X");
             Vector3 turn = new(0, delta, 0);
-            rotation *= Quaternion.Euler(turn * rotationAmount);
+            _rotation *= Quaternion.Euler(turn * _rotationAmount);
         }
     }
 
@@ -46,34 +46,34 @@ public class CameraController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            target += (transform.forward * moveSpeed);
+            _target += (transform.forward * _moveSpeed);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            target += transform.forward * -moveSpeed;
+            _target += transform.forward * -_moveSpeed;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            target += transform.right * moveSpeed;
+            _target += transform.right * _moveSpeed;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            target += transform.right * -moveSpeed;
+            _target += transform.right * -_moveSpeed;
         }
         if (Input.GetKey(KeyCode.Q))
         {
-            rotation *= Quaternion.Euler(Vector3.up * rotationAmount / 3);
+            _rotation *= Quaternion.Euler(Vector3.up * _rotationAmount / 3);
         }
         if (Input.GetKey(KeyCode.E))
         {
-            rotation *= Quaternion.Euler(Vector3.up * -rotationAmount / 3);
+            _rotation *= Quaternion.Euler(Vector3.up * -_rotationAmount / 3);
         }
     }
 
     private void HandleMovement()
     {
-        transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * moveTime);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * moveTime);
-        cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, zoom, Time.deltaTime * moveTime);
+        transform.position = Vector3.Lerp(transform.position, _target, Time.deltaTime * _moveTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, _rotation, Time.deltaTime * _moveTime);
+        _cameraTransform.localPosition = Vector3.Lerp(_cameraTransform.localPosition, _zoom, Time.deltaTime * _moveTime);
     }
 }

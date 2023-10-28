@@ -44,10 +44,7 @@ public class Explosion : WarEntity
             return false;
         }
 
-        if (_propertyBlock == null)
-        {
-            _propertyBlock = new MaterialPropertyBlock();
-        }
+        _propertyBlock ??= new MaterialPropertyBlock();
 
         float t = _age / _duration;
         Color c = Color.black;

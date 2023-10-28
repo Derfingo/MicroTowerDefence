@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ffdebf6327bf7a4fadd84d487ce5b3c, type: 3}
-  m_Name: EnemyFactory
+  m_Name: SmallEnemyFactory
   m_EditorClassIdentifier: 
   _small:
     Prefab: {fileID: 6033740692477537779, guid: 021f05e117ceff64ab74035e1bab29a3,
       type: 3}
     Scale:
-      _min: 0.3
-      _max: 0.5
+      _min: 0.1
+      _max: 0.3
     PathOffset:
-      _min: -0.4
-      _max: 0.4
+      _min: 0
+      _max: 0
     Speed:
       _min: 2
       _max: 3
@@ -28,32 +28,30 @@ MonoBehaviour:
       _min: 10
       _max: 30
   _medium:
-    Prefab: {fileID: 6033740692477537779, guid: 1a7a3d70e9cbb7441b60fa8112055015,
-      type: 3}
+    Prefab: {fileID: 0}
     Scale:
-      _min: 0.5
-      _max: 0.7
-    PathOffset:
-      _min: -0.1
-      _max: 0.1
-    Speed:
-      _min: 0.8
-      _max: 1.2
-    Health:
-      _min: 50
-      _max: 100
-  _large:
-    Prefab: {fileID: 6033740692477537779, guid: e2b0a35b052e0b340af75b7efc261dbb,
-      type: 3}
-    Scale:
-      _min: 0.8
+      _min: 1
       _max: 1
     PathOffset:
       _min: 0
       _max: 0
     Speed:
-      _min: 0.4
-      _max: 0.6
+      _min: 1
+      _max: 1
     Health:
-      _min: 150
-      _max: 250
+      _min: 100
+      _max: 100
+  _large:
+    Prefab: {fileID: 0}
+    Scale:
+      _min: 1
+      _max: 1
+    PathOffset:
+      _min: 0
+      _max: 0
+    Speed:
+      _min: 1
+      _max: 1
+    Health:
+      _min: 100
+      _max: 100

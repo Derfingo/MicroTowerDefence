@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 
 public class GameBoard : MonoBehaviour
 {
@@ -11,9 +9,7 @@ public class GameBoard : MonoBehaviour
     [SerializeField] private Transform _pointers;
     [SerializeField] private GameTile _tilePrefab;
 
-    private Vector2Int _size;
     private GameTile[] _tiles;
-
     private GameTileContentFactory _contentFactory;
 
     private readonly Queue<GameTile> _searchFrontier = new();
@@ -30,8 +26,9 @@ public class GameBoard : MonoBehaviour
     {
         _boardData = boardData;
         _contentFactory = contentFactory;
-        var offset = new Vector2((X - 1) * 0.5f, (Y - 1) * 0.5f);
+        _ground.localScale = new Vector3(_boardData.X, 1f, _boardData.Y);
 
+        var offset = new Vector2((X - 1) * 0.5f, (Y - 1) * 0.5f);
         _tiles = new GameTile[X * Y];
 
         for (int i = 0, y = 0; y < Y; y++)
@@ -40,7 +37,7 @@ public class GameBoard : MonoBehaviour
             {
                 var tile = _tiles[i] = Instantiate(_tilePrefab);
                 tile.BoardPosition = new Vector2Int(x, y);
-                tile.transform.SetParent(_ground, false);
+                tile.transform.SetParent(_pointers, false);
                 tile.transform.localPosition = new Vector3(x - offset.x, 0f, y - offset.y);
 
                 if (x > 0)

@@ -34,7 +34,9 @@ public class TileBuilder : MonoBehaviour
     private void Update()
     {
         if (_isEnabled == false || _tempTile == null)
+        {
             return;
+        }
 
         var plane = new Plane(Vector3.up, Vector3.zero);
         if (plane.Raycast(TouchRay, out var position))
@@ -58,6 +60,12 @@ public class TileBuilder : MonoBehaviour
 
             _tempTile = null;
         }
+
+        //if (Input.GetMouseButtonDown(1))
+        //{
+        //    var tile = _gameBoard.GetTile(_tempTile.transform.localPosition);
+        //    _gameBoard.TryBuild(tile, _contentFactory.Get(GameTileContentType.Empty));
+        //}
     }
 
     public void Enable()
