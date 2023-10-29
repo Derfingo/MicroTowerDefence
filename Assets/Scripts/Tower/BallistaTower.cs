@@ -4,7 +4,7 @@ public class BallistaTower : Tower
 {
     [SerializeField, Range(1f, 100f)] private float _damage = 50f;
     [SerializeField, Range(0.5f, 3f)] private float _shellBlastRadius = 1f;
-    [SerializeField, Range(0.5f, 2f)] private float _shootPerSecond = 1.0f;
+    [SerializeField, Range(0.2f, 1f)] private float _shootPerSecond = 1.0f;
     [SerializeField] private Transform _ballista;
 
     public override TowerType Type => TowerType.Ballista;

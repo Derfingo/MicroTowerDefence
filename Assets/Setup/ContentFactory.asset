@@ -21,5 +21,5 @@ MonoBehaviour:
   _spawnPrefab: {fileID: 7160363751374002329, guid: 12683a760946ea641aad36dde09ccd9a,
     type: 3}
   _towerPrefabs:
-  - {fileID: 89403773166779676, guid: 0c5c321720e8822449431a20a3c8eb94, type: 3}
+  - {fileID: 5478110801795154581, guid: 312004f727ea1464c992488e167e950a, type: 3}
   - {fileID: 5187168687205909870, guid: 885d21bb7366dd647b7c6c8de364a4d9, type: 3}

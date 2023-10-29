@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AppStartup : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class AppStartup : MonoBehaviour
     {
         var loadingOperations = new Queue<ILoadingOperation>();
         loadingOperations.Enqueue(new MenuLoadingOperation());
+        GetComponent<LoadingScreen>().Load(loadingOperations);
         Debug.Log("boot");
     }
 }

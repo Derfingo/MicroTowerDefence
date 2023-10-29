@@ -289,8 +289,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 61
-  _targetRange: 1.5
-  _damage: 100
-  _shellBlastRadius: 0.8
-  _shootPerSecond: 0.5
+  _targetRange: 3
+  _damage: 40
+  _shellBlastRadius: 1.2
+  _shootPerSecond: 0.4
   _ballista: {fileID: 4235823781975711259}
