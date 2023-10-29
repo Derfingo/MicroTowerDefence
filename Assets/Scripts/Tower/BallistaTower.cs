@@ -60,6 +60,8 @@ public class BallistaTower : Tower
         float s2 = s * s;
 
         float r = s2 * s2 - g * (g * x * x + 2f * y * s2);
+        r = Mathf.Max(0f, r);
+
         float tanTheta = (s2 + Mathf.Sqrt(r)) / (g * x);
         float cosTheta = Mathf.Cos(Mathf.Atan(tanTheta));
         float sinTheta = cosTheta * tanTheta;
