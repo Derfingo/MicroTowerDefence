@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnSequences:
   - _factory: {fileID: 11400000, guid: 675564c76d9dffd46806cd169fd00043, type: 2}
-    _type: 0
+    _type: 1
     _amount: 40
-    _cooldown: 10
+    _cooldown: 2
