@@ -70,7 +70,14 @@ public class GameBoard : MonoBehaviour
 
     public bool TryBuild(GameTile tile, GameTileContent content)
     {
-        if (tile.Content.Type != GameTileContentType.Empty)
+        if (tile.Content.Type == GameTileContentType.Empty)
+        {
+            if (content.Type == GameTileContentType.Tower)
+            {
+                return false;
+            }
+        }
+        else if (tile.Content.Type != GameTileContentType.Place)
         {
             return false;
         }
@@ -171,16 +178,12 @@ public class GameBoard : MonoBehaviour
 
     public void DestroyTile(GameTile tile)
     {
-        if (tile.Content.Type <= GameTileContentType.Empty)
-        {
-            return;
-        }
+        Debug.Log(tile.Content.Type);
 
-        _contentToUpdate.Remove(tile.Content);
-
-        if (tile.Content.Type == GameTileContentType.Spawn)
+        if (tile.Content.Type != GameTileContentType.Empty)
         {
-            _spawnPoints.Remove(tile);
+            tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+            FindPath();
         }
     }
 

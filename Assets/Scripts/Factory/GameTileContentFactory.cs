@@ -8,6 +8,7 @@ public class GameTileContentFactory : GameObjectFactory
     [SerializeField] private GameTileContent _emptyPrefab;
     [SerializeField] private GameTileContent _wallPrefab;
     [SerializeField] private GameTileContent _spawnPrefab;
+    [SerializeField] private GameTileContent _placePrefab;
     [Space]
     [SerializeField] private Tower[] _towerPrefabs;
 
@@ -24,6 +25,7 @@ public class GameTileContentFactory : GameObjectFactory
             GameTileContentType.Empty => Get(_emptyPrefab),
             GameTileContentType.Wall => Get(_wallPrefab),
             GameTileContentType.Spawn => Get(_spawnPrefab),
+            GameTileContentType.Place => Get(_placePrefab),
             _ => null,
         };
     }

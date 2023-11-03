@@ -28,8 +28,10 @@ public enum GameTileContentType : byte
 {
     Empty = 0,
     Destination = 1,
-    Wall = 51,
     Spawn = 2,
+    Place = 3,
+
+    Wall = 51,
     Tower = 61
 }
 

@@ -42,6 +42,7 @@ public class TileBuilder : MonoBehaviour
         if (plane.Raycast(TouchRay, out var position))
         {
             _tempTile.transform.position = TouchRay.GetPoint(position);
+            Debug.Log(TouchRay.GetPoint(position));
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -55,17 +56,11 @@ public class TileBuilder : MonoBehaviour
             else
             {
                 Destroy(_tempTile.gameObject);
-                Debug.Log("null");
+                //Debug.Log("null");
             }
 
             _tempTile = null;
         }
-
-        //if (Input.GetMouseButtonDown(1))
-        //{
-        //    var tile = _gameBoard.GetTile(_tempTile.transform.localPosition);
-        //    _gameBoard.TryBuild(tile, _contentFactory.Get(GameTileContentType.Empty));
-        //}
     }
 
     public void Enable()
