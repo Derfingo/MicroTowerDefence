@@ -25,6 +25,7 @@ public class EnemyWave : ScriptableObject
         public float Progress(float deltaTime)
         {
             deltaTime = _sequence.Progress(deltaTime);
+
             while (deltaTime >= 0f)
             {
                 if (++_index >= _wave._spawnSequences.Length)

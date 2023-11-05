@@ -10,6 +10,7 @@ public class GameBoard : MonoBehaviour
     [SerializeField] private GameTile _tilePrefab;
 
     private GameTile[] _tiles;
+    private BoardData _boardData;
     private GameTileContentFactory _contentFactory;
 
     private readonly Queue<GameTile> _searchFrontier = new();
@@ -17,10 +18,10 @@ public class GameBoard : MonoBehaviour
     private readonly List<GameTileContent> _contentToUpdate = new();
 
     public int SpawnPointCount => _spawnPoints.Count;
-
-    private BoardData _boardData;
     public byte X => _boardData.X;
     public byte Y => _boardData.Y;
+
+    public GameTileContentType[] GetAllContentTypes => _tiles.Select(t => t.Content.Type).ToArray();
 
     public void Initialize(BoardData boardData, GameTileContentFactory contentFactory)
     {
@@ -83,6 +84,7 @@ public class GameBoard : MonoBehaviour
         }
 
         tile.Content = content;
+
         if (FindPath() == false)
         {
             tile.Content = _contentFactory.Get(GameTileContentType.Empty);
@@ -167,7 +169,10 @@ public class GameBoard : MonoBehaviour
     private GameTile GetTile(int x, int y)
     {
         if (x >= 0 && x < X && y >= 0 && y < Y)
+        {
             return _tiles[x + y * X];
+        }
+            
         return null;
     }
 
@@ -207,7 +212,5 @@ public class GameBoard : MonoBehaviour
 
         FindPath();
     }
-
-    public GameTileContentType[] GetAllContentTypes => _tiles.Select(t => t.Content.Type).ToArray();
 }
 

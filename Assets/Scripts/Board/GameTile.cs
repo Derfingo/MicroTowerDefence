@@ -13,18 +13,13 @@ public class GameTile : MonoBehaviour
 
     public bool IsAlternative { get; set; }
     public Vector2Int BoardPosition { get; set; }
-
-    private int _distance;
-    public bool HasPath => _distance != int.MaxValue;
-
-    private GameTileContent _content;
-
     public Vector3 ExitPoint { get; private set; }
     public Direction PathDirection { get; private set; }
-
+    public bool HasPath => _distance != int.MaxValue;
     public GameTile NextTileOnPath => _nextOnPath;
 
-
+    private int _distance;
+    private GameTileContent _content;
 
     public GameTileContent Content
     {

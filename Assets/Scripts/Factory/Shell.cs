@@ -5,8 +5,8 @@ using UnityEngine;
 public class Shell : WarEntity
 {
     private Vector3 _launchPoint, _targetPoint, _launchVelocity;
-    private float _age;
     private float _blastRadius, _damage;
+    private float _age;
 
     public void Initialize(Vector3 launchPoint, Vector3 targetPoint, Vector3 launchVelocity, float blastRadius, float damage)
     {

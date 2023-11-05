@@ -5,16 +5,14 @@ using static UnityEngine.GraphicsBuffer;
 
 public class BeamTower : Tower
 {
-    [SerializeField, Range(1f, 100f)] private float _damagePerSecond = 10f;
-
     [SerializeField] private Transform _turret;
     [SerializeField] private Transform _laserBeam;
+    [SerializeField, Range(1f, 100f)] private float _damagePerSecond = 10f;
+
+    public override GameTileContentType Type => GameTileContentType.Laser;
 
     private Vector3 _laserBeamScale;
-
     private TargetPoint _target;
-
-    public override TowerType Type => TowerType.Laser;
 
     private void Awake()
     {

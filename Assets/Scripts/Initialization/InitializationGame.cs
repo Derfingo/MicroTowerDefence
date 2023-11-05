@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class InitializationGame : MonoBehaviour
 {
     [SerializeField] private Vector2Int _cellCount = new(11, 11);
-    [SerializeField, Range(1f, 30f)] private float _prepareTime = 5f;
+    [SerializeField, Range(0f, 30f)] private float _prepareTime = 5f;
     [SerializeField, Range(10, 100)] private int _startingPlayerHealth = 10;
     [Space]
     [SerializeField] private GameTileContentFactory _contentFactory;
@@ -93,6 +93,7 @@ public class InitializationGame : MonoBehaviour
         {
             StopCoroutine( _prepareRoutine );
         }
+
         _currentPlayerHealth = _startingPlayerHealth;
         Cleanup();
         _activeScenario = _sceraio.Begin();

@@ -14,6 +14,7 @@ public abstract class GameObjectFactory : ScriptableObject
             if(Application.isEditor)
             {
                 _scene = SceneManager.GetSceneByName(name);
+
                 if (_scene.isLoaded == false)
                 {
                     _scene = SceneManager.CreateScene(name);

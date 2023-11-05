@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class DirectionExtensions
 {
-    private static Quaternion[] _rotations =
+    private static readonly Quaternion[] _rotations =
     {
         Quaternion.identity,
         Quaternion.Euler(0f, 90f, 0f),

@@ -7,8 +7,8 @@ public sealed class BoardData : ISerializable
     public string Name;
     public byte X;
     public byte Y;
-    public GameTileContentType[] Content;
     public byte[] Levels;
+    public GameTileContentType[] Content;
 
     public byte[] Serialize()
     {
@@ -72,7 +72,7 @@ public sealed class BoardData : ISerializable
             Levels = new byte[size],
         };
         result.Content[0] = GameTileContentType.Spawn;
-        result.Content[^1] = GameTileContentType.Destination;
+        result.Content[5] = GameTileContentType.Destination;
         return result;
     }
 }

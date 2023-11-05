@@ -8,12 +8,11 @@ public class Explosion : WarEntity
     [SerializeField] AnimationCurve _scaleCurve;
     [SerializeField] AnimationCurve _colorCurve;
 
-    private float _age;
-
     private static int _colorPropId = Shader.PropertyToID("_Color");
     private static MaterialPropertyBlock _propertyBlock;
     private MeshRenderer _meshRenderer;
     private float _scale;
+    private float _age;
 
     private void Awake()
     {
@@ -25,6 +24,7 @@ public class Explosion : WarEntity
         if (damage > 0f)
         {
             TargetPoint.FillBuffer(position, blastRadious);
+
             for (int i = 0; i < TargetPoint.BufferedCount; i++)
             {
                 TargetPoint.GetBuffered(i).Enemy.TakeDamage(damage);
@@ -38,6 +38,7 @@ public class Explosion : WarEntity
     public override bool GameUpdate()
     {
         _age += Time.deltaTime;
+
         if (_age >= _duration)
         {
             OriginFactory.Reclaim(this);

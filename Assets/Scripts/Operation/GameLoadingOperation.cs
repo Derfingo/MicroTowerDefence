@@ -13,6 +13,7 @@ public class GameLoadingOperation : ILoadingOperation
     {
         onProgress?.Invoke(0.5f);
         var loadOp = SceneManager.LoadSceneAsync(Constants.Scenes.TEST_LEVEL, LoadSceneMode.Single);
+
         while (loadOp.isDone == false)
         {
             await Task.Delay(1);

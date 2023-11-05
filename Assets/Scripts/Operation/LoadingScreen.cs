@@ -57,6 +57,7 @@ public class LoadingScreen : MonoBehaviour
         {
             await Task.Delay(1);
         }
+
         await Task.Delay(TimeSpan.FromSeconds(0.3f));
     }
 

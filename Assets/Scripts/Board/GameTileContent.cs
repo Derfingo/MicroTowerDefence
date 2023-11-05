@@ -8,9 +8,7 @@ public class GameTileContent : MonoBehaviour
     [SerializeField] private GameTileContentType _type;
 
     public GameTileContentType Type => _type;
-
     public GameTileContentFactory OriginFactory { get; set; }
-
     public bool IsBlickingPath => Type == GameTileContentType.Wall || Type == GameTileContentType.Tower;
 
     public void Recycle()
@@ -32,11 +30,8 @@ public enum GameTileContentType : byte
     Place = 3,
 
     Wall = 51,
-    Tower = 61
-}
+    Tower = 61,
 
-public enum TowerType
-{
-    Laser,
-    Ballista
+    Laser = 101,
+    Ballista = 102
 }

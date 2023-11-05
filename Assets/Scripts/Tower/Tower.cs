@@ -6,7 +6,7 @@ public abstract class Tower : GameTileContent
 {
     [SerializeField, Range(1f, 10f)] protected float _targetRange = 2f;
 
-    public abstract TowerType Type { get; }
+    public new abstract GameTileContentType Type { get; }
 
     protected bool IsAcquireTarget(out TargetPoint target)
     {
@@ -29,7 +29,11 @@ public abstract class Tower : GameTileContent
 
         Vector3 myPosition = transform.localPosition;
         Vector3 targetPosition = target.Position;
-        if (Vector3.Distance(myPosition, targetPosition) > _targetRange + target.ColliderSize * target.Enemy.Scale)
+
+        float distance = Vector3.Distance(myPosition, targetPosition);
+        float range = _targetRange + target.ColliderSize * target.Enemy.Scale;
+
+        if (distance > range || target.IsEnabled == false)
         {
             target = null;
             return false;

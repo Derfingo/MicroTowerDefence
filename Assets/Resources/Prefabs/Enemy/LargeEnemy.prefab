@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _model: {fileID: 6330979198749395444}
+  _view: {fileID: 0}
 --- !u!1 &6462511840292965946
 GameObject:
   m_ObjectHideFlags: 0

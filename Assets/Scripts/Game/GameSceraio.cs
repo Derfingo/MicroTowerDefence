@@ -27,6 +27,7 @@ public class GameSceraio : ScriptableObject
         public bool Progress()
         {
             float deltaTime = _wave.Progress(Time.deltaTime);
+
             while (deltaTime >= 0f)
             {
                 if (++_index >= _scenario._waves.Length)

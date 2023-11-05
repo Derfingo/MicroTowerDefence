@@ -6,7 +6,6 @@ using UnityEngine;
 public class TileBuilder : MonoBehaviour
 {
     [SerializeField] private List<BuildButton> _buttons;
-    [SerializeField] private List<TowerBuildButton> _towerButtons;
 
     private GameTileContentFactory _contentFactory;
     private Camera _camera;
@@ -21,7 +20,6 @@ public class TileBuilder : MonoBehaviour
     private void Awake()
     {
         _buttons.ForEach(b => b.AddListener(OnBuildingSelected));
-        _towerButtons.ForEach(b => b.AddListener(OnBuildingSelected));
     }
 
     public void Initialize(GameTileContentFactory contentFactory, Camera camera, GameBoard gameBoard)
@@ -39,10 +37,10 @@ public class TileBuilder : MonoBehaviour
         }
 
         var plane = new Plane(Vector3.up, Vector3.zero);
+
         if (plane.Raycast(TouchRay, out var position))
         {
             _tempTile.transform.position = TouchRay.GetPoint(position);
-            Debug.Log(TouchRay.GetPoint(position));
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -74,12 +72,6 @@ public class TileBuilder : MonoBehaviour
     }
 
     private void OnBuildingSelected(GameTileContentType type)
-    {
-        //TODO check money
-        _tempTile = _contentFactory.Get(type);
-    }
-
-    private void OnBuildingSelected(TowerType type)
     {
         //TODO check money
         _tempTile = _contentFactory.Get(type);

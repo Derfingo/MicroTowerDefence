@@ -30,9 +30,11 @@ public class EnemySpawnSequence
         public float Progress(float deltaTime)
         {
             _cooldown += deltaTime;
+
             while (_cooldown >= _sequence._cooldown)
             {
                 _cooldown -= _sequence._cooldown;
+
                 if (_count >= _sequence._amount)
                 {
                     return _cooldown;

@@ -10,7 +10,6 @@ public struct FloatRange
     [SerializeField] private float _min, _max;
 
     public readonly float Min => _min;
-
     public readonly float Max => _max;
 
     public float RandomValueInRange

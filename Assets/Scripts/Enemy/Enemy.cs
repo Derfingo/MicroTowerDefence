@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Enemy : GameBehaviour
 {
-    [SerializeField] Transform _model;
+    [SerializeField] private Transform _model;
+    [SerializeField] private EnemyView _view;
 
     public EnemyFactory OriginFactory { get; set; }
     public float Health { get; private set; }
@@ -28,6 +29,7 @@ public class Enemy : GameBehaviour
         _speed = speed;
         Scale = scale;
         Health = health;
+        _view.Initialize(this);
     }
 
     public void SpawnOn(GameTile tile)
@@ -65,10 +67,13 @@ public class Enemy : GameBehaviour
     {
         if (Health <= 0f)
         {
-            Recycle();
+            DisableView();
+            _view.Die();
             return false;
         }
+
         _progress += Time.deltaTime * _progressFactor;
+
         while (_progress >= 1)
         {
             if (_tileTo == null)
@@ -161,6 +166,12 @@ public class Enemy : GameBehaviour
     public override void Recycle()
     {
         OriginFactory.Reclaim(this);
+    }
+
+    private void DisableView()
+    {
+        _view.GetComponentInChildren<Collider>().enabled = false;
+        _view.GetComponentInChildren<TargetPoint>().enabled = false;
     }
 }
 
