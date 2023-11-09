@@ -33,5 +33,6 @@ public enum GameTileContentType : byte
     Tower = 61,
 
     Laser = 101,
-    Ballista = 102
+    Mortar = 102,
+    Archer = 103,
 }

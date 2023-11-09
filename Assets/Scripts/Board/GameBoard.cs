@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameBoard : MonoBehaviour
 {
-    [SerializeField] private TileBuilder _tileBuilder;
     [SerializeField] private Transform _ground;
     [SerializeField] private Transform _pointers;
     [SerializeField] private GameTile _tilePrefab;

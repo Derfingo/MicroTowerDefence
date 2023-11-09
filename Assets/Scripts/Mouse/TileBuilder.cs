@@ -6,27 +6,33 @@ using UnityEngine;
 public class TileBuilder : MonoBehaviour
 {
     [SerializeField] private List<BuildButton> _buttons;
+    [SerializeField] private InputController _inputController;
 
     private GameTileContentFactory _contentFactory;
-    private Camera _camera;
+    private GameTileContent _tempTile;
     private GameBoard _gameBoard;
-
     private bool _isEnabled;
 
-    private Ray TouchRay => _camera.ScreenPointToRay(Input.mousePosition);
-
-    private GameTileContent _tempTile;
-
-    private void Awake()
+    private void Start()
     {
         _buttons.ForEach(b => b.AddListener(OnBuildingSelected));
+        _inputController.OnMouseButtonUp += OnBuild;
     }
 
-    public void Initialize(GameTileContentFactory contentFactory, Camera camera, GameBoard gameBoard)
+    public void Initialize(GameTileContentFactory contentFactory, GameBoard gameBoard)
     {
         _contentFactory = contentFactory;
-        _camera = camera;
         _gameBoard = gameBoard;
+    }
+
+    public void Enable()
+    {
+        _isEnabled = true;
+    }
+
+    public void Disable()
+    {
+        _isEnabled = false;
     }
 
     private void Update()
@@ -38,37 +44,34 @@ public class TileBuilder : MonoBehaviour
 
         var plane = new Plane(Vector3.up, Vector3.zero);
 
-        if (plane.Raycast(TouchRay, out var position))
+        if (plane.Raycast(_inputController.TouchRay, out var position))
         {
-            _tempTile.transform.position = TouchRay.GetPoint(position);
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            var tile = _gameBoard.GetTile(_tempTile.transform.localPosition);
-            if (tile != null && _gameBoard.TryBuild(tile, _tempTile))
-            {
-                // spend money
-                // record tile
-            }
-            else
-            {
-                Destroy(_tempTile.gameObject);
-                //Debug.Log("null");
-            }
-
-            _tempTile = null;
+            _tempTile.transform.position = _inputController.TouchRay.GetPoint(position);
         }
     }
 
-    public void Enable()
+    private void OnBuild()
     {
-        _isEnabled = true;
-    }
+        if (_tempTile == null)
+        {
+            return;
+        }
 
-    public void Disable()
-    {
-        _isEnabled = false;
+        var tile = _gameBoard.GetTile(_tempTile.transform.localPosition);
+        
+
+        if (tile != null && _gameBoard.TryBuild(tile, _tempTile))
+        {
+            // spend money
+            // record tile
+        }
+        else
+        {
+            Destroy(_tempTile.gameObject);
+            //Debug.Log("null");
+        }
+
+        _tempTile = null;
     }
 
     private void OnBuildingSelected(GameTileContentType type)

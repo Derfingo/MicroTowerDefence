@@ -22,7 +22,9 @@ MonoBehaviour:
     type: 3}
   _placePrefab: {fileID: 3651249449104863518, guid: 155a9b37c43a5ed46a2afcc50de0cd9c,
     type: 3}
-  _laserTowerPrefab: {fileID: 5478110801795154581, guid: 312004f727ea1464c992488e167e950a,
+  _beamPrefab: {fileID: 5478110801795154581, guid: 312004f727ea1464c992488e167e950a,
     type: 3}
-  _ballistaTowerPrefab: {fileID: 5187168687205909870, guid: 885d21bb7366dd647b7c6c8de364a4d9,
+  _mortarPrefab: {fileID: 5187168687205909870, guid: 885d21bb7366dd647b7c6c8de364a4d9,
+    type: 3}
+  _archerPrefab: {fileID: 240080371973959801, guid: 34af1f1464e0b0c40bb7e8459f81ad00,
     type: 3}

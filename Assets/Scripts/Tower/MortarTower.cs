@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class BallistaTower : Tower
+public class MortarTower : Tower
 {
-    [SerializeField] private Transform _ballista;
+    [SerializeField] private Transform _cannon;
     [SerializeField, Range(1f, 100f)] private float _damage = 50f;
     [SerializeField, Range(0.5f, 3f)] private float _shellBlastRadius = 1f;
     [SerializeField, Range(0.2f, 1f)] private float _shootPerSecond = 1.0f;
 
-    public override GameTileContentType Type => GameTileContentType.Ballista;
+    public override GameTileContentType Type => GameTileContentType.Mortar;
 
     private float _launchSpeed;
     private float _launchProgress;
@@ -20,7 +20,7 @@ public class BallistaTower : Tower
     private void OnValidate()
     {
         float x = _targetRange + 0.251f;
-        float y = -_ballista.position.y;
+        float y = -_cannon.position.y;
         _launchSpeed = Mathf.Sqrt(9.81f * (y + Mathf.Sqrt(x * x + y * y)));
     }
 
@@ -44,7 +44,7 @@ public class BallistaTower : Tower
 
     private void Launch(TargetPoint target)
     {
-        Vector3 launchPoint = _ballista.position;
+        Vector3 launchPoint = _cannon.position;
         Vector3 targetPoint = target.Position;
         targetPoint.y = 0f;
 
@@ -67,7 +67,7 @@ public class BallistaTower : Tower
         float cosTheta = Mathf.Cos(Mathf.Atan(tanTheta));
         float sinTheta = cosTheta * tanTheta;
 
-        _ballista.localRotation = Quaternion.LookRotation(new Vector3(direction.x, tanTheta, direction.y));
+        _cannon.localRotation = Quaternion.LookRotation(new Vector3(direction.x, tanTheta, direction.y));
 
         InitializationGame.SpawnShell().Initialize(launchPoint, targetPoint,
             new Vector3(s * cosTheta * direction.x, s * sinTheta, s * cosTheta * direction.y), _shellBlastRadius, _damage);

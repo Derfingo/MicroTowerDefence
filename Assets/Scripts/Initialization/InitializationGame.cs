@@ -16,7 +16,6 @@ public class InitializationGame : MonoBehaviour
     [SerializeField] private TileBuilder _tileBuilder;
     [SerializeField] private WarFactory _warFactory;
     [SerializeField] private GameBoard _board;
-    [SerializeField] private Camera _camera;
     [SerializeField] private GameSceraio _sceraio;
 
     private GameSceraio.State _activeScenario;
@@ -33,7 +32,7 @@ public class InitializationGame : MonoBehaviour
     {
         BoardData boardData = BoardData.GetInitial(_cellCount);
         _board.Initialize(boardData, _contentFactory);
-        _tileBuilder.Initialize(_contentFactory, _camera, _board);
+        _tileBuilder.Initialize(_contentFactory, _board);
         BeginNewGame();
     }
 
@@ -42,6 +41,13 @@ public class InitializationGame : MonoBehaviour
         Shell shell = _instance._warFactory.Shell;
         _instance._nonEnemies.Add(shell);
         return shell;
+    }
+
+    public static Arrow SpawnArrow()
+    {
+        Arrow arrorw = _instance._warFactory.Arrow;
+        _instance._nonEnemies.Add(arrorw);
+        return arrorw;
     }
 
     public static Explosion SpawnExplosion()

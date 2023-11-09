@@ -5,14 +5,16 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform _cameraTransform;
+    [SerializeField] private InputController _inputController;
+    [Space]
     [SerializeField] private float _moveSpeed = 0.1f;
     [SerializeField] private float _moveTime = 10f;
     [SerializeField] private float _rotationAmount = 2.5f;
     [SerializeField] private Vector3 _zoomAmount = new(0, -0.3f, 0.3f);
 
+    public Quaternion Rotation;
     public Vector3 Target;
     public Vector3 Zoom;
-    public Quaternion Rotation;
 
     private void Start()
     {
@@ -30,17 +32,10 @@ public class CameraController : MonoBehaviour
 
     private void HandleMouse()
     {
-        if (Input.mouseScrollDelta.y != 0)
-        {
-            Zoom += Input.mouseScrollDelta.y * _zoomAmount;
-        }
-
-        if (Input.GetMouseButton(1))
-        {
-            float delta = Input.GetAxis("Mouse X");
-            Vector3 turn = new(0, delta, 0);
-            Rotation *= Quaternion.Euler(turn * _rotationAmount);
-        }
+        Zoom += _inputController.ScrollDelta.y * _zoomAmount;
+        float delta = _inputController.DeltaX;
+        Vector3 turn = new(0, delta, 0);
+        Rotation *= Quaternion.Euler(turn * _rotationAmount);
     }
 
     private void HandleKeyboard()

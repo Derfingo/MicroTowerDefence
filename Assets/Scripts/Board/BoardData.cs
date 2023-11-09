@@ -73,6 +73,9 @@ public sealed class BoardData : ISerializable
         };
         result.Content[0] = GameTileContentType.Spawn;
         result.Content[5] = GameTileContentType.Destination;
+        result.Content[7] = GameTileContentType.Place;
+        result.Content[8] = GameTileContentType.Place;
+        result.Content[9] = GameTileContentType.Place;
         return result;
     }
 }

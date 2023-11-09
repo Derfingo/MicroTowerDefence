@@ -10,8 +10,9 @@ public class GameTileContentFactory : GameObjectFactory
     [SerializeField] private GameTileContent _spawnPrefab;
     [SerializeField] private GameTileContent _placePrefab;
     [Space]
-    [SerializeField] private Tower _laserTowerPrefab;
-    [SerializeField] private Tower _ballistaTowerPrefab;
+    [SerializeField] private Tower _beamPrefab;
+    [SerializeField] private Tower _mortarPrefab;
+    [SerializeField] private Tower _archerPrefab;
 
     public void Reclaim(GameTileContent content)
     {
@@ -27,8 +28,9 @@ public class GameTileContentFactory : GameObjectFactory
             GameTileContentType.Wall => Get(_wallPrefab),
             GameTileContentType.Spawn => Get(_spawnPrefab),
             GameTileContentType.Place => Get(_placePrefab),
-            GameTileContentType.Ballista => Get(_ballistaTowerPrefab),
-            GameTileContentType.Laser => Get(_laserTowerPrefab),
+            GameTileContentType.Mortar => Get(_mortarPrefab),
+            GameTileContentType.Laser => Get(_beamPrefab),
+            GameTileContentType.Archer => Get(_archerPrefab),
             _ => null,
         };
     }
