@@ -20,7 +20,7 @@ MonoBehaviour:
     type: 3}
   _spawnPrefab: {fileID: 7160363751374002329, guid: 12683a760946ea641aad36dde09ccd9a,
     type: 3}
-  _placePrefab: {fileID: 3651249449104863518, guid: 155a9b37c43a5ed46a2afcc50de0cd9c,
+  _placePrefab: {fileID: 1255147332634311009, guid: 155a9b37c43a5ed46a2afcc50de0cd9c,
     type: 3}
   _beamPrefab: {fileID: 5478110801795154581, guid: 312004f727ea1464c992488e167e950a,
     type: 3}

@@ -71,11 +71,7 @@ public sealed class BoardData : ISerializable
             Content = new GameTileContentType[size],
             Levels = new byte[size],
         };
-        result.Content[0] = GameTileContentType.Spawn;
-        result.Content[5] = GameTileContentType.Destination;
-        result.Content[7] = GameTileContentType.Place;
-        result.Content[8] = GameTileContentType.Place;
-        result.Content[9] = GameTileContentType.Place;
+
         return result;
     }
 }

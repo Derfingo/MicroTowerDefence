@@ -57,6 +57,15 @@ public class GameBoard : MonoBehaviour
         Clear();
     }
 
+    private void SetTileContentTest()
+    {
+        ForceBuild(_tiles[0], _contentFactory.Get(GameTileContentType.Spawn));
+        ForceBuild(_tiles[5], _contentFactory.Get(GameTileContentType.Destination));
+        ForceBuild(_tiles[9], _contentFactory.Get(GameTileContentType.Place));
+        ForceBuild(_tiles[8], _contentFactory.Get(GameTileContentType.Place));
+        ForceBuild(_tiles[7], _contentFactory.Get(GameTileContentType.Place));
+    }
+
     public void ForceBuild(GameTile tile, GameTileContent content)
     {
         tile.Content = content;
@@ -208,6 +217,8 @@ public class GameBoard : MonoBehaviour
         {
             ForceBuild(_tiles[i], _contentFactory.Get(_boardData.Content[i]));
         }
+
+        SetTileContentTest();
 
         FindPath();
     }

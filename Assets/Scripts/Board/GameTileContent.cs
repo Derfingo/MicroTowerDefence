@@ -6,7 +6,6 @@ using UnityEngine;
 public class GameTileContent : MonoBehaviour
 {
     [SerializeField] private GameTileContentType _type;
-
     public GameTileContentType Type => _type;
     public GameTileContentFactory OriginFactory { get; set; }
     public bool IsBlickingPath => Type == GameTileContentType.Wall || Type == GameTileContentType.Tower;
@@ -18,7 +17,6 @@ public class GameTileContent : MonoBehaviour
 
     public virtual void GameUpdate()
     {
-
     }
 }
 

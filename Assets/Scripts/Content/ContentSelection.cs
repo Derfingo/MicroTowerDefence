@@ -5,14 +5,19 @@ using UnityEngine;
 
 public class ContentSelection : MonoBehaviour
 {
+    [SerializeField] private BuildingMenuUI _buildingMenu;
+    [SerializeField] private TowerMenuUI _towerMenu;
     [SerializeField] private InputController _mouseController;
     [SerializeField] private GameBoard _gameBoard;
 
-    private GameTile _SelectedTile;
+    public event Action<GameTileContentType, GameTile> OnBuild;
+
+    private GameTile _tempTile;
 
     private void Start()
     {
         _mouseController.OnMouseButtonDown += OnSelectContent;
+        _buildingMenu.Buttons.ForEach(b => b.AddListener(OnBuildClick));
     }
 
     private void OnSelectContent()
@@ -26,8 +31,45 @@ public class ContentSelection : MonoBehaviour
 
             if (tile != null)
             {
-                Debug.Log(tile.Content.Type);
+                if (tile.Content.Type == GameTileContentType.Place)
+                {
+                    if (_tempTile != null)
+                    {
+                        _towerMenu.Hide();
+                        _buildingMenu.Hide();
+                    }
+
+                    _buildingMenu.Show();
+                    _tempTile = tile;
+                }
+                else if (tile.Content.Type == GameTileContentType.Tower)
+                {
+                    if (_tempTile != null)
+                    {
+                        _towerMenu.Hide();
+                        _buildingMenu.Hide();
+                    }
+
+                    _towerMenu.Show();
+                    _tempTile = tile;
+                }
+                else
+                {
+                    _towerMenu.Hide();
+                    _buildingMenu.Hide();
+                }
+            }
+            else
+            {
+                _towerMenu.Hide();
+                _buildingMenu.Hide();
+                _tempTile = null;
             }
         }
+    }
+
+    private void OnBuildClick(GameTileContentType type)
+    {
+        OnBuild?.Invoke(type, _tempTile);
     }
 }

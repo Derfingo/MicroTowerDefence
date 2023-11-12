@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour
         Zoom = _cameraTransform.localPosition;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         HandleMovement();
         HandleKeyboard();

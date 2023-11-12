@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class TileBuilder : MonoBehaviour
 {
+    [SerializeField] private ContentSelection _contentSelection;
     [SerializeField] private List<BuildButton> _buttons;
     [SerializeField] private InputController _inputController;
 
@@ -17,6 +18,7 @@ public class TileBuilder : MonoBehaviour
     {
         _buttons.ForEach(b => b.AddListener(OnBuildingSelected));
         _inputController.OnMouseButtonUp += OnBuild;
+        _contentSelection.OnBuild += OnBuildSelect;
     }
 
     public void Initialize(GameTileContentFactory contentFactory, GameBoard gameBoard)
@@ -78,5 +80,14 @@ public class TileBuilder : MonoBehaviour
     {
         //TODO check money
         _tempTile = _contentFactory.Get(type);
+    }
+
+    private void OnBuildSelect(GameTileContentType type, GameTile tile)
+    {
+        GameTileContent content = _contentFactory.Get(type);
+        if (tile != null)
+        {
+            _gameBoard.TryBuild(tile, content);
+        }
     }
 }
