@@ -5,8 +5,27 @@ using UnityEngine;
 public abstract class Tower : GameTileContent
 {
     [SerializeField, Range(1f, 10f)] protected float _targetRange = 2f;
+    [SerializeField] protected TowerLevelConfig _towerLevelConfig;
+    [SerializeField] protected Transform _towerModel;
 
     public new abstract GameTileContentType Type { get; }
+    public abstract void Initialize(TowerLevel level);
+
+    public TowerLevel CurrentLevel = TowerLevel.First;
+
+    public void SetLevel(TowerLevel level)
+    {
+        _towerModel.GetChild((int)level - 1).gameObject.SetActive(false);
+        _towerModel.GetChild((int)level).gameObject.SetActive(true);
+        SetConfig(level);
+        CurrentLevel = level;
+    }
+
+    public void SetConfig(TowerLevel level)
+    {
+        var config = _towerLevelConfig.GetConfig(level);
+        _targetRange = config.TargetTange;
+    }
 
     protected bool IsAcquireTarget(out TargetPoint target)
     {

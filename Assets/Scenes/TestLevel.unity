@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7273697}
   m_Layer: 0
-  m_Name: ---ENVIROMENT---
+  m_Name: --- ENVIROMENT ---
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -469,6 +469,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 90304490}
   m_CullTransparentMesh: 1
+--- !u!1 &95764484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 95764486}
+  - component: {fileID: 95764485}
+  m_Layer: 0
+  m_Name: Upgrade Tower
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &95764485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95764484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 235002e31ea38b94c898a1f8514918f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiController: {fileID: 1881084979}
+--- !u!4 &95764486
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95764484}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &171455721
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,7 +811,6 @@ GameObject:
   - component: {fileID: 384159441}
   - component: {fileID: 384159440}
   - component: {fileID: 384159439}
-  - component: {fileID: 384159438}
   m_Layer: 5
   m_Name: Sell Button
   m_TagString: Untagged
@@ -794,19 +838,6 @@ RectTransform:
   m_AnchoredPosition: {x: 337.5, y: -75}
   m_SizeDelta: {x: 225, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &384159438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 384159436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e6105414d1af8e4698c22f67949d84c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _type: 102
 --- !u!114 &384159439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1171,8 +1202,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ae5e18c6db4a8d4db645914a767c996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buildingMenu: {fileID: 1375482709}
-  _towerMenu: {fileID: 171455723}
   _mouseController: {fileID: 714363559}
   _gameBoard: {fileID: 299134201}
 --- !u!4 &674079225
@@ -1250,7 +1279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 795768357}
   m_Layer: 0
-  m_Name: ---SETUP---
+  m_Name: --- SETUP ---
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1432,8 +1461,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cellCount: {x: 6, y: 6}
-  _prepareTime: 30
-  _startingPlayerHealth: 100
+  _prepareTime: 3
+  _startingPlayerHealth: 30
   _contentFactory: {fileID: 11400000, guid: c11e0f31d10b4fb449e4202e6eef44b3, type: 2}
   _enemyFactory: {fileID: 11400000, guid: 675564c76d9dffd46806cd169fd00043, type: 2}
   _tileBuilder: {fileID: 1256486103}
@@ -2232,12 +2261,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 151d2355c746fc34895f29ac84010f89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _contentSelection: {fileID: 674079224}
   _buttons:
   - {fileID: 90304492}
   - {fileID: 2115946300}
   - {fileID: 1056036706}
   _inputController: {fileID: 714363559}
+  _uiController: {fileID: 1881084979}
 --- !u!4 &1256486104
 Transform:
   m_ObjectHideFlags: 0
@@ -2774,18 +2803,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &1523833757 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1938003622988130495, guid: d5d61e42765f4a44abc4d68b6a87cfd0,
-    type: 3}
-  m_PrefabInstance: {fileID: 6124800284441008176}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a4c5ffaf0207b741852d411a47e1122, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1547516063
 GameObject:
   m_ObjectHideFlags: 0
@@ -2798,7 +2815,6 @@ GameObject:
   - component: {fileID: 1547516068}
   - component: {fileID: 1547516067}
   - component: {fileID: 1547516066}
-  - component: {fileID: 1547516065}
   m_Layer: 5
   m_Name: Upgrade Button
   m_TagString: Untagged
@@ -2826,19 +2842,6 @@ RectTransform:
   m_AnchoredPosition: {x: 112.5, y: -75}
   m_SizeDelta: {x: 225, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1547516065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1547516063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e6105414d1af8e4698c22f67949d84c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _type: 101
 --- !u!114 &1547516066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3356,8 +3359,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215f53aa17aaad743a5b187e9bb48d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraController: {fileID: 1523833757}
-  _towerMenuUI: {fileID: 1375482709}
+  _towerMenu: {fileID: 171455723}
+  _buildingMenu: {fileID: 1375482709}
+  _contentSelection: {fileID: 674079224}
 --- !u!4 &1881084980
 Transform:
   m_ObjectHideFlags: 0
@@ -4035,6 +4039,7 @@ SceneRoots:
   - {fileID: 795768357}
   - {fileID: 6124800284441008176}
   - {fileID: 714363560}
+  - {fileID: 95764486}
   - {fileID: 1881084980}
   - {fileID: 674079225}
   - {fileID: 987854743}

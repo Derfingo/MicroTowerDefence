@@ -1,75 +1,69 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ContentSelection : MonoBehaviour
 {
-    [SerializeField] private BuildingMenuUI _buildingMenu;
-    [SerializeField] private TowerMenuUI _towerMenu;
     [SerializeField] private InputController _mouseController;
     [SerializeField] private GameBoard _gameBoard;
 
-    public event Action<GameTileContentType, GameTile> OnBuild;
+    public event Action OnBuildingMenu;
+    public event Action OnTowerMenu;
+    public event Action OnHideMenu;
 
     private GameTile _tempTile;
+    public GameTile TempTile => _tempTile;
 
     private void Start()
     {
         _mouseController.OnMouseButtonDown += OnSelectContent;
-        _buildingMenu.Buttons.ForEach(b => b.AddListener(OnBuildClick));
     }
 
-    private void OnSelectContent()
+    private GameTile TryGetTile()
     {
         var plane = new Plane(Vector3.up, Vector3.zero);
-
-        if (plane.Raycast(_mouseController.TouchRay, out var position))
+        if (plane.Raycast(_mouseController.TouchRay, out var distance))
         {
-            var tilePosition = _mouseController.TouchRay.GetPoint(position);
-            var tile = _gameBoard.GetTile(tilePosition);
+            var position = _mouseController.TouchRay.GetPoint(distance);
+            var tile = _gameBoard.GetTile(position);
+            return tile;
+        }
 
+        return null;
+    }
+
+    private void DefineContent(GameTile tile)
+    {
+        if (EventSystem.current.currentSelectedGameObject == null)
+        {
             if (tile != null)
             {
+                _tempTile = tile;
+
                 if (tile.Content.Type == GameTileContentType.Place)
                 {
-                    if (_tempTile != null)
-                    {
-                        _towerMenu.Hide();
-                        _buildingMenu.Hide();
-                    }
-
-                    _buildingMenu.Show();
-                    _tempTile = tile;
+                    OnBuildingMenu?.Invoke();
                 }
                 else if (tile.Content.Type == GameTileContentType.Tower)
                 {
-                    if (_tempTile != null)
-                    {
-                        _towerMenu.Hide();
-                        _buildingMenu.Hide();
-                    }
-
-                    _towerMenu.Show();
-                    _tempTile = tile;
+                    OnTowerMenu?.Invoke();
                 }
                 else
                 {
-                    _towerMenu.Hide();
-                    _buildingMenu.Hide();
+                    OnHideMenu?.Invoke();
                 }
             }
             else
             {
-                _towerMenu.Hide();
-                _buildingMenu.Hide();
                 _tempTile = null;
+                OnHideMenu?.Invoke();
             }
         }
     }
 
-    private void OnBuildClick(GameTileContentType type)
+    private void OnSelectContent()
     {
-        OnBuild?.Invoke(type, _tempTile);
+        var tile = TryGetTile();
+        DefineContent(tile);
     }
 }

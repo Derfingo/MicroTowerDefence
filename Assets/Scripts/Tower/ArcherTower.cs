@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ArcherTower : Tower
@@ -24,6 +22,11 @@ public class ArcherTower : Tower
         float x = _targetRange + 0.251f;
         float y = -_archer.position.y;
         _launchSpeed = Mathf.Sqrt(9.81f * (y + Mathf.Sqrt(x * x + y * y)));
+    }
+
+    public override void Initialize(TowerLevel level)
+    {
+        SetConfig(level);
     }
 
     public override void GameUpdate()

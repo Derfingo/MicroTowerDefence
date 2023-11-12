@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc2d987f25f220546a9bb4d3bcf5f5ed, type: 3}
+  m_Name: Archer Config
+  m_EditorClassIdentifier: 
+  _firstPrefab:
+    Prefab: {fileID: 404256357162471880, guid: f031cced4edfadd4b99665f7d9e58d45, type: 3}
+    TargetTange: 1.5
+    Cost: 0
+  _secondPrefab:
+    Prefab: {fileID: 240080371973959801, guid: 34af1f1464e0b0c40bb7e8459f81ad00, type: 3}
+    TargetTange: 2.1
+    Cost: 120
+  _thirdPrefab:
+    Prefab: {fileID: 546477330913187392, guid: 4b4cdf4c0cf99fd47995e618a2b9e1c0, type: 3}
+    TargetTange: 2.4
+    Cost: 250

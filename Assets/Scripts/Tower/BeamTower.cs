@@ -19,6 +19,10 @@ public class BeamTower : Tower
         _laserBeamScale = _laserBeam.localScale;
     }
 
+    public override void Initialize(TowerLevel level)
+    {
+    }
+
     public override void GameUpdate()
     {
         if (IsTargetTracked(ref _target) || IsAcquireTarget(out _target))

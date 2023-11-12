@@ -1,13 +1,11 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TileBuilder : MonoBehaviour
 {
-    [SerializeField] private ContentSelection _contentSelection;
     [SerializeField] private List<BuildButton> _buttons;
     [SerializeField] private InputController _inputController;
+    [SerializeField] private UIController _uiController;
 
     private GameTileContentFactory _contentFactory;
     private GameTileContent _tempTile;
@@ -18,7 +16,7 @@ public class TileBuilder : MonoBehaviour
     {
         _buttons.ForEach(b => b.AddListener(OnBuildingSelected));
         _inputController.OnMouseButtonUp += OnBuild;
-        _contentSelection.OnBuild += OnBuildSelect;
+        _uiController.OnBuildClick += OnBuildSelect;
     }
 
     public void Initialize(GameTileContentFactory contentFactory, GameBoard gameBoard)

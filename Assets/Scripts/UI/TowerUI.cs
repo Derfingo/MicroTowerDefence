@@ -9,6 +9,9 @@ public class TowerMenuUI : MonoBehaviour
     [SerializeField] private Button _upgradeTowerButton;
     [SerializeField] private Button _sellTowerButton;
 
+    public Button UpgradeButton => _upgradeTowerButton;
+    public Button SellButton => _sellTowerButton;
+
     public void Show()
     {
         _menuPanel.SetActive(true);

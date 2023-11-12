@@ -93,6 +93,12 @@ public class GameBoard : MonoBehaviour
 
         tile.Content = content;
 
+        if (content.Type == GameTileContentType.Tower)
+        {
+            Tower tower = tile.Content.GetComponent<Tower>();
+            tower.Initialize(TowerLevel.First);
+        }
+
         if (FindPath() == false)
         {
             tile.Content = _contentFactory.Get(GameTileContentType.Empty);

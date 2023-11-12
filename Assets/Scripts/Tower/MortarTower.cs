@@ -24,6 +24,10 @@ public class MortarTower : Tower
         _launchSpeed = Mathf.Sqrt(9.81f * (y + Mathf.Sqrt(x * x + y * y)));
     }
 
+    public override void Initialize(TowerLevel level)
+    {
+    }
+
     public override void GameUpdate()
     {
         _launchProgress += Time.deltaTime * _shootPerSecond;

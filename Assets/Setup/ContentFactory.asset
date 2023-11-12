@@ -26,5 +26,5 @@ MonoBehaviour:
     type: 3}
   _mortarPrefab: {fileID: 5187168687205909870, guid: 885d21bb7366dd647b7c6c8de364a4d9,
     type: 3}
-  _archerPrefab: {fileID: 240080371973959801, guid: 34af1f1464e0b0c40bb7e8459f81ad00,
+  _archerPrefab: {fileID: 4976866377412561173, guid: f263ae43349e2a64db22dfa06698913a,
     type: 3}
