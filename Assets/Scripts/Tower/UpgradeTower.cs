@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UpgradeTower : MonoBehaviour
 {
     [SerializeField] private UIController _uiController;
+    [SerializeField] private GameBoard _board;
 
     private void Start()
     {
@@ -13,15 +12,14 @@ public class UpgradeTower : MonoBehaviour
 
     private void OnUpgradeTower(GameTile tile)
     {
-        Tower tower = tile.Content.GetComponent<Tower>();
-
         // check money
-        if (tower.CurrentLevel == TowerLevel.Third)
+
+        if (tile.Content.Level == 2)
         {
             Debug.Log("max level");
             return;
         }
 
-        tower.SetLevel(tower.CurrentLevel + 1);
+        _board.ReplaceTile(tile, tile.Content.Level + 1);
     }
 }

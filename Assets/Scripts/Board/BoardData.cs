@@ -8,7 +8,7 @@ public sealed class BoardData : ISerializable
     public byte X;
     public byte Y;
     public byte[] Levels;
-    public GameTileContentType[] Content;
+    public TileContentType[] Content;
 
     public byte[] Serialize()
     {
@@ -52,10 +52,10 @@ public sealed class BoardData : ISerializable
         offset += ByteConverter.ReturnFromStream(data, offset, size, out byte[] content);
         offset += ByteConverter.ReturnFromStream(data, offset, size, out Levels);
 
-        Content = new GameTileContentType[content.Length];
+        Content = new TileContentType[content.Length];
         for (var i = 0; i < content.Length; i++)
         {
-            Content[i] = (GameTileContentType)content[i];
+            Content[i] = (TileContentType)content[i];
         }
     }
 
@@ -68,7 +68,7 @@ public sealed class BoardData : ISerializable
             Name = $"test{size}",
             X = (byte)boardSize.x,
             Y = (byte)boardSize.y,
-            Content = new GameTileContentType[size],
+            Content = new TileContentType[size],
             Levels = new byte[size],
         };
 

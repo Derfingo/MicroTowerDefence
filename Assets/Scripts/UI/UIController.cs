@@ -7,7 +7,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private BuildingMenuUI _buildingMenu;
     [SerializeField] private ContentSelection _contentSelection;
 
-    public event Action<GameTileContentType, GameTile> OnBuildClick;
+    public event Action<TowerType, GameTile> OnBuildClick;
     public event Action<GameTile> OnUpgradeClick;
     public event Action<GameTile> OnSellClick;
 
@@ -41,7 +41,7 @@ public class UIController : MonoBehaviour
         _towerMenu.Hide();
     }
 
-    private void OnBuildClicked(GameTileContentType type)
+    private void OnBuildClicked(TowerType type)
     {
         OnBuildClick?.Invoke(type, _contentSelection.TempTile);
         HideMenus();

@@ -7,8 +7,6 @@ public class MortarTower : Tower
     [SerializeField, Range(0.5f, 3f)] private float _shellBlastRadius = 1f;
     [SerializeField, Range(0.2f, 1f)] private float _shootPerSecond = 1.0f;
 
-    public override GameTileContentType Type => GameTileContentType.Mortar;
-
     private float _launchSpeed;
     private float _launchProgress;
 
@@ -24,8 +22,11 @@ public class MortarTower : Tower
         _launchSpeed = Mathf.Sqrt(9.81f * (y + Mathf.Sqrt(x * x + y * y)));
     }
 
-    public override void Initialize(TowerLevel level)
+    protected override void SetStats(TowerConfig config)
     {
+        _damage = config.Damage;
+        _shellBlastRadius = config.ShellBlastRadius;
+        _shootPerSecond = config.ShootPerSecond;
     }
 
     public override void GameUpdate()
@@ -60,7 +61,7 @@ public class MortarTower : Tower
         float y = -launchPoint.y;
         direction /= x;
 
-        float g = 9.81f;
+        float g = 25f;
         float s = _launchSpeed;
         float s2 = s * s;
 

@@ -1,15 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class BeamTower : Tower
 {
     [SerializeField] private Transform _turret;
     [SerializeField] private Transform _laserBeam;
     [SerializeField, Range(1f, 100f)] private float _damagePerSecond = 10f;
-
-    public override GameTileContentType Type => GameTileContentType.Laser;
 
     private Vector3 _laserBeamScale;
     private TargetPoint _target;
@@ -19,8 +14,9 @@ public class BeamTower : Tower
         _laserBeamScale = _laserBeam.localScale;
     }
 
-    public override void Initialize(TowerLevel level)
+    protected override void SetStats(TowerConfig config)
     {
+        _damagePerSecond = config.DamagePerSecond;
     }
 
     public override void GameUpdate()

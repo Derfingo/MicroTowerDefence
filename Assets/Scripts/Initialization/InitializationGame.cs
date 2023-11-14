@@ -9,7 +9,7 @@ public class InitializationGame : MonoBehaviour
     [SerializeField, Range(0f, 30f)] private float _prepareTime = 5f;
     [SerializeField, Range(10, 100)] private int _startingPlayerHealth = 10;
     [Space]
-    [SerializeField] private GameTileContentFactory _contentFactory;
+    [SerializeField] private TileContentFactory _contentFactory;
     [SerializeField] private EnemyFactory _enemyFactory;
     [SerializeField] private TileBuilder _tileBuilder;
     [SerializeField] private WarFactory _warFactory;

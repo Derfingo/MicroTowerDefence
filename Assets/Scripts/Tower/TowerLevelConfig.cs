@@ -4,34 +4,27 @@ using UnityEngine;
 [CreateAssetMenu]
 public class TowerLevelConfig : ScriptableObject
 {
-    [SerializeField] private TowerConfig _firstPrefab;
-    [SerializeField] private TowerConfig _secondPrefab;
-    [SerializeField] private TowerConfig _thirdPrefab;
+    [SerializeField] private TowerConfig _level1, _level2, _level3;
 
-    [Serializable]
-    public class TowerConfig
+    public TowerConfig Get(int level)
     {
-        [Range(1f, 5f)] public float TargetTange;
-        [Range(50, 300)] public int Cost;
-    }
-
-    public TowerConfig GetConfig(TowerLevel level)
-    {
-        switch (level)
+        return level switch
         {
-            case TowerLevel.First: return _firstPrefab;
-            case TowerLevel.Second: return _secondPrefab;
-            case TowerLevel.Third: return _thirdPrefab;
-        }
-
-        Debug.Log($"No config for {level}");
-        return _firstPrefab;
+            0 => _level1,
+            1 => _level2,
+            2 => _level3,
+            _ => null
+        };
     }
 }
 
-public enum TowerLevel : byte
+[Serializable]
+public class TowerConfig
 {
-    First,
-    Second,
-    Third
+    [Range(1f, 5f)] public float TargetRange;
+    [Range(10, 100)] public int Damage;
+    [Range(50, 300)] public int Cost;
+    [Range(0.1f, 1f)] public float ShellBlastRadius;
+    [Range(0.2f, 3f)] public float ShootPerSecond;
+    [Range(1f, 100f)] public float DamagePerSecond;
 }

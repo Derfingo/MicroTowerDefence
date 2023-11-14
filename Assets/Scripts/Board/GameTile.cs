@@ -19,9 +19,9 @@ public class GameTile : MonoBehaviour
     public GameTile NextTileOnPath => _nextOnPath;
 
     private int _distance;
-    private GameTileContent _content;
+    private TileContent _content;
 
-    public GameTileContent Content
+    public TileContent Content
     {
         get => _content;
         set

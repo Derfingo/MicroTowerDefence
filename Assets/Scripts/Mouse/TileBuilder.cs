@@ -3,23 +3,25 @@ using UnityEngine;
 
 public class TileBuilder : MonoBehaviour
 {
-    [SerializeField] private List<BuildButton> _buttons;
+    [SerializeField] private List<BuildContentButton> _contentButtons;
+    [SerializeField] private List<BuildTowerButton> _towerButtons;
     [SerializeField] private InputController _inputController;
     [SerializeField] private UIController _uiController;
 
-    private GameTileContentFactory _contentFactory;
-    private GameTileContent _tempTile;
+    private TileContentFactory _contentFactory;
+    private TileContent _tempTile;
     private GameBoard _gameBoard;
     private bool _isEnabled;
 
     private void Start()
     {
-        _buttons.ForEach(b => b.AddListener(OnBuildingSelected));
+        _contentButtons.ForEach(b => b.AddListener(OnBuildingSelected));
+        _towerButtons.ForEach(b => b.AddListener(OnBuildingSelected));
         _inputController.OnMouseButtonUp += OnBuild;
         _uiController.OnBuildClick += OnBuildSelect;
     }
 
-    public void Initialize(GameTileContentFactory contentFactory, GameBoard gameBoard)
+    public void Initialize(TileContentFactory contentFactory, GameBoard gameBoard)
     {
         _contentFactory = contentFactory;
         _gameBoard = gameBoard;
@@ -74,15 +76,20 @@ public class TileBuilder : MonoBehaviour
         _tempTile = null;
     }
 
-    private void OnBuildingSelected(GameTileContentType type)
+    private void OnBuildingSelected(TileContentType type)
     {
         //TODO check money
         _tempTile = _contentFactory.Get(type);
     }
 
-    private void OnBuildSelect(GameTileContentType type, GameTile tile)
+    private void OnBuildingSelected(TowerType type)
     {
-        GameTileContent content = _contentFactory.Get(type);
+        _tempTile = _contentFactory.Get(type);
+    }
+
+    private void OnBuildSelect(TowerType type, GameTile tile)
+    {
+        TileContent content = _contentFactory.Get(type);
         if (tile != null)
         {
             _gameBoard.TryBuild(tile, content);

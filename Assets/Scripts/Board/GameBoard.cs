@@ -10,19 +10,19 @@ public class GameBoard : MonoBehaviour
 
     private GameTile[] _tiles;
     private BoardData _boardData;
-    private GameTileContentFactory _contentFactory;
+    private TileContentFactory _contentFactory;
 
     private readonly Queue<GameTile> _searchFrontier = new();
     private readonly List<GameTile> _spawnPoints = new();
-    private readonly List<GameTileContent> _contentToUpdate = new();
+    private readonly List<TileContent> _contentToUpdate = new();
 
     public int SpawnPointCount => _spawnPoints.Count;
     public byte X => _boardData.X;
     public byte Y => _boardData.Y;
 
-    public GameTileContentType[] GetAllContentTypes => _tiles.Select(t => t.Content.Type).ToArray();
+    public TileContentType[] GetAllContentTypes => _tiles.Select(t => t.Content.ContentType).ToArray();
 
-    public void Initialize(BoardData boardData, GameTileContentFactory contentFactory)
+    public void Initialize(BoardData boardData, TileContentFactory contentFactory)
     {
         _boardData = boardData;
         _contentFactory = contentFactory;
@@ -59,55 +59,49 @@ public class GameBoard : MonoBehaviour
 
     private void SetTileContentTest()
     {
-        ForceBuild(_tiles[0], _contentFactory.Get(GameTileContentType.Spawn));
-        ForceBuild(_tiles[5], _contentFactory.Get(GameTileContentType.Destination));
-        ForceBuild(_tiles[9], _contentFactory.Get(GameTileContentType.Place));
-        ForceBuild(_tiles[8], _contentFactory.Get(GameTileContentType.Place));
-        ForceBuild(_tiles[7], _contentFactory.Get(GameTileContentType.Place));
+        ForceBuild(_tiles[0], _contentFactory.Get(TileContentType.Spawn));
+        ForceBuild(_tiles[5], _contentFactory.Get(TileContentType.Destination));
+        ForceBuild(_tiles[9], _contentFactory.Get(TileContentType.Place));
+        ForceBuild(_tiles[8], _contentFactory.Get(TileContentType.Place));
+        ForceBuild(_tiles[7], _contentFactory.Get(TileContentType.Place));
     }
 
-    public void ForceBuild(GameTile tile, GameTileContent content)
+    public void ForceBuild(GameTile tile, TileContent content)
     {
         tile.Content = content;
         _contentToUpdate.Add(content);
 
-        if (content.Type == GameTileContentType.Spawn)
+        if (content.ContentType == TileContentType.Spawn)
         {
             _spawnPoints.Add(tile);
         }
     }
 
-    public bool TryBuild(GameTile tile, GameTileContent content)
+    public bool TryBuild(GameTile tile, TileContent content)
     {
-        if (tile.Content.Type == GameTileContentType.Empty)
+        if (tile.Content.ContentType == TileContentType.Empty)
         {
-            if (content.Type == GameTileContentType.Tower)
+            if (content.ContentType == TileContentType.Tower)
             {
                 return false;
             }
         }
-        else if (tile.Content.Type != GameTileContentType.Place)
+        else if (tile.Content.ContentType != TileContentType.Place)
         {
             return false;
         }
 
         tile.Content = content;
 
-        if (content.Type == GameTileContentType.Tower)
-        {
-            Tower tower = tile.Content.GetComponent<Tower>();
-            tower.Initialize(TowerLevel.First);
-        }
-
         if (FindPath() == false)
         {
-            tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+            tile.Content = _contentFactory.Get(TileContentType.Empty);
             return false;
         }
 
         _contentToUpdate.Add(content);
 
-        if (content.Type == GameTileContentType.Spawn)
+        if (content.ContentType == TileContentType.Spawn)
         {
             _spawnPoints.Add(tile);
         }
@@ -119,7 +113,7 @@ public class GameBoard : MonoBehaviour
     {
         foreach (var tile in _tiles)
         {
-            if (tile.Content.Type == GameTileContentType.Destination)
+            if (tile.Content.ContentType == TileContentType.Destination)
             {
                 tile.BecomeDestination();
                 _searchFrontier.Enqueue(tile);
@@ -197,13 +191,29 @@ public class GameBoard : MonoBehaviour
 
     public void DestroyTile(GameTile tile)
     {
-        Debug.Log(tile.Content.Type);
-
-        if (tile.Content.Type != GameTileContentType.Empty)
+        if (tile.Content.ContentType <= TileContentType.Empty)
         {
-            tile.Content = _contentFactory.Get(GameTileContentType.Empty);
-            FindPath();
+            return;
         }
+
+        _contentToUpdate.Remove(tile.Content);
+
+        if (tile.Content.ContentType == TileContentType.Spawn)
+        {
+            _spawnPoints.Remove(tile);
+        }
+
+        tile.Content = _contentFactory.Get(TileContentType.Empty);
+        FindPath();
+    }
+
+    public void ReplaceTile(GameTile tile, int level)
+    {
+        var content = tile.Content.GetComponent<Tower>().TowerType;
+        var newTile = _contentFactory.Get(content, level);
+        DestroyTile(tile);
+        ForceBuild(tile, newTile);
+        FindPath();
     }
 
     public void GameUpdate()
@@ -221,7 +231,7 @@ public class GameBoard : MonoBehaviour
 
         for (var i = 0; i < _boardData.Content.Length; i++)
         {
-            ForceBuild(_tiles[i], _contentFactory.Get(_boardData.Content[i]));
+            ForceBuild(_tiles[i], _contentFactory.Get(TileContentType.Empty));
         }
 
         SetTileContentTest();

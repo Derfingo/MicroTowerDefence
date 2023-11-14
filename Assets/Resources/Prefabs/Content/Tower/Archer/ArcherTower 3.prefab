@@ -160,8 +160,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ff37cff3500ad24183d18332624ea2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 61
+  _contentType: 61
+  _towerType: 103
   _targetRange: 2.4
+  _towerLevelConfig: {fileID: 0}
+  _towerModel: {fileID: 0}
+  CurrentLevel: 0
   _archer: {fileID: 1757858329118719948}
   _damage: 40
   _shellBlastRadius: 0.1

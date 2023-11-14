@@ -40,11 +40,11 @@ public class ContentSelection : MonoBehaviour
             {
                 _tempTile = tile;
 
-                if (tile.Content.Type == GameTileContentType.Place)
+                if (tile.Content.ContentType == TileContentType.Place)
                 {
                     OnBuildingMenu?.Invoke();
                 }
-                else if (tile.Content.Type == GameTileContentType.Tower)
+                else if (tile.Content.ContentType == TileContentType.Tower)
                 {
                     OnTowerMenu?.Invoke();
                 }

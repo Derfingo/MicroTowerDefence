@@ -1,31 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Tower : GameTileContent
+public abstract class Tower : TileContent
 {
+    [SerializeField] private TowerType _towerType;
     [SerializeField, Range(1f, 10f)] protected float _targetRange = 2f;
-    [SerializeField] protected TowerLevelConfig _towerLevelConfig;
-    [SerializeField] protected Transform _towerModel;
+    public TowerType TowerType => _towerType;
 
-    public new abstract GameTileContentType Type { get; }
-    public abstract void Initialize(TowerLevel level);
+    private TowerConfig _config;
 
-    public TowerLevel CurrentLevel = TowerLevel.First;
-
-    public void SetLevel(TowerLevel level)
+    public override void Initialize(TileContentFactory factory, int level)
     {
-        _towerModel.GetChild((int)level - 1).gameObject.SetActive(false);
-        _towerModel.GetChild((int)level).gameObject.SetActive(true);
-        SetConfig(level);
-        CurrentLevel = level;
+        base.Initialize(factory, level);
+        SetConfig(OriginFactory.GetConfig(level));
     }
 
-    public void SetConfig(TowerLevel level)
+    public void SetConfig(TowerConfig config)
     {
-        var config = _towerLevelConfig.GetConfig(level);
-        _targetRange = config.TargetTange;
+        _config = config;
+        SetStats(_config);
     }
+
+    protected abstract void SetStats(TowerConfig config);
 
     protected bool IsAcquireTarget(out TargetPoint target)
     {
@@ -68,4 +63,11 @@ public abstract class Tower : GameTileContent
         position.y += 0.1f;
         Gizmos.DrawWireSphere(position, _targetRange);
     }
+}
+
+public enum TowerType : byte
+{
+    Beam = 101,
+    Mortar = 102,
+    Archer = 103,
 }

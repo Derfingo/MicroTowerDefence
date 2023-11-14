@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class BuildingMenuUI : MonoBehaviour
 {
     [SerializeField] private GameObject _buttonsPanel;
-    [SerializeField] private List<BuildButton> _buttons;
+    [SerializeField] private List<BuildTowerButton> _buttons;
 
-    public List<BuildButton> Buttons => _buttons;
+    public List<BuildTowerButton> Buttons => _buttons;
 
     public void SetRotationPanel(Quaternion rotation)
     {

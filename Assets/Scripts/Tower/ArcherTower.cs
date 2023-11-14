@@ -7,8 +7,6 @@ public class ArcherTower : Tower
     [SerializeField, Range(0.1f, 1f)] private float _shellBlastRadius = 1f;
     [SerializeField, Range(0.2f, 3f)] private float _shootPerSecond = 2.0f;
 
-    public override GameTileContentType Type => GameTileContentType.Archer;
-
     private float _launchSpeed;
     private float _launchProgress;
 
@@ -24,9 +22,11 @@ public class ArcherTower : Tower
         _launchSpeed = Mathf.Sqrt(9.81f * (y + Mathf.Sqrt(x * x + y * y)));
     }
 
-    public override void Initialize(TowerLevel level)
+    protected override void SetStats(TowerConfig config)
     {
-        SetConfig(level);
+        _damage = config.Damage;
+        _shootPerSecond = config.ShootPerSecond;
+        _shellBlastRadius = config.ShellBlastRadius;
     }
 
     public override void GameUpdate()

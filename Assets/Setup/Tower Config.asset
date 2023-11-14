@@ -10,14 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc2d987f25f220546a9bb4d3bcf5f5ed, type: 3}
-  m_Name: Archer Config
+  m_Name: Tower Config
   m_EditorClassIdentifier: 
-  _firstPrefab:
-    TargetTange: 5
+  _level1:
+    TargetRange: 1.5
+    Damage: 15
     Cost: 0
-  _secondPrefab:
-    TargetTange: 2.1
-    Cost: 120
-  _thirdPrefab:
-    TargetTange: 2.4
+    ShellBlastRadius: 0.3
+    ShootPerSecond: 0.9
+    DamagePerSecond: 0
+  _level2:
+    TargetRange: 2.1
+    Damage: 25
+    Cost: 150
+    ShellBlastRadius: 0.5
+    ShootPerSecond: 1.1
+    DamagePerSecond: 0
+  _level3:
+    TargetRange: 2.4
+    Damage: 40
     Cost: 250
+    ShellBlastRadius: 1
+    ShootPerSecond: 1.3
+    DamagePerSecond: 0
