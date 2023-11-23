@@ -55,5 +55,9 @@ public class InputController : MonoBehaviour
         {
             _deltaX = Input.GetAxis("Mouse X");
         }
+        else
+        {
+            _deltaX = 0f;
+        }
     }
 }
