@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform _cameraTransform;
-    [SerializeField] private InputController _inputController;
+    [SerializeField] private InputController _input;
     [Space]
     [SerializeField] private float _moveSpeed = 0.1f;
     [SerializeField] private float _moveTime = 10f;
@@ -32,8 +32,8 @@ public class CameraController : MonoBehaviour
 
     private void HandleMouse()
     {
-        Zoom += _inputController.ScrollDelta.y * _zoomAmount;
-        float delta = _inputController.DeltaX;
+        Zoom += _input.ScrollDeltaY * _zoomAmount;
+        float delta = _input.MouseDeltaX;
         Vector3 turn = new(0, delta, 0);
         Rotation *= Quaternion.Euler(turn * _rotationAmount);
     }

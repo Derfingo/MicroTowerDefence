@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InputController : MonoBehaviour
@@ -8,12 +6,9 @@ public class InputController : MonoBehaviour
     public event Action OnMouseButtonDown;
     public event Action OnMouseButtonUp;
 
-    private Vector3 _scrollDelta;
+    public float ScrollDeltaY {  get; private set; }
+    public float MouseDeltaX { get; private set; }
     private Camera _camera;
-    private float _deltaX;
-
-    public float DeltaX => _deltaX;
-    public Vector3 ScrollDelta => _scrollDelta;
     public Ray TouchRay => _camera.ScreenPointToRay(Input.mousePosition);
 
     private void Awake()
@@ -23,11 +18,17 @@ public class InputController : MonoBehaviour
 
     private void Update()
     {
-        OnClick();
-        ReadDelta();
+        ReadScroll();
+        OnMouseClick();
+        ReadMouseDelta();
     }
 
-    private void OnClick()
+    public Vector3 GetMousePosition()
+    {
+        return Input.mousePosition;
+    }
+
+    private void OnMouseClick()
     {
         if (Input.GetMouseButtonUp(0))
         {
@@ -40,24 +41,27 @@ public class InputController : MonoBehaviour
         }
     }
 
-    private void ReadDelta()
+    private void ReadScroll()
     {
         if (Input.mouseScrollDelta.y != 0)
         {
-            _scrollDelta = Input.mouseScrollDelta;
+            ScrollDeltaY = Input.mouseScrollDelta.y;
         }
         else
         {
-            _scrollDelta.y = 0;
+            ScrollDeltaY = 0f;
         }
+    }
 
+    private void ReadMouseDelta()
+    {
         if (Input.GetMouseButton(1))
         {
-            _deltaX = Input.GetAxis("Mouse X");
+            MouseDeltaX = Input.GetAxis("Mouse X");
         }
         else
         {
-            _deltaX = 0f;
+            MouseDeltaX = 0f;
         }
     }
 }
