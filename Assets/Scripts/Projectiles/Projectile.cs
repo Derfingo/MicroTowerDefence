@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class WarEntity : GameBehaviour
+public abstract class Projectile : GameBehaviour
 {
-    public WarFactory OriginFactory { get; set; }
+    public ProjectileFactory OriginFactory { get; set; }
 
     public override void Recycle()
     {

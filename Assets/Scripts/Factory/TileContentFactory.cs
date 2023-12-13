@@ -14,6 +14,7 @@ public class TileContentFactory : GameObjectFactory
     [SerializeField] private Tower[] _beamPrefabs;
     [SerializeField] private Tower[] _mortarPrefabs;
     [SerializeField] private Tower[] _archerPrefabs;
+    [SerializeField] private Tower[] _magicPrefabs;
     [Space]
     [SerializeField] private TowerLevelConfig _towerLevelConfig;
 
@@ -47,6 +48,7 @@ public class TileContentFactory : GameObjectFactory
             TowerType.Beam => Get(_beamPrefabs[level], level),
             TowerType.Mortar => Get(_mortarPrefabs[level], level),
             TowerType.Archer => Get(_archerPrefabs[level], level),
+            TowerType.Magic => Get(_magicPrefabs[level], level),
             _ => null,
         };
     }

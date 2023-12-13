@@ -163,10 +163,8 @@ MonoBehaviour:
   _contentType: 61
   _towerType: 103
   _targetRange: 2.1
-  _towerLevelConfig: {fileID: 0}
-  _towerModel: {fileID: 0}
-  CurrentLevel: 0
+  _cost: 100
   _archer: {fileID: 3809948737107712306}
-  _damage: 25
+  _damage: 70
   _shellBlastRadius: 0.1
   _shootPerSecond: 1.1

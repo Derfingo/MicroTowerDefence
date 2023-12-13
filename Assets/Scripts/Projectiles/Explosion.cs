@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Explosion : WarEntity
+public class Explosion : Projectile
 {
     [SerializeField, Range(0f, 1f)] private float _duration = 0.5f;
     [SerializeField] AnimationCurve _scaleCurve;

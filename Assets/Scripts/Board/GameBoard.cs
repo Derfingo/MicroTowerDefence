@@ -1,12 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GameBoard : MonoBehaviour
 {
     [SerializeField] private Transform _ground;
     [SerializeField] private Transform _pointers;
     [SerializeField] private GameTile _tilePrefab;
+    [SerializeField] private Tilemap _tilemap;
+    [SerializeField] Coins _coins;
+    [SerializeField, Range(0, 100)] private int _destinationIndex = 10;
 
     private GameTile[] _tiles;
     private BoardData _boardData;
@@ -55,15 +59,30 @@ public class GameBoard : MonoBehaviour
         }
 
         Clear();
+        InitializeTilemap();
+    }
+
+    private void InitializeTilemap()
+    {
+        _tilemap.size =  new Vector3Int(X, Y);
+
+        var bounds = new BoundsInt(_tilemap.origin, _tilemap.size);
+        foreach (var position in bounds.allPositionsWithin)
+        {
+            var go = _tilemap.GetInstantiatedObject(position);
+            Debug.Log(go);
+            // Do action with go here
+        }
     }
 
     private void SetTileContentTest()
     {
         ForceBuild(_tiles[0], _contentFactory.Get(TileContentType.Spawn));
-        ForceBuild(_tiles[5], _contentFactory.Get(TileContentType.Destination));
-        ForceBuild(_tiles[9], _contentFactory.Get(TileContentType.Place));
-        ForceBuild(_tiles[8], _contentFactory.Get(TileContentType.Place));
+        ForceBuild(_tiles[_destinationIndex], _contentFactory.Get(TileContentType.Destination));
+        ForceBuild(_tiles[6], _contentFactory.Get(TileContentType.Place));
         ForceBuild(_tiles[7], _contentFactory.Get(TileContentType.Place));
+        ForceBuild(_tiles[8], _contentFactory.Get(TileContentType.Place));
+        ForceBuild(_tiles[9], _contentFactory.Get(TileContentType.Place));
     }
 
     public void ForceBuild(GameTile tile, TileContent content)
@@ -210,10 +229,19 @@ public class GameBoard : MonoBehaviour
     public void ReplaceTile(GameTile tile, int level)
     {
         var content = tile.Content.GetComponent<Tower>().TowerType;
-        var newTile = _contentFactory.Get(content, level);
-        DestroyTile(tile);
-        ForceBuild(tile, newTile);
-        FindPath();
+        var newTile = _contentFactory.Get(content, level).GetComponent<Tower>();
+
+        if (_coins.Check(newTile.Cost))
+        {
+            _coins.Spend(newTile.Cost);
+            DestroyTile(tile);
+            ForceBuild(tile, newTile);
+            FindPath();
+        }
+        else
+        {
+            newTile.Recycle();
+        }
     }
 
     public void GameUpdate()

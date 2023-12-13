@@ -18,3 +18,5 @@ MonoBehaviour:
     type: 3}
   _arrowPrefab: {fileID: 5147722369600717297, guid: a997838dcab49d147be30e26685c42fd,
     type: 3}
+  _magicSpherePrefab: {fileID: 8027435645924631251, guid: e67f05cd597b6ca41a9c1d7fa3e57424,
+    type: 3}

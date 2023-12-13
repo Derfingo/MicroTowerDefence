@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Arrow : WarEntity
+public class Arrow : Projectile
 {
     private Vector3 _launchPoint, _targetPoint, _launchVelocity;
     private float _blastRadius, _damage;

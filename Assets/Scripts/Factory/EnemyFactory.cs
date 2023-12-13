@@ -16,6 +16,7 @@ public class EnemyFactory : GameObjectFactory
         [FloatRangeSlider(-0.4f, 0.4f)] public FloatRange PathOffset = new(0f);
         [FloatRangeSlider(0.2f, 5f)] public FloatRange Speed = new(1f);
         [FloatRangeSlider(10f, 1000f)] public FloatRange Health = new(100f);
+        [SerializeField, Range(10, 50)] public uint Coins = 10;
     }
 
     private EnemyConfig GetConfig(EnemyType type)
@@ -25,6 +26,7 @@ public class EnemyFactory : GameObjectFactory
             case EnemyType.Large: return _large;
             case EnemyType.Medium: return _medium;
             case EnemyType.Small: return _small;
+            case EnemyType.Slime : return _medium;
         }
 
         Debug.LogError($"No config for {type}");
@@ -39,7 +41,8 @@ public class EnemyFactory : GameObjectFactory
         instance.Initialize(config.Scale.RandomValueInRange,
                             config.PathOffset.RandomValueInRange,
                             config.Speed.RandomValueInRange,
-                            config.Health.RandomValueInRange);
+                            config.Health.RandomValueInRange,
+                            config.Coins);
         return instance;
     }
 

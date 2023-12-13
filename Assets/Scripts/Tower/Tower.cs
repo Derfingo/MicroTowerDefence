@@ -4,7 +4,9 @@ public abstract class Tower : TileContent
 {
     [SerializeField] private TowerType _towerType;
     [SerializeField, Range(1f, 10f)] protected float _targetRange = 2f;
+    [SerializeField, Range(50, 500)] protected uint _cost;
     public TowerType TowerType => _towerType;
+    public uint Cost => _cost;
 
     private TowerConfig _config;
 
@@ -70,4 +72,5 @@ public enum TowerType : byte
     Beam = 101,
     Mortar = 102,
     Archer = 103,
+    Magic = 104,
 }

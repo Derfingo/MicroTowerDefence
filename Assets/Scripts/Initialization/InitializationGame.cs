@@ -12,7 +12,7 @@ public class InitializationGame : MonoBehaviour
     [SerializeField] private TileContentFactory _contentFactory;
     [SerializeField] private EnemyFactory _enemyFactory;
     [SerializeField] private TileBuilder _tileBuilder;
-    [SerializeField] private WarFactory _warFactory;
+    [SerializeField] private ProjectileFactory _warFactory;
     [SerializeField] private GameBoard _board;
     [SerializeField] private GameSceraio _sceraio;
 
@@ -46,6 +46,13 @@ public class InitializationGame : MonoBehaviour
         Arrow arrorw = _instance._warFactory.Arrow;
         _instance._nonEnemies.Add(arrorw);
         return arrorw;
+    }
+
+    public static MagicSphere SpawnSphere()
+    {
+        MagicSphere sphere = _instance._warFactory.MagicSphere;
+        _instance._nonEnemies.Add(sphere);
+        return sphere;
     }
 
     public static Explosion SpawnExplosion()

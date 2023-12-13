@@ -12,6 +12,9 @@ public class Enemy : GameBehaviour
     public float Health { get; private set; }
     public float Scale { get; private set; }
 
+    private const float CHANGE_DIR_SPEED_MULTIPLIER = 0.8f;
+    private uint _coins;
+
     private GameTile _tileFrom, _tileTo;
     private Vector3 _positionFrom, _positionTo;
     private float _progress, _progressFactor;
@@ -21,15 +24,19 @@ public class Enemy : GameBehaviour
     private float _directionAngleFrom, _directionAngleTo;
     private float _pathOffset;
     private float _speed;
+    private float _originalSpeed;
 
-    public void Initialize(float scale, float pathOffset, float speed, float health)
+    public void Initialize(float scale, float pathOffset, float speed, float health, uint coins)
     {
         _model.localScale = new Vector3(scale, scale, scale);
         _pathOffset = pathOffset;
+        _originalSpeed = speed;
+        _coins = coins;
         _speed = speed;
         Scale = scale;
         Health = health;
         _view.Initialize(this);
+        SetSpeed(speed);
     }
 
     public void SpawnOn(GameTile tile)
@@ -41,6 +48,13 @@ public class Enemy : GameBehaviour
         PrepareIntro();
     }
 
+    public void SetSpeed(float factor)
+    {
+        _speed = _originalSpeed * factor;
+        HandleDirection();
+        _view.SetSpeedFactor(factor);
+    }
+
     private void PrepareIntro()
     {
         _positionFrom = _tileFrom.transform.localPosition;
@@ -50,7 +64,7 @@ public class Enemy : GameBehaviour
         _directionAngleFrom = _directionAngleTo = _direction.GetAngle();
         _model.localPosition = new Vector3(_pathOffset, 0f);
         transform.localRotation = _direction.GetRotation();
-        _progressFactor = 2f * _speed;
+        _progressFactor = _speed;
     }
 
     private void PrepareOutro()
@@ -60,20 +74,25 @@ public class Enemy : GameBehaviour
         _directionAngleTo = _direction.GetAngle();
         _model.localPosition = new Vector3(_pathOffset, 0f);
         transform.localRotation = _direction.GetRotation();
-        _progressFactor = 2f * _speed;
+        _progressFactor = _speed;
     }
 
     public override bool GameUpdate()
     {
+        if (_view.IsInited == false)
+        {
+            return true;
+        }
+
         if (Health <= 0f)
         {
             DisableView();
             _view.Die();
+            FindAnyObjectByType<Coins>().Add(_coins);
             return false;
         }
 
         _progress += Time.deltaTime * _progressFactor;
-
         while (_progress >= 1)
         {
             if (_tileTo == null)
@@ -97,13 +116,7 @@ public class Enemy : GameBehaviour
             float angle = Mathf.LerpUnclamped(_directionAngleFrom, _directionAngleTo, _progress);
             transform.localRotation = Quaternion.Euler(0f, angle, 0f);
         }
-
         return true;
-    }
-
-    public void TakeDamage(float damage)
-    {
-        Health -= damage;
     }
 
     private void PrepareNextState()
@@ -111,17 +124,20 @@ public class Enemy : GameBehaviour
         _tileFrom = _tileTo;
         _tileTo = _tileTo.NextTileOnPath;
         _positionFrom = _positionTo;
-
         if (_tileTo == null)
         {
             PrepareOutro();
         }
-
         _positionTo = _tileFrom.ExitPoint;
         _directionChange = _direction.GetDirectionChangeTo(_tileFrom.PathDirection);
         _direction = _tileFrom.PathDirection;
         _directionAngleFrom = _directionAngleTo;
 
+        HandleDirection();
+    }
+
+    private void HandleDirection()
+    {
         switch (_directionChange)
         {
             case DirectionChange.None: PrepareForward(); break;
@@ -129,6 +145,11 @@ public class Enemy : GameBehaviour
             case DirectionChange.TurnLeft: PrepareTurnLeft(); break;
             default: PrepareTurnAround(); break;
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        Health -= damage;
     }
 
     private void PrepareForward()
@@ -144,7 +165,7 @@ public class Enemy : GameBehaviour
         _directionAngleTo = _directionAngleFrom + 90f;
         _model.localPosition = new Vector3(_pathOffset - 0.5f, 0f);
         transform.localPosition = _positionFrom + _direction.GetHalfVector();
-        _progressFactor = _speed / (Mathf.PI * 0.5f * (0.5f - _pathOffset));
+        _progressFactor = _speed * CHANGE_DIR_SPEED_MULTIPLIER;
     }
 
     private void PrepareTurnLeft()
@@ -152,7 +173,7 @@ public class Enemy : GameBehaviour
         _directionAngleTo = _directionAngleFrom - 90f;
         _model.localPosition = new Vector3(_pathOffset + 0.5f, 0f);
         transform.localPosition = _positionFrom + _direction.GetHalfVector();
-        _progressFactor = _speed / (Mathf.PI * 0.5f * (0.5f - _pathOffset));
+        _progressFactor = _speed * CHANGE_DIR_SPEED_MULTIPLIER;
     }
 
     private void PrepareTurnAround()
@@ -160,7 +181,7 @@ public class Enemy : GameBehaviour
         _directionAngleTo = _directionAngleFrom + (_pathOffset < 0f ? 180f : -180f);
         _model.localPosition = new Vector3(_pathOffset, 0f);
         transform.localPosition = _positionFrom;
-        _progressFactor = _speed / (Mathf.PI * Mathf.Max(Mathf.Abs(_pathOffset), 0.2f));
+        _progressFactor = _speed * CHANGE_DIR_SPEED_MULTIPLIER;
     }
 
     public override void Recycle()
@@ -177,7 +198,8 @@ public class Enemy : GameBehaviour
 
 public enum EnemyType
 {
-    Large,
+    Small,
     Medium,
-    Small
+    Large,
+    Slime,
 }

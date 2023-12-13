@@ -7,6 +7,7 @@ public class TileBuilder : MonoBehaviour
     [SerializeField] private List<BuildTowerButton> _towerButtons;
     [SerializeField] private InputController _inputController;
     [SerializeField] private UIController _uiController;
+    [SerializeField] private Coins _coins;
 
     private TileContentFactory _contentFactory;
     private TileContent _tempTile;
@@ -19,6 +20,8 @@ public class TileBuilder : MonoBehaviour
         _towerButtons.ForEach(b => b.AddListener(OnBuildingSelected));
         _inputController.OnMouseButtonUp += OnBuild;
         _uiController.OnBuildClick += OnBuildSelect;
+        _uiController.OnSellClick += OnSellTower;
+
     }
 
     public void Initialize(TileContentFactory contentFactory, GameBoard gameBoard)
@@ -78,21 +81,37 @@ public class TileBuilder : MonoBehaviour
 
     private void OnBuildingSelected(TileContentType type)
     {
-        //TODO check money
         _tempTile = _contentFactory.Get(type);
     }
 
     private void OnBuildingSelected(TowerType type)
     {
-        _tempTile = _contentFactory.Get(type);
+        // fix
+        if (_coins.Check(10000))
+        {
+            _tempTile = _contentFactory.Get(type);
+        }
     }
 
     private void OnBuildSelect(TowerType type, GameTile tile)
     {
-        TileContent content = _contentFactory.Get(type);
+        Tower content = _contentFactory.Get(type).GetComponent<Tower>();
         if (tile != null)
         {
-            _gameBoard.TryBuild(tile, content);
+            if (_coins.Check(content.Cost))
+            {
+                _gameBoard.TryBuild(tile, content);
+                _coins.Spend(content.Cost);
+            }
+            else
+            {
+                content.Recycle();
+            }
         }
+    }
+
+    private void OnSellTower(GameTile tile)
+    {
+        _gameBoard.DestroyTile(tile);
     }
 }

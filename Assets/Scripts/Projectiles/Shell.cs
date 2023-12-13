@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shell : WarEntity
+public class Shell : Projectile
 {
     private Vector3 _launchPoint, _targetPoint, _launchVelocity;
     private float _blastRadius, _damage;

@@ -12,8 +12,6 @@ public class UpgradeTower : MonoBehaviour
 
     private void OnUpgradeTower(GameTile tile)
     {
-        // check money
-
         if (tile.Content.Level == 2)
         {
             Debug.Log("max level");

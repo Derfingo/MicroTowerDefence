@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c397229907b535e4e8ee850f0ec01ec5, type: 3}
   m_Name: Content Factory
   m_EditorClassIdentifier: 
-  _destinationPrefab: {fileID: 5152518456917404400, guid: 4ae499f7fb8097e46b809a9812f8cceb,
+  _destinationPrefab: {fileID: 1477688854478302059, guid: a9098b6fe56818c4f95630f8c52e0bc9,
     type: 3}
   _emptyPrefab: {fileID: 3379947495970736174, guid: d3a38d887f107664f9193c884ca083b3,
     type: 3}
@@ -34,4 +34,6 @@ MonoBehaviour:
   - {fileID: 404256357162471880, guid: f031cced4edfadd4b99665f7d9e58d45, type: 3}
   - {fileID: 240080371973959801, guid: 34af1f1464e0b0c40bb7e8459f81ad00, type: 3}
   - {fileID: 546477330913187392, guid: 4b4cdf4c0cf99fd47995e618a2b9e1c0, type: 3}
+  _magicPrefabs:
+  - {fileID: 1572941653109879507, guid: fe3f5e8fb5b7dc645acfbeb7ec3e8be7, type: 3}
   _towerLevelConfig: {fileID: 11400000, guid: 83f1b4a46f7776b4da3bd4771e72007d, type: 2}
