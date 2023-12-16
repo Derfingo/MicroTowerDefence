@@ -1,10 +1,11 @@
 using UnityEngine;
 
-public abstract class Tower : TileContent
+public abstract class TowerBase : TileContent
 {
     [SerializeField] private TowerType _towerType;
     [SerializeField, Range(1f, 10f)] protected float _targetRange = 2f;
     [SerializeField, Range(50, 500)] protected uint _cost;
+
     public TowerType TowerType => _towerType;
     public uint Cost => _cost;
 

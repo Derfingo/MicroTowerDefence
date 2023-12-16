@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MortarTower : Tower
+public class MortarTower : TowerBase
 {
     [SerializeField] private Transform _cannon;
     [SerializeField, Range(1f, 100f)] private float _damage = 50f;

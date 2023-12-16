@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BeamTower : Tower
+public class BeamTower : TowerBase
 {
     [SerializeField] private Transform _turret;
     [SerializeField] private Transform _laserBeam;

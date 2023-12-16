@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7595527499472988892}
   - component: {fileID: 7677278631414282450}
   - component: {fileID: 7998714193634077080}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6033226082365624168}
   - component: {fileID: 5478110801795154581}
-  m_Layer: 0
+  - component: {fileID: 8147805907430637407}
+  m_Layer: 8
   m_Name: BeamTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,13 +132,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c3ebdcd86d7a584aab67dd871a8b9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _contentType: 61
   _towerType: 101
   _targetRange: 1.8
   _cost: 150
   _turret: {fileID: 7595527499472988892}
   _laserBeam: {fileID: 438201482266141751}
   _damagePerSecond: 25
+--- !u!65 &8147805907430637407
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2584996159717152661}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.7, y: 0.5, z: 0.7}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!1 &3077502437733276703
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +171,7 @@ GameObject:
   - component: {fileID: 4687424776339251877}
   - component: {fileID: 6925775733731751052}
   - component: {fileID: 3817471451164962747}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Crystal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,8 +187,8 @@ Transform:
   m_GameObject: {fileID: 3077502437733276703}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0}
-  m_LocalScale: {x: 1, y: 0.6, z: 1}
+  m_LocalPosition: {x: 0, y: 0.04, z: 0}
+  m_LocalScale: {x: 1, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6033226082365624168}
@@ -250,7 +271,7 @@ GameObject:
   - component: {fileID: 438201482266141751}
   - component: {fileID: 8392042107441710044}
   - component: {fileID: 5977635503641801188}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: LaserBeam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -333,7 +354,7 @@ GameObject:
   - component: {fileID: 2484237029336111386}
   - component: {fileID: 3618604471981056923}
   - component: {fileID: 4270691776423181936}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}

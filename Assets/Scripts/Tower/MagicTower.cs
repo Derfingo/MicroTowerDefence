@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.Searcher;
 using UnityEngine;
 
-public class MagicTower : Tower
+public class MagicTower : TowerBase
 {
     [SerializeField] private Transform _spere;
     [SerializeField, Range(0.2f, 3f)] private float _shootPerSecond = 2.0f;

@@ -5,6 +5,7 @@ public class InputController : MonoBehaviour
 {
     public event Action OnMouseButtonDown;
     public event Action OnMouseButtonUp;
+    public event Action OnMouseHold;
 
     public float ScrollDeltaY {  get; private set; }
     public float MouseDeltaX { get; private set; }
@@ -38,6 +39,11 @@ public class InputController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             OnMouseButtonDown?.Invoke();
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            OnMouseHold?.Invoke();
         }
     }
 

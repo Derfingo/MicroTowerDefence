@@ -11,10 +11,10 @@ public class TileContentFactory : GameObjectFactory
     [SerializeField] private TileContent _placePrefab;
     [Space]
     [Header("Towers")]
-    [SerializeField] private Tower[] _beamPrefabs;
-    [SerializeField] private Tower[] _mortarPrefabs;
-    [SerializeField] private Tower[] _archerPrefabs;
-    [SerializeField] private Tower[] _magicPrefabs;
+    [SerializeField] private TowerBase[] _beamPrefabs;
+    [SerializeField] private TowerBase[] _mortarPrefabs;
+    [SerializeField] private TowerBase[] _archerPrefabs;
+    [SerializeField] private TowerBase[] _magicPrefabs;
     [Space]
     [SerializeField] private TowerLevelConfig _towerLevelConfig;
 
@@ -26,19 +26,6 @@ public class TileContentFactory : GameObjectFactory
     public TowerConfig GetConfig(int level)
     {
         return _towerLevelConfig.Get(level);
-    }
-
-    public TileContent Get(TileContentType contentType, int level = 0)
-    {
-        return contentType switch
-        {
-            TileContentType.Destination => Get(_destinationPrefab, level),
-            TileContentType.Empty => Get(_emptyPrefab, level),
-            TileContentType.Spawn => Get(_spawnPrefab, level),
-            TileContentType.Place => Get(_placePrefab, level),
-            TileContentType.Wall => Get(_wallPrefab, level),
-            _ => null,
-        };
     }
 
     public TileContent Get(TowerType type, int level = 0)

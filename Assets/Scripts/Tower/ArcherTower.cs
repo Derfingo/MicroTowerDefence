@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ArcherTower : Tower
+public class ArcherTower : TowerBase
 {
     [SerializeField] private Transform _archer;
     [SerializeField, Range(1f, 100f)] private float _damage = 25f;

@@ -15,7 +15,6 @@ public class Enemy : GameBehaviour
     private const float CHANGE_DIR_SPEED_MULTIPLIER = 0.8f;
     private uint _coins;
 
-    private GameTile _tileFrom, _tileTo;
     private Vector3 _positionFrom, _positionTo;
     private float _progress, _progressFactor;
 
@@ -39,42 +38,11 @@ public class Enemy : GameBehaviour
         SetSpeed(speed);
     }
 
-    public void SpawnOn(GameTile tile)
-    {
-        transform.localPosition = tile.transform.localPosition;
-        _tileFrom = tile;
-        _tileTo = tile.NextTileOnPath;
-        _progress = 0f;
-        PrepareIntro();
-    }
-
     public void SetSpeed(float factor)
     {
         _speed = _originalSpeed * factor;
         HandleDirection();
         _view.SetSpeedFactor(factor);
-    }
-
-    private void PrepareIntro()
-    {
-        _positionFrom = _tileFrom.transform.localPosition;
-        _positionTo = _tileFrom.ExitPoint;
-        _direction = _tileFrom.PathDirection;
-        _directionChange = DirectionChange.None;
-        _directionAngleFrom = _directionAngleTo = _direction.GetAngle();
-        _model.localPosition = new Vector3(_pathOffset, 0f);
-        transform.localRotation = _direction.GetRotation();
-        _progressFactor = _speed;
-    }
-
-    private void PrepareOutro()
-    {
-        _positionTo = _tileFrom.transform.localPosition;
-        _directionChange = DirectionChange.None;
-        _directionAngleTo = _direction.GetAngle();
-        _model.localPosition = new Vector3(_pathOffset, 0f);
-        transform.localRotation = _direction.GetRotation();
-        _progressFactor = _speed;
     }
 
     public override bool GameUpdate()
@@ -95,15 +63,14 @@ public class Enemy : GameBehaviour
         _progress += Time.deltaTime * _progressFactor;
         while (_progress >= 1)
         {
-            if (_tileTo == null)
-            {
-                InitializationGame.EnemyReachedDestination();
-                Recycle();
-                return false;
-            }
+            //if (_tileTo == null)
+            //{
+            //    InitializationGame.EnemyReachedDestination();
+            //    Recycle();
+            //    return false;
+            //}
 
             _progress = (_progress - 1f) / _progressFactor;
-            PrepareNextState();
             _progress *= _progressFactor;
         }
 
@@ -117,23 +84,6 @@ public class Enemy : GameBehaviour
             transform.localRotation = Quaternion.Euler(0f, angle, 0f);
         }
         return true;
-    }
-
-    private void PrepareNextState()
-    {
-        _tileFrom = _tileTo;
-        _tileTo = _tileTo.NextTileOnPath;
-        _positionFrom = _positionTo;
-        if (_tileTo == null)
-        {
-            PrepareOutro();
-        }
-        _positionTo = _tileFrom.ExitPoint;
-        _directionChange = _direction.GetDirectionChangeTo(_tileFrom.PathDirection);
-        _direction = _tileFrom.PathDirection;
-        _directionAngleFrom = _directionAngleTo;
-
-        HandleDirection();
     }
 
     private void HandleDirection()

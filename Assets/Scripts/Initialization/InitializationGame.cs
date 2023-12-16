@@ -5,16 +5,16 @@ using Random = UnityEngine.Random;
 
 public class InitializationGame : MonoBehaviour
 {
-    [SerializeField] private Vector2Int _cellCount = new(11, 11);
     [SerializeField, Range(0f, 30f)] private float _prepareTime = 5f;
     [SerializeField, Range(10, 100)] private int _startingPlayerHealth = 10;
     [Space]
     [SerializeField] private TileContentFactory _contentFactory;
     [SerializeField] private EnemyFactory _enemyFactory;
-    [SerializeField] private TileBuilder _tileBuilder;
+    [SerializeField] private BuildingController _buildingController;
+    [SerializeField] private ContentSelector _contentSelector;
     [SerializeField] private ProjectileFactory _warFactory;
-    [SerializeField] private GameBoard _board;
     [SerializeField] private GameSceraio _sceraio;
+    [SerializeField] private Coins _coins;
 
     private GameSceraio.State _activeScenario;
     private static InitializationGame _instance;
@@ -28,9 +28,8 @@ public class InitializationGame : MonoBehaviour
 
     private void Start()
     {
-        BoardData boardData = BoardData.GetInitial(_cellCount);
-        _board.Initialize(boardData, _contentFactory);
-        _tileBuilder.Initialize(_contentFactory, _board);
+        _buildingController.Initialize(_contentFactory);
+        _contentSelector.Initialize(_contentFactory);
         BeginNewGame();
     }
 
@@ -93,7 +92,6 @@ public class InitializationGame : MonoBehaviour
 
         Physics.SyncTransforms();
         _enemies.GameUpdate();
-        _board.GameUpdate();
         _nonEnemies.GameUpdate();
     }
 
@@ -108,23 +106,21 @@ public class InitializationGame : MonoBehaviour
         _currentPlayerHealth = _startingPlayerHealth;
         Cleanup();
         _activeScenario = _sceraio.Begin();
-        _tileBuilder.Enable();
         _prepareRoutine = StartCoroutine(PrepareRoutine());
     }
 
     private void Cleanup()
     {
-        _tileBuilder.Disable();
-        _board.Clear();
         _enemies.Clear();
         _nonEnemies.Clear();
+        _coins.Reset();
     }
 
     public static void SpawnEnemy(EnemyFactory factory, EnemyType type)
     {
-        GameTile spawnPoint = _instance._board.GetSpawnPoint(Random.Range(0, _instance._board.SpawnPointCount));
+        //GameTile spawnPoint = _instance._board.GetSpawnPoint(Random.Range(0, _instance._board.SpawnPointCount));
         Enemy enemy = factory.Get(type);
-        enemy.SpawnOn(spawnPoint);
+        //enemy.SpawnOn(spawnPoint);
         _instance._enemies.Add(enemy);
     }
 

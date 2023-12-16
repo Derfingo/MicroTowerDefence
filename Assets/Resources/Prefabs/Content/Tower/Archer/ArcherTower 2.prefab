@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3809948737107712306}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Archer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 3538361389704909948}
   - component: {fileID: 1859396979364441398}
   - component: {fileID: 2947708840274069922}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,8 @@ GameObject:
   m_Component:
   - component: {fileID: 977536263576016855}
   - component: {fileID: 240080371973959801}
-  m_Layer: 0
+  - component: {fileID: 5978211410862968552}
+  m_Layer: 8
   m_Name: ArcherTower 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,7 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ff37cff3500ad24183d18332624ea2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _contentType: 61
   _towerType: 103
   _targetRange: 2.1
   _cost: 100
@@ -168,3 +168,24 @@ MonoBehaviour:
   _damage: 70
   _shellBlastRadius: 0.1
   _shootPerSecond: 1.1
+--- !u!65 &5978211410862968552
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7755771093445008063}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.6, y: 1, z: 0.6}
+  m_Center: {x: 0, y: 0.5, z: 0}

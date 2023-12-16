@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class CoinsView : MonoBehaviour
+public class CoinsView : ViewBase
 {
     [SerializeField] private TextMeshProUGUI _coinsAmount;
 
