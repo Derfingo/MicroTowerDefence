@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingController : MonoBehaviour
@@ -6,7 +7,7 @@ public class BuildingController : MonoBehaviour
     [SerializeField] private Coins _coins;
 
     private TileContentFactory _contentFactory;
-    private TileContent _tempContent;
+    private List<TileContent> _contents = new List<TileContent>();
 
     private void Start()
     {
@@ -20,14 +21,22 @@ public class BuildingController : MonoBehaviour
         _contentFactory = contentFactory;
     }
 
+    private void Update()
+    {
+        for (int i = 0; i < _contents.Count; i++)
+        {
+            _contents[i].GameUpdate();
+        }
+    }
+
     private void OnBuild(TileContent content, Vector3 position)
     {
-        _tempContent = content;
         var tower = content.GetComponent<TowerBase>();
 
         if (_coins.TrySpend(tower.Cost))
         {
-            content.transform.position = position;
+            content.Position = position;
+            _contents.Add(content);
         }
         else
         {
@@ -35,19 +44,19 @@ public class BuildingController : MonoBehaviour
         }
     }
 
-    private void OnSell()
+    private void OnSell(TileContent content)
     {
-        _tempContent.Recycle();
+        _contents.Remove(content);
+        content.Recycle();
         _coins.Add(30);
-        _tempContent = null;
     }
 
-    private void OnUpgrade()
+    private void OnUpgrade(TileContent content)
     {
-        var tower = _tempContent.GetComponent<TowerBase>();
-        var level = _tempContent.Level;
+        var tower = content.GetComponent<TowerBase>();
+        var position = content.Position;
+        var level = content.Level;
         var type = tower.TowerType;
-        var position = _tempContent.transform.position;
 
         if (level == 2)
         {
@@ -57,10 +66,11 @@ public class BuildingController : MonoBehaviour
 
         if (_coins.TrySpend(tower.Cost))
         {
-            _tempContent.Recycle();
-            var content = _contentFactory.Get(type, level + 1);
-            content.transform.position = position;
-            _tempContent = content;
+            _contents.Remove(content);
+            content.Recycle();
+            var newContent = _contentFactory.Get(type, level + 1);
+            newContent.Position = position;
+            _contents.Add(newContent);
         }
     }
 }

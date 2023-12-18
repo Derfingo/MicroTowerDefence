@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class InitializationGame : MonoBehaviour
 {
@@ -9,6 +8,7 @@ public class InitializationGame : MonoBehaviour
     [SerializeField, Range(10, 100)] private int _startingPlayerHealth = 10;
     [Space]
     [SerializeField] private TileContentFactory _contentFactory;
+    [SerializeField] private EnemyContorller _enemyContorller;
     [SerializeField] private EnemyFactory _enemyFactory;
     [SerializeField] private BuildingController _buildingController;
     [SerializeField] private ContentSelector _contentSelector;
@@ -19,7 +19,7 @@ public class InitializationGame : MonoBehaviour
     private GameSceraio.State _activeScenario;
     private static InitializationGame _instance;
 
-    private readonly GameBehaviourCollection _enemies = new();
+    //private readonly GameBehaviourCollection _enemies = new();
     private readonly GameBehaviourCollection _nonEnemies = new();
 
     private int _currentPlayerHealth;
@@ -82,7 +82,7 @@ public class InitializationGame : MonoBehaviour
                 BeginNewGame();
             }
 
-            if (_activeScenario.Progress() == false && _enemies.IsEmpty)
+            if (_activeScenario.Progress() == false && _enemyContorller.IsEmpty)
             {
                 Debug.Log("Win");
                 BeginNewGame();
@@ -91,7 +91,7 @@ public class InitializationGame : MonoBehaviour
         }
 
         Physics.SyncTransforms();
-        _enemies.GameUpdate();
+        _enemyContorller.GameUpdate();
         _nonEnemies.GameUpdate();
     }
 
@@ -105,24 +105,24 @@ public class InitializationGame : MonoBehaviour
 
         _currentPlayerHealth = _startingPlayerHealth;
         Cleanup();
-        _activeScenario = _sceraio.Begin();
+        _activeScenario = _sceraio.Begin(_enemyContorller);
         _prepareRoutine = StartCoroutine(PrepareRoutine());
     }
 
     private void Cleanup()
     {
-        _enemies.Clear();
+        _enemyContorller.Clear();
         _nonEnemies.Clear();
         _coins.Reset();
     }
 
-    public static void SpawnEnemy(EnemyFactory factory, EnemyType type)
-    {
-        //GameTile spawnPoint = _instance._board.GetSpawnPoint(Random.Range(0, _instance._board.SpawnPointCount));
-        Enemy enemy = factory.Get(type);
-        //enemy.SpawnOn(spawnPoint);
-        _instance._enemies.Add(enemy);
-    }
+    //public static void SpawnEnemy(EnemyFactory factory, EnemyType type)
+    //{
+    //    //GameTile spawnPoint = _instance._board.GetSpawnPoint(Random.Range(0, _instance._board.SpawnPointCount));
+    //    Enemy enemy = factory.Get(type);
+    //    //enemy.SetPosition(spawnPoint)
+    //    _instance._enemies.Add(enemy);
+    //}
 
     public static void EnemyReachedDestination()
     {
@@ -134,7 +134,7 @@ public class InitializationGame : MonoBehaviour
     private IEnumerator PrepareRoutine()
     {
         yield return new WaitForSeconds(_prepareTime);
-        _activeScenario = _sceraio.Begin();
+        _activeScenario = _sceraio.Begin(_enemyContorller);
         _scenarioInProgress = true;
     }
 }

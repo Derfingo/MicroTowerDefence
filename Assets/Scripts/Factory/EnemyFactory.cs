@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -38,11 +36,7 @@ public class EnemyFactory : GameObjectFactory
         var config = GetConfig(type);
         Enemy instance = CreateGameObjectInstance(config.Prefab);
         instance.OriginFactory = this;
-        instance.Initialize(config.Scale.RandomValueInRange,
-                            config.PathOffset.RandomValueInRange,
-                            config.Speed.RandomValueInRange,
-                            config.Health.RandomValueInRange,
-                            config.Coins);
+        instance.Initialize(config);
         return instance;
     }
 

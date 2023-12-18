@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -11,17 +9,19 @@ public class EnemySpawnSequence
     [SerializeField, Range(1, 100)] private int _amount = 1;
     [SerializeField, Range(0.1f, 10f)] private float _cooldown = 1f;
 
-    public State Begin() => new(this);
+    public State Begin(EnemyContorller contorller) => new(this, contorller);
 
     [Serializable]
     public struct State
     {
         private EnemySpawnSequence _sequence;
+        private EnemyContorller _contorller;
         private int _count;
         private float _cooldown;
 
-        public State(EnemySpawnSequence sequence)
+        public State(EnemySpawnSequence sequence, EnemyContorller contorller)
         {
+            _contorller = contorller;
             _sequence = sequence;
             _count = 0;
             _cooldown = sequence._cooldown;
@@ -41,7 +41,10 @@ public class EnemySpawnSequence
                 }
 
                 _count++;
-                InitializationGame.SpawnEnemy(_sequence._factory, _sequence._type);
+
+                _contorller.Spawn(_sequence._factory, _sequence._type);
+                // spawn enemy
+                //InitializationGame.SpawnEnemy(_sequence._factory, _sequence._type);
             }
 
             return -1f;

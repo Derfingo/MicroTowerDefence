@@ -37,7 +37,7 @@ public class RaycastController : MonoBehaviour
         return _hitPosition;
     }
 
-    public GameObject GetContent()
+    public TileContent GetContent()
     {
         var mousePosition = _input.GetMousePosition();
         var ray = _camera.ScreenPointToRay(mousePosition);
@@ -46,7 +46,7 @@ public class RaycastController : MonoBehaviour
         {
             if (hit.collider.gameObject != null)
             {
-                return hit.collider.gameObject;
+                return hit.collider.GetComponent<TileContent>();
             }
         }
 

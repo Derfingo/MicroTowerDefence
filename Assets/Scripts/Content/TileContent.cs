@@ -6,6 +6,11 @@ public abstract class TileContent : MonoBehaviour
 {
     public TileContentFactory OriginFactory { get; set; }
     public int Level { get; protected set; }
+    public Vector3 Position
+    {
+        get => transform.position;
+        set => transform.position = value;
+    }
 
     public virtual void Initialize(TileContentFactory factory, int level)
     {

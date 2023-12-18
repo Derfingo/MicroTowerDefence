@@ -11,12 +11,12 @@ public class ContentSelector : MonoBehaviour
     [SerializeField] private ViewController _view;
 
     public event Action<TileContent, Vector3> OnBuild;
-    public event Action OnUpdate;
-    public event Action OnSell;
-
-    public TileContent TargetContent { get; private set; }
+    public event Action<TileContent> OnUpdate;
+    public event Action<TileContent> OnSell;
 
     private TileContentFactory _contentFactory;
+    private TileContent _previewContent;
+    private TileContent _targetContent;
 
     private void Start()
     {
@@ -26,11 +26,6 @@ public class ContentSelector : MonoBehaviour
 
         _input.OnMouseButtonDown += OnGetContent;
         _input.OnMouseButtonUp += OnBuildSelected;
-    }
-
-    private void _view_OnUpgradeBuilding()
-    {
-        throw new NotImplementedException();
     }
 
     public void Initialize(TileContentFactory contentFactory)
@@ -46,17 +41,17 @@ public class ContentSelector : MonoBehaviour
 
     private void OnBuildSelected()
     {
-        if (TargetContent != null)
+        if (_previewContent != null)
         {
             if (_raycast.IsHit)
             {
                 var centerCellPosition = _tilemapController.GetCellCenterPosition();
-                OnBuild?.Invoke(TargetContent, centerCellPosition);
-                TargetContent = null;
+                OnBuild?.Invoke(_previewContent, centerCellPosition);
+                _previewContent = null;
             }
             else
             {
-                TargetContent.Recycle();
+                _previewContent.Recycle();
             }
             
             _view.ShowBuildingMenu();
@@ -65,28 +60,30 @@ public class ContentSelector : MonoBehaviour
 
     private void OnSelectedBuilding(TowerType type)
     {
-        TargetContent = _contentFactory.Get(type);
+        _previewContent = _contentFactory.Get(type);
     }
 
     private void OnUpgradeBuilding()
     {
         _view.ShowBuildingMenu();
-        OnUpdate?.Invoke();
+        OnUpdate?.Invoke(_targetContent);
+        _targetContent = null;
     }
 
     private void OnSellSelectedBuilding()
     {
         _view.ShowBuildingMenu();
-        OnSell?.Invoke();
+        OnSell?.Invoke(_targetContent);
+        _targetContent = null;
     }
 
     private void OnGetContent()
     {
         if (EventSystem.current.currentSelectedGameObject == null)
         {
-            var content = _raycast.GetContent();
+            _targetContent = _raycast.GetContent();
 
-            if (content != null)
+            if (_targetContent != null)
             {
                 _view.ShowTowerMenu();
             }
@@ -95,7 +92,7 @@ public class ContentSelector : MonoBehaviour
                 _view.ShowBuildingMenu();
             }
 
-            DebugView.ShowInfo(_tilemapController.GridPosition, content, _tilemapController.HeightTilemap);
+            DebugView.ShowInfo(_tilemapController.GridPosition, _targetContent, _tilemapController.HeightTilemap);
         }
     }
 
@@ -116,22 +113,22 @@ public class ContentSelector : MonoBehaviour
 
     private void SetTargetContentView()
     {
-        if (TargetContent == null)
+        if (_previewContent == null)
         {
             return;
         }
 
         if (_raycast.IsHit)
         {
-            TargetContent.Show();
+            _previewContent.Show();
         }
         else
         {
-            TargetContent.Hide();
+            _previewContent.Hide();
         }
 
         var viewPosition = _raycast.GetPosition();
         viewPosition.y = _tilemapController.HeightTilemap;
-        TargetContent.transform.position = viewPosition;
+        _previewContent.transform.position = viewPosition;
     }
 }

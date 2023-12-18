@@ -1,16 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using TreeEditor;
 using UnityEngine;
+using static EnemyFactory;
 
 public class Enemy : GameBehaviour
 {
+    [SerializeField] private PathMovement _movement;
     [SerializeField] private Transform _model;
     [SerializeField] private EnemyView _view;
 
     public EnemyFactory OriginFactory { get; set; }
     public float Health { get; private set; }
     public float Scale { get; private set; }
+
+    private PathPointsView _pathPoints;
 
     private const float CHANGE_DIR_SPEED_MULTIPLIER = 0.8f;
     private uint _coins;
@@ -25,23 +26,33 @@ public class Enemy : GameBehaviour
     private float _speed;
     private float _originalSpeed;
 
-    public void Initialize(float scale, float pathOffset, float speed, float health, uint coins)
+    public void Initialize(EnemyConfig config)
     {
-        _model.localScale = new Vector3(scale, scale, scale);
-        _pathOffset = pathOffset;
-        _originalSpeed = speed;
-        _coins = coins;
-        _speed = speed;
-        Scale = scale;
-        Health = health;
+        _model.localScale *= config.Scale.RandomValueInRange;
+        _pathOffset = config.PathOffset.RandomValueInRange;
+        _originalSpeed = config.Speed.RandomValueInRange;
+        _speed = config.Speed.RandomValueInRange;
+        Health = config.Health.RandomValueInRange;
+        Scale = config.Scale.RandomValueInRange;
+        _coins = config.Coins;
         _view.Initialize(this);
-        SetSpeed(speed);
+        SetSpeed(_speed);
+    }
+
+    public void SetPath(PathPointsView pathPoints)
+    {
+        _pathPoints = pathPoints;
+        _movement.Initialize(_pathPoints, MovementType.Move, _pathPoints.LeastDistance, _speed);
+    }
+     
+    public void SetPosition(Vector3 position)
+    {
+        transform.position = position;
     }
 
     public void SetSpeed(float factor)
     {
         _speed = _originalSpeed * factor;
-        HandleDirection();
         _view.SetSpeedFactor(factor);
     }
 
@@ -60,41 +71,39 @@ public class Enemy : GameBehaviour
             return false;
         }
 
-        _progress += Time.deltaTime * _progressFactor;
-        while (_progress >= 1)
+        if (_movement.IsFinish)
         {
-            //if (_tileTo == null)
-            //{
-            //    InitializationGame.EnemyReachedDestination();
-            //    Recycle();
-            //    return false;
-            //}
-
-            _progress = (_progress - 1f) / _progressFactor;
-            _progress *= _progressFactor;
+            Recycle();
+            return false;
         }
 
-        if (_directionChange == DirectionChange.None)
-        {
-            transform.localPosition = Vector3.LerpUnclamped(_positionFrom, _positionTo, _progress);
-        }
-        else
-        {
-            float angle = Mathf.LerpUnclamped(_directionAngleFrom, _directionAngleTo, _progress);
-            transform.localRotation = Quaternion.Euler(0f, angle, 0f);
-        }
+        _movement.Move();
+
+        //_progress += Time.deltaTime * _progressFactor;
+        //while (_progress >= 1)
+        //{
+        //    //if (_tileTo == null)
+        //    //{
+        //    //    InitializationGame.EnemyReachedDestination();
+        //    //    Recycle();
+        //    //    return false;
+        //    //}
+
+        //    _progress = (_progress - 1f) / _progressFactor;
+        //    _progress *= _progressFactor;
+        //}
+
+        //if (_directionChange == DirectionChange.None)
+        //{
+        //    transform.localPosition = Vector3.LerpUnclamped(_positionFrom, _positionTo, _progress);
+        //}
+        //else
+        //{
+        //    float angle = Mathf.LerpUnclamped(_directionAngleFrom, _directionAngleTo, _progress);
+        //    transform.localRotation = Quaternion.Euler(0f, angle, 0f);
+        //}
+
         return true;
-    }
-
-    private void HandleDirection()
-    {
-        switch (_directionChange)
-        {
-            case DirectionChange.None: PrepareForward(); break;
-            case DirectionChange.TurnRight: PrepareTurnRight(); break;
-            case DirectionChange.TurnLeft: PrepareTurnLeft(); break;
-            default: PrepareTurnAround(); break;
-        }
     }
 
     public void TakeDamage(float damage)

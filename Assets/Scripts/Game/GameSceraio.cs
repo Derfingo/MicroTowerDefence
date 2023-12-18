@@ -8,20 +8,22 @@ public class GameSceraio : ScriptableObject
 {
     [SerializeField] private EnemyWave[] _waves;
 
-    public State Begin() => new(this);
+    public State Begin(EnemyContorller controller) => new(this, controller);
 
     [Serializable]
     public struct State
     {
+        private EnemyContorller _controller;
         private GameSceraio _scenario;
         private int _index;
         private EnemyWave.State _wave;
 
-        public State(GameSceraio scenario)
+        public State(GameSceraio scenario, EnemyContorller controller)
         {
+            _controller = controller;
             _scenario = scenario;
             _index = 0;
-            _wave = scenario._waves[0].Begin();
+            _wave = scenario._waves[0].Begin(controller);
         }
 
         public bool Progress()
@@ -35,7 +37,7 @@ public class GameSceraio : ScriptableObject
                     return false;
                 }
 
-                _wave = _scenario._waves[_index].Begin();
+                _wave = _scenario._waves[_index].Begin(_controller);
                 deltaTime = _wave.Progress(deltaTime);
             }
 

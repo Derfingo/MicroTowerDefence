@@ -7,19 +7,21 @@ public class EnemyWave : ScriptableObject
 {
     [SerializeField] private EnemySpawnSequence[] _spawnSequences;
 
-    public State Begin() => new(this);
+    public State Begin(EnemyContorller contorller) => new(this, contorller);
 
     public struct State
     {
+        private EnemyContorller _contorller;
         private EnemyWave _wave;
         private int _index;
         private EnemySpawnSequence.State _sequence;
 
-        public State(EnemyWave wave)
+        public State(EnemyWave wave, EnemyContorller contorller)
         {
+            _contorller = contorller;
             _wave = wave;
             _index = 0;
-            _sequence = _wave._spawnSequences[0].Begin();
+            _sequence = _wave._spawnSequences[0].Begin(contorller);
         }
 
         public float Progress(float deltaTime)
@@ -33,7 +35,7 @@ public class EnemyWave : ScriptableObject
                     return deltaTime;
                 }
 
-                _sequence = _wave._spawnSequences[_index].Begin();
+                _sequence = _wave._spawnSequences[_index].Begin(_contorller);
                 deltaTime = _sequence.Progress(deltaTime);
             }
 
