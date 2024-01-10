@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Searcher;
 using UnityEngine;
 
 public class MagicTower : TowerBase
@@ -17,7 +14,7 @@ public class MagicTower : TowerBase
         _shootPerSecond = config.ShootPerSecond;
     }
 
-    public override void GameUpdate()
+    public override bool GameUpdate()
     {
         _launchProgress += Time.deltaTime * _shootPerSecond;
 
@@ -33,12 +30,14 @@ public class MagicTower : TowerBase
                 _launchProgress = 0.999f;
             }
         }
+
+        return true;
     }
 
     private void Launch(TargetPoint target)
     {
         Vector3 launchPoint = _spere.position;
         Vector3 targetPoint = target.Position;
-        InitializationGame.SpawnSphere().Initialize(launchPoint, targetPoint, 1f, _damage);
+        //_projectile.GetSphere().Initialize(launchPoint, targetPoint, 1f, _damage);
     }
 }

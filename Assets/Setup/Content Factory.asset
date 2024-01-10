@@ -12,16 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c397229907b535e4e8ee850f0ec01ec5, type: 3}
   m_Name: Content Factory
   m_EditorClassIdentifier: 
-  _destinationPrefab: {fileID: 1477688854478302059, guid: a9098b6fe56818c4f95630f8c52e0bc9,
-    type: 3}
-  _emptyPrefab: {fileID: 3379947495970736174, guid: d3a38d887f107664f9193c884ca083b3,
-    type: 3}
-  _wallPrefab: {fileID: 3946213136886708290, guid: 27a0d918f0893cd4eacfdc7b7628cf08,
-    type: 3}
-  _spawnPrefab: {fileID: 7160363751374002329, guid: 12683a760946ea641aad36dde09ccd9a,
-    type: 3}
-  _placePrefab: {fileID: 1255147332634311009, guid: 155a9b37c43a5ed46a2afcc50de0cd9c,
-    type: 3}
   _beamPrefabs:
   - {fileID: 5478110801795154581, guid: 312004f727ea1464c992488e167e950a, type: 3}
   - {fileID: 5478110801795154581, guid: 312004f727ea1464c992488e167e950a, type: 3}
@@ -36,4 +26,4 @@ MonoBehaviour:
   - {fileID: 546477330913187392, guid: 4b4cdf4c0cf99fd47995e618a2b9e1c0, type: 3}
   _magicPrefabs:
   - {fileID: 1572941653109879507, guid: fe3f5e8fb5b7dc645acfbeb7ec3e8be7, type: 3}
-  _towerLevelConfig: {fileID: 11400000, guid: 83f1b4a46f7776b4da3bd4771e72007d, type: 2}
+  _towerLevelConfig: {fileID: 11400000, guid: 070caf5e433817149a92f6d644d059e8, type: 2}

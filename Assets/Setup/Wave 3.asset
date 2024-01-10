@@ -16,4 +16,4 @@ MonoBehaviour:
   - _factory: {fileID: 11400000, guid: 675564c76d9dffd46806cd169fd00043, type: 2}
     _type: 2
     _amount: 5
-    _cooldown: 4
+    _cooldown: 5

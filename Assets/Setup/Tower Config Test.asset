@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc2d987f25f220546a9bb4d3bcf5f5ed, type: 3}
+  m_Name: Tower Config Test
+  m_EditorClassIdentifier: 
+  _level1:
+    TargetRange: 2.8
+    Damage: 40
+    Cost: 0
+    ShellBlastRadius: 0.5
+    ShootPerSecond: 0.5
+    DamagePerSecond: 25
+  _level2:
+    TargetRange: 2.8
+    Damage: 100
+    Cost: 0
+    ShellBlastRadius: 1
+    ShootPerSecond: 1
+    DamagePerSecond: 100
+  _level3:
+    TargetRange: 0
+    Damage: 100
+    Cost: 0
+    ShellBlastRadius: 1
+    ShootPerSecond: 1.5
+    DamagePerSecond: 100

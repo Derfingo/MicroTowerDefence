@@ -1,27 +1,26 @@
 using UnityEngine;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class PathPointsView : MonoBehaviour
 {
     [SerializeField] private MovementType _movementType;
     [SerializeField] private float _leastDistance = 0.1f;
+    [SerializeField] private Transform[] _pathPoints;
 
     public Transform[] Points => _pathPoints;
     public Vector3 InitialPoint => _pathPoints[0].position;
     public MovementType MovementType => _movementType;
     public float LeastDistance => _leastDistance;
 
-    private Transform[] _pathPoints;
+    //private void Awake()
+    //{
+    //    _pathPoints = new Transform[transform.childCount];
 
-    private void Awake()
-    {
-        _pathPoints = new Transform[transform.childCount];
-
-        for (int i = 0; i < _pathPoints.Length; i++)
-        {
-            _pathPoints[i] = transform.GetChild(i);
-        }
-    }
+    //    for (int i = 0; i < _pathPoints.Length; i++)
+    //    {
+    //        _pathPoints[i] = transform.GetChild(i);
+    //    }
+    //}
 
     private void OnDrawGizmos()
     {

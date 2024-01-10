@@ -4,32 +4,21 @@ public class ArcherTower : TowerBase
 {
     [SerializeField] private Transform _archer;
     [SerializeField, Range(1f, 100f)] private float _damage = 25f;
-    [SerializeField, Range(0.1f, 1f)] private float _shellBlastRadius = 1f;
-    [SerializeField, Range(0.2f, 3f)] private float _shootPerSecond = 2.0f;
+    [SerializeField, Range(0.1f, 3f)] private float _shellBlastRadius = 1f;
+    [SerializeField, Range(0.1f, 3f)] private float _shootPerSecond = 2.0f;
 
     private float _launchSpeed;
     private float _launchProgress;
 
-    private void Awake()
-    {
-        OnValidate();
-    }
-
-    private void OnValidate()
-    {
-        float x = _targetRange + 0.251f;
-        float y = -_archer.position.y;
-        _launchSpeed = Mathf.Sqrt(9.81f * (y + Mathf.Sqrt(x * x + y * y)));
-    }
-
     protected override void SetStats(TowerConfig config)
     {
         _damage = config.Damage;
+        _targetRange = config.TargetRange;
         _shootPerSecond = config.ShootPerSecond;
         _shellBlastRadius = config.ShellBlastRadius;
     }
 
-    public override void GameUpdate()
+    public override bool GameUpdate()
     {
         _launchProgress += Time.deltaTime * _shootPerSecond;
 
@@ -37,7 +26,8 @@ public class ArcherTower : TowerBase
         {
             if (IsAcquireTarget(out TargetPoint target))
             {
-                Launch(target);
+                Vector3 predict = PredictPosition(_archer.position, target.Position, target.Velocity);
+                Shoot(predict);
                 _launchProgress -= 1f;
             }
             else
@@ -45,6 +35,13 @@ public class ArcherTower : TowerBase
                 _launchProgress = 0.999f;
             }
         }
+
+        return true;
+    }
+
+    private void Shoot(Vector3 target)
+    {
+        _projectile.GetArrow().Initialize(_archer.position, target, _damage);
     }
 
     private void Launch(TargetPoint target)
@@ -74,7 +71,7 @@ public class ArcherTower : TowerBase
 
         _archer.localRotation = Quaternion.LookRotation(new Vector3(direction.x, tanTheta, direction.y));
 
-        InitializationGame.SpawnArrow().Initialize(launchPoint, targetPoint,
-            new Vector3(s * cosTheta * direction.x, s * sinTheta, s * cosTheta * direction.y), _shellBlastRadius, _damage);
+        //_projectile.SpawnArrow().Initialize(_projectile ,launchPoint, targetPoint,
+            //new Vector3(s * cosTheta * direction.x, s * sinTheta, s * cosTheta * direction.y), _shellBlastRadius, _damage);
     }
 }

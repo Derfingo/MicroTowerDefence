@@ -21,29 +21,20 @@ public class Coins : MonoBehaviour
 
     public bool TrySpend(uint cost)
     {
-        if (Check(cost))
-        {
-            _coins -= cost;
-            _view.SetCoins(_coins);
-            return true;
-        }
-
-        return false;
-    }
-
-    public void Reset()
-    {
-        _coins = _initialConins;
-    }
-
-    private bool Check(uint cost)
-    {
         if (_coins < cost)
         {
             Debug.Log("coins is not enough");
             return false;
         }
 
+        _coins -= cost;
+        _view.SetCoins(_coins);
         return true;
+    }
+
+    public void Reset()
+    {
+        _coins = _initialConins;
+        _view.SetCoins(_coins);
     }
 }

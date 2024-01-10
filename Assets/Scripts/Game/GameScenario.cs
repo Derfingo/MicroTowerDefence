@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class GameSceraio : ScriptableObject
+public class GameScenario : ScriptableObject
 {
     [SerializeField] private EnemyWave[] _waves;
 
@@ -14,11 +12,11 @@ public class GameSceraio : ScriptableObject
     public struct State
     {
         private EnemyContorller _controller;
-        private GameSceraio _scenario;
+        private GameScenario _scenario;
         private int _index;
         private EnemyWave.State _wave;
 
-        public State(GameSceraio scenario, EnemyContorller controller)
+        public State(GameScenario scenario, EnemyContorller controller)
         {
             _controller = controller;
             _scenario = scenario;

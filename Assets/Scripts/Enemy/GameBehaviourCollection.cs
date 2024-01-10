@@ -1,14 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 [Serializable]
 public class GameBehaviourCollection
 {
     public bool IsEmpty => _behaviours.Count == 0;
 
-    private List<GameBehaviour> _behaviours = new();
+    private readonly List<GameBehaviour> _behaviours = new();
 
     public void Add(GameBehaviour behaviour)
     {
@@ -27,6 +25,11 @@ public class GameBehaviourCollection
                 i -= 1;
             }
         }
+    }
+
+    public void Remove(GameBehaviour behaviour)
+    {
+        _behaviours.Remove(behaviour);
     }
 
     public void Clear()

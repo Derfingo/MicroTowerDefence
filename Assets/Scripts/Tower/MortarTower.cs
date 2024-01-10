@@ -4,32 +4,20 @@ public class MortarTower : TowerBase
 {
     [SerializeField] private Transform _cannon;
     [SerializeField, Range(1f, 100f)] private float _damage = 50f;
-    [SerializeField, Range(0.5f, 3f)] private float _shellBlastRadius = 1f;
-    [SerializeField, Range(0.2f, 1f)] private float _shootPerSecond = 1.0f;
+    [SerializeField, Range(0.1f, 3f)] private float _shellBlastRadius = 1f;
+    [SerializeField, Range(0.1f, 3f)] private float _shootPerSecond = 1.0f;
 
-    private float _launchSpeed;
     private float _launchProgress;
-
-    private void Awake()
-    {
-        OnValidate();
-    }
-
-    private void OnValidate()
-    {
-        float x = _targetRange + 0.251f;
-        float y = -_cannon.position.y;
-        _launchSpeed = Mathf.Sqrt(9.81f * (y + Mathf.Sqrt(x * x + y * y)));
-    }
 
     protected override void SetStats(TowerConfig config)
     {
         _damage = config.Damage;
-        _shellBlastRadius = config.ShellBlastRadius;
+        _targetRange = config.TargetRange;
         _shootPerSecond = config.ShootPerSecond;
+        _shellBlastRadius = config.ShellBlastRadius;
     }
 
-    public override void GameUpdate()
+    public override bool GameUpdate()
     {
         _launchProgress += Time.deltaTime * _shootPerSecond;
 
@@ -37,7 +25,9 @@ public class MortarTower : TowerBase
         {
             if (IsAcquireTarget(out TargetPoint target))
             {
-                Launch(target);
+                Vector3 predict = PredictPosition(_cannon.position, target.Position, target.Velocity);
+                RotateCannon(predict);
+                Shoot(predict);
                 _launchProgress -= 1f;
             }
             else
@@ -45,53 +35,18 @@ public class MortarTower : TowerBase
                 _launchProgress = 0.999f;
             }
         }
+
+        return true;
     }
 
-    private void Launch(TargetPoint target)
+    private void RotateCannon(Vector3 target)
     {
-        Vector3 launchPoint = _cannon.position;
-        Vector3 targetPoint = target.Position;
-        targetPoint.y = 0f;
+        Vector3 direction = target - _cannon.position;
+        _cannon.forward = direction;
+    }
 
-        Vector2 direction;
-        direction.x = targetPoint.x - launchPoint.x;
-        direction.y = targetPoint.z - launchPoint.z;
-
-        float x = direction.magnitude;
-        float y = -launchPoint.y;
-        direction /= x;
-
-        float g = 25f;
-        float s = _launchSpeed;
-        float s2 = s * s;
-
-        float r = s2 * s2 - g * (g * x * x + 2f * y * s2);
-        r = Mathf.Max(0f, r);
-
-        float tanTheta = (s2 + Mathf.Sqrt(r)) / (g * x);
-        float cosTheta = Mathf.Cos(Mathf.Atan(tanTheta));
-        float sinTheta = cosTheta * tanTheta;
-
-        _cannon.localRotation = Quaternion.LookRotation(new Vector3(direction.x, tanTheta, direction.y));
-
-        InitializationGame.SpawnShell().Initialize(launchPoint, targetPoint,
-            new Vector3(s * cosTheta * direction.x, s * sinTheta, s * cosTheta * direction.y), _shellBlastRadius, _damage);
-
-        /* visualization
-        Vector3 prev = launchPoint, next;
-        for (int i = 1; i < 10; i++)
-        {
-            float t = i / 10f;
-            float dx = s * cosTheta * t;
-            float dy = s * sinTheta * t - 0.5f * g * t * t;
-            next = launchPoint + new Vector3(direction.x * dx, dy, direction.y * dx);
-            Debug.DrawLine(prev, next, Color.blue);
-            prev = next;
-        }
-
-        Debug.DrawLine(launchPoint, targetPoint, Color.red);
-        Debug.DrawLine(new Vector3(launchPoint.x, 0.01f, launchPoint.z),
-            new Vector3(launchPoint.x + direction.x * x, 0.01f, launchPoint.z + direction.y * x), Color.white);
-        */
+    private void Shoot(Vector3 target)
+    {
+        _projectile.GetShell().Initialize(_projectile, _cannon.position, target, _shellBlastRadius, _damage);
     }
 }

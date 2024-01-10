@@ -1,13 +1,13 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingController : MonoBehaviour
 {
+    [SerializeField] private ProjectileController _projectileController;
     [SerializeField] private ContentSelector _contentSelector;
     [SerializeField] private Coins _coins;
 
     private TileContentFactory _contentFactory;
-    private List<TileContent> _contents = new List<TileContent>();
+    private readonly GameBehaviourCollection _buildings = new();
 
     private void Start()
     {
@@ -21,22 +21,25 @@ public class BuildingController : MonoBehaviour
         _contentFactory = contentFactory;
     }
 
-    private void Update()
+    public void GameUpdate()
     {
-        for (int i = 0; i < _contents.Count; i++)
-        {
-            _contents[i].GameUpdate();
-        }
+        _buildings.GameUpdate();
+    }
+
+    public void Clear()
+    {
+        _buildings.Clear();
     }
 
     private void OnBuild(TileContent content, Vector3 position)
     {
         var tower = content.GetComponent<TowerBase>();
+        tower.SetProjectile(_projectileController);
 
         if (_coins.TrySpend(tower.Cost))
         {
             content.Position = position;
-            _contents.Add(content);
+            _buildings.Add(content);
         }
         else
         {
@@ -46,31 +49,36 @@ public class BuildingController : MonoBehaviour
 
     private void OnSell(TileContent content)
     {
-        _contents.Remove(content);
+        _buildings.Remove(content);
         content.Recycle();
         _coins.Add(30);
     }
 
     private void OnUpgrade(TileContent content)
     {
-        var tower = content.GetComponent<TowerBase>();
-        var position = content.Position;
-        var level = content.Level;
-        var type = tower.TowerType;
-
-        if (level == 2)
+        if (content.Level == 2)
         {
             Debug.Log("max level");
             return;
         }
 
-        if (_coins.TrySpend(tower.Cost))
+        var tower = content.GetComponent<TowerBase>();
+        var newTower = _contentFactory.Get(tower.TowerType, tower.Level + 1) as TowerBase; 
+        var cost = newTower.Cost;
+
+        if (_coins.TrySpend(cost))
         {
-            _contents.Remove(content);
+            var position = content.Position;
+            _buildings.Remove(content);
             content.Recycle();
-            var newContent = _contentFactory.Get(type, level + 1);
-            newContent.Position = position;
-            _contents.Add(newContent);
+            
+            newTower.SetProjectile(_projectileController);
+            newTower.Position = position;
+            _buildings.Add(newTower);
+        }
+        else
+        {
+            newTower.Recycle();
         }
     }
 }

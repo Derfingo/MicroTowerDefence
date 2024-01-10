@@ -1,140 +1,19 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class InitializationGame : MonoBehaviour
 {
-    [SerializeField, Range(0f, 30f)] private float _prepareTime = 5f;
-    [SerializeField, Range(10, 100)] private int _startingPlayerHealth = 10;
-    [Space]
     [SerializeField] private TileContentFactory _contentFactory;
     [SerializeField] private EnemyContorller _enemyContorller;
     [SerializeField] private EnemyFactory _enemyFactory;
     [SerializeField] private BuildingController _buildingController;
     [SerializeField] private ContentSelector _contentSelector;
     [SerializeField] private ProjectileFactory _warFactory;
-    [SerializeField] private GameSceraio _sceraio;
+    [SerializeField] private GameScenario _sceraio;
     [SerializeField] private Coins _coins;
-
-    private GameSceraio.State _activeScenario;
-    private static InitializationGame _instance;
-
-    //private readonly GameBehaviourCollection _enemies = new();
-    private readonly GameBehaviourCollection _nonEnemies = new();
-
-    private int _currentPlayerHealth;
-    private bool _scenarioInProgress;
-    private bool _isPaused;
 
     private void Start()
     {
         _buildingController.Initialize(_contentFactory);
         _contentSelector.Initialize(_contentFactory);
-        BeginNewGame();
-    }
-
-    public static Shell SpawnShell()
-    {
-        Shell shell = _instance._warFactory.Shell;
-        _instance._nonEnemies.Add(shell);
-        return shell;
-    }
-
-    public static Arrow SpawnArrow()
-    {
-        Arrow arrorw = _instance._warFactory.Arrow;
-        _instance._nonEnemies.Add(arrorw);
-        return arrorw;
-    }
-
-    public static MagicSphere SpawnSphere()
-    {
-        MagicSphere sphere = _instance._warFactory.MagicSphere;
-        _instance._nonEnemies.Add(sphere);
-        return sphere;
-    }
-
-    public static Explosion SpawnExplosion()
-    {
-        Explosion explosion = _instance._warFactory.Explosion;
-        _instance._nonEnemies.Add(explosion);
-        return explosion;
-    }
-
-    private void OnEnable()
-    {
-        _instance = this;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            _isPaused = !_isPaused;
-            Time.timeScale = _isPaused ? 0f : 1f;
-        }
-
-        if (_scenarioInProgress)
-        {
-            if (_currentPlayerHealth <= 0f)
-            {
-                Debug.Log("Defeated");
-                BeginNewGame();
-            }
-
-            if (_activeScenario.Progress() == false && _enemyContorller.IsEmpty)
-            {
-                Debug.Log("Win");
-                BeginNewGame();
-                _activeScenario.Progress();
-            }
-        }
-
-        Physics.SyncTransforms();
-        _enemyContorller.GameUpdate();
-        _nonEnemies.GameUpdate();
-    }
-
-    private void BeginNewGame()
-    {
-        _scenarioInProgress = false;
-        if (_prepareRoutine != null)
-        {
-            StopCoroutine( _prepareRoutine );
-        }
-
-        _currentPlayerHealth = _startingPlayerHealth;
-        Cleanup();
-        _activeScenario = _sceraio.Begin(_enemyContorller);
-        _prepareRoutine = StartCoroutine(PrepareRoutine());
-    }
-
-    private void Cleanup()
-    {
-        _enemyContorller.Clear();
-        _nonEnemies.Clear();
-        _coins.Reset();
-    }
-
-    //public static void SpawnEnemy(EnemyFactory factory, EnemyType type)
-    //{
-    //    //GameTile spawnPoint = _instance._board.GetSpawnPoint(Random.Range(0, _instance._board.SpawnPointCount));
-    //    Enemy enemy = factory.Get(type);
-    //    //enemy.SetPosition(spawnPoint)
-    //    _instance._enemies.Add(enemy);
-    //}
-
-    public static void EnemyReachedDestination()
-    {
-        _instance._currentPlayerHealth--;
-    }
-
-    private Coroutine _prepareRoutine;
-
-    private IEnumerator PrepareRoutine()
-    {
-        yield return new WaitForSeconds(_prepareTime);
-        _activeScenario = _sceraio.Begin(_enemyContorller);
-        _scenarioInProgress = true;
     }
 }

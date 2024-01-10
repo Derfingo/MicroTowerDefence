@@ -163,6 +163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8812784674728710535}
   - component: {fileID: 7149406886531677756}
+  - component: {fileID: 1831649666591236346}
   m_Layer: 9
   m_Name: Small Slime
   m_TagString: Untagged
@@ -198,8 +199,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d08391722f2494cada7c7b96db27c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _movement: {fileID: 1831649666591236346}
   _model: {fileID: 7838311552070096681}
   _view: {fileID: 5410276219273053342}
+--- !u!114 &1831649666591236346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3242474922699732105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 778d9f32ce5a72c4a9155dfe9bfe0a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3623458190268598753
 GameObject:
   m_ObjectHideFlags: 0

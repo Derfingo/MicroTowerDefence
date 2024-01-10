@@ -15,6 +15,7 @@ public class EnemyFactory : GameObjectFactory
         [FloatRangeSlider(0.2f, 5f)] public FloatRange Speed = new(1f);
         [FloatRangeSlider(10f, 1000f)] public FloatRange Health = new(100f);
         [SerializeField, Range(10, 50)] public uint Coins = 10;
+        [SerializeField, Range(1, 5)] public uint Damage = 1;
     }
 
     private EnemyConfig GetConfig(EnemyType type)

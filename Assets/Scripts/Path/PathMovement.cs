@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PathMovement : MonoBehaviour
@@ -9,8 +8,10 @@ public class PathMovement : MonoBehaviour
     private Vector3 _target;
     private int _indexPoint;
     private float _speed;
+    private Vector3 _velocity;
 
     public bool IsFinish { get; private set; }
+    public Vector3 Velocity => _velocity;
 
     public void Initialize(PathPointsView pathPointsView, MovementType type, float maxDistance, float speed)
     {
@@ -20,6 +21,20 @@ public class PathMovement : MonoBehaviour
         _speed = speed;
 
         _target = _pathPointsView.Points[1].position;
+    }
+
+    private void Update()
+    {
+        var aim = _target - transform.position;
+
+        if (aim.magnitude > 0.5f)
+        {
+            _velocity = aim.normalized * _speed;
+        }
+        else
+        {
+            _velocity = Vector3.zero;
+        }
     }
 
     public void Move()
@@ -38,7 +53,7 @@ public class PathMovement : MonoBehaviour
         }
         else if (_movementType == MovementType.Lerp)
         {
-            transform.position = Vector3.Lerp(transform.position, _target, Time.deltaTime * _speed);
+            transform.position = Vector3.Lerp(direction.normalized, _target, Time.deltaTime * _speed);
         }
 
         //var angle = Mathf.Lerp(transform.position.y, _angle, Time.deltaTime / 2);

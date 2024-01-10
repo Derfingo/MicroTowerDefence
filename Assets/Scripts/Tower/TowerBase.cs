@@ -3,13 +3,16 @@ using UnityEngine;
 public abstract class TowerBase : TileContent
 {
     [SerializeField] private TowerType _towerType;
-    [SerializeField, Range(1f, 10f)] protected float _targetRange = 2f;
+    [SerializeField, Range(1f, 10f)] protected float _targetRange;
     [SerializeField, Range(50, 500)] protected uint _cost;
+    [SerializeField] protected float _speedProjectile = 4f;
 
     public TowerType TowerType => _towerType;
+    public float TargetRange => _targetRange;
     public uint Cost => _cost;
 
     private TowerConfig _config;
+    protected ProjectileController _projectile;
 
     public override void Initialize(TileContentFactory factory, int level)
     {
@@ -21,6 +24,11 @@ public abstract class TowerBase : TileContent
     {
         _config = config;
         SetStats(_config);
+    }
+
+    public void SetProjectile(ProjectileController projectile)
+    {
+        _projectile = projectile;
     }
 
     protected abstract void SetStats(TowerConfig config);
@@ -57,6 +65,24 @@ public abstract class TowerBase : TileContent
         }
 
         return true;
+    }
+
+    protected Vector3 PredictPosition(Vector3 startPosition, Vector3 targetPosition, Vector3 targetVelocity)
+    {
+        Vector3 targetDistance = targetPosition - startPosition;
+
+        float a = Vector3.Dot(targetPosition, targetPosition) - (_speedProjectile * _speedProjectile);
+        float b = 2 * Vector3.Dot(targetVelocity, targetDistance);
+        float c = Vector3.Dot(targetDistance, targetDistance);
+
+        float discriminant = Mathf.Sqrt((b * b) - 4 * a * c);
+
+        float t1 = (-b + discriminant) / (2 * a);
+        float t2 = (-b - discriminant) / (2 * a);
+
+        float time = Mathf.Max(t1, t2);
+
+        return targetPosition + targetVelocity * time;
     }
 
     private void OnDrawGizmosSelected()

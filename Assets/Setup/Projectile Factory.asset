@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7135bb468e1534b4b9a8f86aed1fdcaf, type: 3}
-  m_Name: WarFactory
+  m_Name: Projectile Factory
   m_EditorClassIdentifier: 
   _shellPrefab: {fileID: 2973602105575201436, guid: 20c3864008e674b4c869faf68c248e2b,
     type: 3}
   _explosionPrefab: {fileID: 3187970650182742161, guid: 50bd0c0373f076241aa587b540dcda80,
     type: 3}
-  _arrowPrefab: {fileID: 5147722369600717297, guid: a997838dcab49d147be30e26685c42fd,
+  _arrowPrefab: {fileID: 5248649696323108207, guid: c48a5172acfe97f439b12040ac187a53,
     type: 3}
   _magicSpherePrefab: {fileID: 8027435645924631251, guid: e67f05cd597b6ca41a9c1d7fa3e57424,
     type: 3}

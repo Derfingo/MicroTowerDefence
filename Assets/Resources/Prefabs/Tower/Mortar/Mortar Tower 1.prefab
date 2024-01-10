@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7347831751136368651}
   - component: {fileID: 5561823838833205569}
   - component: {fileID: 8938004176383821269}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7702362687281950428}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pivot Cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 990658826926094728}
   - component: {fileID: 2695590916196581570}
   - component: {fileID: 1462846933583914070}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,13 +141,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8289343000217578163}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7702362687281950428}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2695590916196581570
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -209,8 +209,8 @@ GameObject:
   - component: {fileID: 371881293365393152}
   - component: {fileID: 5187168687205909870}
   - component: {fileID: 174856093823723962}
-  m_Layer: 0
-  m_Name: MortarTower
+  m_Layer: 8
+  m_Name: Mortar Tower 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -246,7 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _towerType: 102
-  _targetRange: 2.5
+  _targetRange: 5
   _cost: 80
   _cannon: {fileID: 7702362687281950428}
   _damage: 40

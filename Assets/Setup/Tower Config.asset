@@ -16,20 +16,20 @@ MonoBehaviour:
     TargetRange: 1.5
     Damage: 15
     Cost: 0
-    ShellBlastRadius: 0.3
+    ShellBlastRadius: 0.5
     ShootPerSecond: 0.9
     DamagePerSecond: 0
   _level2:
-    TargetRange: 2.1
+    TargetRange: 2.2
     Damage: 25
-    Cost: 150
-    ShellBlastRadius: 0.5
+    Cost: 100
+    ShellBlastRadius: 0.1
     ShootPerSecond: 1.1
     DamagePerSecond: 0
   _level3:
-    TargetRange: 2.4
+    TargetRange: 2.6
     Damage: 40
     Cost: 250
-    ShellBlastRadius: 1
+    ShellBlastRadius: 0.1
     ShootPerSecond: 1.3
     DamagePerSecond: 0

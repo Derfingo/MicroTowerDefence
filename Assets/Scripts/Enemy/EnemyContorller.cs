@@ -1,8 +1,12 @@
+using System;
 using UnityEngine;
 
 public class EnemyContorller : MonoBehaviour
 {
     [SerializeField] private PathPointsView _enemyPathView;
+
+    public event Action<uint> OnEnemyFinish;
+    public event Action<uint> OnEnemyDie;
 
     private readonly GameBehaviourCollection _enemies = new();
 
@@ -13,6 +17,8 @@ public class EnemyContorller : MonoBehaviour
         Enemy enemy = factory.Get(type);
         enemy.SetPath(_enemyPathView);
         enemy.SetPosition(_enemyPathView.InitialPoint);
+        enemy.OnFinish += OnEnemyFinish;
+        enemy.OnDie += OnEnemyDie;
         _enemies.Add(enemy);
     }
 

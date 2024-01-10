@@ -28,22 +28,24 @@ MonoBehaviour:
       _min: 50
       _max: 150
     Coins: 15
+    Damage: 1
   _medium:
     Prefab: {fileID: 8142990288872035872, guid: 833a453e02e3f3043b4a75570159385e,
       type: 3}
     Scale:
       _min: 1
-      _max: 1.2
+      _max: 1
     PathOffset:
       _min: 0
       _max: 0
     Speed:
-      _min: 0.8
+      _min: 1
       _max: 1
     Health:
-      _min: 75
-      _max: 120
-    Coins: 25
+      _min: 100
+      _max: 100
+    Coins: 20
+    Damage: 2
   _large:
     Prefab: {fileID: 6820808880408376390, guid: 7b4f35b0370a5aa49a2923e8fc2807de,
       type: 3}
@@ -59,4 +61,5 @@ MonoBehaviour:
     Health:
       _min: 400
       _max: 600
-    Coins: 50
+    Coins: 40
+    Damage: 3

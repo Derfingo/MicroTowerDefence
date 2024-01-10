@@ -1,8 +1,7 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [SelectionBase]
-public abstract class TileContent : MonoBehaviour
+public abstract class TileContent : GameBehaviour
 {
     public TileContentFactory OriginFactory { get; set; }
     public int Level { get; protected set; }
@@ -18,13 +17,9 @@ public abstract class TileContent : MonoBehaviour
         Level = level;
     }
 
-    public void Recycle()
+    public override void Recycle()
     {
         OriginFactory.Reclaim(this);
-    }
-
-    public virtual void GameUpdate()
-    {
     }
 
     public void Show()

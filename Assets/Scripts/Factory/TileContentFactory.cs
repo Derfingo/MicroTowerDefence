@@ -4,11 +4,6 @@ using UnityEngine;
 public class TileContentFactory : GameObjectFactory
 {
     [Header("Content")]
-    [SerializeField] private TileContent _destinationPrefab;
-    [SerializeField] private TileContent _emptyPrefab;
-    [SerializeField] private TileContent _wallPrefab;
-    [SerializeField] private TileContent _spawnPrefab;
-    [SerializeField] private TileContent _placePrefab;
     [Space]
     [Header("Towers")]
     [SerializeField] private TowerBase[] _beamPrefabs;

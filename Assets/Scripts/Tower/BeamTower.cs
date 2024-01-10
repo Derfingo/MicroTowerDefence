@@ -16,10 +16,11 @@ public class BeamTower : TowerBase
 
     protected override void SetStats(TowerConfig config)
     {
+        _targetRange = config.TargetRange;
         _damagePerSecond = config.DamagePerSecond;
     }
 
-    public override void GameUpdate()
+    public override bool GameUpdate()
     {
         if (IsTargetTracked(ref _target) || IsAcquireTarget(out _target))
         {
@@ -29,6 +30,8 @@ public class BeamTower : TowerBase
         {
             _laserBeam.localScale = Vector3.zero;
         }
+
+        return true;
     }
 
     private void Shoot()

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -15,6 +13,18 @@ public class ProjectileFactory : GameObjectFactory
     public Arrow Arrow => Get(_arrowPrefab);
     public MagicSphere MagicSphere => Get(_magicSpherePrefab);
 
+    public Projectile Get(ProjectileType type)
+    {
+        return type switch
+        {
+            ProjectileType.Shell => Get(_shellPrefab),
+            ProjectileType.Explosion => Get(_explosionPrefab),
+            ProjectileType.Arrow => Get(_arrowPrefab),
+            ProjectileType.Sphere => Get(_magicSpherePrefab),
+            _ => null,
+        };
+    }
+
     private  T Get<T>(T prefab) where T : Projectile
     {
         T instanle = CreateGameObjectInstance(prefab);
@@ -22,8 +32,8 @@ public class ProjectileFactory : GameObjectFactory
         return instanle;
     }
 
-    public void Reclaim(Projectile entity)
+    public void Reclaim(Projectile entity, float delay = 0f)
     {
-        Destroy(entity.gameObject);
+        Destroy(entity.gameObject, delay);
     }
 }
