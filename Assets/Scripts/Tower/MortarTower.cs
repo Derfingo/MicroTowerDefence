@@ -25,9 +25,10 @@ public class MortarTower : TowerBase
         {
             if (IsAcquireTarget(out TargetPoint target))
             {
-                Vector3 predict = PredictPosition(_cannon.position, target.Position, target.Velocity);
+                var predict = PredictPosition(_cannon.position, target.Position, target.Velocity);
+                var config = GetProjectileConfig(_cannon.position, predict, _damage, _shellBlastRadius);
                 RotateCannon(predict);
-                Shoot(predict);
+                Shoot(config);
                 _launchProgress -= 1f;
             }
             else
@@ -45,8 +46,8 @@ public class MortarTower : TowerBase
         _cannon.forward = direction;
     }
 
-    private void Shoot(Vector3 target)
+    private void Shoot(ProjectileConfig config)
     {
-        _projectile.GetShell().Initialize(_projectile, _cannon.position, target, _shellBlastRadius, _damage);
+        _projectile.GetShell().Initialize(_projectile, config);
     }
 }

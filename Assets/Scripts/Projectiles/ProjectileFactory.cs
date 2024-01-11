@@ -13,7 +13,7 @@ public class ProjectileFactory : GameObjectFactory
     public Arrow Arrow => Get(_arrowPrefab);
     public MagicSphere MagicSphere => Get(_magicSpherePrefab);
 
-    public Projectile Get(ProjectileType type)
+    public GameBehaviour Get(ProjectileType type)
     {
         return type switch
         {
@@ -25,14 +25,14 @@ public class ProjectileFactory : GameObjectFactory
         };
     }
 
-    private  T Get<T>(T prefab) where T : Projectile
+    private  T Get<T>(T prefab) where T : GameBehaviour
     {
         T instanle = CreateGameObjectInstance(prefab);
         instanle.OriginFactory = this;
         return instanle;
     }
 
-    public void Reclaim(Projectile entity, float delay = 0f)
+    public void Reclaim(GameBehaviour entity, float delay = 0f)
     {
         Destroy(entity.gameObject, delay);
     }

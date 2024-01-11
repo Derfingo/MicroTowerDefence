@@ -4,9 +4,9 @@ public class ArcherTower : TowerBase
 {
     [SerializeField] private Transform _archer;
     [SerializeField, Range(1f, 100f)] private float _damage = 25f;
-    [SerializeField, Range(0.1f, 3f)] private float _shellBlastRadius = 1f;
     [SerializeField, Range(0.1f, 3f)] private float _shootPerSecond = 2.0f;
 
+    private float _collisionRadius = 0.1f;
     private float _launchSpeed;
     private float _launchProgress;
 
@@ -15,7 +15,6 @@ public class ArcherTower : TowerBase
         _damage = config.Damage;
         _targetRange = config.TargetRange;
         _shootPerSecond = config.ShootPerSecond;
-        _shellBlastRadius = config.ShellBlastRadius;
     }
 
     public override bool GameUpdate()
@@ -26,8 +25,9 @@ public class ArcherTower : TowerBase
         {
             if (IsAcquireTarget(out TargetPoint target))
             {
-                Vector3 predict = PredictPosition(_archer.position, target.Position, target.Velocity);
-                Shoot(predict);
+                var predict = PredictPosition(_archer.position, target.Position, target.Velocity);
+                var config = GetProjectileConfig(_archer.position, predict, _damage, _collisionRadius); // fix radius
+                Shoot(config);
                 _launchProgress -= 1f;
             }
             else
@@ -39,9 +39,9 @@ public class ArcherTower : TowerBase
         return true;
     }
 
-    private void Shoot(Vector3 target)
+    private void Shoot(ProjectileConfig config)
     {
-        _projectile.GetArrow().Initialize(_archer.position, target, _damage);
+        _projectile.GetArrow().Initialize(_projectile, config);
     }
 
     private void Launch(TargetPoint target)

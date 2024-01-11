@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Explosion : Projectile
+public class Explosion : GameBehaviour
 {
     [SerializeField, Range(0f, 1f)] private float _duration = 0.5f;
     [SerializeField] AnimationCurve _scaleCurve;
@@ -53,5 +53,10 @@ public class Explosion : Projectile
         transform.localScale = Vector3.one * (_scale * _scaleCurve.Evaluate(t));
 
         return true;
+    }
+
+    public override void Recycle()
+    {
+        OriginFactory.Reclaim(this);
     }
 }

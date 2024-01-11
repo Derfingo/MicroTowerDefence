@@ -85,13 +85,18 @@ public abstract class TowerBase : TileContent
         return targetPosition + targetVelocity * time;
     }
 
-    private void OnDrawGizmosSelected()
+    protected ProjectileConfig GetProjectileConfig(Vector3 start, Vector3 target, float damage, float blastRadius = 0f)
     {
-        Gizmos.color = Color.yellow;
-        Vector3 position = transform.localPosition;
-        position.y += 0.1f;
-        Gizmos.DrawWireSphere(position, _targetRange);
+        return new ProjectileConfig(start, target, damage, blastRadius);
     }
+
+    //private void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.color = Color.yellow;
+    //    Vector3 position = transform.localPosition;
+    //    position.y += 0.1f;
+    //    Gizmos.DrawWireSphere(position, _targetRange);
+    //}
 }
 
 public enum TowerType : byte
