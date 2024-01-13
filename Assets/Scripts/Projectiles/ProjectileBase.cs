@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [SelectionBase]
-public abstract class Projectile : GameBehaviour
+public abstract class ProjectileBase : GameBehaviour
 {
     protected ProjectileController _projectile;
     protected Vector3 _middlePoint;
@@ -35,9 +35,9 @@ public abstract class Projectile : GameBehaviour
         //Debug.Log("height: " + _middlePoint.y);
     }
 
-    public override void Recycle()
+    public override void Destroy()
     {
-        OriginFactory.Reclaim(this);
+        Destroy(gameObject);
     }
 }
 

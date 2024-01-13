@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c397229907b535e4e8ee850f0ec01ec5, type: 3}
-  m_Name: Content Factory
+  m_Name: Tower Factory
   m_EditorClassIdentifier: 
   _beamPrefabs:
   - {fileID: 5478110801795154581, guid: 312004f727ea1464c992488e167e950a, type: 3}
@@ -25,5 +25,6 @@ MonoBehaviour:
   - {fileID: 240080371973959801, guid: 34af1f1464e0b0c40bb7e8459f81ad00, type: 3}
   - {fileID: 546477330913187392, guid: 4b4cdf4c0cf99fd47995e618a2b9e1c0, type: 3}
   _magicPrefabs:
+  - {fileID: 2835667209765803658, guid: cc8b8c92d01961e4c9b7f3e170c77e1d, type: 3}
   - {fileID: 1572941653109879507, guid: fe3f5e8fb5b7dc645acfbeb7ec3e8be7, type: 3}
   _towerLevelConfig: {fileID: 11400000, guid: 070caf5e433817149a92f6d644d059e8, type: 2}

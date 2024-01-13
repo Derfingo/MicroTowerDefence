@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class Shell : Projectile
+public class Shell : ProjectileBase
 {
     public override bool GameUpdate()
     {
         if (DetectGround())
         {
             _projectile.GetExplosion().Initialize(transform.position, _blastRadious, _damage);
-            OriginFactory.Reclaim(this);
+            Destroy();
             return false;
         }
 

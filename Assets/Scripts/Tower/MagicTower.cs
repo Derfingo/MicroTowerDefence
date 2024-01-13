@@ -22,7 +22,9 @@ public class MagicTower : TowerBase
         {
             if (IsAcquireTarget(out TargetPoint target))
             {
-                Launch(target);
+                var predict = PredictPosition(_spere.position, target.Position, target.Velocity);
+                var config = GetProjectileConfig(_spere.position, predict, _damage);
+                Shoot(config);
                 _launchProgress -= 1f;
             }
             else
@@ -34,10 +36,8 @@ public class MagicTower : TowerBase
         return true;
     }
 
-    private void Launch(TargetPoint target)
+    private void Shoot(ProjectileConfig config)
     {
-        Vector3 launchPoint = _spere.position;
-        Vector3 targetPoint = target.Position;
-        //_projectile.GetSphere().Initialize(launchPoint, targetPoint, 1f, _damage);
+        _projectile.GetSphere().Initialize(_projectile, config);
     }
 }

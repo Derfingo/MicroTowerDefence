@@ -1,18 +1,18 @@
 using UnityEngine;
 
-public class Arrow : Projectile
+public class Arrow : ProjectileBase
 {
     public override bool GameUpdate()
     {
         if (DetectCollision())
         {
-            OriginFactory.Reclaim(this);
+            Destroy();
             return false;
         }
 
         if (DetectGround())
         {
-            OriginFactory.Reclaim(this, 2f);
+            Destroy();
             return false;
         }
 
@@ -59,7 +59,7 @@ public class Arrow : Projectile
 
     private bool DetectGround()
     {
-        if (transform.position.y <= 0f)
+        if (transform.position.y <= 0.1f)
         {
             return true;
         }

@@ -70,7 +70,7 @@ public class Enemy : GameBehaviour
 
         if (_movement.IsFinish)
         {
-            Recycle();
+            Destroy();
             OnFinish?.Invoke(_damage);
             OnDie = null;
             return false;
@@ -86,15 +86,15 @@ public class Enemy : GameBehaviour
         _health -= damage;
     }
 
-    public override void Recycle()
-    {
-        OriginFactory.Reclaim(this);
-    }
-
     private void DisableView()
     {
         _view.GetComponentInChildren<Collider>().enabled = false;
         _view.GetComponentInChildren<TargetPoint>().enabled = false;
+    }
+
+    public override void Destroy()
+    {
+        Destroy(gameObject);
     }
 }
 

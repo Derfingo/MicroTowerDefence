@@ -27,6 +27,13 @@ public class ProjectileController : MonoBehaviour
         return arrow;
     }
 
+    public MagicSphere GetSphere()
+    {
+        var shpere = _factory.MagicSphere;
+        _projectiles.Add(shpere);
+        return shpere;
+    }
+
     public void GameUpdate()
     {
         _projectiles.GameUpdate();
@@ -36,13 +43,4 @@ public class ProjectileController : MonoBehaviour
     {
         _projectiles.Clear();
     }
-}
-
-public enum ProjectileType
-{
-    Arrow,
-    Shell,
-    Explosion,
-    Sphere,
-    Test
 }

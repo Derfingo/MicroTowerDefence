@@ -16,7 +16,7 @@ public class ContentSelector : MonoBehaviour
     public event Action<TileContent> OnUpdate;
     public event Action<TileContent> OnSell;
 
-    private TileContentFactory _contentFactory;
+    private TowerFactory _towerFactory;
     private TileContent _previewContent;
     private TileContent _targetContent;
 
@@ -32,9 +32,9 @@ public class ContentSelector : MonoBehaviour
         _targetCellView.Show();
     }
 
-    public void Initialize(TileContentFactory contentFactory)
+    public void Initialize(TowerFactory towerFactory)
     {
-        _contentFactory = contentFactory;
+        _towerFactory = towerFactory;
     }
 
     private void Update()
@@ -55,7 +55,7 @@ public class ContentSelector : MonoBehaviour
             }
             else
             {
-                _previewContent.Recycle();
+                _previewContent.Destroy();
             }
             
             _view.ShowBuildingMenu();
@@ -65,7 +65,7 @@ public class ContentSelector : MonoBehaviour
 
     private void OnSelectedBuilding(TowerType type)
     {
-        _previewContent = _contentFactory.Get(type);
+        _previewContent = _towerFactory.Get(type);
         TowerBase tower = _previewContent.GetComponent<TowerBase>();
         SetTargetRange(tower.Position, tower.TargetRange);
     }

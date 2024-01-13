@@ -2,7 +2,6 @@ using UnityEngine;
 
 public abstract class EnemyView : MonoBehaviour
 {
-
     public bool IsInited {  get; protected set; }
 
     protected const string DIED_KEY = "Died";

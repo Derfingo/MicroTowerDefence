@@ -2,6 +2,6 @@ public class KnightView : EnemyView
 {
     public void OnDieAnimationFinished()
     {
-        _enemy.Recycle();
+        _enemy.Destroy();
     }
 }

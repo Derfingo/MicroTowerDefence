@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7618165030027409315}
   - component: {fileID: 1572941653109879507}
-  m_Layer: 0
-  m_Name: Magic Tower
+  - component: {fileID: 1323115923149718814}
+  m_Layer: 8
+  m_Name: Magic Tower 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,12 +47,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4438d3b223303b44191c994c0033373c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _contentType: 61
   _towerType: 104
   _targetRange: 2
+  _cost: 0
+  _speedProjectile: 4
   _spere: {fileID: 816626011107751559}
   _shootPerSecond: 2
   _damage: 25
+--- !u!65 &1323115923149718814
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654807706741588389}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.6, y: 1.2, z: 0.6}
+  m_Center: {x: 0, y: 0.6, z: 0}
 --- !u!1 &5276261774195988683
 GameObject:
   m_ObjectHideFlags: 0
@@ -63,7 +86,7 @@ GameObject:
   - component: {fileID: 6390761380060660743}
   - component: {fileID: 1122594715081030155}
   - component: {fileID: 5697677575176453960}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +170,7 @@ GameObject:
   - component: {fileID: 2558627722788720589}
   - component: {fileID: 1344228258013178713}
   - component: {fileID: 8228178630518975118}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}

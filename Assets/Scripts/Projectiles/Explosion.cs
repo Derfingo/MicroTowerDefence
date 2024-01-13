@@ -39,7 +39,7 @@ public class Explosion : GameBehaviour
 
         if (_age >= _duration)
         {
-            OriginFactory.Reclaim(this);
+            Destroy();
             return false;
         }
 
@@ -55,8 +55,8 @@ public class Explosion : GameBehaviour
         return true;
     }
 
-    public override void Recycle()
+    public override void Destroy()
     {
-        OriginFactory.Reclaim(this);
+        Destroy(gameObject);
     }
 }

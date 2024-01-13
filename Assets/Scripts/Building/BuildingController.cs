@@ -6,7 +6,7 @@ public class BuildingController : MonoBehaviour
     [SerializeField] private ContentSelector _contentSelector;
     [SerializeField] private Coins _coins;
 
-    private TileContentFactory _contentFactory;
+    private TowerFactory _towerFactory;
     private readonly GameBehaviourCollection _buildings = new();
 
     private void Start()
@@ -16,9 +16,9 @@ public class BuildingController : MonoBehaviour
         _contentSelector.OnUpdate += OnUpgrade;
     }
 
-    public void Initialize(TileContentFactory contentFactory)
+    public void Initialize(TowerFactory contentFactory)
     {
-        _contentFactory = contentFactory;
+        _towerFactory = contentFactory;
     }
 
     public void GameUpdate()
@@ -38,39 +38,40 @@ public class BuildingController : MonoBehaviour
 
         if (_coins.TrySpend(tower.Cost))
         {
-            content.Position = position;
+            tower.Position = position;
             _buildings.Add(content);
         }
         else
         {
-            content.Recycle();
+            content.Destroy();
         }
     }
 
     private void OnSell(TileContent content)
     {
         _buildings.Remove(content);
-        content.Recycle();
+        content.Destroy();
         _coins.Add(30);
     }
 
     private void OnUpgrade(TileContent content)
     {
-        if (content.Level == 2)
+        var tower = content.GetComponent<TowerBase>();
+
+        if (tower.Level == 2)
         {
             Debug.Log("max level");
             return;
         }
 
-        var tower = content.GetComponent<TowerBase>();
-        var newTower = _contentFactory.Get(tower.TowerType, tower.Level + 1) as TowerBase; 
+        var newTower = _towerFactory.Get(tower.TowerType, tower.Level + 1); 
         var cost = newTower.Cost;
 
         if (_coins.TrySpend(cost))
         {
             var position = content.Position;
             _buildings.Remove(content);
-            content.Recycle();
+            content.Destroy();
             
             newTower.SetProjectile(_projectileController);
             newTower.Position = position;
@@ -78,7 +79,7 @@ public class BuildingController : MonoBehaviour
         }
         else
         {
-            newTower.Recycle();
+            newTower.Destroy();
         }
     }
 }

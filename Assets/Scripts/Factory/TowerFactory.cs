@@ -1,11 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu]
-public class TileContentFactory : GameObjectFactory
+public class TowerFactory : GameObjectFactory
 {
-    [Header("Content")]
-    [Space]
-    [Header("Towers")]
     [SerializeField] private TowerBase[] _beamPrefabs;
     [SerializeField] private TowerBase[] _mortarPrefabs;
     [SerializeField] private TowerBase[] _archerPrefabs;
@@ -13,17 +9,7 @@ public class TileContentFactory : GameObjectFactory
     [Space]
     [SerializeField] private TowerLevelConfig _towerLevelConfig;
 
-    public void Reclaim(TileContent content)
-    {
-        Destroy(content.gameObject);
-    }
-
-    public TowerConfig GetConfig(int level)
-    {
-        return _towerLevelConfig.Get(level);
-    }
-
-    public TileContent Get(TowerType type, int level = 0)
+    public TowerBase Get(TowerType type, int level = 0)
     {
         return type switch
         {
@@ -35,10 +21,23 @@ public class TileContentFactory : GameObjectFactory
         };
     }
 
-    private T Get<T>(T prefab, int level) where T : TileContent
+    private T Get<T>(T prefab, int level = 0) where T : TowerBase
     {
         T instance = CreateGameObjectInstance(prefab);
-        instance.Initialize(this, level);
+        instance.Initialize(GetConfig(level), level);
         return instance;
     }
+
+    private TowerConfig GetConfig(int level)
+    {
+        return _towerLevelConfig.Get(level);
+    }
+}
+
+public enum TowerType : byte
+{
+    Beam = 101,
+    Mortar = 102,
+    Archer = 103,
+    Magic = 104,
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
 public class GameBehaviourCollection
@@ -36,7 +37,7 @@ public class GameBehaviourCollection
     {
         for (int i = 0; i < _behaviours.Count; i++)
         {
-            _behaviours[i].Recycle();
+            _behaviours[i].Destroy();
         }
 
         _behaviours.Clear();

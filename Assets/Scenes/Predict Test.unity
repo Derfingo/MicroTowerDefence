@@ -4315,14 +4315,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07377e8978fb03448a28588d38d5efb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _contentFactory: {fileID: 11400000, guid: 8b7976d0dda20974cbc5fbf7d1cb0bd5, type: 2}
-  _enemyContorller: {fileID: 250740639}
-  _enemyFactory: {fileID: 11400000, guid: 63e7d53d2ce69e143af86d94043d78a9, type: 2}
+  _towerFactory: {fileID: 11400000, guid: 8b7976d0dda20974cbc5fbf7d1cb0bd5, type: 2}
   _buildingController: {fileID: 98841625}
   _contentSelector: {fileID: 77270954}
-  _warFactory: {fileID: 11400000, guid: b4855641958fa3a4fb0248fdf5ecce04, type: 2}
-  _sceraio: {fileID: 11400000, guid: 0df6968ad275edf41ac44ed686258ce9, type: 2}
-  _coins: {fileID: 2088420226}
 --- !u!4 &1943920052
 Transform:
   m_ObjectHideFlags: 0

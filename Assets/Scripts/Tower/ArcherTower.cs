@@ -39,7 +39,7 @@ public class ArcherTower : TowerBase
         return true;
     }
 
-    private void Shoot(ProjectileConfig config)
+    protected void Shoot(ProjectileConfig config)
     {
         _projectile.GetArrow().Initialize(_projectile, config);
     }

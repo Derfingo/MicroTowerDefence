@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[SelectionBase]
 public abstract class TowerBase : TileContent
 {
     [SerializeField] private TowerType _towerType;
@@ -9,21 +10,15 @@ public abstract class TowerBase : TileContent
 
     public TowerType TowerType => _towerType;
     public float TargetRange => _targetRange;
+    public int Level { get; protected set; }
     public uint Cost => _cost;
 
-    private TowerConfig _config;
     protected ProjectileController _projectile;
 
-    public override void Initialize(TileContentFactory factory, int level)
+    public void Initialize(TowerConfig config, int level)
     {
-        base.Initialize(factory, level);
-        SetConfig(OriginFactory.GetConfig(level));
-    }
-
-    public void SetConfig(TowerConfig config)
-    {
-        _config = config;
-        SetStats(_config);
+        Level = level;
+        SetStats(config);
     }
 
     public void SetProjectile(ProjectileController projectile)
@@ -97,12 +92,4 @@ public abstract class TowerBase : TileContent
     //    position.y += 0.1f;
     //    Gizmos.DrawWireSphere(position, _targetRange);
     //}
-}
-
-public enum TowerType : byte
-{
-    Beam = 101,
-    Mortar = 102,
-    Archer = 103,
-    Magic = 104,
 }
