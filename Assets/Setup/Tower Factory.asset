@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _beamPrefabs:
   - {fileID: 5478110801795154581, guid: 312004f727ea1464c992488e167e950a, type: 3}
-  - {fileID: 5478110801795154581, guid: 312004f727ea1464c992488e167e950a, type: 3}
-  - {fileID: 5478110801795154581, guid: 312004f727ea1464c992488e167e950a, type: 3}
+  - {fileID: 1982780485478578002, guid: 593c23cff9885bd4cbb398e58c5cb64f, type: 3}
+  - {fileID: 4122716746201762980, guid: e226e95ffb34d6e4a8801186938901d8, type: 3}
   _mortarPrefabs:
   - {fileID: 5187168687205909870, guid: 885d21bb7366dd647b7c6c8de364a4d9, type: 3}
-  - {fileID: 1313210861052123609, guid: c6ae8f73230b9b14fbcc58a83c5af40c, type: 3}
+  - {fileID: 4578439508782521830, guid: c0b3a364f37ce5642a83772db43adf1d, type: 3}
   - {fileID: 1313210861052123609, guid: c6ae8f73230b9b14fbcc58a83c5af40c, type: 3}
   _archerPrefabs:
   - {fileID: 404256357162471880, guid: f031cced4edfadd4b99665f7d9e58d45, type: 3}
@@ -26,5 +26,6 @@ MonoBehaviour:
   - {fileID: 546477330913187392, guid: 4b4cdf4c0cf99fd47995e618a2b9e1c0, type: 3}
   _magicPrefabs:
   - {fileID: 2835667209765803658, guid: cc8b8c92d01961e4c9b7f3e170c77e1d, type: 3}
+  - {fileID: 3228772374763237014, guid: 3655786741bb7a54fb2b310eddf62df0, type: 3}
   - {fileID: 1572941653109879507, guid: fe3f5e8fb5b7dc645acfbeb7ec3e8be7, type: 3}
   _towerLevelConfig: {fileID: 11400000, guid: 070caf5e433817149a92f6d644d059e8, type: 2}

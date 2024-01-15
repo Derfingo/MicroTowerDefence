@@ -81,9 +81,9 @@ MonoBehaviour:
   _towerType: 103
   _targetRange: 2.5
   _cost: 50
+  _speedProjectile: 4
   _archer: {fileID: 7486057009029123722}
   _damage: 25.3
-  _shellBlastRadius: 0.1
   _shootPerSecond: 0.9
 --- !u!65 &4638526967713505373
 BoxCollider:
@@ -167,7 +167,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8469494145858465668, guid: 3ff80550f1e301e4ca083587c70653c0, type: 3}
+  - {fileID: 2100000, guid: cbfd02c9f9bd7bc4a93c85e7cd263615, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -27,7 +27,7 @@ MonoBehaviour:
     ShootPerSecond: 1
     DamagePerSecond: 100
   _level3:
-    TargetRange: 0
+    TargetRange: 4
     Damage: 100
     Cost: 0
     ShellBlastRadius: 1
