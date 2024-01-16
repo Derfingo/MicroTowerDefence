@@ -15,10 +15,19 @@ public abstract class TowerBase : TileContent
 
     protected ProjectileController _projectile;
 
+    private BoxCollider _collider;
+    public bool IsInit
+    {
+        get => _collider.enabled;
+        set => _collider.enabled = value;
+    }
+
     public void Initialize(TowerConfig config, int level)
     {
         Level = level;
         SetStats(config);
+        _collider = GetComponent<BoxCollider>();
+        _collider.enabled = false;
     }
 
     public void SetProjectile(ProjectileController projectile)

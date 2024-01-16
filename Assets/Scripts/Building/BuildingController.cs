@@ -39,6 +39,7 @@ public class BuildingController : MonoBehaviour
         if (_coins.TrySpend(tower.Cost))
         {
             tower.Position = position;
+            tower.IsInit = true;
             _buildings.Add(content);
         }
         else
@@ -75,6 +76,7 @@ public class BuildingController : MonoBehaviour
             
             newTower.SetProjectile(_projectileController);
             newTower.Position = position;
+            newTower.IsInit = true;
             _buildings.Add(newTower);
         }
         else

@@ -47,7 +47,7 @@ public class ContentSelector : MonoBehaviour
     {
         if (_previewContent != null)
         {
-            if (_raycast.IsHit)
+            if (_raycast.IsHit && _raycast.GetContent() == null)
             {
                 var centerCellPosition = _tilemapController.GetCellCenterPosition();
                 OnBuild?.Invoke(_previewContent, centerCellPosition);
