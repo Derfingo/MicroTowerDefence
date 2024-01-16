@@ -2,35 +2,30 @@ using UnityEngine;
 
 public class TowerFactory : GameObjectFactory
 {
-    [SerializeField] private TowerBase[] _beamPrefabs;
-    [SerializeField] private TowerBase[] _mortarPrefabs;
-    [SerializeField] private TowerBase[] _archerPrefabs;
-    [SerializeField] private TowerBase[] _magicPrefabs;
-    [Space]
-    [SerializeField] private TowerLevelConfig _towerLevelConfig;
+    [SerializeField] private TowerLevelConfig _beamConfig;
+    [SerializeField] private TowerLevelConfig _mortarConfig;
+    [SerializeField] private TowerLevelConfig _archerConfig;
+    [SerializeField] private TowerLevelConfig _magicConfig;
 
     public TowerBase Get(TowerType type, int level = 0)
     {
-        return type switch
-        {
-            TowerType.Beam => Get(_beamPrefabs[level], level),
-            TowerType.Mortar => Get(_mortarPrefabs[level], level),
-            TowerType.Archer => Get(_archerPrefabs[level], level),
-            TowerType.Magic => Get(_magicPrefabs[level], level),
-            _ => null,
-        };
-    }
-
-    private T Get<T>(T prefab, int level = 0) where T : TowerBase
-    {
-        T instance = CreateGameObjectInstance(prefab);
-        instance.Initialize(GetConfig(level), level);
+        TowerLevelConfig config = GetConfig(type);
+        TowerConfig tower = config.Get(level);
+        TowerBase instance = CreateGameObjectInstance(tower.Prefab);
+        instance.Initialize(config.Get(level), level);
         return instance;
     }
 
-    private TowerConfig GetConfig(int level)
+    private TowerLevelConfig GetConfig(TowerType type)
     {
-        return _towerLevelConfig.Get(level);
+        return type switch
+        {
+            TowerType.Mortar => _mortarConfig,
+            TowerType.Archer => _archerConfig,
+            TowerType.Magic => _magicConfig,
+            TowerType.Beam => _beamConfig,
+            _ => null
+        };
     }
 }
 

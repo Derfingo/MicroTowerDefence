@@ -8,10 +8,10 @@ public class TilemapController : MonoBehaviour
     [SerializeField] private RaycastController _raycast;
     [SerializeField] private Tilemap[] _tilemapArray;
 
-    public int HeightTilemap { get; private set; }
+    public float HeightTilemap { get; private set; }
     public Vector3Int GridPosition { get; private set; }
 
-    private Dictionary<int, Tilemap> _tilemaps;
+    private Dictionary<float, Tilemap> _tilemaps;
     private Tilemap _targetTilemap;
 
     private void Start()
@@ -37,11 +37,11 @@ public class TilemapController : MonoBehaviour
 
     private void InitializeTilemaps()
     {
-        _tilemaps = new Dictionary<int, Tilemap>();
+        _tilemaps = new Dictionary<float, Tilemap>();
 
         for (int i = 0; i < _tilemapArray.Length; i++)
         {
-            int height = (int)_tilemapArray[i].transform.position.y;
+            var height = _tilemapArray[i].transform.position.y;
             _tilemaps.Add(height, _tilemapArray[i]);
         }
 
@@ -58,12 +58,12 @@ public class TilemapController : MonoBehaviour
 
     private bool GetTilamap(float mouseHeight)
     {
-        var height = Mathf.RoundToInt(mouseHeight);
+        //var height = Mathf.Round(mouseHeight);
 
-        if (_tilemaps.ContainsKey(height))
+        if (_tilemaps.ContainsKey(mouseHeight))
         {
-            HeightTilemap = height;
-            _targetTilemap = _tilemaps[height];
+            HeightTilemap = mouseHeight;
+            _targetTilemap = _tilemaps[mouseHeight];
             return true;
         }
 

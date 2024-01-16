@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc2d987f25f220546a9bb4d3bcf5f5ed, type: 3}
+  m_Name: Mortar Tower Config
+  m_EditorClassIdentifier: 
+  Type: 102
+  _level1:
+    Prefab: {fileID: 5187168687205909870, guid: 885d21bb7366dd647b7c6c8de364a4d9,
+      type: 3}
+    TargetRange: 1.9
+    Damage: 20
+    Cost: 70
+    ShellBlastRadius: 0.5
+    ShootPerSecond: 0.7
+    DamagePerSecond: 30
+  _level2:
+    Prefab: {fileID: 4578439508782521830, guid: c0b3a364f37ce5642a83772db43adf1d,
+      type: 3}
+    TargetRange: 2.3
+    Damage: 40
+    Cost: 100
+    ShellBlastRadius: 0.6
+    ShootPerSecond: 0.9
+    DamagePerSecond: 50
+  _level3:
+    Prefab: {fileID: 1313210861052123609, guid: c6ae8f73230b9b14fbcc58a83c5af40c,
+      type: 3}
+    TargetRange: 2.7
+    Damage: 70
+    Cost: 220
+    ShellBlastRadius: 0.8
+    ShootPerSecond: 1.2
+    DamagePerSecond: 80

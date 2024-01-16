@@ -11,7 +11,9 @@ public class MagicTower : TowerBase
     protected override void SetStats(TowerConfig config)
     {
         _damage = config.Damage;
+        _targetRange = config.TargetRange;
         _shootPerSecond = config.ShootPerSecond;
+        _cost = config.Cost;
     }
 
     public override bool GameUpdate()

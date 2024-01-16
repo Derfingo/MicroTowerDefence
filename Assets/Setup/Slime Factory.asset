@@ -26,7 +26,7 @@ MonoBehaviour:
       _max: 1.6
     Health:
       _min: 50
-      _max: 150
+      _max: 100
     Coins: 15
     Damage: 1
   _medium:
@@ -43,7 +43,7 @@ MonoBehaviour:
       _max: 1
     Health:
       _min: 100
-      _max: 100
+      _max: 150
     Coins: 20
     Damage: 2
   _large:
@@ -59,7 +59,7 @@ MonoBehaviour:
       _min: 0.6
       _max: 0.8
     Health:
-      _min: 400
-      _max: 600
+      _min: 500
+      _max: 800
     Coins: 40
     Damage: 3
