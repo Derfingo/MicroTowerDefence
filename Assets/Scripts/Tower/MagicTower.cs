@@ -39,6 +39,6 @@ public class MagicTower : TowerBase
 
     private void Shoot(ProjectileConfig config)
     {
-        _projectile.GetSphere().Initialize(_projectile, config);
+        _projectileController.GetSphere(Level).Initialize(_projectileController, config);
     }
 }

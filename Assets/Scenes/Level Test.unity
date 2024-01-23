@@ -6981,7 +6981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e514b4d10b5d04782931564a7f748c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialConins: 500
+  _initialConins: 150
   _view: {fileID: 1375975589}
 --- !u!4 &2088420227
 Transform:

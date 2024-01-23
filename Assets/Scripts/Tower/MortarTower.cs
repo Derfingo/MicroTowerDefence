@@ -48,6 +48,6 @@ public class MortarTower : TowerBase
 
     private void Shoot(ProjectileConfig config)
     {
-        _projectile.GetShell().Initialize(_projectile, config);
+        _projectileController.GetShell().Initialize(_projectileController, config);
     }
 }

@@ -27,11 +27,12 @@ public class ProjectileController : MonoBehaviour
         return arrow;
     }
 
-    public MagicSphere GetSphere()
+    public MagicSphere GetSphere(uint level)
     {
-        var shpere = _factory.MagicSphere;
-        _projectiles.Add(shpere);
-        return shpere;
+        var projectile = _factory.Get(ProjectileType.Sphere, level);
+        var magicSphere = projectile.GetComponent<MagicSphere>();
+        _projectiles.Add(magicSphere);
+        return magicSphere;
     }
 
     public void GameUpdate()

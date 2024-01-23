@@ -7,7 +7,7 @@ public class TowerFactory : GameObjectFactory
     [SerializeField] private TowerLevelConfig _archerConfig;
     [SerializeField] private TowerLevelConfig _magicConfig;
 
-    public TowerBase Get(TowerType type, int level = 0)
+    public TowerBase Get(TowerType type, uint level = 0)
     {
         TowerLevelConfig config = GetConfig(type);
         TowerConfig tower = config.Get(level);

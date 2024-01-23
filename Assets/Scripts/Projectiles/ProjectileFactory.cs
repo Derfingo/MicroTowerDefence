@@ -3,23 +3,22 @@ using UnityEngine;
 [CreateAssetMenu]
 public class ProjectileFactory : GameObjectFactory
 {
-    [SerializeField] private Shell _shellPrefab;
+    [SerializeField] private Shell[] _shellPrefab;
+    [SerializeField] private Arrow[] _arrowPrefab;
     [SerializeField] private Explosion _explosionPrefab;
-    [SerializeField] private Arrow _arrowPrefab;
-    [SerializeField] private MagicSphere _magicSpherePrefab;
+    [SerializeField] private MagicSphere[] _magicSpherePrefabs;
 
-    public Shell Shell => Get(_shellPrefab);
-    public Arrow Arrow => Get(_arrowPrefab);
-    public MagicSphere MagicSphere => Get(_magicSpherePrefab);
+    public Shell Shell => Get(_shellPrefab[0]);
+    public Arrow Arrow => Get(_arrowPrefab[0]);
     public Explosion Explosion => Instantiate(_explosionPrefab);
 
-    public ProjectileBase Get(ProjectileType type)
+    public ProjectileBase Get(ProjectileType type, uint level)
     {
         return type switch
         {
-            ProjectileType.Shell => Get(_shellPrefab),
-            ProjectileType.Arrow => Get(_arrowPrefab),
-            ProjectileType.Sphere => Get(_magicSpherePrefab),
+            ProjectileType.Shell => Get(_shellPrefab[level]),
+            ProjectileType.Arrow => Get(_arrowPrefab[level]),
+            ProjectileType.Sphere => Get(_magicSpherePrefabs[level]),
             _ => null,
         };
     }

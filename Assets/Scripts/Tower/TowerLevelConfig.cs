@@ -8,7 +8,7 @@ public class TowerLevelConfig : ScriptableObject
     [Range(30, 200)] public uint CostToBuild;
     [SerializeField] private TowerConfig _level1, _level2, _level3;
 
-    public TowerConfig Get(int level)
+    public TowerConfig Get(uint level)
     {
         return level switch
         {

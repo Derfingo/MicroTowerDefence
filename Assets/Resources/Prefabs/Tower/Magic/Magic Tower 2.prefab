@@ -40,7 +40,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 438549253239405490}
-  m_Mesh: {fileID: -2432090755550338912, guid: 4dfe5673387a3c741a6b89cfe379885e, type: 3}
+  m_Mesh: {fileID: -2432090755550338912, guid: 61c8c86d7394e584c87e26c545a3fcbb, type: 3}
 --- !u!23 &7647425840473347903
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8469494145858465668, guid: fb54bffeb89a3284d9c5a600b9a81a99, type: 3}
+  - {fileID: 2100000, guid: 32c5b5d682450134096eeda127ba6cc7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -132,7 +132,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _towerType: 104
   _targetRange: 2
-  _cost: 0
   _speedProjectile: 4
   _spere: {fileID: 5953127296144868287}
   _shootPerSecond: 2
@@ -187,7 +186,7 @@ Transform:
   m_GameObject: {fileID: 5823693279412371887}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.15, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -200,7 +199,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5823693279412371887}
-  m_Mesh: {fileID: -2432090755550338912, guid: 8ed60e366c1a8a64b947953c989b7636, type: 3}
+  m_Mesh: {fileID: -2432090755550338912, guid: 6a895d4abc982214abda82d014f6a05d, type: 3}
 --- !u!23 &7835465011122419642
 MeshRenderer:
   m_ObjectHideFlags: 0

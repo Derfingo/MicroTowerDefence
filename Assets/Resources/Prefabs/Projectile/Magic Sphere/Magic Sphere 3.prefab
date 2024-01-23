@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4436751026686430185}
   - component: {fileID: 8027435645924631251}
   m_Layer: 0
-  m_Name: Magic Sphere
+  m_Name: Magic Sphere 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +85,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5999438928652111197}
-  m_Mesh: {fileID: -2432090755550338912, guid: 000ecef70eac96b4cbf4096e9834b31e, type: 3}
+  m_Mesh: {fileID: -2432090755550338912, guid: f986de7c9e82aeb45b31de4f926c092a, type: 3}
 --- !u!23 &1824652595942717796
 MeshRenderer:
   m_ObjectHideFlags: 0

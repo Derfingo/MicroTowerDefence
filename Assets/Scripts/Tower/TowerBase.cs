@@ -10,11 +10,11 @@ public abstract class TowerBase : TileContent
 
     public TowerType TowerType => _towerType;
     public float TargetRange => _targetRange;
-    public int Level { get; protected set; }
+    public uint Level { get; protected set; }
     public uint UpgradeCost {  get; protected set; }
     public uint SellCost { get; protected set; }
 
-    protected ProjectileController _projectile;
+    protected ProjectileController _projectileController;
 
     private BoxCollider _collider;
 
@@ -24,7 +24,7 @@ public abstract class TowerBase : TileContent
         set => _collider.enabled = value;
     }
 
-    public void Initialize(TowerConfig config, int level)
+    public void Initialize(TowerConfig config, uint level)
     {
         Level = level;
         UpgradeCost = config.UpgradeCost;
@@ -36,7 +36,7 @@ public abstract class TowerBase : TileContent
 
     public void SetProjectile(ProjectileController projectile)
     {
-        _projectile = projectile;
+        _projectileController = projectile;
     }
 
     protected abstract void SetStats(TowerConfig config);
