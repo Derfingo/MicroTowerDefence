@@ -18,7 +18,6 @@ public class BeamTower : TowerBase
     {
         _targetRange = config.TargetRange;
         _damagePerSecond = config.DamagePerSecond;
-        _cost = config.Cost;
     }
 
     public override bool GameUpdate()

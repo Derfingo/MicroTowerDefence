@@ -34,10 +34,11 @@ public class BuildingController : MonoBehaviour
     private void OnBuild(TileContent content, Vector3 position)
     {
         var tower = content.GetComponent<TowerBase>();
-        tower.SetProjectile(_projectileController);
+        var cost = _towerFactory.GetCost(tower.TowerType);
 
-        if (_coins.TrySpend(tower.Cost))
+        if (_coins.TrySpend(cost))
         {
+            tower.SetProjectile(_projectileController);
             tower.Position = position;
             tower.IsInit = true;
             _buildings.Add(content);
@@ -65,11 +66,9 @@ public class BuildingController : MonoBehaviour
             return;
         }
 
-        var newTower = _towerFactory.Get(tower.TowerType, tower.Level + 1);
-        var cost = newTower.Cost;
-
-        if (_coins.TrySpend(cost))
+        if (_coins.TrySpend(tower.UpgradeCost))
         {
+            var newTower = _towerFactory.Get(tower.TowerType, tower.Level + 1);
             var position = content.Position;
             _buildings.Remove(content);
             content.Destroy();
@@ -78,10 +77,6 @@ public class BuildingController : MonoBehaviour
             newTower.Position = position;
             newTower.IsInit = true;
             _buildings.Add(newTower);
-        }
-        else
-        {
-            newTower.Destroy();
         }
     }
 }

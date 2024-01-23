@@ -20,10 +20,10 @@ public class TowerFactory : GameObjectFactory
     {
         return type switch
         {
-            TowerType.Beam => 0,
-            TowerType.Mortar => 0,
-            TowerType.Archer => 0,
-            TowerType.Magic => 0,
+            TowerType.Beam => GetConfig(type).CostToBuild,
+            TowerType.Mortar => GetConfig(type).CostToBuild,
+            TowerType.Archer => GetConfig(type).CostToBuild,
+            TowerType.Magic => GetConfig(type).CostToBuild,
             _ => throw new System.NotImplementedException(),
         };
     }

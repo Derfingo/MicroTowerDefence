@@ -6,13 +6,13 @@ public abstract class TowerBase : TileContent
 {
     [SerializeField] private TowerType _towerType;
     [SerializeField, Range(1f, 10f)] protected float _targetRange;
-    [SerializeField, Range(50, 500)] protected uint _cost;
     [SerializeField] protected float _speedProjectile = 4f;
 
     public TowerType TowerType => _towerType;
     public float TargetRange => _targetRange;
     public int Level { get; protected set; }
-    public uint Cost => _cost;
+    public uint UpgradeCost {  get; protected set; }
+    public uint SellCost { get; protected set; }
 
     protected ProjectileController _projectile;
 
@@ -27,6 +27,8 @@ public abstract class TowerBase : TileContent
     public void Initialize(TowerConfig config, int level)
     {
         Level = level;
+        UpgradeCost = config.UpgradeCost;
+        SellCost = config.SellCost;
         SetStats(config);
         _collider = GetComponent<BoxCollider>();
         _collider.enabled = false;

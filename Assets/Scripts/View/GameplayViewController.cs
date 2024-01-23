@@ -6,6 +6,7 @@ public class GameplayViewController : ViewBase
     [SerializeField] private TowerMenu _towerMenu;
     [SerializeField] private BuildingView _buildingView;
     [SerializeField] private TowerFactory _towerFactory;
+    [SerializeField] private CoinsView _coinsView;
 
     public event Action<TowerType> OnSelectBuilding;
 
@@ -18,7 +19,12 @@ public class GameplayViewController : ViewBase
         _towerMenu.UpgradeButton.onClick.AddListener(OnUpgradeTowerClicked);
         _towerMenu.SellButton.onClick.AddListener(OnSellTowerCliked);
 
-        SetCofig();
+        SetConfig();
+    }
+
+    public void ShowDeficiencyCoins()
+    {
+        _coinsView.DeficiencyCoinsAnimate();
     }
 
     public void ShowBuildingMenu()
@@ -27,9 +33,10 @@ public class GameplayViewController : ViewBase
         _buildingView.Show();
     }
 
-    public void ShowTowerMenu()
+    public void ShowTowerMenu(uint upgradeCost, uint sellCost)
     {
         HideMenus();
+        _towerMenu.SetCosts(upgradeCost, sellCost);
         _towerMenu.Show();
     }
 
@@ -39,11 +46,11 @@ public class GameplayViewController : ViewBase
         _towerMenu.Hide();
     }
 
-    private void SetCofig()
+    private void SetConfig()
     {
         foreach (var button in _buildingView.Buttons)
         {
-            button.SetCost(_towerFactory.GetConfig(button.Type).Get(0).Cost);
+            button.SetCost(_towerFactory.GetConfig(button.Type).CostToBuild);
         }
     }
 

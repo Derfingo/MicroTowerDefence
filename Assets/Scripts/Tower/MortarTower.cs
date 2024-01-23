@@ -15,7 +15,6 @@ public class MortarTower : TowerBase
         _targetRange = config.TargetRange;
         _shootPerSecond = config.ShootPerSecond;
         _shellBlastRadius = config.ShellBlastRadius;
-        _cost = config.Cost;
     }
 
     public override bool GameUpdate()

@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Archer Tower Config
   m_EditorClassIdentifier: 
   Type: 103
+  CostToBuild: 50
   _level1:
     Prefab: {fileID: 404256357162471880, guid: f031cced4edfadd4b99665f7d9e58d45, type: 3}
     TargetRange: 1.7
     Damage: 20
-    Cost: 50
+    UpgradeCost: 100
+    SellCost: 30
     ShellBlastRadius: 0.5
     ShootPerSecond: 0.9
     DamagePerSecond: 25
@@ -25,7 +27,8 @@ MonoBehaviour:
     Prefab: {fileID: 240080371973959801, guid: 34af1f1464e0b0c40bb7e8459f81ad00, type: 3}
     TargetRange: 2.3
     Damage: 40
-    Cost: 100
+    UpgradeCost: 200
+    SellCost: 60
     ShellBlastRadius: 0.6
     ShootPerSecond: 1.1
     DamagePerSecond: 50
@@ -33,7 +36,8 @@ MonoBehaviour:
     Prefab: {fileID: 546477330913187392, guid: 4b4cdf4c0cf99fd47995e618a2b9e1c0, type: 3}
     TargetRange: 2.7
     Damage: 70
-    Cost: 220
+    UpgradeCost: 300
+    SellCost: 180
     ShellBlastRadius: 0.8
     ShootPerSecond: 1.3
     DamagePerSecond: 80

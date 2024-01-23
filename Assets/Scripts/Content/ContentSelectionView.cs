@@ -7,8 +7,9 @@ public class ContentSelectionView : MonoBehaviour
     [SerializeField] private TilemapController _tilemapController;
     [SerializeField] private RaycastController _raycast;
     [SerializeField] private InputController _input;
-    [SerializeField] private GameplayViewController _view;
+    [SerializeField] private Coins _coins;
     [Space]
+    [SerializeField] private GameplayViewController _view;
     [SerializeField] private TargetCellView _targetCellView;
     [SerializeField] private TargetRadiusView _targetRadiusView;
 
@@ -68,8 +69,18 @@ public class ContentSelectionView : MonoBehaviour
     {
         _previewContent = _towerFactory.Get(type);
         TowerBase tower = _previewContent.GetComponent<TowerBase>();
-        SetTargetRange(tower.Position, tower.TargetRange);
-        _tilemapController.ShowTowerPlaces();
+        var cost = _towerFactory.GetCost(tower.TowerType);
+
+        if (_coins.Check(cost))
+        {
+            SetTargetRange(tower.Position, tower.TargetRange);
+            _tilemapController.ShowTowerPlaces();
+        }
+        else
+        {
+            _view.ShowDeficiencyCoins();
+            _previewContent.Destroy();
+        }
     }
 
     private void OnUpgradeBuilding()
@@ -99,7 +110,7 @@ public class ContentSelectionView : MonoBehaviour
                 var position = tower.Position;
                 position.y += 0.01f;
                 SetTargetRange(position, tower.TargetRange);
-                _view.ShowTowerMenu();
+                _view.ShowTowerMenu(tower.UpgradeCost, tower.SellCost);
             }
             else
             {

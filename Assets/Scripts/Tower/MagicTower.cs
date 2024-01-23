@@ -13,7 +13,6 @@ public class MagicTower : TowerBase
         _damage = config.Damage;
         _targetRange = config.TargetRange;
         _shootPerSecond = config.ShootPerSecond;
-        _cost = config.Cost;
     }
 
     public override bool GameUpdate()

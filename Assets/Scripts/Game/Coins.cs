@@ -17,20 +17,30 @@ public class Coins : MonoBehaviour
     {
         _coins += amount;
         _view.SetCoins(_coins);
-        _view.Animate();
+        _view.AddCoinsAnimate();
     }
 
-    public bool TrySpend(uint cost)
+    public bool Check(uint cost)
     {
         if (_coins < cost)
         {
             Debug.Log("coins is not enough");
             return false;
         }
-
-        _coins -= cost;
-        _view.SetCoins(_coins);
+        
         return true;
+    }
+
+    public bool TrySpend(uint cost)
+    {
+        if (Check(cost))
+        {
+            _coins -= cost;
+            _view.SetCoins(_coins);
+            return true;
+        }
+
+        return false;
     }
 
     public void Reset()
