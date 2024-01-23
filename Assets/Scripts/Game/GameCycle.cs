@@ -5,8 +5,10 @@ public class GameCycle : MonoBehaviour
 {
     [SerializeField, Range(0f, 30f)] private float _prepareTime = 5f;
     [Space]
+    [SerializeField] private ContentSelectionView _contentSelectionView;
     [SerializeField] private ProjectileController _projectileController;
     [SerializeField] private BuildingController _buildingController;
+    [SerializeField] private TilemapController _tilemapController;
     [SerializeField] private EnemyContorller _enemyController;
     [SerializeField] private GameScenario _gameScenario;
     [SerializeField] private Health _health;
@@ -26,9 +28,9 @@ public class GameCycle : MonoBehaviour
 
     private void Update()
     {
+        UpdateControllers();
         UpdateScenario();
         Physics.SyncTransforms();
-        UpdateEntities();
     }
 
     private void UpdateScenario()
@@ -60,8 +62,10 @@ public class GameCycle : MonoBehaviour
         _coins.Add(coins);
     }
 
-    private void UpdateEntities()
+    private void UpdateControllers()
     {
+        _tilemapController.GameUpdate();
+        _contentSelectionView.GameUpdate();
         _buildingController.GameUpdate();
         _projectileController.GameUpdate();
         _enemyController.GameUpdate();

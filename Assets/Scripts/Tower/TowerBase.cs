@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 [SelectionBase]
@@ -16,6 +17,7 @@ public abstract class TowerBase : TileContent
     protected ProjectileController _projectile;
 
     private BoxCollider _collider;
+
     public bool IsInit
     {
         get => _collider.enabled;

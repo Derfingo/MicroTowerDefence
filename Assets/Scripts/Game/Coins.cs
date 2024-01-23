@@ -17,6 +17,7 @@ public class Coins : MonoBehaviour
     {
         _coins += amount;
         _view.SetCoins(_coins);
+        _view.Animate();
     }
 
     public bool TrySpend(uint cost)

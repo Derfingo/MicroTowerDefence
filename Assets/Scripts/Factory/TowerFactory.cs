@@ -16,7 +16,19 @@ public class TowerFactory : GameObjectFactory
         return instance;
     }
 
-    private TowerLevelConfig GetConfig(TowerType type)
+    public uint GetCost(TowerType type)
+    {
+        return type switch
+        {
+            TowerType.Beam => 0,
+            TowerType.Mortar => 0,
+            TowerType.Archer => 0,
+            TowerType.Magic => 0,
+            _ => throw new System.NotImplementedException(),
+        };
+    }
+
+    public TowerLevelConfig GetConfig(TowerType type)
     {
         return type switch
         {

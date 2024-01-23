@@ -2,12 +2,12 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ContentSelector : MonoBehaviour
+public class ContentSelectionView : MonoBehaviour
 {
     [SerializeField] private TilemapController _tilemapController;
     [SerializeField] private RaycastController _raycast;
     [SerializeField] private InputController _input;
-    [SerializeField] private ViewController _view;
+    [SerializeField] private GameplayViewController _view;
     [Space]
     [SerializeField] private TargetCellView _targetCellView;
     [SerializeField] private TargetRadiusView _targetRadiusView;
@@ -37,7 +37,7 @@ public class ContentSelector : MonoBehaviour
         _towerFactory = towerFactory;
     }
 
-    private void Update()
+    public void GameUpdate()
     {
         SetTargetCellView();
         SetTargetContentView();
@@ -58,6 +58,7 @@ public class ContentSelector : MonoBehaviour
                 _previewContent.Destroy();
             }
             
+            _tilemapController.HideTowerPlaces();
             _view.ShowBuildingMenu();
             _targetRadiusView.Hide();
         }
@@ -68,6 +69,7 @@ public class ContentSelector : MonoBehaviour
         _previewContent = _towerFactory.Get(type);
         TowerBase tower = _previewContent.GetComponent<TowerBase>();
         SetTargetRange(tower.Position, tower.TargetRange);
+        _tilemapController.ShowTowerPlaces();
     }
 
     private void OnUpgradeBuilding()
@@ -118,15 +120,15 @@ public class ContentSelector : MonoBehaviour
     private void SetTargetCellView()
     {
         var viewPosition = _tilemapController.GetCellPosition();
-        _targetCellView.SetPosition(viewPosition);
+        _targetCellView.SetTargetCellPosition(viewPosition);
 
         if (_raycast.IsHit)
         {
-            _targetCellView.Show();
+            _targetCellView.ShowTargetCell();
         }
         else
         {
-            _targetCellView.Hide();
+            _targetCellView.HideTargerCell();
         }
     }
 

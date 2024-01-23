@@ -7,19 +7,22 @@ public class TilemapController : MonoBehaviour
     [SerializeField] private InputController _input;
     [SerializeField] private RaycastController _raycast;
     [SerializeField] private Tilemap[] _tilemapArray;
+    [SerializeField] private TowerPlaceView[] _towerPlaces;
 
     public float HeightTilemap { get; private set; }
     public Vector3Int GridPosition { get; private set; }
 
     private Dictionary<float, Tilemap> _tilemaps;
+    
     private Tilemap _targetTilemap;
 
     private void Start()
     {
         InitializeTilemaps();
+        HideTowerPlaces();
     }
 
-    private void Update()
+    public void GameUpdate()
     {
         var position = _raycast.GetPosition();
         DetectPosition(position);
@@ -33,6 +36,22 @@ public class TilemapController : MonoBehaviour
     public Vector3 GetCellPosition()
     {
         return _targetTilemap.CellToWorld(GridPosition);
+    }
+
+    public void ShowTowerPlaces()
+    {
+        foreach (var place in _towerPlaces)
+        {
+            place.Show();
+        }
+    }
+
+    public void HideTowerPlaces()
+    {
+        foreach (var place in _towerPlaces)
+        {
+            place.Hide();
+        }
     }
 
     private void InitializeTilemaps()

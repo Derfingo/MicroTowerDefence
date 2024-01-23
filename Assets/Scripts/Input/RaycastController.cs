@@ -12,8 +12,6 @@ public class RaycastController : MonoBehaviour
     private const float MAX_DISTANCE = 100f;
     private Vector3 _hitPosition;
 
-    public Ray TouchRay => _camera.ScreenPointToRay(_input.GetMousePosition());
-
     public Vector3 GetPosition()
     {
         var mousePosition = _input.GetMousePosition();

@@ -3,7 +3,7 @@ using UnityEngine;
 public class BuildingController : MonoBehaviour
 {
     [SerializeField] private ProjectileController _projectileController;
-    [SerializeField] private ContentSelector _contentSelector;
+    [SerializeField] private ContentSelectionView _contentSelector;
     [SerializeField] private Coins _coins;
 
     private TowerFactory _towerFactory;
@@ -65,7 +65,7 @@ public class BuildingController : MonoBehaviour
             return;
         }
 
-        var newTower = _towerFactory.Get(tower.TowerType, tower.Level + 1); 
+        var newTower = _towerFactory.Get(tower.TowerType, tower.Level + 1);
         var cost = newTower.Cost;
 
         if (_coins.TrySpend(cost))

@@ -4,7 +4,7 @@ public class InitializationGame : MonoBehaviour
 {
     [SerializeField] private TowerFactory _towerFactory;
     [SerializeField] private BuildingController _buildingController;
-    [SerializeField] private ContentSelector _contentSelector;
+    [SerializeField] private ContentSelectionView _contentSelector;
 
     private void Start()
     {

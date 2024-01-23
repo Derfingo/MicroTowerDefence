@@ -31,6 +31,7 @@ public class Health : MonoBehaviour
 
         _health -= damage;
         _view.SetHealth(_health);
+        _view.Animate();
         return false;
     }
 
