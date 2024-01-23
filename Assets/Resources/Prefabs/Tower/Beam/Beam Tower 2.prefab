@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 1982780485478578002}
   - component: {fileID: 2607818785992752635}
   m_Layer: 8
-  m_Name: BeamTower 2
+  m_Name: Beam Tower 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

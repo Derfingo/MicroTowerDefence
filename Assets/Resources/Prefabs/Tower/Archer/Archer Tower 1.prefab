@@ -80,7 +80,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _towerType: 103
   _targetRange: 2.5
-  _cost: 50
   _speedProjectile: 4
   _archer: {fileID: 7486057009029123722}
   _damage: 25.3
@@ -146,7 +145,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7685409652123768477}
-  m_Mesh: {fileID: -2432090755550338912, guid: 3ff80550f1e301e4ca083587c70653c0, type: 3}
+  m_Mesh: {fileID: -2432090755550338912, guid: 2622761966e555445a069086b8370b8d, type: 3}
 --- !u!23 &1003376237234428024
 MeshRenderer:
   m_ObjectHideFlags: 0

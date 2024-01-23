@@ -71,7 +71,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5741218238127114055}
-  m_Mesh: {fileID: -2432090755550338912, guid: d061fa24a65294b4e938cf4625331781, type: 3}
+  m_Mesh: {fileID: -2432090755550338912, guid: 5ce72ba232be2484d8df02599da965c0, type: 3}
 --- !u!23 &2947708840274069922
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 240080371973959801}
   - component: {fileID: 5978211410862968552}
   m_Layer: 8
-  m_Name: ArcherTower 2
+  m_Name: Archer Tower 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,10 +163,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _towerType: 103
   _targetRange: 2.1
-  _cost: 100
+  _speedProjectile: 4
   _archer: {fileID: 3809948737107712306}
   _damage: 70
-  _shellBlastRadius: 0.1
   _shootPerSecond: 1.1
 --- !u!65 &5978211410862968552
 BoxCollider:
