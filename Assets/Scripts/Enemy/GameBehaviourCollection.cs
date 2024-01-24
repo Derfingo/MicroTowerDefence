@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameBehaviourCollection
 {
     public bool IsEmpty => _behaviours.Count == 0;
+    public List<GameBehaviour> Behaviours => _behaviours;
 
     private readonly List<GameBehaviour> _behaviours = new();
 

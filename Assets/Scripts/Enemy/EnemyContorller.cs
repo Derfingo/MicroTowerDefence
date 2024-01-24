@@ -22,6 +22,14 @@ public class EnemyContorller : MonoBehaviour
         _enemies.Add(enemy);
     }
 
+    public void SetPause(bool isPause)
+    {
+        foreach (var enemy in _enemies.Behaviours)
+        {
+            enemy.GetComponentInChildren<Animator>().enabled = !isPause;
+        }
+    }
+
     public void Clear()
     {
         _enemies.Clear();

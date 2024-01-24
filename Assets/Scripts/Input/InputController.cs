@@ -17,7 +17,7 @@ public class InputController : MonoBehaviour
         _camera = Camera.main;
     }
 
-    private void Update()
+    public void GameUpdate()
     {
         ReadScroll();
         OnMouseClick();

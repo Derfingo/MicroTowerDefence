@@ -9,6 +9,8 @@ public class GameCycle : MonoBehaviour
     [SerializeField] private ProjectileController _projectileController;
     [SerializeField] private BuildingController _buildingController;
     [SerializeField] private TilemapController _tilemapController;
+    [SerializeField] private CameraController _cameraController;
+    [SerializeField] private InputController _inputController;
     [SerializeField] private EnemyContorller _enemyController;
     [SerializeField] private GameScenario _gameScenario;
     [SerializeField] private Health _health;
@@ -18,6 +20,7 @@ public class GameCycle : MonoBehaviour
     private Coroutine _prepareRoutine;
     private bool _scenarioInProgress;
     private bool _isDefeat;
+    private bool _isPause;
 
     private void Start()
     {
@@ -28,9 +31,30 @@ public class GameCycle : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            _isPause = !_isPause;
+            _enemyController.SetPause(_isPause);
+        }
+
+        if (_isPause)
+        {
+            return;
+        }
+
         UpdateControllers();
         UpdateScenario();
         Physics.SyncTransforms();
+    }
+
+    private void LateUpdate()
+    {
+        if (_isPause)
+        {
+            return;
+        }
+
+        _cameraController.GameLateUpdate();
     }
 
     private void UpdateScenario()
@@ -64,6 +88,7 @@ public class GameCycle : MonoBehaviour
 
     private void UpdateControllers()
     {
+        _inputController.GameUpdate();
         _tilemapController.GameUpdate();
         _contentSelectionView.GameUpdate();
         _buildingController.GameUpdate();
