@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BuildTowerButton : MonoBehaviour, IPointerDownHandler
+public class BuildTowerButton : ViewBase, IPointerDownHandler
 {
     [SerializeField] private TowerType _type;
     [SerializeField] private TextMeshProUGUI _cost;

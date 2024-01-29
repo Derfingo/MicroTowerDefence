@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-public class MainViewController : MonoBehaviour
+public class MainViewController : ViewBase
 {
     [SerializeField] private MainView _mainView;
     [SerializeField] private SettingView _settingView;

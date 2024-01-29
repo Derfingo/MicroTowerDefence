@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 
 public class TilemapController : MonoBehaviour
 {
-    [SerializeField] private InputController _input;
+    [SerializeField] private InputReader _input;
     [SerializeField] private RaycastController _raycast;
     [SerializeField] private Tilemap[] _tilemapArray;
     [SerializeField] private TowerPlaceView[] _towerPlaces;
@@ -16,7 +16,7 @@ public class TilemapController : MonoBehaviour
     
     private Tilemap _targetTilemap;
 
-    private void Start()
+    public void Initialize()
     {
         InitializeTilemaps();
         HideTowerPlaces();

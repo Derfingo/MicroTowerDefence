@@ -3,8 +3,8 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform _cameraTransform;
-    [SerializeField] private InputController _input;
     [Space]
+    [SerializeField] private bool _isMovement = false;
     [SerializeField] private float _moveSpeed = 0.1f;
     [SerializeField] private float _moveTime = 10f;
     [SerializeField] private float _rotationAmount = 2.5f;
@@ -14,8 +14,17 @@ public class CameraController : MonoBehaviour
     public Vector3 Target;
     public Vector3 Zoom;
 
-    private void Start()
+    private IInputActions _input;
+
+    public void Initialize(IInputActions input)
     {
+        _input = input;
+
+        _input.OnMouseZoomEvent += OnMouseZoom;
+        _input.OnTurnCameraLeftEvent += OnTurnLeft;
+        _input.OnTurnCameraRightEvent += OnTurnRight;
+        _input.OnRotateCameraEvent += OnTurnWithMouse;
+
         Target = transform.position;
         Rotation = transform.rotation;
         Zoom = _cameraTransform.localPosition;
@@ -23,45 +32,52 @@ public class CameraController : MonoBehaviour
 
     public void GameLateUpdate()
     {
+        HandleKeyboard(_isMovement);
         HandleMovement();
-        HandleKeyboard();
-        HandleMouse();
     }
 
-    private void HandleMouse()
+    private void HandleKeyboard(bool isMovement)
     {
-        Zoom += _input.ScrollDeltaY * _zoomAmount;
-        float delta = _input.MouseDeltaX;
-        Vector3 turn = new(0, delta, 0);
+        if (isMovement)
+        {
+            if (Input.GetKey(KeyCode.W))
+            {
+                Target += (transform.forward * _moveSpeed);
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                Target += transform.forward * -_moveSpeed;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                Target += transform.right * _moveSpeed;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                Target += transform.right * -_moveSpeed;
+            }
+        }
+    }
+
+    private void OnMouseZoom(float zoom)
+    {
+        Zoom += zoom * _zoomAmount;
+    }
+
+    private void OnTurnLeft()
+    {
+        Rotation *= Quaternion.Euler(Vector3.up * _rotationAmount / 3);
+    }
+
+    private void OnTurnRight()
+    {
+        Rotation *= Quaternion.Euler(Vector3.up * -_rotationAmount / 3);
+    }
+
+    private void OnTurnWithMouse(float rotation)
+    {
+        Vector3 turn = new(0f, rotation, 0f);
         Rotation *= Quaternion.Euler(turn * _rotationAmount);
-    }
-
-    private void HandleKeyboard()
-    {
-        if (Input.GetKey(KeyCode.W))
-        {
-            Target += (transform.forward * _moveSpeed);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            Target += transform.forward * -_moveSpeed;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            Target += transform.right * _moveSpeed;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            Target += transform.right * -_moveSpeed;
-        }
-        if (Input.GetKey(KeyCode.Q))
-        {
-            Rotation *= Quaternion.Euler(Vector3.up * _rotationAmount / 3);
-        }
-        if (Input.GetKey(KeyCode.E))
-        {
-            Rotation *= Quaternion.Euler(Vector3.up * -_rotationAmount / 3);
-        }
     }
 
     private void HandleMovement()

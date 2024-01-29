@@ -6,7 +6,6 @@ public class ContentSelectionView : MonoBehaviour
 {
     [SerializeField] private TilemapController _tilemapController;
     [SerializeField] private RaycastController _raycast;
-    [SerializeField] private InputController _input;
     [SerializeField] private Coins _coins;
     [Space]
     [SerializeField] private GameplayViewController _view;
@@ -14,28 +13,27 @@ public class ContentSelectionView : MonoBehaviour
     [SerializeField] private TargetRadiusView _targetRadiusView;
 
     public event Action<TileContent, Vector3> OnBuild;
-    public event Action<TileContent> OnUpdate;
+    public event Action<TileContent> OnUpgrade;
     public event Action<TileContent> OnSell;
 
     private TowerFactory _towerFactory;
     private TileContent _previewContent;
     private TileContent _targetContent;
+    private IInputActions _input;
 
-    private void Start()
+    public void Initialize(TowerFactory towerFactory, IInputActions input)
     {
+        _towerFactory = towerFactory;
+        _input = input;
+
+        _input.OnSelectContentEvent += OnGetContent;
+        _input.OnBuildContentEvent += OnBuildSelected;
+
         _view.OnSelectBuilding += OnSelectedBuilding;
         _view.OnSellBuilding += OnSellSelectedBuilding;
         _view.OnUpgradeBuilding += OnUpgradeBuilding;
 
-        _input.OnMouseButtonDown += OnGetContent;
-        _input.OnMouseButtonUp += OnBuildSelected;
-
         _targetCellView.Show();
-    }
-
-    public void Initialize(TowerFactory towerFactory)
-    {
-        _towerFactory = towerFactory;
     }
 
     public void GameUpdate()
@@ -85,7 +83,7 @@ public class ContentSelectionView : MonoBehaviour
 
     private void OnUpgradeBuilding()
     {
-        OnUpdate?.Invoke(_targetContent);
+        OnUpgrade?.Invoke(_targetContent);
         _view.ShowBuildingMenu();
         _targetRadiusView.Hide();
         _targetContent = null;

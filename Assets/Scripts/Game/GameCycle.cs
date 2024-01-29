@@ -10,7 +10,7 @@ public class GameCycle : MonoBehaviour
     [SerializeField] private BuildingController _buildingController;
     [SerializeField] private TilemapController _tilemapController;
     [SerializeField] private CameraController _cameraController;
-    [SerializeField] private InputController _inputController;
+    [SerializeField] private InputReader _inputController;
     [SerializeField] private EnemyContorller _enemyController;
     [SerializeField] private GameScenario _gameScenario;
     [SerializeField] private Health _health;
@@ -22,7 +22,7 @@ public class GameCycle : MonoBehaviour
     private bool _isDefeat;
     private bool _isPause;
 
-    private void Start()
+    public void Initialize()
     {
         BeginNewGame();
         _enemyController.OnEnemyFinish += TakeDamage;

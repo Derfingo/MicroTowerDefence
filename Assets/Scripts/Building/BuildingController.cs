@@ -9,16 +9,13 @@ public class BuildingController : MonoBehaviour
     private TowerFactory _towerFactory;
     private readonly GameBehaviourCollection _buildings = new();
 
-    private void Start()
-    {
-        _contentSelector.OnBuild += OnBuild;
-        _contentSelector.OnSell += OnSell;
-        _contentSelector.OnUpdate += OnUpgrade;
-    }
-
     public void Initialize(TowerFactory contentFactory)
     {
         _towerFactory = contentFactory;
+
+        _contentSelector.OnBuild += OnBuild;
+        _contentSelector.OnSell += OnSell;
+        _contentSelector.OnUpgrade += OnUpgrade;
     }
 
     public void GameUpdate()

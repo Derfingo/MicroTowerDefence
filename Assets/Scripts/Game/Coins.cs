@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Coins : MonoBehaviour
+public class Coins : ViewBase
 {
     [SerializeField] private uint _initialConins;
     [SerializeField] private CoinsView _view;

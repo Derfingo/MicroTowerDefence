@@ -1,0 +1,210 @@
+{
+    "name": "Input Action Maps",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "46c9d953-8998-4039-be1d-3a97471dc910",
+            "actions": [
+                {
+                    "name": "Zoom Camera",
+                    "type": "PassThrough",
+                    "id": "a9c2c66d-d37e-4eff-a4f4-53a214874a5c",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Mouse Position",
+                    "type": "Value",
+                    "id": "265a05ea-fa21-410d-b394-53278af5ef3d",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Select Content",
+                    "type": "Button",
+                    "id": "c43de571-4fea-4b7a-91b2-b4fe7f114de5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Rotate Camera",
+                    "type": "Button",
+                    "id": "945f7059-3b28-4984-94de-d905f81e626c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Turn Camera Left",
+                    "type": "Button",
+                    "id": "87963ce6-f1f9-4ca1-9085-d66806080bf6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Turn Camera Right",
+                    "type": "Button",
+                    "id": "d2453d83-5f9c-4f56-880e-53da4056dbfd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Build Content",
+                    "type": "Button",
+                    "id": "b93c354a-f21f-48d4-b9ca-352114587f16",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "42e58f7c-86cd-4f00-8c90-fb75074ca238",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "NormalizeVector2",
+                    "groups": "Player",
+                    "action": "Zoom Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5f875800-a374-443e-af3c-76629d5e8d08",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mouse Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ce97aa85-37b7-4c8f-81c8-b5b4ca83e88f",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select Content",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ac9e98c3-7e45-41c2-8f17-786d6f8617fa",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "021a789a-da4a-4c10-83ec-60635cc2f2b9",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Turn Camera Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9bcdafc4-1a75-42ca-9913-5c27e6a8be02",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Turn Camera Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d0742c97-3a6b-4ed5-8b4d-58f4eb021074",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Build Content",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "cfe6abb0-a18a-4eb9-822d-aaaab20ef365",
+            "actions": [
+                {
+                    "name": "Pause Game",
+                    "type": "Button",
+                    "id": "b1391dc3-aeb4-437f-baad-7e3711491fea",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "aa670353-e59d-4e37-955a-2fcd31077ca4",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause Game",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ef03474-c39d-4620-bb99-4d998f1d0137",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause Game",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "510a2e3d-758a-40b2-8c3f-517110b8a2e4",
+                    "path": "<DualSenseGamepadHID>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause Game",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Player",
+            "bindingGroup": "Player",
+            "devices": []
+        }
+    ]
+}

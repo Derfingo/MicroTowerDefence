@@ -13,7 +13,7 @@ public class GameplayViewController : ViewBase
     public event Action OnUpgradeBuilding;
     public event Action OnSellBuilding;
 
-    private void Start()
+    public void Initialize()
     {
         _buildingView.Buttons.ForEach(b => b.AddListener(OnSelectedBuilding));
         _towerMenu.UpgradeButton.onClick.AddListener(OnUpgradeTowerClicked);

@@ -3,7 +3,6 @@ using UnityEngine;
 public class RaycastController : MonoBehaviour
 {
     [SerializeField] private Camera _camera;
-    [SerializeField] private InputController _input;
     [SerializeField] private LayerMask _touchMask;
     [SerializeField] private LayerMask _contentMask;
 
@@ -11,11 +10,16 @@ public class RaycastController : MonoBehaviour
 
     private const float MAX_DISTANCE = 100f;
     private Vector3 _hitPosition;
+    private IInputActions _input;
+
+    public void Initialize(IInputActions input)
+    {
+        _input = input;
+    }
 
     public Vector3 GetPosition()
     {
-        var mousePosition = _input.GetMousePosition();
-        var ray = _camera.ScreenPointToRay(mousePosition);
+        var ray = _camera.ScreenPointToRay(_input.MousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, MAX_DISTANCE, _touchMask))
         {
@@ -37,8 +41,7 @@ public class RaycastController : MonoBehaviour
 
     public TileContent GetContent()
     {
-        var mousePosition = _input.GetMousePosition();
-        var ray = _camera.ScreenPointToRay(mousePosition);
+        var ray = _camera.ScreenPointToRay(_input.MousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, MAX_DISTANCE, _contentMask))
         {
