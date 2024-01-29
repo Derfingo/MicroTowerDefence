@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class GameCycle : MonoBehaviour
 {
-    [SerializeField, Range(0f, 30f)] private float _prepareTime = 5f;
-    [Space]
     [SerializeField] private ContentSelectionView _contentSelectionView;
     [SerializeField] private ProjectileController _projectileController;
     [SerializeField] private BuildingController _buildingController;
@@ -19,11 +17,13 @@ public class GameCycle : MonoBehaviour
     private GameScenario.State _activeScenario;
     private Coroutine _prepareRoutine;
     private bool _scenarioInProgress;
+    private float _prepareTime;
     private bool _isDefeat;
     private bool _isPause;
 
-    public void Initialize()
+    public void Initialize(float prepareTime)
     {
+        _prepareTime = prepareTime;
         BeginNewGame();
         _enemyController.OnEnemyFinish += TakeDamage;
         _enemyController.OnEnemyDie += AddCoins;

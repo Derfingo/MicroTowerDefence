@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class ViewConfigProvider : ScriptableObject, ILevelConfig
+public class ViewConfigProvider : ScriptableObject
 {
     [SerializeField] private TowerFactory _towerFactory;
 

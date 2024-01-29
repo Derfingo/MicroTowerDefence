@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private uint _initialHealth;
     [SerializeField] private HealthView _view;
 
+    private uint _initialHealth;
     private uint _health;
-    public uint Amount => _health;
 
-    private void Start()
+    public void Initialize(uint health)
     {
-        _health = _initialHealth;
+        _initialHealth = health;
+        _health = health;
         _view.SetHealth(_health);
     }
 

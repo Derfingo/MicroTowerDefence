@@ -11,21 +11,26 @@ public class InitializationLevel : MonoBehaviour
     [SerializeField] private TilemapController _tilemapController;
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private GameCycle _gamecycle;
+    [SerializeField] private Health _health;
+    [SerializeField] private Coins _coins;
     [Space]
     [SerializeField] private GameplayViewController _gameplayViewController;
+    [Space]
+    [SerializeField] private LevelConfigProvider _levelConfigProvider;
 
     private void Awake()
     {
+        var config = _levelConfigProvider.Get();
+
         _raycastController.Initialize(_inputReader);
         _cameraController.Initialize(_inputReader);
         _tilemapController.Initialize();
         _contentSelector.Initialize(_towerFactory, _inputReader);
         _buildingController.Initialize(_towerFactory);
-        _gamecycle.Initialize();
-    }
+        _gamecycle.Initialize(config.PrepareTime);
 
-    private void Start()
-    {
         _gameplayViewController.Initialize();
+        _health.Initialize(config.Health);
+        _coins.Initialize(config.Coins);
     }
 }

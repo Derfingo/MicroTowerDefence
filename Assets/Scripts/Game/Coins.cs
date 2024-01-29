@@ -2,14 +2,15 @@ using UnityEngine;
 
 public class Coins : ViewBase
 {
-    [SerializeField] private uint _initialConins;
     [SerializeField] private CoinsView _view;
 
+    private uint _initialCoins;
     private uint _coins;
 
-    private void Start()
+    public void Initialize(uint initialCoins)
     {
-        _coins = _initialConins;
+        _initialCoins = initialCoins;
+        _coins = initialCoins;
         _view.SetCoins(_coins);
     }
 
@@ -45,7 +46,7 @@ public class Coins : ViewBase
 
     public void Reset()
     {
-        _coins = _initialConins;
+        _coins = _initialCoins;
         _view.SetCoins(_coins);
     }
 }

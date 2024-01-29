@@ -8446,7 +8446,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40da5043b52927469a2451d6b7a4031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prepareTime: 0
   _contentSelectionView: {fileID: 77270954}
   _projectileController: {fileID: 1233792664}
   _buildingController: {fileID: 98841625}
@@ -9831,7 +9830,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56e9c62052693143a7b466a4dab4760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialHealth: 10
   _view: {fileID: 4820345256144011465}
 --- !u!4 &1761680645
 Transform:
@@ -11378,7 +11376,11 @@ MonoBehaviour:
   _tilemapController: {fileID: 782842631}
   _inputReader: {fileID: 137816887}
   _gamecycle: {fileID: 1550305077}
+  _health: {fileID: 1761680644}
+  _coins: {fileID: 2088420226}
   _gameplayViewController: {fileID: 2015046994}
+  _levelConfigProvider: {fileID: 11400000, guid: 26e6e1552e5cd594fb4f83d2c2f0da12,
+    type: 2}
 --- !u!4 &1943920052
 Transform:
   m_ObjectHideFlags: 0
@@ -11894,7 +11896,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e514b4d10b5d04782931564a7f748c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialConins: 150
   _view: {fileID: 1375975589}
 --- !u!4 &2088420227
 Transform:
