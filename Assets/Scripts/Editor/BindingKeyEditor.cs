@@ -5,8 +5,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[CustomEditor(typeof(BindingKeys))]
-    public class BindingKeysEditor : Editor
+[CustomEditor(typeof(BindingKey))]
+    public class BindingKeyEditor : Editor
     {
         protected void OnEnable()
         {

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using static UnityEngine.InputSystem.InputActionRebindingExtensions;
 
-public class BindingKeys : MonoBehaviour
+public class BindingKey : MonoBehaviour
 {
     [Tooltip("Reference to action that is to be rebound from the UI.")]
     [SerializeField] private InputActionReference _inputActionMap;
@@ -40,7 +40,7 @@ public class BindingKeys : MonoBehaviour
 
     private RebindingOperation m_RebindOperation;
 
-    private static List<BindingKeys> s_RebindActionUIs;
+    private static List<BindingKey> s_RebindActionUIs;
 
     /// <summary>
     /// Reference to the action that is to be rebound.
@@ -347,7 +347,7 @@ public class BindingKeys : MonoBehaviour
     protected void OnEnable()
     {
         if (s_RebindActionUIs == null)
-            s_RebindActionUIs = new List<BindingKeys>();
+            s_RebindActionUIs = new List<BindingKey>();
         s_RebindActionUIs.Add(this);
         if (s_RebindActionUIs.Count == 1)
             InputSystem.onActionChange += OnActionChange;
@@ -416,12 +416,12 @@ public class BindingKeys : MonoBehaviour
     }
 
     [Serializable]
-    public class UpdateBindingUIEvent : UnityEvent<BindingKeys, string, string, string>
+    public class UpdateBindingUIEvent : UnityEvent<BindingKey, string, string, string>
     {
     }
 
     [Serializable]
-    public class InteractiveRebindEvent : UnityEvent<BindingKeys, RebindingOperation>
+    public class InteractiveRebindEvent : UnityEvent<BindingKey, RebindingOperation>
     {
     }
 }
