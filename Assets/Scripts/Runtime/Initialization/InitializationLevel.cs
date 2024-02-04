@@ -4,7 +4,7 @@ public class InitializationLevel : MonoBehaviour
 {
     [SerializeField] private TowerFactory _towerFactory;
     [SerializeField] private CameraController _cameraController;
-    [SerializeField] private BuildingController _buildingController;
+    [SerializeField] private TowerController _buildingController;
     [SerializeField] private ContentSelectionView _contentSelector;
     [SerializeField] private RaycastController _raycastController;
     [SerializeField] private ActionMapReader _actionMapReader;
@@ -22,10 +22,11 @@ public class InitializationLevel : MonoBehaviour
     {
         var config = _levelConfigProvider.Get();
 
-        _raycastController.Initialize(_inputReader);
-        _cameraController.Initialize(_inputReader);
+        _actionMapReader.Initialize();
+        _raycastController.Initialize(_actionMapReader);
+        _cameraController.Initialize(_actionMapReader);
         _tilemapController.Initialize();
-        _contentSelector.Initialize(_towerFactory, _inputReader);
+        _contentSelector.Initialize(_towerFactory, _actionMapReader);
         _buildingController.Initialize(_towerFactory);
         _gamecycle.Initialize(config.PrepareTime);
 

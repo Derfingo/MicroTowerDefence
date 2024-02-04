@@ -2,28 +2,47 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class BuildTowerButton : ViewBase, IPointerDownHandler
+[RequireComponent(typeof(Image))]
+public class BuildTowerButton : ViewBase, ISubmitHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     [SerializeField] private TowerType _type;
-    [SerializeField] private TextMeshProUGUI _cost;
 
+    public Action<TowerType> ClickEvent;
+    public Action<TowerType> PointerEnterEvent;
+    public Action<TowerType> PointerExitEvent;
     public TowerType Type => _type;
 
-    private Action<TowerType> _listenerAction;
+    private TMP_Text _costText;
+
+    private void OnEnable()
+    {
+        _costText = GetComponentInChildren<TMP_Text>();
+    }
 
     public void SetCost(uint cost)
     {
-        _cost.text = cost.ToString();
+        _costText.text = cost.ToString();
     }
 
-    public void AddListener(Action<TowerType> listenerAction)
+    public void OnSubmit(BaseEventData eventData)
     {
-        _listenerAction = listenerAction;
+        ClickEvent?.Invoke(_type);
     }
 
-    void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        _listenerAction?.Invoke(_type);
+        PointerEnterEvent?.Invoke(_type);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        PointerExitEvent?.Invoke(_type);
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        ClickEvent?.Invoke(_type);
     }
 }

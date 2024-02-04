@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BuildingView : ViewBase
 {
-    [SerializeField] private List<BuildTowerButton> _buttons;
+    [SerializeField] private List<BuildTowerButton> _towerButtons;
 
-    public List<BuildTowerButton> Buttons => _buttons;
+    public List<BuildTowerButton> TowerButtons => _towerButtons;
 }

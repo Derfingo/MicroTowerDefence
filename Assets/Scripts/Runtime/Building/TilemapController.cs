@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 
 public class TilemapController : MonoBehaviour
 {
-    [SerializeField] private InputReader _input;
+    [SerializeField] private ActionMapReader _input;
     [SerializeField] private RaycastController _raycast;
     [SerializeField] private Tilemap[] _tilemapArray;
     [SerializeField] private TowerPlaceView[] _towerPlaces;
@@ -13,13 +13,14 @@ public class TilemapController : MonoBehaviour
     public Vector3Int GridPosition { get; private set; }
 
     private Dictionary<float, Tilemap> _tilemaps;
-    
     private Tilemap _targetTilemap;
+    private bool _isShow;
 
     public void Initialize()
     {
         InitializeTilemaps();
         HideTowerPlaces();
+        _input.TowerPlacesEvent += OnTowerPlaces;
     }
 
     public void GameUpdate()
@@ -38,7 +39,21 @@ public class TilemapController : MonoBehaviour
         return _targetTilemap.CellToWorld(GridPosition);
     }
 
-    public void ShowTowerPlaces()
+    private void OnTowerPlaces()
+    {
+        _isShow = !_isShow;
+
+        if (_isShow)
+        {
+            ShowTowerPlaces();
+        }
+        else
+        {
+            HideTowerPlaces();
+        }
+    }
+
+    private void ShowTowerPlaces()
     {
         foreach (var place in _towerPlaces)
         {
@@ -46,7 +61,7 @@ public class TilemapController : MonoBehaviour
         }
     }
 
-    public void HideTowerPlaces()
+    private void HideTowerPlaces()
     {
         foreach (var place in _towerPlaces)
         {

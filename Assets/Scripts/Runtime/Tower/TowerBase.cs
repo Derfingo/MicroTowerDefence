@@ -8,6 +8,7 @@ public abstract class TowerBase : TileContent
     [SerializeField, Range(1f, 10f)] protected float _targetRange;
     [SerializeField] protected float _speedProjectile = 4f;
 
+    public readonly uint MaxLevel = 2;
     public TowerType TowerType => _towerType;
     public float TargetRange => _targetRange;
     public uint Level { get; protected set; }
@@ -31,6 +32,7 @@ public abstract class TowerBase : TileContent
         SellCost = config.SellCost;
         SetStats(config);
         _collider = GetComponent<BoxCollider>();
+        _collider.size = new Vector3(0.9f, 1f, 0.9f);
         _collider.enabled = false;
     }
 

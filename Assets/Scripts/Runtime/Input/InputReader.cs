@@ -3,19 +3,20 @@ using UnityEngine;
 
 public class InputReader : MonoBehaviour, IInputActions
 {
-    public event Action<float> OnRotateCameraEvent;
-    public event Action<float> OnMouseZoomEvent;
-    public event Action OnTurnCameraLeftEvent;
-    public event Action OnTurnCameraRightEvent;
-    public event Action OnSelectContentEvent;
-    public event Action OnBuildContentEvent;
-    public event Action OnPauseGameEvent;
+    public event Action<float> RotateCameraEvent;
+    public event Action<float> ScrollEvent;
+    public event Action<bool> TurnCameraLeftEvent;
+    public event Action<bool> TurnCameraRightEvent;
+    public event Action GamePauseEvent;
+    public event Action SelectPlaceEvent;
+    public event Action CancelSelectPlaceEvent;
 
     public Vector3 MousePosition { get; private set; }
 
     public void GameUpdate()
     {
         GetMousePosition();
+        OnKeyboardHandler();
         OnMouseButtonsHandler();
         OnScroll();
         OnRotate();
@@ -28,24 +29,42 @@ public class InputReader : MonoBehaviour, IInputActions
 
     private void OnMouseButtonsHandler()
     {
-        if (Input.GetMouseButtonUp(0))
-        {
-            OnBuildContentEvent?.Invoke();
-        }
-
         if (Input.GetMouseButtonDown(0))
         {
-            OnSelectContentEvent?.Invoke();
+            SelectPlaceEvent?.Invoke();
         }
 
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetMouseButtonDown(1))
         {
-            OnTurnCameraLeftEvent?.Invoke();
+            CancelSelectPlaceEvent?.Invoke();
+        }
+    }
+
+    private void OnKeyboardHandler()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            TurnCameraLeftEvent?.Invoke(true);
         }
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKeyUp(KeyCode.Q))
         {
-            OnTurnCameraRightEvent?.Invoke();
+            TurnCameraLeftEvent?.Invoke(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            TurnCameraRightEvent?.Invoke(true);
+        }
+
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            TurnCameraRightEvent?.Invoke(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GamePauseEvent?.Invoke();
         }
     }
 
@@ -53,11 +72,11 @@ public class InputReader : MonoBehaviour, IInputActions
     {
         if (Input.mouseScrollDelta.y != 0)
         {
-            OnMouseZoomEvent?.Invoke(Input.mouseScrollDelta.y);
+            ScrollEvent?.Invoke(Input.mouseScrollDelta.y);
         }
         else
         {
-            OnMouseZoomEvent?.Invoke(0f);
+            ScrollEvent?.Invoke(0f);
         }
     }
 
@@ -65,7 +84,22 @@ public class InputReader : MonoBehaviour, IInputActions
     {
         if (Input.GetMouseButton(1))
         {
-            OnRotateCameraEvent?.Invoke(Input.GetAxis("Mouse X"));
+            RotateCameraEvent?.Invoke(Input.GetAxis("Mouse X"));
         }
+    }
+
+    public void SetPlayerMap()
+    {
+        Debug.Log("not implemented");
+    }
+
+    public void SetUIMap()
+    {
+        Debug.Log("not implemented");
+    }
+
+    public void SetAllMaps()
+    {
+        Debug.Log("not implemented");
     }
 }

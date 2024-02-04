@@ -5,12 +5,12 @@ public class GameCycle : MonoBehaviour
 {
     [SerializeField] private ContentSelectionView _contentSelectionView;
     [SerializeField] private ProjectileController _projectileController;
-    [SerializeField] private BuildingController _buildingController;
     [SerializeField] private TilemapController _tilemapController;
+    [SerializeField] private TowerController _buildingController;
     [SerializeField] private CameraController _cameraController;
-    [SerializeField] private InputReader _inputController;
     [SerializeField] private EnemyContorller _enemyController;
     [SerializeField] private GameScenario _gameScenario;
+    [SerializeField] private ActionMapReader _input;
     [SerializeField] private Health _health;
     [SerializeField] private Coins _coins;
 
@@ -24,19 +24,14 @@ public class GameCycle : MonoBehaviour
     public void Initialize(float prepareTime)
     {
         _prepareTime = prepareTime;
-        BeginNewGame();
+        _input.GamePauseEvent += OnPause;
         _enemyController.OnEnemyFinish += TakeDamage;
         _enemyController.OnEnemyDie += AddCoins;
+        BeginNewGame();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            _isPause = !_isPause;
-            _enemyController.SetPause(_isPause);
-        }
-
         if (_isPause)
         {
             return;
@@ -55,6 +50,12 @@ public class GameCycle : MonoBehaviour
         }
 
         _cameraController.GameLateUpdate();
+    }
+
+    private void OnPause()
+    {
+        _isPause = !_isPause;
+        _enemyController.SetPause(_isPause);
     }
 
     private void UpdateScenario()
@@ -88,7 +89,6 @@ public class GameCycle : MonoBehaviour
 
     private void UpdateControllers()
     {
-        _inputController.GameUpdate();
         _tilemapController.GameUpdate();
         _contentSelectionView.GameUpdate();
         _buildingController.GameUpdate();

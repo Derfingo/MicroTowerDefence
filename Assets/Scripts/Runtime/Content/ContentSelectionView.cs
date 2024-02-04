@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class ContentSelectionView : MonoBehaviour
 {
@@ -12,115 +11,171 @@ public class ContentSelectionView : MonoBehaviour
     [SerializeField] private TargetCellView _targetCellView;
     [SerializeField] private TargetRadiusView _targetRadiusView;
 
-    public event Action<TileContent, Vector3> OnBuild;
-    public event Action<TileContent> OnUpgrade;
-    public event Action<TileContent> OnSell;
+    public event Action<TileContent, Vector3> BuildEvent;
+    public event Action<TileContent> UpgradeEvent;
+    public event Action<TileContent, uint> SellEvent;
 
     private TowerFactory _towerFactory;
     private TileContent _previewContent;
     private TileContent _targetContent;
+    private Vector3 _previewPosition;
     private IInputActions _input;
+
+    private bool _isSelected;
 
     public void Initialize(TowerFactory towerFactory, IInputActions input)
     {
         _towerFactory = towerFactory;
         _input = input;
 
-        _input.OnSelectContentEvent += OnGetContent;
-        _input.OnBuildContentEvent += OnBuildSelected;
+        _input.SelectPlaceEvent += OnSelectPlace;
+        _input.CancelSelectPlaceEvent += OnCancelSelectedPlace;
 
-        _view.OnSelectBuilding += OnSelectedBuilding;
-        _view.OnSellBuilding += OnSellSelectedBuilding;
-        _view.OnUpgradeBuilding += OnUpgradeBuilding;
+        _view.BuildTowerEvent += OnBuildTower;
+        _view.SellTowerEvent += OnSellSelectedTower;
+        _view.UpgradeTowerEvent += OnUpgradeTower;
+
+        _view.SelectPreviewTowerEvent += OnShowPreviewTower;
+        _view.DeselectPreviewTowerEvent += OnHidePreviewTower;
+
+        _view.PointerEnterEvent += OnPointerOverButton;
+        _view.PointerExitEvent += OnPointerOutButton;
 
         _targetCellView.Show();
+        _view.HideMenus();
     }
 
     public void GameUpdate()
     {
         SetTargetCellView();
-        SetTargetContentView();
     }
 
-    private void OnBuildSelected()
+    private void OnBuildTower(TowerType type)
     {
         if (_previewContent != null)
         {
-            if (_raycast.IsHit && _raycast.GetContent() == null)
-            {
-                var centerCellPosition = _tilemapController.GetCellCenterPosition();
-                OnBuild?.Invoke(_previewContent, centerCellPosition);
-                _previewContent = null;
-            }
-            else
-            {
-                _previewContent.Destroy();
-            }
-            
-            _tilemapController.HideTowerPlaces();
-            _view.ShowBuildingMenu();
+            BuildEvent?.Invoke(_previewContent, _previewPosition);
+            _previewContent = null;
             _targetRadiusView.Hide();
+            _view.HideMenus();
+        }
+        else
+        {
+            Debug.Log("preview is null");
+        }
+
+        _input.SetPlayerMap();
+        _isSelected = false;
+    }
+
+    private void OnSelectPlace()
+    {
+        /*
+         * 1. place -> build tower -> track mouse
+         * 2. tower -> update or sell > track mouse
+         * 3. trap -> interact -> track mouse
+         * 4. track mouse
+        */
+
+        if (_isSelected && _raycast.GetContent() == null && _previewContent == null)
+        {
+            OnCancelSelectedPlace();
+            Debug.Log("cancel");
+            return;
+        }
+
+        _targetContent = _raycast.GetContent();
+
+        if (_targetContent == null && _raycast.IsHit)
+        {
+            SelectToBuild();
+        }
+        else if (_targetContent != null)
+        {
+            SelectTower();
         }
     }
 
-    private void OnSelectedBuilding(TowerType type)
+    private void SelectToBuild()
     {
+        _isSelected = true;
+        _previewPosition = _tilemapController.GetCellCenterPosition();
+        _view.ShowBuildingMenu();
+    }
+
+    private void SelectTower()
+    {
+        _isSelected = true;
+        TowerBase tower = _targetContent.GetComponent<TowerBase>();
+        var position = tower.Position;
+        position.y += 0.01f;
+        SetTargetRadiusView(position, tower.TargetRange);
+        _view.ShowTowerMenu(tower.UpgradeCost, tower.SellCost);
+
+        DebugView.ShowInfo(_tilemapController.GridPosition, _targetContent, _tilemapController.HeightTilemap);
+    }
+
+    private void OnShowPreviewTower(TowerType type)
+    {
+        _input.SetUIMap();
         _previewContent = _towerFactory.Get(type);
         TowerBase tower = _previewContent.GetComponent<TowerBase>();
         var cost = _towerFactory.GetCost(tower.TowerType);
 
         if (_coins.Check(cost))
         {
-            SetTargetRange(tower.Position, tower.TargetRange);
-            _tilemapController.ShowTowerPlaces();
+            _previewContent.Position = _previewPosition;
+            _previewContent.Show();
+            SetTargetRadiusView(tower.Position, tower.TargetRange);
         }
         else
         {
-            _view.ShowDeficiencyCoins();
             _previewContent.Destroy();
+            // show not enough coins
         }
     }
 
-    private void OnUpgradeBuilding()
+    private void OnHidePreviewTower(TowerType type)
     {
-        OnUpgrade?.Invoke(_targetContent);
-        _view.ShowBuildingMenu();
+        if (_previewContent != null)
+        {
+            _previewContent.Destroy();
+            _previewContent = null;
+        }
+
+        _input.SetPlayerMap();
+    }
+
+    private void OnCancelSelectedPlace()
+    {
+        _view.HideMenus();
         _targetRadiusView.Hide();
         _targetContent = null;
+        _isSelected = false;
+        _input.SetPlayerMap();
     }
 
-    private void OnSellSelectedBuilding()
+    private void OnUpgradeTower()
     {
-        _view.ShowBuildingMenu();
-        OnSell?.Invoke(_targetContent);
+        UpgradeEvent?.Invoke(_targetContent);
+        _view.HideMenus();
+        _targetRadiusView.Hide();
         _targetContent = null;
+        _isSelected = false;
+        _input.SetPlayerMap();
     }
 
-    private void OnGetContent()
+    private void OnSellSelectedTower()
     {
-        if (EventSystem.current.currentSelectedGameObject == null)
-        {
-            _targetContent = _raycast.GetContent();
-
-            if (_targetContent != null)
-            {
-                TowerBase tower = _targetContent.GetComponent<TowerBase>();
-                var position = tower.Position;
-                position.y += 0.01f;
-                SetTargetRange(position, tower.TargetRange);
-                _view.ShowTowerMenu(tower.UpgradeCost, tower.SellCost);
-            }
-            else
-            {
-                _view.ShowBuildingMenu();
-                _targetRadiusView.Hide();
-            }
-
-            DebugView.ShowInfo(_tilemapController.GridPosition, _targetContent, _tilemapController.HeightTilemap);
-        }
+        SellEvent?.Invoke(_targetContent, _targetContent.GetComponent<TowerBase>().SellCost);
+        _targetRadiusView.Hide();
+        _view.HideMenus();
+        _targetContent = null;
+        _isSelected = false;
+        _input.SetPlayerMap();
     }
 
-    private void SetTargetRange(Vector3 position, float radius)
+    private void SetTargetRadiusView(Vector3 position, float radius)
     {
         _targetRadiusView.SetRadiusView(position, radius);
         _targetRadiusView.Show();
@@ -128,6 +183,11 @@ public class ContentSelectionView : MonoBehaviour
 
     private void SetTargetCellView()
     {
+        if (_isSelected)
+        {
+            return;
+        }
+
         var viewPosition = _tilemapController.GetCellPosition();
         _targetCellView.SetTargetCellPosition(viewPosition);
 
@@ -141,27 +201,13 @@ public class ContentSelectionView : MonoBehaviour
         }
     }
 
-    private void SetTargetContentView()
+    private void OnPointerOverButton()
     {
-        if (_previewContent == null)
-        {
-            return;
-        }
+        _input.SetUIMap();
+    }
 
-        if (_raycast.IsHit)
-        {
-            _previewContent.Show();
-            _targetRadiusView.Show();
-        }
-        else
-        {
-            _previewContent.Hide();
-            _targetRadiusView.Hide();
-        }
-
-        var viewPosition = _raycast.GetPosition();
-        viewPosition.y = _tilemapController.HeightTilemap;
-        _previewContent.transform.position = viewPosition;
-        _targetRadiusView.SetRadiusView(viewPosition);
+    private void OnPointerOutButton()
+    {
+        _input.SetPlayerMap();
     }
 }

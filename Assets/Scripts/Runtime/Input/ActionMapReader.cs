@@ -5,87 +5,171 @@ using static InputActionMaps;
 
 public class ActionMapReader : MonoBehaviour, IPlayerActions, IUIActions, IInputActions
 {
-    public event Action<float> OnRotateCameraEvent;
-    public event Action<float> OnMouseZoomEvent;
-    public event Action OnTurnCameraLeftEvent;
-    public event Action OnTurnCameraRightEvent;
-    public event Action OnSelectContentEvent;
-    public event Action OnBuildContentEvent;
-    public event Action OnPauseGameEvent;
+    public event Action<float> RotateCameraEvent;
+    public event Action<float> ScrollEvent;
+    public event Action<bool> TurnCameraLeftEvent;
+    public event Action<bool> TurnCameraRightEvent;
+    public event Action GamePauseEvent;
+    public event Action SelectPlaceEvent;
+    public event Action CancelSelectPlaceEvent;
+    public event Action TowerPlacesEvent;
+
     public Vector3 MousePosition { get; private set; }
 
     private InputActionMaps _inputActionMaps;
+    private bool _isRotateCamera;
 
-    private void Start()
+    public void Initialize()
     {
         _inputActionMaps = new InputActionMaps();
-        //_inputActionMaps.Player.SetCallbacks(this);
-        //_inputActionMaps.UI.SetCallbacks(this);
-        AddListeners();
-        _inputActionMaps.Player.Enable();
-        //_inputActionMaps.UI.Enable();
+        SetPlayerMap();
     }
 
-    private void AddListeners()
+    public void SetAllMaps()
     {
-        _inputActionMaps.Player.ZoomCamera.performed += OnZoomCamera;
-        _inputActionMaps.Player.ZoomCamera.started += OnZoomCamera;
+        _inputActionMaps.Player.SetCallbacks(this);
+        _inputActionMaps.UI.SetCallbacks(this);
+        _inputActionMaps.Player.Enable();
+        _inputActionMaps.UI.Enable();
     }
 
     public void SetPlayerMap()
     {
         _inputActionMaps.UI.Disable();
+        _inputActionMaps.UI.RemoveCallbacks(this);
         _inputActionMaps.Player.Enable();
+        _inputActionMaps.Player.SetCallbacks(this);
+        //Debug.Log("player map");
     }
 
     public void SetUIMap()
     {
         _inputActionMaps.Player.Disable();
+        _inputActionMaps.Player.RemoveCallbacks(this);
         _inputActionMaps.UI.Enable();
+        _inputActionMaps.UI.SetCallbacks(this);
+        //Debug.Log("ui map");
     }
 
     public void OnMousePosition(InputAction.CallbackContext context)
     {
-        MousePosition = context.ReadValue<Vector3>();
+        MousePosition = context.ReadValue<Vector2>();
     }
 
-    public void OnRotateCamera(InputAction.CallbackContext context)
+    public void OnMouseScroll(InputAction.CallbackContext context)
     {
-        OnRotateCameraEvent?.Invoke(context.ReadValue<Vector2>().x);
+        ScrollEvent?.Invoke(context.ReadValue<Vector2>().y);
     }
 
     public void OnTurnCameraLeft(InputAction.CallbackContext context)
     {
-        OnTurnCameraLeftEvent?.Invoke();
+        if (context.started)
+        {
+            TurnCameraLeftEvent?.Invoke(true);
+        }
+
+        if (context.canceled)
+        {
+            TurnCameraLeftEvent?.Invoke(false);
+        }
     }
 
     public void OnTurnCameraRight(InputAction.CallbackContext context)
     {
-        OnTurnCameraRightEvent?.Invoke();
-    }
-
-    public void OnZoomCamera(InputAction.CallbackContext context)
-    {
-        OnMouseZoomEvent?.Invoke(context.ReadValue<Vector2>().y);
-    }
-
-    public void OnSelectContent(InputAction.CallbackContext context)
-    {
-        if (context.action.WasPressedThisFrame())
+        if (context.started)
         {
-            OnSelectContentEvent?.Invoke();
+            TurnCameraRightEvent?.Invoke(true);
+        }
+
+        if (context.canceled)
+        {
+            TurnCameraRightEvent?.Invoke(false);
         }
     }
 
-    public void OnBuildContent(InputAction.CallbackContext context)
+    public void OnRotateCamera(InputAction.CallbackContext context)
     {
-        if (context.action.WasReleasedThisFrame())
+        if (_isRotateCamera)
         {
-            OnBuildContentEvent?.Invoke();
+            RotateCameraEvent?.Invoke(context.ReadValue<Vector2>().x);
         }
     }
 
-    public void OnPauseGame(InputAction.CallbackContext context)
+    public void OnRightMouseButtonHold(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            _isRotateCamera = true;
+        }
+
+        if (context.canceled)
+        {
+            _isRotateCamera = false;
+        }
+    }
+
+    public void OnSelectPlace(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            SelectPlaceEvent?.Invoke();
+        }
+    }
+
+    public void OnTowerPlaces(InputAction.CallbackContext context)
+    {
+        TowerPlacesEvent?.Invoke();
+    }
+
+    public void OnGamePause(InputAction.CallbackContext context)
+    {
+        GamePauseEvent?.Invoke();
+    }
+
+    public void OnNavigate(InputAction.CallbackContext context)
+    {
+    }
+
+    public void OnSubmit(InputAction.CallbackContext context)
+    {
+    }
+
+    public void OnCancel(InputAction.CallbackContext context)
+    {
+    }
+
+    public void OnPoint(InputAction.CallbackContext context)
+    {
+    }
+
+    public void OnClick(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+        }
+    }
+
+    public void OnScrollWheel(InputAction.CallbackContext context)
+    {
+    }
+
+    public void OnMiddleClick(InputAction.CallbackContext context)
+    {
+    }
+
+    public void OnRightClick(InputAction.CallbackContext context)
+    {
+        if (context.canceled)
+        {
+            CancelSelectPlaceEvent?.Invoke();
+        }
+    }
+
+    public void OnTrackedDevicePosition(InputAction.CallbackContext context)
+    {
+    }
+
+    public void OnTrackedDeviceOrientation(InputAction.CallbackContext context)
     {
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BuildingController : MonoBehaviour
+public class TowerController : MonoBehaviour
 {
     [SerializeField] private ProjectileController _projectileController;
     [SerializeField] private ContentSelectionView _contentSelector;
@@ -13,9 +13,9 @@ public class BuildingController : MonoBehaviour
     {
         _towerFactory = contentFactory;
 
-        _contentSelector.OnBuild += OnBuild;
-        _contentSelector.OnSell += OnSell;
-        _contentSelector.OnUpgrade += OnUpgrade;
+        _contentSelector.BuildEvent += OnBuild;
+        _contentSelector.SellEvent += OnSell;
+        _contentSelector.UpgradeEvent += OnUpgrade;
     }
 
     public void GameUpdate()
@@ -46,18 +46,18 @@ public class BuildingController : MonoBehaviour
         }
     }
 
-    private void OnSell(TileContent content)
+    private void OnSell(TileContent content, uint coins)
     {
         _buildings.Remove(content);
         content.Destroy();
-        _coins.Add(30);
+        _coins.Add(coins);
     }
 
     private void OnUpgrade(TileContent content)
     {
         var tower = content.GetComponent<TowerBase>();
 
-        if (tower.Level == 2)
+        if (tower.Level >= tower.MaxLevel)
         {
             Debug.Log("max level");
             return;

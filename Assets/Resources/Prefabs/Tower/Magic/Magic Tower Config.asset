@@ -20,7 +20,7 @@ MonoBehaviour:
     TargetRange: 1.7
     Damage: 20
     UpgradeCost: 90
-    SellCost: 0
+    SellCost: 20
     ShellBlastRadius: 0.5
     ShootPerSecond: 1
     DamagePerSecond: 15

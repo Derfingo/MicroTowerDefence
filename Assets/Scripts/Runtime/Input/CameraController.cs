@@ -15,15 +15,17 @@ public class CameraController : MonoBehaviour
     public Vector3 Zoom;
 
     private IInputActions _input;
+    private bool _isTurnLeft;
+    private bool _isTurnRight;
 
     public void Initialize(IInputActions input)
     {
         _input = input;
 
-        _input.OnMouseZoomEvent += OnMouseZoom;
-        _input.OnTurnCameraLeftEvent += OnTurnLeft;
-        _input.OnTurnCameraRightEvent += OnTurnRight;
-        _input.OnRotateCameraEvent += OnTurnWithMouse;
+        _input.ScrollEvent += OnMouseZoom;
+        _input.RotateCameraEvent += OnTurnWithMouse;
+        _input.TurnCameraLeftEvent += (isTurnLeft) => _isTurnLeft = isTurnLeft;
+        _input.TurnCameraRightEvent += (isTurnRight) => _isTurnRight = isTurnRight;
 
         Target = transform.position;
         Rotation = transform.rotation;
@@ -34,6 +36,8 @@ public class CameraController : MonoBehaviour
     {
         HandleKeyboard(_isMovement);
         HandleMovement();
+        OnTurnLeft();
+        OnTurnRight();
     }
 
     private void HandleKeyboard(bool isMovement)
@@ -66,12 +70,18 @@ public class CameraController : MonoBehaviour
 
     private void OnTurnLeft()
     {
-        Rotation *= Quaternion.Euler(Vector3.up * _rotationAmount / 3);
+        if (_isTurnLeft)
+        {
+            Rotation *= Quaternion.Euler(Vector3.up * _rotationAmount / 3);
+        }
     }
 
     private void OnTurnRight()
     {
-        Rotation *= Quaternion.Euler(Vector3.up * -_rotationAmount / 3);
+        if (_isTurnRight)
+        {
+            Rotation *= Quaternion.Euler(Vector3.up * -_rotationAmount / 3);
+        }
     }
 
     private void OnTurnWithMouse(float rotation)

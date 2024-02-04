@@ -3,23 +3,37 @@ using UnityEngine;
 
 public class GameplayViewController : ViewBase
 {
-    [SerializeField] private TowerMenu _towerMenu;
+    [SerializeField] private BuildTowerView _towerMenu;
     [SerializeField] private BuildingView _buildingView;
     [SerializeField] private TowerFactory _towerFactory;
     [SerializeField] private CoinsView _coinsView;
 
-    public event Action<TowerType> OnSelectBuilding;
+    public event Action<TowerType> BuildTowerEvent;
+    public event Action<TowerType> SelectPreviewTowerEvent;
+    public event Action<TowerType> DeselectPreviewTowerEvent;
 
-    public event Action OnUpgradeBuilding;
-    public event Action OnSellBuilding;
+    public event Action UpgradeTowerEvent;
+    public event Action SellTowerEvent;
+
+    public event Action PointerEnterEvent;
+    public event Action PointerExitEvent;
 
     public void Initialize()
     {
-        _buildingView.Buttons.ForEach(b => b.AddListener(OnSelectedBuilding));
-        _towerMenu.UpgradeButton.onClick.AddListener(OnUpgradeTowerClicked);
-        _towerMenu.SellButton.onClick.AddListener(OnSellTowerCliked);
+        _buildingView.TowerButtons.ForEach(click => click.ClickEvent += OnBuildTower);
+        _buildingView.TowerButtons.ForEach(enter => enter.PointerEnterEvent += OnSelectPreviewTower);
+        _buildingView.TowerButtons.ForEach(exit => exit.PointerExitEvent += OnDeselectPreviewTower);
+
+        _towerMenu.UpgradeButton.ClickEvent += OnUpgradeTower;
+        _towerMenu.UpgradeButton.PointerEnterEvent += OnPointerEnterButton;
+        _towerMenu.UpgradeButton.PointerExitEvent += OnPointerExitButton;
+
+        _towerMenu.SellButton.ClickEvent += OnSellTower;
+        _towerMenu.SellButton.PointerEnterEvent += OnPointerEnterButton;
+        _towerMenu.SellButton.PointerExitEvent += OnPointerExitButton;
 
         SetConfig();
+        HideMenus();
     }
 
     public void ShowDeficiencyCoins()
@@ -40,7 +54,7 @@ public class GameplayViewController : ViewBase
         _towerMenu.Show();
     }
 
-    private void HideMenus()
+    public void HideMenus()
     {
         _buildingView.Hide();
         _towerMenu.Hide();
@@ -48,24 +62,44 @@ public class GameplayViewController : ViewBase
 
     private void SetConfig()
     {
-        foreach (var button in _buildingView.Buttons)
+        foreach (var button in _buildingView.TowerButtons)
         {
             button.SetCost(_towerFactory.GetConfig(button.Type).CostToBuild);
         }
     }
 
-    private void OnSelectedBuilding(TowerType type)
+    private void OnSelectPreviewTower(TowerType type)
     {
-        OnSelectBuilding?.Invoke(type);
+        SelectPreviewTowerEvent?.Invoke(type);
     }
 
-    private void OnUpgradeTowerClicked()
+    private void OnDeselectPreviewTower(TowerType type)
     {
-        OnUpgradeBuilding?.Invoke();
+        DeselectPreviewTowerEvent?.Invoke(type);
     }
 
-    private void OnSellTowerCliked()
+    private void OnBuildTower(TowerType type)
     {
-        OnSellBuilding?.Invoke();
+        BuildTowerEvent?.Invoke(type);
+    }
+
+    private void OnUpgradeTower()
+    {
+        UpgradeTowerEvent?.Invoke();
+    }
+
+    private void OnSellTower()
+    {
+        SellTowerEvent?.Invoke();
+    }
+
+    private void OnPointerEnterButton()
+    {
+        PointerEnterEvent?.Invoke();
+    }
+
+    private void OnPointerExitButton()
+    {
+        PointerExitEvent?.Invoke();
     }
 }
