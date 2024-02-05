@@ -567,8 +567,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 69970604}
+  - component: {fileID: 69970605}
   m_Layer: 5
-  m_Name: Bottom View
+  m_Name: Buttons View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -595,6 +596,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &69970605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69970603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 049d468a9c2522f4fac5463eb84e3df0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _towerButtonsView: {fileID: 171455725}
+  _buildTowerButtonsView: {fileID: 418408535}
 --- !u!1 &77270953
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,9 +642,9 @@ MonoBehaviour:
   _tilemapController: {fileID: 782842631}
   _raycast: {fileID: 533964236}
   _coins: {fileID: 2088420226}
-  _view: {fileID: 2015046994}
-  _targetCellView: {fileID: 758783432}
+  _gameplayButtonsView: {fileID: 69970605}
   _targetRadiusView: {fileID: 407247625}
+  _targetCellView: {fileID: 758783432}
 --- !u!4 &77270955
 Transform:
   m_ObjectHideFlags: 0
@@ -1203,7 +1218,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 171455722}
-  - component: {fileID: 171455723}
+  - component: {fileID: 171455725}
   - component: {fileID: 171455724}
   m_Layer: 0
   m_Name: Tower Menu
@@ -1233,22 +1248,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 5}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
---- !u!114 &171455723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 171455721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4196ca9ffc83bc64ca90178b42b05e61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _upgradeTowerButton: {fileID: 1547516069}
-  _sellTowerButton: {fileID: 384159442}
-  _upgradeCostText: {fileID: 369704066}
-  _sellCostText: {fileID: 1399438684}
 --- !u!114 &171455724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1273,6 +1272,22 @@ MonoBehaviour:
   m_Spacing: {x: 5, y: 1}
   m_Constraint: 1
   m_ConstraintCount: 2
+--- !u!114 &171455725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171455721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f3c4b8e1e43b44b95d908a133e165b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _upgradeTowerButton: {fileID: 1547516069}
+  _sellTowerButton: {fileID: 384159442}
+  _upgradeCostText: {fileID: 369704066}
+  _sellCostText: {fileID: 1399438684}
 --- !u!1 &199797123
 GameObject:
   m_ObjectHideFlags: 0
@@ -1976,7 +1991,7 @@ GameObject:
   m_Component:
   - component: {fileID: 312381405}
   m_Layer: 0
-  m_Name: ---     UI     ---
+  m_Name: ---     VIEW     ---
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3722,13 +3737,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &758783431
-RectTransform:
+--- !u!4 &758783431
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 758783430}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -3737,11 +3753,6 @@ RectTransform:
   - {fileID: 1486445484}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &758783432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3755,7 +3766,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetSprite: {fileID: 1486445485}
-  _blockBuild: {fileID: 0}
 --- !u!1 &769756006
 GameObject:
   m_ObjectHideFlags: 0
@@ -5429,6 +5439,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 103
+--- !u!1 &1112020624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1112020626}
+  - component: {fileID: 1112020625}
+  m_Layer: 0
+  m_Name: Gameplay Presenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1112020625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112020624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47e1afacbb80dc849b073e437c8b2212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1112020626
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112020624}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1133468863
 GameObject:
   m_ObjectHideFlags: 0
@@ -8871,7 +8925,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e56e9c62052693143a7b466a4dab4760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _view: {fileID: 4820345256144011465}
 --- !u!4 &1761680645
 Transform:
   m_ObjectHideFlags: 0
@@ -10214,7 +10267,6 @@ MonoBehaviour:
   _towerFactory: {fileID: 11400000, guid: 8b7976d0dda20974cbc5fbf7d1cb0bd5, type: 2}
   _cameraController: {fileID: 1177465228}
   _buildingController: {fileID: 98841627}
-  _contentSelector: {fileID: 77270954}
   _raycastController: {fileID: 533964236}
   _actionMapReader: {fileID: 769756009}
   _tilemapController: {fileID: 782842631}
@@ -10222,9 +10274,13 @@ MonoBehaviour:
   _gamecycle: {fileID: 1550305077}
   _health: {fileID: 1761680644}
   _coins: {fileID: 2088420226}
-  _gameplayViewController: {fileID: 2015046994}
+  _contentSelectionView: {fileID: 77270954}
+  _gameplayButtonsView: {fileID: 69970605}
   _levelConfigProvider: {fileID: 11400000, guid: 26e6e1552e5cd594fb4f83d2c2f0da12,
     type: 2}
+  _healthView: {fileID: 4820345256144011465}
+  _coinsView: {fileID: 1375975589}
+  _gameplayPresenter: {fileID: 1112020625}
 --- !u!4 &1943920052
 Transform:
   m_ObjectHideFlags: 0
@@ -10332,7 +10388,6 @@ GameObject:
   - component: {fileID: 2015046992}
   - component: {fileID: 2015046991}
   - component: {fileID: 2015046990}
-  - component: {fileID: 2015046994}
   m_Layer: 5
   m_Name: Gameplay Canvas
   m_TagString: Untagged
@@ -10427,22 +10482,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &2015046994
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2015046989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db2ff5edeae250949af43bb859084c68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _towerMenu: {fileID: 171455723}
-  _buildingView: {fileID: 418408535}
-  _towerFactory: {fileID: 11400000, guid: 8b7976d0dda20974cbc5fbf7d1cb0bd5, type: 2}
-  _coinsView: {fileID: 1375975589}
 --- !u!1 &2065573577
 GameObject:
   m_ObjectHideFlags: 0
@@ -10740,7 +10779,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e514b4d10b5d04782931564a7f748c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _view: {fileID: 1375975589}
 --- !u!224 &2088420227
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12052,25 +12090,26 @@ SceneRoots:
   m_Roots:
   - {fileID: 795768357}
   - {fileID: 6124800284441008176}
-  - {fileID: 769756008}
   - {fileID: 137816888}
+  - {fileID: 769756008}
   - {fileID: 533964237}
   - {fileID: 1233792665}
   - {fileID: 1550305078}
-  - {fileID: 77270955}
   - {fileID: 782842630}
   - {fileID: 98841626}
   - {fileID: 250740640}
-  - {fileID: 1932330185}
   - {fileID: 1761680645}
   - {fileID: 2088420227}
   - {fileID: 1943920052}
+  - {fileID: 1112020626}
   - {fileID: 7273697}
   - {fileID: 543450653442771741}
   - {fileID: 844599221}
   - {fileID: 312381405}
+  - {fileID: 77270955}
+  - {fileID: 1932330185}
   - {fileID: 758783431}
+  - {fileID: 407247626}
   - {fileID: 1244617679}
   - {fileID: 2015046993}
   - {fileID: 95116002}
-  - {fileID: 407247626}

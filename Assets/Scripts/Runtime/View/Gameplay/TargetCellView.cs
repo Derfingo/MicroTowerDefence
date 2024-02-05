@@ -3,20 +3,14 @@ using UnityEngine;
 public class TargetCellView : ViewBase
 {
     [SerializeField] private SpriteRenderer _targetSprite;
-    [SerializeField] private GameObject _blockBuild;
 
-    public void SetTargetCellPosition(Vector3 position)
+    public void UpdatePosition(Vector3 position)
     {
         transform.position = position;
     }
 
-    public void ShowTargetCell()
+    public void Display(bool isShow)
     {
-        _targetSprite.enabled = true;
-    }
-
-    public void HideTargerCell()
-    {
-        _targetSprite.enabled = false;
+        _targetSprite.enabled = isShow;
     }
 }
