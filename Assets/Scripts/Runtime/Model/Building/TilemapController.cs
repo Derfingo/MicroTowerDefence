@@ -7,7 +7,7 @@ public class TilemapController : MonoBehaviour, IGridModel
     [SerializeField] private ActionMapReader _input;
     [SerializeField] private RaycastController _raycast;
     [SerializeField] private Tilemap[] _tilemapArray;
-    [SerializeField] private TowerPlaceView[] _towerPlaces;
+    [SerializeField] private TowerPlaceView[] _towerPlaces;  // view
 
     private Dictionary<float, Tilemap> _tilemaps;
     private Vector3Int _worldGridPosition;

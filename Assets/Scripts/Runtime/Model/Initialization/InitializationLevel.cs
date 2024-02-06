@@ -5,7 +5,7 @@ public class InitializationLevel : MonoBehaviour
     [Header("Models")]
     [SerializeField] private TowerFactory _towerFactory;
     [SerializeField] private CameraController _cameraController;
-    [SerializeField] private TowerController _buildingController;
+    [SerializeField] private TowerController _towerController;
     [SerializeField] private RaycastController _raycastController;
     [SerializeField] private ActionMapReader _actionMapReader;
     [SerializeField] private TilemapController _tilemapController;
@@ -32,11 +32,11 @@ public class InitializationLevel : MonoBehaviour
         _raycastController.Initialize(_actionMapReader);
         _cameraController.Initialize(_actionMapReader);
         _tilemapController.Initialize();
-        _buildingController.Initialize(_towerFactory);
+        _towerController.Initialize(_towerFactory);
         _gamecycle.Initialize(config.PrepareTime, _contentSelectionView);
 
         _scorePresenter.Initialize(_healthView, _coinsView, _health, _coins);
-        _gameplayPresenter.Initialize(_gameplayButtonsView, _contentSelectionView, _pathPointsView, _tilemapController, _raycastController, _coins);
+        _gameplayPresenter.Initialize(_gameplayButtonsView, _contentSelectionView, _towerController, _pathPointsView, _tilemapController, _raycastController, _coins);
 
         _gameplayButtonsView.Initialize();
         _gameplayButtonsView.SetCost(_towerFactory.GetAllCostTowers());

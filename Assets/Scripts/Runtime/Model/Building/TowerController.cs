@@ -1,34 +1,29 @@
 using UnityEngine;
 
-public class TowerController : MonoBehaviour
+public class TowerController : MonoBehaviour, ITowerControllerModel
 {
     [SerializeField] private ProjectileController _projectileController;
-    [SerializeField] private ContentSelectionView _contentSelector;
     [SerializeField] private Coins _coins;
 
     private TowerFactory _towerFactory;
-    private readonly GameBehaviourCollection _buildings = new();
+    private readonly GameBehaviourCollection _towers = new();
 
     public void Initialize(TowerFactory contentFactory)
     {
         _towerFactory = contentFactory;
-
-        _contentSelector.BuildEvent += OnBuild;
-        _contentSelector.SellEvent += OnSell;
-        _contentSelector.UpgradeEvent += OnUpgrade;
     }
 
     public void GameUpdate()
     {
-        _buildings.GameUpdate();
+        _towers.GameUpdate();
     }
 
     public void Clear()
     {
-        _buildings.Clear();
+        _towers.Clear();
     }
 
-    private void OnBuild(TileContent content, Vector3 position)
+    public void OnBuild(TileContent content, Vector3 position)
     {
         var tower = content.GetComponent<TowerBase>();
         var cost = _towerFactory.GetCostToBuild(tower.TowerType);
@@ -38,22 +33,23 @@ public class TowerController : MonoBehaviour
             tower.SetProjectile(_projectileController);
             tower.Position = position;
             tower.IsInit = true;
-            _buildings.Add(content);
+            _towers.Add(tower);
         }
         else
         {
-            content.Destroy();
+            tower.Destroy();
         }
     }
 
-    private void OnSell(TileContent content, uint coins)
+    public void OnSell(TileContent content, uint coins)
     {
-        _buildings.Remove(content);
-        content.Destroy();
+        var tower = content.GetComponent<TowerBase>();
+        _towers.Remove(tower);
+        tower.Destroy();
         _coins.Add(coins);
     }
 
-    private void OnUpgrade(TileContent content)
+    public void OnUpgrade(TileContent content)
     {
         var tower = content.GetComponent<TowerBase>();
 
@@ -66,14 +62,14 @@ public class TowerController : MonoBehaviour
         if (_coins.TrySpend(tower.UpgradeCost))
         {
             var newTower = _towerFactory.Get(tower.TowerType, tower.Level + 1);
-            var position = content.Position;
-            _buildings.Remove(content);
-            content.Destroy();
+            var position = tower.Position;
+            _towers.Remove(tower);
+            tower.Destroy();
             
             newTower.SetProjectile(_projectileController);
             newTower.Position = position;
             newTower.IsInit = true;
-            _buildings.Add(newTower);
+            _towers.Add(newTower);
         }
     }
 }

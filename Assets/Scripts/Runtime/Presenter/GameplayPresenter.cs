@@ -4,6 +4,7 @@ public class GameplayPresenter : MonoBehaviour
 {
     private IGameplayButtonsView _gameplayButtonsView;
     private IContentSelectionView _contentSelectionView;
+    private ITowerControllerModel _towerControllerModel;
 
     private IPathView _pathView;
 
@@ -14,19 +15,21 @@ public class GameplayPresenter : MonoBehaviour
     private ICoinsModel _coins;
 
     public void Initialize(IGameplayButtonsView gameplayButtonsView,
-                           IContentSelectionView contentSelectionModel,
+                           IContentSelectionView contentSelection,
+                           ITowerControllerModel towerController,
                            IPathView pathView,
-                           IGridModel gridModel,
-                           IRaycastModel raycastModel,
+                           IGridModel grid,
+                           IRaycastModel raycast,
                            ICoinsModel coins)
     {
         _coins = coins;
+        _gridModel = grid;
         _pathView = pathView;
-        _gridModel = gridModel;
-        _raycastModel = raycastModel;
+        _raycastModel = raycast;
 
         _gameplayButtonsView = gameplayButtonsView;
-        _contentSelectionView = contentSelectionModel;
+        _contentSelectionView = contentSelection;
+        _towerControllerModel = towerController;
 
         _contentSelectionView.CellCenterPositionEvent += _gridModel.GetCellCenterPosition;
         _contentSelectionView.WorldGridPositionEvent += _gridModel.GetWorldGridPosition;
@@ -35,5 +38,9 @@ public class GameplayPresenter : MonoBehaviour
         _contentSelectionView.GetContentEvent += _raycastModel.GetContent;
         _contentSelectionView.RaycastHitEvent += _raycastModel.CheckHit;
         _contentSelectionView.CheckCoinsEvent += _coins.Check;
+
+        _contentSelectionView.UpgradeEvent += _towerControllerModel.OnUpgrade;
+        _contentSelectionView.BuildEvent += _towerControllerModel.OnBuild;
+        _contentSelectionView.SellEvent += _towerControllerModel.OnSell;
     }
 }

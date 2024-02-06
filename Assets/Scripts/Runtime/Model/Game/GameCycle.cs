@@ -21,7 +21,7 @@ public class GameCycle : MonoBehaviour
     private bool _isDefeat;
     private bool _isPause;
 
-    public void Initialize(float prepareTime, ContentSelectionView contentSelectionView)
+    public void Initialize(float prepareTime, ContentSelectionView contentSelectionView)  // view
     {
         _contentSelectionView = contentSelectionView;
         _prepareTime = prepareTime;

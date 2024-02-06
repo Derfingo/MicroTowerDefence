@@ -11,4 +11,8 @@ public interface IContentSelectionView
 
     public event Func<TileContent> GetContentEvent;
     public event Func<bool> RaycastHitEvent;
+
+    public event Action<TileContent, Vector3> BuildEvent;
+    public event Action<TileContent, uint> SellEvent;
+    public event Action<TileContent> UpgradeEvent;
 }

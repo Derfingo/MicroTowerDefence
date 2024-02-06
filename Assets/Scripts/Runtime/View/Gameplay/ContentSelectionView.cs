@@ -94,9 +94,7 @@ public class ContentSelectionView : ViewBase, IContentSelectionView
     {
         _isSelected = true;
         TowerBase tower = _targetContent.GetComponent<TowerBase>();
-        var position = tower.Position;
-        position.y += 0.01f;
-        SetTargetRadiusView(position, tower.TargetRange);
+        SetTargetRadiusView(tower.Position, tower.TargetRange);
         _gameplayButtonsView.ShowTowerView(tower.UpgradeCost, tower.SellCost);
 
         var worldGridPosition = WorldGridPositionEvent.Invoke();         // func
@@ -105,7 +103,7 @@ public class ContentSelectionView : ViewBase, IContentSelectionView
         DebugView.ShowInfo(worldGridPosition, _targetContent, heightTilemap);
     }
 
-    public void OnBuildTower(TowerType type)
+    private void OnBuildTower(TowerType type)
     {
         if (_previewContent != null)
         {
@@ -123,7 +121,7 @@ public class ContentSelectionView : ViewBase, IContentSelectionView
         _isSelected = false;
     }
 
-    public void OnShowPreviewTower(TowerType type)
+    private void OnShowPreviewTower(TowerType type)
     {
         _input.SetUIMap();
         _previewContent = _towerFactory.Get(type);
@@ -143,7 +141,7 @@ public class ContentSelectionView : ViewBase, IContentSelectionView
         }
     }
 
-    public void OnHidePreviewTower(TowerType type)
+    private void OnHidePreviewTower(TowerType type)
     {
         if (_previewContent != null)
         {
@@ -154,7 +152,7 @@ public class ContentSelectionView : ViewBase, IContentSelectionView
         _input.SetPlayerMap();
     }
 
-    public void OnUpgradeTower()
+    private void OnUpgradeTower()
     {
         UpgradeEvent?.Invoke(_targetContent);
         _gameplayButtonsView.HideButtonViews();
@@ -164,9 +162,10 @@ public class ContentSelectionView : ViewBase, IContentSelectionView
         _input.SetPlayerMap();
     }
 
-    public void OnSellSelectedTower()
+    private void OnSellSelectedTower()
     {
-        SellEvent?.Invoke(_targetContent, _targetContent.GetComponent<TowerBase>().SellCost);
+        var tower = _targetContent.GetComponent<TowerBase>();
+        SellEvent?.Invoke(_targetContent, tower.SellCost);
         _targetRadiusView.Hide();
         _gameplayButtonsView.HideButtonViews();
         _targetContent = null;
@@ -174,12 +173,12 @@ public class ContentSelectionView : ViewBase, IContentSelectionView
         _input.SetPlayerMap();
     }
 
-    public void OnPointerOverButton()
+    private void OnPointerOverButton()
     {
         _input.SetUIMap();
     }
 
-    public void OnPointerOutButton()
+    private void OnPointerOutButton()
     {
         _input.SetPlayerMap();
     }

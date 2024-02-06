@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyContorller : MonoBehaviour
 {
-    [SerializeField] private PathPointsView _enemyPathView;
+    [SerializeField] private PathPointsView _enemyPathView; // view
 
     public event Action<uint> OnEnemyFinish;
     public event Action<uint> OnEnemyDie;

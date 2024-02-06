@@ -639,9 +639,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e783ae01d5b412488d870c99f181657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tilemapController: {fileID: 782842631}
-  _raycast: {fileID: 533964236}
-  _coins: {fileID: 2088420226}
   _gameplayButtonsView: {fileID: 69970605}
   _targetRadiusView: {fileID: 407247625}
   _targetCellView: {fileID: 758783432}
@@ -870,7 +867,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _projectileController: {fileID: 1233792664}
-  _contentSelector: {fileID: 77270954}
   _coins: {fileID: 2088420226}
 --- !u!1001 &101483974
 PrefabInstance:
@@ -10340,7 +10336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _towerFactory: {fileID: 11400000, guid: 8b7976d0dda20974cbc5fbf7d1cb0bd5, type: 2}
   _cameraController: {fileID: 1177465228}
-  _buildingController: {fileID: 98841627}
+  _towerController: {fileID: 98841627}
   _raycastController: {fileID: 533964236}
   _actionMapReader: {fileID: 769756009}
   _tilemapController: {fileID: 782842631}
