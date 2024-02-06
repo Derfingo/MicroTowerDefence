@@ -48,9 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f287c574fba997b4ba4355a335e52f26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _towerType: 102
+  _towerType: 1
   _targetRange: 5
-  _cost: 80
   _speedProjectile: 4
   _cannon: {fileID: 4142834370141915538}
   _damage: 40

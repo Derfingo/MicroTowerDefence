@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ff37cff3500ad24183d18332624ea2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _towerType: 103
+  _towerType: 2
   _targetRange: 2.1
   _speedProjectile: 4
   _archer: {fileID: 3809948737107712306}

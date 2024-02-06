@@ -20,7 +20,8 @@ public class InitializationLevel : MonoBehaviour
     [SerializeField] private PathPointsView _pathPointsView;
     [SerializeField] private HealthView _healthView;
     [SerializeField] private CoinsView _coinsView;
-    [Header("Presenters") ,Space]
+    [Header("Presenters"), Space]
+    [SerializeField] private ScorePresenter _scorePresenter;
     [SerializeField] private GameplayPresenter _gameplayPresenter;
 
     private void Awake()
@@ -34,7 +35,8 @@ public class InitializationLevel : MonoBehaviour
         _buildingController.Initialize(_towerFactory);
         _gamecycle.Initialize(config.PrepareTime, _contentSelectionView);
 
-        _gameplayPresenter.Initialize(_gameplayButtonsView, _contentSelectionView, _healthView, _coinsView, _health, _coins, _pathPointsView);
+        _scorePresenter.Initialize(_healthView, _coinsView, _health, _coins);
+        _gameplayPresenter.Initialize(_gameplayButtonsView, _contentSelectionView, _pathPointsView, _tilemapController, _raycastController, _coins);
 
         _gameplayButtonsView.Initialize();
         _gameplayButtonsView.SetCost(_towerFactory.GetAllCostTowers());

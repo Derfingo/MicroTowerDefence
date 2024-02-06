@@ -64,6 +64,11 @@ public class GameplayButtonsView : ViewBase, IGameplayButtonsView
 
     public void SetCost(Dictionary<TowerType, uint> costTowers)
     {
+        if (_buildTowerButtonsView.TowerButtons == null)
+        {
+            Debug.Log("null");
+        }
+
         foreach (var button in _buildTowerButtonsView.TowerButtons)
         {
             if (costTowers.TryGetValue(button.Type, out var cost))

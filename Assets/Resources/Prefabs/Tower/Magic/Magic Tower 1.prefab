@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4438d3b223303b44191c994c0033373c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _towerType: 104
+  _towerType: 3
   _targetRange: 2
   _speedProjectile: 4
   _spere: {fileID: 6191656768205252667}

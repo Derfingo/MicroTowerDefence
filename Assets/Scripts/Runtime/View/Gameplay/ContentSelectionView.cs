@@ -3,13 +3,18 @@ using UnityEngine;
 
 public class ContentSelectionView : ViewBase, IContentSelectionView
 {
-    [SerializeField] private TilemapController _tilemapController;
-    [SerializeField] private RaycastController _raycast;
-    [SerializeField] private Coins _coins;
-    [Space]
     [SerializeField] private GameplayButtonsView _gameplayButtonsView;
     [SerializeField] private TargetRadiusView _targetRadiusView;
     [SerializeField] private TargetCellView _targetCellView;
+
+    public event Predicate<uint> CheckCoinsEvent;
+
+    public event Func<bool> RaycastHitEvent;
+    public event Func<TileContent> GetContentEvent;
+
+    public event Func<Vector3> CellCenterPositionEvent;
+    public event Func<Vector3Int> WorldGridPositionEvent;
+    public event Func<float> HeightTilemapEvent;
 
     public event Action<TileContent, Vector3> BuildEvent;
     public event Action<TileContent, uint> SellEvent;
@@ -50,16 +55,16 @@ public class ContentSelectionView : ViewBase, IContentSelectionView
 
     private void OnSelectPlace()
     {
-        if (_isSelected && _raycast.GetContent() == null && _previewContent == null)
+        if (_isSelected && GetContentEvent.Invoke() == null && _previewContent == null)
         {
             OnCancelSelectedPlace();
             Debug.Log("cancel");
             return;
         }
 
-        _targetContent = _raycast.GetContent();
+        _targetContent = GetContentEvent.Invoke();              // func
 
-        if (_targetContent == null && _raycast.IsHit)
+        if (_targetContent == null && RaycastHitEvent.Invoke())
         {
             SelectToBuild();
         }
@@ -81,7 +86,7 @@ public class ContentSelectionView : ViewBase, IContentSelectionView
     private void SelectToBuild()
     {
         _isSelected = true;
-        _previewPosition = _tilemapController.GetCellCenterPosition();
+        _previewPosition = CellCenterPositionEvent.Invoke();             // func
         _gameplayButtonsView.ShowBuildTowerView();
     }
 
@@ -94,7 +99,10 @@ public class ContentSelectionView : ViewBase, IContentSelectionView
         SetTargetRadiusView(position, tower.TargetRange);
         _gameplayButtonsView.ShowTowerView(tower.UpgradeCost, tower.SellCost);
 
-        DebugView.ShowInfo(_tilemapController.GridPosition, _targetContent, _tilemapController.HeightTilemap);
+        var worldGridPosition = WorldGridPositionEvent.Invoke();         // func
+        var heightTilemap = HeightTilemapEvent.Invoke();                 // func
+
+        DebugView.ShowInfo(worldGridPosition, _targetContent, heightTilemap);
     }
 
     public void OnBuildTower(TowerType type)
@@ -122,7 +130,7 @@ public class ContentSelectionView : ViewBase, IContentSelectionView
         TowerBase tower = _previewContent.GetComponent<TowerBase>();
         var cost = _towerFactory.GetCostToBuild(tower.TowerType);
 
-        if (_coins.Check(cost))
+        if (CheckCoinsEvent.Invoke(cost))
         {
             _previewContent.Position = _previewPosition;
             _previewContent.Show();
@@ -189,8 +197,8 @@ public class ContentSelectionView : ViewBase, IContentSelectionView
             return;
         }
 
-        var position = _tilemapController.GetCellPosition();
+        var position = CellCenterPositionEvent.Invoke();     // func
         _targetCellView.UpdatePosition(position);
-        _targetCellView.Display(_raycast.IsHit);
+        _targetCellView.Display(RaycastHitEvent.Invoke());   // func
     }
 }

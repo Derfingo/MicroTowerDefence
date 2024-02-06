@@ -2,18 +2,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class TilemapController : MonoBehaviour
+public class TilemapController : MonoBehaviour, IGridModel
 {
     [SerializeField] private ActionMapReader _input;
     [SerializeField] private RaycastController _raycast;
     [SerializeField] private Tilemap[] _tilemapArray;
     [SerializeField] private TowerPlaceView[] _towerPlaces;
 
-    public float HeightTilemap { get; private set; }
-    public Vector3Int GridPosition { get; private set; }
-
     private Dictionary<float, Tilemap> _tilemaps;
+    private Vector3Int _worldGridPosition;
     private Tilemap _targetTilemap;
+    private float _heightTilemap;
     private bool _isShow;
 
     public void Initialize()
@@ -31,12 +30,17 @@ public class TilemapController : MonoBehaviour
 
     public Vector3 GetCellCenterPosition()
     {
-        return _targetTilemap.GetCellCenterWorld(GridPosition);
+        return _targetTilemap.GetCellCenterWorld(_worldGridPosition);
     }
 
-    public Vector3 GetCellPosition()
+    public Vector3Int GetWorldGridPosition()
     {
-        return _targetTilemap.CellToWorld(GridPosition);
+        return _worldGridPosition;
+    }
+
+    public float GetHeightTilemap()
+    {
+        return _heightTilemap;
     }
 
     private void OnTowerPlaces()
@@ -96,7 +100,7 @@ public class TilemapController : MonoBehaviour
 
         if (_tilemaps.ContainsKey(mouseHeight))
         {
-            HeightTilemap = mouseHeight;
+            _heightTilemap = mouseHeight;
             _targetTilemap = _tilemaps[mouseHeight];
             return true;
         }
@@ -106,6 +110,6 @@ public class TilemapController : MonoBehaviour
 
     private void GetGridPosition(Vector3 position)
     {
-        GridPosition = _targetTilemap.WorldToCell(position);
+        _worldGridPosition = _targetTilemap.WorldToCell(position);
     }
 }

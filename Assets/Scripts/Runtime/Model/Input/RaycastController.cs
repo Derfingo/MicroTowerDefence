@@ -1,20 +1,24 @@
 using UnityEngine;
 
-public class RaycastController : MonoBehaviour
+public class RaycastController : MonoBehaviour, IRaycastModel
 {
     [SerializeField] private Camera _camera;
     [SerializeField] private LayerMask _touchMask;
     [SerializeField] private LayerMask _contentMask;
 
-    public bool IsHit {  get; private set; }
-
     private const float MAX_DISTANCE = 100f;
     private Vector3 _hitPosition;
     private IInputActions _input;
+    private bool _isHit;
 
     public void Initialize(IInputActions input)
     {
         _input = input;
+    }
+
+    public bool CheckHit()
+    {
+        return _isHit;
     }
 
     public Vector3 GetPosition()
@@ -27,13 +31,13 @@ public class RaycastController : MonoBehaviour
 
             switch (hit.normal.y)
             {
-                case 0: IsHit = false; break;
-                case 1: IsHit = true; break;
+                case 0: _isHit = false; break;
+                case 1: _isHit = true; break;
             };
         }
         else
         {
-            IsHit = false;
+            _isHit = false;
         }
 
         return _hitPosition;

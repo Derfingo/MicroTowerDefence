@@ -4,30 +4,36 @@ public class GameplayPresenter : MonoBehaviour
 {
     private IGameplayButtonsView _gameplayButtonsView;
     private IContentSelectionView _contentSelectionView;
-    private IHealthView _healthView;
-    private ICoinsView _coinsView;
+
     private IPathView _pathView;
 
-    private IHealthModel _healthModel;
-    private ICoinsModel _coinsModel;
+    private IGridModel _gridModel;
+
+    private IRaycastModel _raycastModel;
+
+    private ICoinsModel _coins;
 
     public void Initialize(IGameplayButtonsView gameplayButtonsView,
                            IContentSelectionView contentSelectionModel,
-                           IHealthView healthView,
-                           ICoinsView coinsView,
-                           IHealthModel healthModel,
-                           ICoinsModel coinsModel,
-                           IPathView pathView)
+                           IPathView pathView,
+                           IGridModel gridModel,
+                           IRaycastModel raycastModel,
+                           ICoinsModel coins)
     {
+        _coins = coins;
+        _pathView = pathView;
+        _gridModel = gridModel;
+        _raycastModel = raycastModel;
+
         _gameplayButtonsView = gameplayButtonsView;
-        _healthView = healthView;
-        _coinsView = coinsView;
-
         _contentSelectionView = contentSelectionModel;
-        _healthModel = healthModel;
-        _coinsModel = coinsModel;
 
-        _healthModel.UpdateHealthEvent += _healthView.UpdateHealth;
-        _coinsModel.UpdateCoinsEvent += _coinsView.UpdateCoins;
+        _contentSelectionView.CellCenterPositionEvent += _gridModel.GetCellCenterPosition;
+        _contentSelectionView.WorldGridPositionEvent += _gridModel.GetWorldGridPosition;
+        _contentSelectionView.HeightTilemapEvent += _gridModel.GetHeightTilemap;
+
+        _contentSelectionView.GetContentEvent += _raycastModel.GetContent;
+        _contentSelectionView.RaycastHitEvent += _raycastModel.CheckHit;
+        _contentSelectionView.CheckCoinsEvent += _coins.Check;
     }
 }
