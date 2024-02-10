@@ -6,9 +6,9 @@ public class ScorePresenter : MonoBehaviour
     private ICoinsView _coinsView;
 
     private IHealthModel _health;
-    private ICoinsModel _coins;
+    private ICoins _coins;
 
-    public void Initialize(IHealthView healthView, ICoinsView coinsView, IHealthModel health, ICoinsModel coins)
+    public void Initialize(IHealthView healthView, ICoinsView coinsView, IHealthModel health, ICoins coins)
     {
         _healthView = healthView;
         _coinsView = coinsView;

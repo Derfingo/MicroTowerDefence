@@ -7,13 +7,15 @@ public class TowerPlaceView : ViewBase
 
     private readonly float _duration = 0.1f;
 
-    public override void Show()
+    public void Display(bool isEnable)
     {
-        _spriteRenderer.DOFade(1f, _duration);
-    }
-
-    public override void Hide()
-    {
-        _spriteRenderer.DOFade(0f, _duration);
+        if (isEnable)
+        {
+            _spriteRenderer.DOFade(1f, _duration);
+        }
+        else
+        {
+            _spriteRenderer.DOFade(0f, _duration);
+        }
     }
 }

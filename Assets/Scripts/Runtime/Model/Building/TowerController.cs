@@ -1,9 +1,13 @@
+using System;
 using UnityEngine;
 
-public class TowerController : MonoBehaviour, ITowerControllerModel
+public class TowerController : MonoBehaviour, ITowerController
 {
     [SerializeField] private ProjectileController _projectileController;
+    [SerializeField] private ContentSelection _contentSelection;
     [SerializeField] private Coins _coins;
+
+    public event Action<TileContent> TowerSelectedEvent;
 
     private TowerFactory _towerFactory;
     private readonly GameBehaviourCollection _towers = new();
@@ -11,6 +15,10 @@ public class TowerController : MonoBehaviour, ITowerControllerModel
     public void Initialize(TowerFactory contentFactory)
     {
         _towerFactory = contentFactory;
+
+        _contentSelection.UpgradeEvent += OnUpgrade;
+        _contentSelection.BuildEvent += OnBuild;
+        _contentSelection.SellEvent += OnSell;
     }
 
     public void GameUpdate()
@@ -31,6 +39,8 @@ public class TowerController : MonoBehaviour, ITowerControllerModel
         if (_coins.TrySpend(cost))
         {
             tower.SetProjectile(_projectileController);
+            tower.SelectedEvent += TowerSelectedEvent;
+            tower.Undo();
             tower.Position = position;
             tower.IsInit = true;
             _towers.Add(tower);
@@ -44,6 +54,7 @@ public class TowerController : MonoBehaviour, ITowerControllerModel
     public void OnSell(TileContent content, uint coins)
     {
         var tower = content.GetComponent<TowerBase>();
+        tower.SelectedEvent -= TowerSelectedEvent;
         _towers.Remove(tower);
         tower.Destroy();
         _coins.Add(coins);
@@ -67,8 +78,10 @@ public class TowerController : MonoBehaviour, ITowerControllerModel
             tower.Destroy();
             
             newTower.SetProjectile(_projectileController);
+            newTower.SelectedEvent += TowerSelectedEvent;
             newTower.Position = position;
             newTower.IsInit = true;
+            newTower.Undo();
             _towers.Add(newTower);
         }
     }

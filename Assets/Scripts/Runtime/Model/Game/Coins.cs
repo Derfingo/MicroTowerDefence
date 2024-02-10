@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Coins : MonoBehaviour, ICoinsModel
+public class Coins : MonoBehaviour, ICoins
 {
     //[SerializeField] private CoinsView _view;
     public event Action<uint> UpdateCoinsEvent;

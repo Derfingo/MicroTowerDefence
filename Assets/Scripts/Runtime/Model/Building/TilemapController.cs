@@ -2,24 +2,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class TilemapController : MonoBehaviour, IGridModel
+public class TilemapController : MonoBehaviour, IGrid
 {
-    [SerializeField] private ActionMapReader _input;
     [SerializeField] private RaycastController _raycast;
     [SerializeField] private Tilemap[] _tilemapArray;
-    [SerializeField] private TowerPlaceView[] _towerPlaces;  // view
 
     private Dictionary<float, Tilemap> _tilemaps;
     private Vector3Int _worldGridPosition;
     private Tilemap _targetTilemap;
     private float _heightTilemap;
-    private bool _isShow;
 
     public void Initialize()
     {
         InitializeTilemaps();
-        HideTowerPlaces();
-        _input.TowerPlacesEvent += OnTowerPlaces;
     }
 
     public void GameUpdate()
@@ -31,46 +26,6 @@ public class TilemapController : MonoBehaviour, IGridModel
     public Vector3 GetCellCenterPosition()
     {
         return _targetTilemap.GetCellCenterWorld(_worldGridPosition);
-    }
-
-    public Vector3Int GetWorldGridPosition()
-    {
-        return _worldGridPosition;
-    }
-
-    public float GetHeightTilemap()
-    {
-        return _heightTilemap;
-    }
-
-    private void OnTowerPlaces()
-    {
-        _isShow = !_isShow;
-
-        if (_isShow)
-        {
-            ShowTowerPlaces();
-        }
-        else
-        {
-            HideTowerPlaces();
-        }
-    }
-
-    private void ShowTowerPlaces()
-    {
-        foreach (var place in _towerPlaces)
-        {
-            place.Show();
-        }
-    }
-
-    private void HideTowerPlaces()
-    {
-        foreach (var place in _towerPlaces)
-        {
-            place.Hide();
-        }
     }
 
     private void InitializeTilemaps()
@@ -96,8 +51,6 @@ public class TilemapController : MonoBehaviour, IGridModel
 
     private bool GetTilamap(float mouseHeight)
     {
-        //var height = Mathf.Round(mouseHeight);
-
         if (_tilemaps.ContainsKey(mouseHeight))
         {
             _heightTilemap = mouseHeight;

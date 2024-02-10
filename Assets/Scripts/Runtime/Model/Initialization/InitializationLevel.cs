@@ -9,6 +9,7 @@ public class InitializationLevel : MonoBehaviour
     [SerializeField] private RaycastController _raycastController;
     [SerializeField] private ActionMapReader _actionMapReader;
     [SerializeField] private TilemapController _tilemapController;
+    [SerializeField] private ContentSelection _contentSelection;
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private GameCycle _gamecycle;
     [SerializeField] private Health _health;
@@ -23,6 +24,7 @@ public class InitializationLevel : MonoBehaviour
     [Header("Presenters"), Space]
     [SerializeField] private ScorePresenter _scorePresenter;
     [SerializeField] private GameplayPresenter _gameplayPresenter;
+    [SerializeField] private SelectionPresenter _selectionPresenter;
 
     private void Awake()
     {
@@ -33,14 +35,23 @@ public class InitializationLevel : MonoBehaviour
         _cameraController.Initialize(_actionMapReader);
         _tilemapController.Initialize();
         _towerController.Initialize(_towerFactory);
+        _contentSelection.Initialize(_actionMapReader);
         _gamecycle.Initialize(config.PrepareTime, _contentSelectionView);
 
         _scorePresenter.Initialize(_healthView, _coinsView, _health, _coins);
-        _gameplayPresenter.Initialize(_gameplayButtonsView, _contentSelectionView, _towerController, _pathPointsView, _tilemapController, _raycastController, _coins);
+        _selectionPresenter.Initialize(_contentSelection,_tilemapController , _raycastController, _contentSelectionView);
+        _gameplayPresenter.Initialize(_gameplayButtonsView,
+                                      _contentSelectionView,
+                                      _towerController,
+                                      _contentSelection,
+                                      _pathPointsView,
+                                      _tilemapController,
+                                      _raycastController,
+                                      _coins);
 
         _gameplayButtonsView.Initialize();
         _gameplayButtonsView.SetCost(_towerFactory.GetAllCostTowers());
-        _contentSelectionView.Initialize(_actionMapReader, _towerFactory);
+        _contentSelectionView.Initialize(_actionMapReader);
         _health.Initialize(config.Health);
         _coins.Initialize(config.Coins);
     }

@@ -9,10 +9,10 @@ public class ActionMapReader : MonoBehaviour, IPlayerActions, IUIActions, IInput
     public event Action<float> ScrollEvent;
     public event Action<bool> TurnCameraLeftEvent;
     public event Action<bool> TurnCameraRightEvent;
+    public event Action<bool> TowerPlacesEvent;
     public event Action GamePauseEvent;
     public event Action SelectPlaceEvent;
     public event Action CancelSelectPlaceEvent;
-    public event Action TowerPlacesEvent;
 
     public Vector3 MousePosition { get; private set; }
 
@@ -118,7 +118,16 @@ public class ActionMapReader : MonoBehaviour, IPlayerActions, IUIActions, IInput
 
     public void OnTowerPlaces(InputAction.CallbackContext context)
     {
-        TowerPlacesEvent?.Invoke();
+        if (context.started)
+        {
+            TowerPlacesEvent?.Invoke(true);
+        }
+
+        if (context.canceled)
+        {
+            TowerPlacesEvent?.Invoke(false);
+        }
+        
     }
 
     public void OnGamePause(InputAction.CallbackContext context)

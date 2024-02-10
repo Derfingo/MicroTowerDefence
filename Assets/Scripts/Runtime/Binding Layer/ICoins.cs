@@ -1,6 +1,6 @@
 using System;
 
-public interface ICoinsModel
+public interface ICoins
 {
     public event Action<uint> UpdateCoinsEvent;
     bool Check(uint cost);

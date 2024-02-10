@@ -10,6 +10,7 @@ public class InputReader : MonoBehaviour, IInputActions
     public event Action GamePauseEvent;
     public event Action SelectPlaceEvent;
     public event Action CancelSelectPlaceEvent;
+    public event Action<bool> TowerPlacesEvent;
 
     public Vector3 MousePosition { get; private set; }
 
@@ -65,6 +66,16 @@ public class InputReader : MonoBehaviour, IInputActions
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             GamePauseEvent?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TowerPlacesEvent?.Invoke(true);
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            TowerPlacesEvent?.Invoke(false);
         }
     }
 

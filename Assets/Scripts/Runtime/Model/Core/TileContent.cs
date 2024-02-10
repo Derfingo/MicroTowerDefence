@@ -9,6 +9,9 @@ public abstract class TileContent : GameBehaviour
         set => transform.position = value;
     }
 
+    public abstract void Interact();
+    public abstract void Undo();
+    
     public void Show()
     {
         gameObject.SetActive(true);

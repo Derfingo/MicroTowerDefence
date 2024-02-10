@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class RaycastController : MonoBehaviour, IRaycastModel
+public class RaycastController : MonoBehaviour, IRaycast
 {
     [SerializeField] private Camera _camera;
-    [SerializeField] private LayerMask _touchMask;
+    [SerializeField] private LayerMask _groundMask;
     [SerializeField] private LayerMask _contentMask;
 
     private const float MAX_DISTANCE = 100f;
@@ -25,7 +25,7 @@ public class RaycastController : MonoBehaviour, IRaycastModel
     {
         var ray = _camera.ScreenPointToRay(_input.MousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, MAX_DISTANCE, _touchMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, MAX_DISTANCE, _groundMask))
         {
             _hitPosition = hit.point;
 
@@ -49,9 +49,9 @@ public class RaycastController : MonoBehaviour, IRaycastModel
 
         if (Physics.Raycast(ray, out RaycastHit hit, MAX_DISTANCE, _contentMask))
         {
-            if (hit.collider.gameObject != null)
+            if (hit.collider.TryGetComponent(out TileContent content))
             {
-                return hit.collider.GetComponent<TileContent>();
+                return content;
             }
         }
 

@@ -1,26 +1,27 @@
-using UnityEngine;
 
-public class GameplayPresenter : MonoBehaviour
+public class GameplayPresenter : UnityEngine.MonoBehaviour
 {
     private IGameplayButtonsView _gameplayButtonsView;
-    private IContentSelectionView _contentSelectionView;
-    private ITowerControllerModel _towerControllerModel;
+    private ISelectionView _selectionView;
+    private ITowerController _towerController;
+    private ISelection _selection;
 
     private IPathView _pathView;
 
-    private IGridModel _gridModel;
+    private IGrid _gridModel;
 
-    private IRaycastModel _raycastModel;
+    private IRaycast _raycastModel;
 
-    private ICoinsModel _coins;
+    private ICoins _coins;
 
     public void Initialize(IGameplayButtonsView gameplayButtonsView,
-                           IContentSelectionView contentSelection,
-                           ITowerControllerModel towerController,
+                           ISelectionView contentSelection,
+                           ITowerController towerController,
+                           ISelection selection,
                            IPathView pathView,
-                           IGridModel grid,
-                           IRaycastModel raycast,
-                           ICoinsModel coins)
+                           IGrid grid,
+                           IRaycast raycast,
+                           ICoins coins)
     {
         _coins = coins;
         _gridModel = grid;
@@ -28,19 +29,9 @@ public class GameplayPresenter : MonoBehaviour
         _raycastModel = raycast;
 
         _gameplayButtonsView = gameplayButtonsView;
-        _contentSelectionView = contentSelection;
-        _towerControllerModel = towerController;
+        _selectionView = contentSelection;
+        _towerController = towerController;
+        _selection = selection;
 
-        _contentSelectionView.CellCenterPositionEvent += _gridModel.GetCellCenterPosition;
-        _contentSelectionView.WorldGridPositionEvent += _gridModel.GetWorldGridPosition;
-        _contentSelectionView.HeightTilemapEvent += _gridModel.GetHeightTilemap;
-
-        _contentSelectionView.GetContentEvent += _raycastModel.GetContent;
-        _contentSelectionView.RaycastHitEvent += _raycastModel.CheckHit;
-        _contentSelectionView.CheckCoinsEvent += _coins.Check;
-
-        _contentSelectionView.UpgradeEvent += _towerControllerModel.OnUpgrade;
-        _contentSelectionView.BuildEvent += _towerControllerModel.OnBuild;
-        _contentSelectionView.SellEvent += _towerControllerModel.OnSell;
     }
 }

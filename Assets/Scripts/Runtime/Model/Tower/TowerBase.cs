@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using UnityEngine;
 
 [SelectionBase]
@@ -7,6 +8,10 @@ public abstract class TowerBase : TileContent
     [SerializeField] private TowerType _towerType;
     [SerializeField, Range(1f, 10f)] protected float _targetRange;
     [SerializeField] protected float _speedProjectile = 4f;
+
+    private TargetRadiusView _targetRadiusView;
+
+    public event Action<TileContent> SelectedEvent;
 
     public readonly uint MaxLevel = 2;
     public TowerType TowerType => _towerType;
@@ -32,6 +37,7 @@ public abstract class TowerBase : TileContent
         SellCost = config.SellCost;
         SetStats(config);
         _collider = GetComponent<BoxCollider>();
+        _targetRadiusView = GetComponentInChildren<TargetRadiusView>();
         _collider.size = new Vector3(0.9f, 1f, 0.9f);
         _collider.enabled = false;
     }
@@ -39,6 +45,30 @@ public abstract class TowerBase : TileContent
     public void SetProjectile(ProjectileController projectile)
     {
         _projectileController = projectile;
+    }
+
+    public override void Interact()
+    {
+        SelectedEvent?.Invoke(this);
+        ShowTargetRadius(true);
+    }
+
+    public override void Undo()
+    {
+        ShowTargetRadius(false);
+    }
+
+    public void ShowTargetRadius(bool isEnable)
+    {
+        if (isEnable)
+        {
+            _targetRadiusView.SetRadius(_targetRange);
+            _targetRadiusView.Show();
+        }
+        else
+        {
+            _targetRadiusView.Hide();
+        }
     }
 
     protected abstract void SetStats(TowerConfig config);
@@ -99,12 +129,4 @@ public abstract class TowerBase : TileContent
     {
         return new ProjectileConfig(start, target, damage, blastRadius);
     }
-
-    //private void OnDrawGizmosSelected()
-    //{
-    //    Gizmos.color = Color.yellow;
-    //    Vector3 position = transform.localPosition;
-    //    position.y += 0.1f;
-    //    Gizmos.DrawWireSphere(position, _targetRange);
-    //}
 }

@@ -17,5 +17,5 @@ MonoBehaviour:
     Name: Test Level
     Description: Test prototype
     PrepareTime: 3
-    Coins: 300
+    Coins: 150
     Health: 10
