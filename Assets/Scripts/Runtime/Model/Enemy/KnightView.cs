@@ -1,7 +1,10 @@
-public class KnightView : EnemyView
+namespace MicroTowerDefence
 {
-    public void OnDieAnimationFinished()
+    public class KnightView : EnemyView
     {
-        _enemy.Destroy();
+        public void OnDieAnimationFinished()
+        {
+            _enemy.Destroy();
+        }
     }
 }

@@ -1,14 +1,17 @@
 using UnityEngine;
 
-public abstract class TowerViewBase : MonoBehaviour
+namespace MicroTowerDefence
 {
-    protected Animator _animator;
-
-    private void Start()
+    public abstract class TowerViewBase : MonoBehaviour
     {
-        _animator = GetComponent<Animator>();
-        Animate();
-    }
+        protected Animator _animator;
 
-    protected abstract void Animate();
+        private void Start()
+        {
+            _animator = GetComponent<Animator>();
+            Animate();
+        }
+
+        protected abstract void Animate();
+    }
 }

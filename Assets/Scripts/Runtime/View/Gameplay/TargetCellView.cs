@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class TargetCellView : ViewBase
+namespace MicroTowerDefence
 {
-    [SerializeField] private SpriteRenderer _targetSprite;
-
-    public void UpdatePosition(Vector3 position)
+    public class TargetCellView : ViewBase
     {
-        transform.position = position;
-    }
+        [SerializeField] private SpriteRenderer _targetSprite;
 
-    public void Display(bool isShow)
-    {
-        _targetSprite.enabled = isShow;
+        public void UpdatePosition(Vector3 position)
+        {
+            transform.position = position;
+        }
+
+        public void Display(bool isShow)
+        {
+            _targetSprite.enabled = isShow;
+        }
     }
 }

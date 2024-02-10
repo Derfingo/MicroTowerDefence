@@ -1,51 +1,48 @@
 using System;
 using UnityEngine;
 
-public class Health : MonoBehaviour, IHealthModel
+namespace MicroTowerDefence
 {
-    //[SerializeField] private HealthView _view;
-    public event Action<uint> UpdateHealthEvent;
-
-    private uint _initialHealth;
-    private uint _health;
-
-
-    public void Initialize(uint health)
+    public class Health : MonoBehaviour, IHealth, IReset
     {
-        _initialHealth = health;
-        _health = health;
-        //_view.UpdateHealth(_health);
-        UpdateHealthEvent?.Invoke(_initialHealth);
-    }
+        public event Action<uint> UpdateHealthEvent;
 
-    public void Add(uint health)
-    {
-        _health += health;
-        //_view.UpdateHealth(_health);
-        UpdateHealthEvent?.Invoke(_health);
-    }
+        private uint _initialHealth;
+        private uint _health;
 
-    public bool TryTakeDamage(uint damage)
-    {
-        if (_health <= damage)
+
+        public void Initialize(uint health)
         {
-            _health = 0;
-            Debug.Log($"health = {_health}");
-            //_view.UpdateHealth(_health);
-            UpdateHealthEvent?.Invoke( _health);
-            return true;
+            _initialHealth = health;
+            _health = health;
+            UpdateHealthEvent?.Invoke(_initialHealth);
         }
 
-        _health -= damage;
-        //_view.UpdateHealth(_health);
-        UpdateHealthEvent?.Invoke(_health);
-        return false;
-    }
+        public void Add(uint health)
+        {
+            _health += health;
+            UpdateHealthEvent?.Invoke(_health);
+        }
 
-    public void Reset()
-    {
-        _health = _initialHealth;
-        //_view.UpdateHealth(_health);
-        UpdateHealthEvent?.Invoke(_health);
+        public bool TryTakeDamage(uint damage)
+        {
+            if (_health <= damage)
+            {
+                _health = 0;
+                Debug.Log($"health = {_health}");
+                UpdateHealthEvent?.Invoke(_health);
+                return true;
+            }
+
+            _health -= damage;
+            UpdateHealthEvent?.Invoke(_health);
+            return false;
+        }
+
+        void IReset.Reset()
+        {
+            _health = _initialHealth;
+            UpdateHealthEvent?.Invoke(_health);
+        }
     }
 }

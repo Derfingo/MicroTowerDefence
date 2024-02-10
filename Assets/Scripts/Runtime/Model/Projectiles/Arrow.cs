@@ -1,69 +1,72 @@
 using UnityEngine;
 
-public class Arrow : ProjectileBase
+namespace MicroTowerDefence
 {
-    public override bool GameUpdate()
+    public class Arrow : ProjectileBase
     {
-        if (DetectCollision())
+        public override bool GameUpdate()
         {
-            Destroy();
-            return false;
-        }
+            if (DetectCollision())
+            {
+                Destroy();
+                return false;
+            }
 
-        if (DetectGround())
-        {
-            Destroy();
-            return false;
-        }
+            if (DetectGround())
+            {
+                Destroy();
+                return false;
+            }
 
-        Move();
-        Rotate();
+            Move();
+            Rotate();
 
-        return true;
-    }
-
-    protected override void Move()
-    {
-        MoveByBezier();
-    }
-
-    protected override void Rotate()
-    {
-        Vector3 relativePosition = _middlePoint - transform.position;
-        if (relativePosition == Vector3.zero)
-        {
-            return;
-        }
-        Quaternion rotation = Quaternion.LookRotation(relativePosition, Vector3.up);
-        transform.rotation = rotation;
-    }
-
-    private void MoveByBezier()
-    {
-        float delta = _speed * Time.deltaTime;
-
-        _middlePoint = Vector3.MoveTowards(_middlePoint, _targetPosition, delta);
-        transform.position = Vector3.MoveTowards(transform.position, _middlePoint, delta);
-    }
-
-    private bool DetectCollision()
-    {
-        if (TargetPoint.FillBuffer(transform.position, _blastRadious))
-        {
-            TargetPoint.GetBuffered(0).Enemy.TakeDamage(_damage);
             return true;
         }
 
-        return false;
-    }
-
-    private bool DetectGround()
-    {
-        if (transform.position.y <= 0.1f)
+        protected override void Move()
         {
-            return true;
+            MoveByBezier();
         }
 
-        return false;
+        protected override void Rotate()
+        {
+            Vector3 relativePosition = _middlePoint - transform.position;
+            if (relativePosition == Vector3.zero)
+            {
+                return;
+            }
+            Quaternion rotation = Quaternion.LookRotation(relativePosition, Vector3.up);
+            transform.rotation = rotation;
+        }
+
+        private void MoveByBezier()
+        {
+            float delta = _speed * Time.deltaTime;
+
+            _middlePoint = Vector3.MoveTowards(_middlePoint, _targetPosition, delta);
+            transform.position = Vector3.MoveTowards(transform.position, _middlePoint, delta);
+        }
+
+        private bool DetectCollision()
+        {
+            if (TargetPoint.FillBuffer(transform.position, _blastRadious))
+            {
+                TargetPoint.GetBuffered(0).Enemy.TakeDamage(_damage);
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool DetectGround()
+        {
+            if (transform.position.y <= 0.1f)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

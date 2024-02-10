@@ -1,4 +1,7 @@
-public interface ICoinsView
+namespace MicroTowerDefence
 {
-    void UpdateCoins(uint coins);
+    public interface ICoinsView
+    {
+        void UpdateCoins(uint coins);
+    }
 }

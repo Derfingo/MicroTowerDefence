@@ -1,8 +1,11 @@
 using UnityEngine;
 
-public interface IPathView
+namespace MicroTowerDefence
 {
-    Transform[] Points { get; }
-    Vector3 InitialPoint {  get; }
-    float LeastDistance { get; }
+    public interface IPathView
+    {
+        Transform[] Points { get; }
+        Vector3 InitialPoint { get; }
+        float LeastDistance { get; }
+    }
 }

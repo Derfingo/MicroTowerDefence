@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public interface IGrid
+namespace MicroTowerDefence
 {
-    Vector3 GetCellCenterPosition();
+    public interface IGrid
+    {
+        Vector3 GetCellCenterPosition();
+    }
 }

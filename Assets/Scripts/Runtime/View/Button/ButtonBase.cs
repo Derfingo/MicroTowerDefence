@@ -1,29 +1,32 @@
 using System;
 using UnityEngine.EventSystems;
 
-public abstract class ButtonBase : ViewBase, ISubmitHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
+namespace MicroTowerDefence
 {
-    public event Action ClickEvent;
-    public event Action PointerEnterEvent;
-    public event Action PointerExitEvent;
-
-    public void OnPointerDown(PointerEventData eventData)
+    public abstract class ButtonBase : ViewBase, ISubmitHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
     {
-        ClickEvent?.Invoke();
-    }
+        public event Action ClickEvent;
+        public event Action PointerEnterEvent;
+        public event Action PointerExitEvent;
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        PointerEnterEvent?.Invoke();
-    }
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            ClickEvent?.Invoke();
+        }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        PointerExitEvent?.Invoke();
-    }
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            PointerEnterEvent?.Invoke();
+        }
 
-    public void OnSubmit(BaseEventData eventData)
-    {
-        ClickEvent?.Invoke();
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            PointerExitEvent?.Invoke();
+        }
+
+        public void OnSubmit(BaseEventData eventData)
+        {
+            ClickEvent?.Invoke();
+        }
     }
 }

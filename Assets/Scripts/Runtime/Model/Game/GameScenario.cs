@@ -1,45 +1,48 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class GameScenario : ScriptableObject
+namespace MicroTowerDefence
 {
-    [SerializeField] private EnemyWave[] _waves;
-
-    public State Begin(EnemyContorller controller) => new(this, controller);
-
-    [Serializable]
-    public struct State
+    [CreateAssetMenu]
+    public class GameScenario : ScriptableObject
     {
-        private EnemyContorller _controller;
-        private GameScenario _scenario;
-        private int _index;
-        private EnemyWave.State _wave;
+        [SerializeField] private EnemyWave[] _waves;
 
-        public State(GameScenario scenario, EnemyContorller controller)
+        public State Begin(EnemyContorller controller) => new(this, controller);
+
+        [Serializable]
+        public struct State
         {
-            _controller = controller;
-            _scenario = scenario;
-            _index = 0;
-            _wave = scenario._waves[0].Begin(controller);
-        }
+            private EnemyContorller _controller;
+            private GameScenario _scenario;
+            private int _index;
+            private EnemyWave.State _wave;
 
-        public bool Progress()
-        {
-            float deltaTime = _wave.Progress(Time.deltaTime);
-
-            while (deltaTime >= 0f)
+            public State(GameScenario scenario, EnemyContorller controller)
             {
-                if (++_index >= _scenario._waves.Length)
-                {
-                    return false;
-                }
-
-                _wave = _scenario._waves[_index].Begin(_controller);
-                deltaTime = _wave.Progress(deltaTime);
+                _controller = controller;
+                _scenario = scenario;
+                _index = 0;
+                _wave = scenario._waves[0].Begin(controller);
             }
 
-            return true;
+            public bool Progress()
+            {
+                float deltaTime = _wave.Progress(Time.deltaTime);
+
+                while (deltaTime >= 0f)
+                {
+                    if (++_index >= _scenario._waves.Length)
+                    {
+                        return false;
+                    }
+
+                    _wave = _scenario._waves[_index].Begin(_controller);
+                    deltaTime = _wave.Progress(deltaTime);
+                }
+
+                return true;
+            }
         }
     }
 }

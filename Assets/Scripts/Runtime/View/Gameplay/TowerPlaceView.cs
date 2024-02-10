@@ -1,21 +1,24 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class TowerPlaceView : ViewBase
+namespace MicroTowerDefence
 {
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-
-    private readonly float _duration = 0.1f;
-
-    public void Display(bool isEnable)
+    public class TowerPlaceView : ViewBase
     {
-        if (isEnable)
+        [SerializeField] private SpriteRenderer _spriteRenderer;
+
+        private readonly float _duration = 0.1f;
+
+        public void Display(bool isEnable)
         {
-            _spriteRenderer.DOFade(1f, _duration);
-        }
-        else
-        {
-            _spriteRenderer.DOFade(0f, _duration);
+            if (isEnable)
+            {
+                _spriteRenderer.DOFade(1f, _duration);
+            }
+            else
+            {
+                _spriteRenderer.DOFade(0f, _duration);
+            }
         }
     }
 }

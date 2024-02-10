@@ -1,23 +1,26 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader : MonoBehaviour
+namespace MicroTowerDefence
 {
-    [SerializeField] private LevelsView _levelsView;
-
-    private void Start()
+    public class SceneLoader : MonoBehaviour
     {
-        SceneManager.UnloadSceneAsync(Constants.Scenes.Boot);
+        [SerializeField] private LevelsView _levelsView;
 
-        foreach (var level in _levelsView.LevelButtons)
+        private void Start()
         {
-            level.onClick.AddListener(LoadLevel);
-        }
-    }
+            SceneManager.UnloadSceneAsync(Constants.Scenes.Boot);
 
-    private void LoadLevel()
-    {
-        SceneManager.LoadScene(Constants.Scenes.TEST_LEVEL, LoadSceneMode.Single);
-        Debug.Log("Level loading");
+            foreach (var level in _levelsView.LevelButtons)
+            {
+                level.onClick.AddListener(LoadLevel);
+            }
+        }
+
+        private void LoadLevel()
+        {
+            SceneManager.LoadScene(Constants.Scenes.TEST_LEVEL, LoadSceneMode.Single);
+            Debug.Log("Level loading");
+        }
     }
 }

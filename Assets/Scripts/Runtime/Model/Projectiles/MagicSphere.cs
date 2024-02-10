@@ -1,54 +1,57 @@
 using UnityEngine;
 
-public class MagicSphere : ProjectileBase
+namespace MicroTowerDefence
 {
-    public override bool GameUpdate()
+    public class MagicSphere : ProjectileBase
     {
-        if (DetectCollision())
+        public override bool GameUpdate()
         {
-            Destroy();
-            return false;
-        }
+            if (DetectCollision())
+            {
+                Destroy();
+                return false;
+            }
 
-        if (DetectGround())
-        {
-            Destroy();
-            return false;
-        }
+            if (DetectGround())
+            {
+                Destroy();
+                return false;
+            }
 
-        Move();
+            Move();
 
-        return true;
-    }
-
-    protected override void Move()
-    {
-        float deltaTime = _speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, _targetPosition, deltaTime);
-    }
-
-    protected override void Rotate()
-    {
-    }
-
-    private bool DetectCollision()
-    {
-        if (TargetPoint.FillBuffer(transform.position, _blastRadious))
-        {
-            TargetPoint.GetBuffered(0).Enemy.TakeDamage(_damage);
             return true;
         }
 
-        return false;
-    }
-
-    private bool DetectGround()
-    {
-        if (transform.position.y <= 0.1f)
+        protected override void Move()
         {
-            return true;
+            float deltaTime = _speed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, _targetPosition, deltaTime);
         }
 
-        return false;
+        protected override void Rotate()
+        {
+        }
+
+        private bool DetectCollision()
+        {
+            if (TargetPoint.FillBuffer(transform.position, _blastRadious))
+            {
+                TargetPoint.GetBuffered(0).Enemy.TakeDamage(_damage);
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool DetectGround()
+        {
+            if (transform.position.y <= 0.1f)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

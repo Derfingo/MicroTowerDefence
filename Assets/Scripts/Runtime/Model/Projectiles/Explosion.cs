@@ -1,62 +1,65 @@
 using UnityEngine;
 
-public class Explosion : GameBehaviour
+namespace MicroTowerDefence
 {
-    [SerializeField, Range(0f, 1f)] private float _duration = 0.5f;
-    [SerializeField] AnimationCurve _scaleCurve;
-    [SerializeField] AnimationCurve _colorCurve;
-
-    private static int _colorPropId = Shader.PropertyToID("_Color");
-    private static MaterialPropertyBlock _propertyBlock;
-    private MeshRenderer _meshRenderer;
-    private float _scale;
-    private float _age;
-
-    private void Awake()
+    public class Explosion : GameBehaviour
     {
-        _meshRenderer = GetComponent<MeshRenderer>();
-    }
+        [SerializeField, Range(0f, 1f)] private float _duration = 0.5f;
+        [SerializeField] AnimationCurve _scaleCurve;
+        [SerializeField] AnimationCurve _colorCurve;
 
-    public void Initialize(Vector3 position, float blastRadious, float damage = 0f)
-    {
-        if (damage > 0f)
+        private static int _colorPropId = Shader.PropertyToID("_Color");
+        private static MaterialPropertyBlock _propertyBlock;
+        private MeshRenderer _meshRenderer;
+        private float _scale;
+        private float _age;
+
+        private void Awake()
         {
-            TargetPoint.FillBuffer(position, blastRadious);
+            _meshRenderer = GetComponent<MeshRenderer>();
+        }
 
-            for (int i = 0; i < TargetPoint.BufferedCount; i++)
+        public void Initialize(Vector3 position, float blastRadious, float damage = 0f)
+        {
+            if (damage > 0f)
             {
-                TargetPoint.GetBuffered(i).Enemy.TakeDamage(damage);
+                TargetPoint.FillBuffer(position, blastRadious);
+
+                for (int i = 0; i < TargetPoint.BufferedCount; i++)
+                {
+                    TargetPoint.GetBuffered(i).Enemy.TakeDamage(damage);
+                }
             }
+
+            transform.localPosition = position;
+            _scale = 2f * blastRadious;
         }
 
-        transform.localPosition = position;
-        _scale = 2f * blastRadious;
-    }
-
-    public override bool GameUpdate()
-    {
-        _age += Time.deltaTime;
-
-        if (_age >= _duration)
+        public override bool GameUpdate()
         {
-            Destroy();
-            return false;
+            _age += Time.deltaTime;
+
+            if (_age >= _duration)
+            {
+                Destroy();
+                return false;
+            }
+
+            _propertyBlock ??= new MaterialPropertyBlock();
+
+            float t = _age / _duration;
+            Color c = Color.black;
+            c.a = _colorCurve.Evaluate(t);
+            _propertyBlock.SetColor(_colorPropId, c);
+            _meshRenderer.SetPropertyBlock(_propertyBlock);
+            transform.localScale = Vector3.one * (_scale * _scaleCurve.Evaluate(t));
+
+            return true;
         }
 
-        _propertyBlock ??= new MaterialPropertyBlock();
-
-        float t = _age / _duration;
-        Color c = Color.black;
-        c.a = _colorCurve.Evaluate(t);
-        _propertyBlock.SetColor(_colorPropId, c);
-        _meshRenderer.SetPropertyBlock(_propertyBlock);
-        transform.localScale = Vector3.one * (_scale * _scaleCurve.Evaluate(t));
-
-        return true;
-    }
-
-    public override void Destroy()
-    {
-        Destroy(gameObject);
+        public override void Destroy()
+        {
+            Destroy(gameObject);
+        }
     }
 }

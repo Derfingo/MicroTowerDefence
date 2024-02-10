@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public class TrapFactory : GameObjectFactory
+namespace MicroTowerDefence
 {
-    [SerializeField] private TrapBase _arrow;
-    [SerializeField] private TrapBase _spike;
-}
+    public class TrapFactory : GameObjectFactory
+    {
+        [SerializeField] private TrapBase _arrow;
+        [SerializeField] private TrapBase _spike;
+    }
 
-public enum TrapType
-{
-    Spike,
-    Arrow
+    public enum TrapType
+    {
+        Spike,
+        Arrow
+    }
 }

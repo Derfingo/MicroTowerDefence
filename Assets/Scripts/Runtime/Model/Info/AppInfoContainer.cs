@@ -1,5 +1,8 @@
-public class AppInfoContainer
+namespace MicroTowerDefence
 {
-    public UserInfoContainer UserInfo {  get; set; }
-    // config
+    public class AppInfoContainer
+    {
+        public UserInfoContainer UserInfo { get; set; }
+        // config
+    }
 }

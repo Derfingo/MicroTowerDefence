@@ -1,57 +1,55 @@
 using System;
 using UnityEngine;
 
-public class Coins : MonoBehaviour, ICoins
+namespace MicroTowerDefence
 {
-    //[SerializeField] private CoinsView _view;
-    public event Action<uint> UpdateCoinsEvent;
-
-    private uint _initialCoins;
-    private uint _coins;
-
-    public void Initialize(uint initialCoins)
+    public class Coins : MonoBehaviour, ICoins, IReset
     {
-        _initialCoins = initialCoins;
-        _coins = initialCoins;
-        //_view.UpdateCoins(_coins);
-        UpdateCoinsEvent?.Invoke(_initialCoins);
-    }
+        public event Action<uint> UpdateCoinsEvent;
 
-    public void Add(uint amount)
-    {
-        _coins += amount;
-        //_view.UpdateCoins(_coins);
-        UpdateCoinsEvent?.Invoke(_coins);
-    }
+        private uint _initialCoins;
+        private uint _coins;
 
-    public bool Check(uint cost)
-    {
-        if (_coins < cost)
+        public void Initialize(uint initialCoins)
         {
-            Debug.Log("coins is not enough");
-            return false;
+            _initialCoins = initialCoins;
+            _coins = initialCoins;
+            UpdateCoinsEvent?.Invoke(_initialCoins);
         }
-        
-        return true;
-    }
 
-    public bool TrySpend(uint cost)
-    {
-        if (Check(cost))
+        public void Add(uint amount)
         {
-            _coins -= cost;
-            //_view.UpdateCoins(_coins);
+            _coins += amount;
             UpdateCoinsEvent?.Invoke(_coins);
+        }
+
+        public bool Check(uint cost)
+        {
+            if (_coins < cost)
+            {
+                Debug.Log("coins is not enough");
+                return false;
+            }
+
             return true;
         }
 
-        return false;
-    }
+        public bool TrySpend(uint cost)
+        {
+            if (Check(cost))
+            {
+                _coins -= cost;
+                UpdateCoinsEvent?.Invoke(_coins);
+                return true;
+            }
 
-    public void Reset()
-    {
-        _coins = _initialCoins;
-        //_view.UpdateCoins(_coins);
-        UpdateCoinsEvent?.Invoke(_coins);
+            return false;
+        }
+
+        void IReset.Reset()
+        {
+            _coins = _initialCoins;
+            UpdateCoinsEvent?.Invoke(_coins);
+        }
     }
 }

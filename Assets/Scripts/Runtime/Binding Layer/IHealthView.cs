@@ -1,4 +1,7 @@
-public interface IHealthView
+namespace MicroTowerDefence
 {
-    void UpdateHealth(uint health);
+    public interface IHealthView
+    {
+        void UpdateHealth(uint health);
+    }
 }

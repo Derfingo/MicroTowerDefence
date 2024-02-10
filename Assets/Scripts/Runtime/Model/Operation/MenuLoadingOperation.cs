@@ -2,20 +2,23 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
-public class MenuLoadingOperation : ILoadingOperation
+namespace MicroTowerDefence
 {
-    public string GetName => "Main menu loading";
-
-    public async Task Load(Action<float> onProgress)
+    public class MenuLoadingOperation : ILoadingOperation
     {
-        onProgress?.Invoke(0.5f);
-        var loadOperation = SceneManager.LoadSceneAsync(Constants.Scenes.MAIN_MENU, LoadSceneMode.Additive);
+        public string GetName => "Main menu loading";
 
-        while (loadOperation.isDone == false)
+        public async Task Load(Action<float> onProgress)
         {
-            await Task.Delay(1);
-        }
+            onProgress?.Invoke(0.5f);
+            var loadOperation = SceneManager.LoadSceneAsync(Constants.Scenes.MAIN_MENU, LoadSceneMode.Additive);
 
-        onProgress?.Invoke(1f);
+            while (loadOperation.isDone == false)
+            {
+                await Task.Delay(1);
+            }
+
+            onProgress?.Invoke(1f);
+        }
     }
 }

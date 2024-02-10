@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildTowerButtonsView : ViewBase
+namespace MicroTowerDefence
 {
-    [SerializeField] private List<BuildTowerButton> _towerButtons;
+    public class BuildTowerButtonsView : ViewBase
+    {
+        [SerializeField] private List<BuildTowerButton> _towerButtons;
 
-    public List<BuildTowerButton> TowerButtons => _towerButtons;
+        public List<BuildTowerButton> TowerButtons => _towerButtons;
+    }
 }

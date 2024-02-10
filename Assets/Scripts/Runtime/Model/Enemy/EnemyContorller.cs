@@ -1,42 +1,45 @@
 using System;
 using UnityEngine;
 
-public class EnemyContorller : MonoBehaviour
+namespace MicroTowerDefence
 {
-    [SerializeField] private PathPointsView _enemyPathView; // view
-
-    public event Action<uint> OnEnemyFinish;
-    public event Action<uint> OnEnemyDie;
-
-    private readonly GameBehaviourCollection _enemies = new();
-
-    public bool IsEmpty => _enemies.IsEmpty;
-
-    public void Spawn(EnemyFactory factory, EnemyType type)
+    public class EnemyContorller : MonoBehaviour, IUpdate, IReset
     {
-        Enemy enemy = factory.Get(type);
-        enemy.SetPath(_enemyPathView);
-        enemy.SetPosition(_enemyPathView.InitialPoint);
-        enemy.OnFinish += OnEnemyFinish;
-        enemy.OnDie += OnEnemyDie;
-        _enemies.Add(enemy);
-    }
+        [SerializeField] private PathPointsView _enemyPathView; // view
 
-    public void SetPause(bool isPause)
-    {
-        foreach (var enemy in _enemies.Behaviours)
+        public event Action<uint> OnEnemyFinish;
+        public event Action<uint> OnEnemyDie;
+
+        private readonly GameBehaviourCollection _enemies = new();
+
+        public bool IsEmpty => _enemies.IsEmpty;
+
+        public void Spawn(EnemyFactory factory, EnemyType type)
         {
-            enemy.GetComponentInChildren<Animator>().enabled = !isPause;
+            Enemy enemy = factory.Get(type);
+            enemy.SetPath(_enemyPathView);
+            enemy.SetPosition(_enemyPathView.InitialPoint);
+            enemy.OnFinish += OnEnemyFinish;
+            enemy.OnDie += OnEnemyDie;
+            _enemies.Add(enemy);
         }
-    }
 
-    public void Clear()
-    {
-        _enemies.Clear();
-    }
+        public void SetPause(bool isPause)
+        {
+            foreach (var enemy in _enemies.Behaviours)
+            {
+                enemy.GetComponentInChildren<Animator>().enabled = !isPause;
+            }
+        }
 
-    public void GameUpdate()
-    {
-        _enemies.GameUpdate();
+        void IReset.Reset()
+        {
+            _enemies.Clear();
+        }
+
+        public void GameUpdate()
+        {
+            _enemies.GameUpdate();
+        }
     }
 }

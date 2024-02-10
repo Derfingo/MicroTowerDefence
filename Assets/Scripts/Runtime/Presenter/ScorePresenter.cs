@@ -1,22 +1,25 @@
 using UnityEngine;
 
-public class ScorePresenter : MonoBehaviour
+namespace MicroTowerDefence
 {
-    private IHealthView _healthView;
-    private ICoinsView _coinsView;
-
-    private IHealthModel _health;
-    private ICoins _coins;
-
-    public void Initialize(IHealthView healthView, ICoinsView coinsView, IHealthModel health, ICoins coins)
+    public class ScorePresenter : MonoBehaviour
     {
-        _healthView = healthView;
-        _coinsView = coinsView;
+        private IHealthView _healthView;
+        private ICoinsView _coinsView;
 
-        _health = health;
-        _coins = coins;
+        private IHealth _health;
+        private ICoins _coins;
 
-        _health.UpdateHealthEvent += _healthView.UpdateHealth;
-        _coins.UpdateCoinsEvent += _coinsView.UpdateCoins;
+        public void Initialize(IHealthView healthView, ICoinsView coinsView, IHealth health, ICoins coins)
+        {
+            _healthView = healthView;
+            _coinsView = coinsView;
+
+            _health = health;
+            _coins = coins;
+
+            _health.UpdateHealthEvent += _healthView.UpdateHealth;
+            _coins.UpdateCoinsEvent += _coinsView.UpdateCoins;
+        }
     }
 }

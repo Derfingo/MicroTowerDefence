@@ -1,46 +1,48 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-[Serializable]
-public class GameBehaviourCollection
+namespace MicroTowerDefence
 {
-    public bool IsEmpty => _behaviours.Count == 0;
-    public List<GameBehaviour> Behaviours => _behaviours;
-
-    private readonly List<GameBehaviour> _behaviours = new();
-
-    public void Add(GameBehaviour behaviour)
+    [Serializable]
+    public class GameBehaviourCollection : IUpdate
     {
-        _behaviours.Add(behaviour);
-    }
+        public bool IsEmpty => _behaviours.Count == 0;
+        public List<GameBehaviour> Behaviours => _behaviours;
 
-    public void GameUpdate()
-    {
-        for (int i = 0; i < _behaviours.Count; i++)
+        private readonly List<GameBehaviour> _behaviours = new();
+
+        public void Add(GameBehaviour behaviour)
         {
-            if (!_behaviours[i].GameUpdate())
+            _behaviours.Add(behaviour);
+        }
+
+        public void GameUpdate()
+        {
+            for (int i = 0; i < _behaviours.Count; i++)
             {
-                int lastIndex = _behaviours.Count - 1;
-                _behaviours[i] = _behaviours[lastIndex];
-                _behaviours.RemoveAt(lastIndex);
-                i -= 1;
+                if (!_behaviours[i].GameUpdate())
+                {
+                    int lastIndex = _behaviours.Count - 1;
+                    _behaviours[i] = _behaviours[lastIndex];
+                    _behaviours.RemoveAt(lastIndex);
+                    i -= 1;
+                }
             }
         }
-    }
 
-    public void Remove(GameBehaviour behaviour)
-    {
-        _behaviours.Remove(behaviour);
-    }
-
-    public void Clear()
-    {
-        for (int i = 0; i < _behaviours.Count; i++)
+        public void Remove(GameBehaviour behaviour)
         {
-            _behaviours[i].Destroy();
+            _behaviours.Remove(behaviour);
         }
 
-        _behaviours.Clear();
+        public void Clear()
+        {
+            for (int i = 0; i < _behaviours.Count; i++)
+            {
+                _behaviours[i].Destroy();
+            }
+
+            _behaviours.Clear();
+        }
     }
 }

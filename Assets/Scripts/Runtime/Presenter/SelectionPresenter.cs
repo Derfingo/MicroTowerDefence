@@ -1,32 +1,35 @@
 using UnityEngine;
 
-public class SelectionPresenter : MonoBehaviour
+namespace MicroTowerDefence
 {
-    private IGrid _grid;
-    private IRaycast _raycast;
-    private ISelection _selection;
-    private ISelectionView _selectionView;
-
-    public void Initialize(ISelection selection, IGrid grid, IRaycast raycast, ISelectionView selectionView)
+    public class SelectionPresenter : MonoBehaviour
     {
-        _grid = grid;
-        _raycast = raycast;
-        _selection = selection;
-        _selectionView = selectionView;
+        private IGrid _grid;
+        private IRaycast _raycast;
+        private ISelection _selection;
+        private ISelectionView _selectionView;
 
-        _selectionView.RaycastHitEvent += _raycast.CheckHit;
+        public void Initialize(ISelection selection, IGrid grid, IRaycast raycast, ISelectionView selectionView)
+        {
+            _grid = grid;
+            _raycast = raycast;
+            _selection = selection;
+            _selectionView = selectionView;
 
-        _selectionView.CellCenterPositionEvent += _grid.GetCellCenterPosition;
+            _selectionView.RaycastHitEvent += _raycast.CheckHit;
 
-        _selectionView.UpgradeClickEvent += _selection.OnUpgradeTower;
-        _selectionView.BuildClickEvent += _selection.OnBuildTower;
-        _selectionView.SellClickEvent += _selection.OnSellTower;
-        _selectionView.ShowPreviewEvent += _selection.OnShowPreview;
-        _selectionView.HidePreviewEvent += _selection.OnHidePreview;
+            _selectionView.CellCenterPositionEvent += _grid.GetCellCenterPosition;
 
-        _selection.SelectedContentEvent += _selectionView.OnSelectedContent;
-        _selection.ShowTowerMenuEvent += _selectionView.ShowTowerMenu;
-        _selection.SelectToBuildEvent += _selectionView.ShowMenuToBuild;
-        _selection.CancelSelectedEvent += _selectionView.OnCancelSelected;
+            _selectionView.UpgradeClickEvent += _selection.OnUpgradeTower;
+            _selectionView.BuildClickEvent += _selection.OnBuildTower;
+            _selectionView.SellClickEvent += _selection.OnSellTower;
+            _selectionView.ShowPreviewEvent += _selection.OnShowPreview;
+            _selectionView.HidePreviewEvent += _selection.OnHidePreview;
+
+            _selection.SelectedContentEvent += _selectionView.OnSelectedContent;
+            _selection.ShowTowerMenuEvent += _selectionView.ShowTowerMenu;
+            _selection.SelectToBuildEvent += _selectionView.ShowMenuToBuild;
+            _selection.CancelSelectedEvent += _selectionView.OnCancelSelected;
+        }
     }
 }

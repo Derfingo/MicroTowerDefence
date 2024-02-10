@@ -1,3 +1,6 @@
-public class SimpleButton : ButtonBase
+namespace MicroTowerDefence
 {
+    public class SimpleButton : ButtonBase
+    {
+    }
 }

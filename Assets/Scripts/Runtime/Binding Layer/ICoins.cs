@@ -1,7 +1,10 @@
 using System;
 
-public interface ICoins
+namespace MicroTowerDefence
 {
-    public event Action<uint> UpdateCoinsEvent;
-    bool Check(uint cost);
+    public interface ICoins
+    {
+        public event Action<uint> UpdateCoinsEvent;
+        bool Check(uint cost);
+    }
 }

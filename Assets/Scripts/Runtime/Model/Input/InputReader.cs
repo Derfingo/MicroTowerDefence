@@ -1,116 +1,119 @@
 using System;
 using UnityEngine;
 
-public class InputReader : MonoBehaviour, IInputActions
+namespace MicroTowerDefence
 {
-    public event Action<float> RotateCameraEvent;
-    public event Action<float> ScrollEvent;
-    public event Action<bool> TurnCameraLeftEvent;
-    public event Action<bool> TurnCameraRightEvent;
-    public event Action GamePauseEvent;
-    public event Action SelectPlaceEvent;
-    public event Action CancelSelectPlaceEvent;
-    public event Action<bool> TowerPlacesEvent;
-
-    public Vector3 MousePosition { get; private set; }
-
-    public void GameUpdate()
+    public class InputReader : MonoBehaviour, IInputActions, IUpdate
     {
-        GetMousePosition();
-        OnKeyboardHandler();
-        OnMouseButtonsHandler();
-        OnScroll();
-        OnRotate();
-    }
+        public event Action<float> RotateCameraEvent;
+        public event Action<float> ScrollEvent;
+        public event Action<bool> TurnCameraLeftEvent;
+        public event Action<bool> TurnCameraRightEvent;
+        public event Action GamePauseEvent;
+        public event Action SelectPlaceEvent;
+        public event Action CancelSelectPlaceEvent;
+        public event Action<bool> TowerPlacesEvent;
 
-    private void GetMousePosition()
-    {
-        MousePosition = Input.mousePosition;
-    }
+        public Vector3 MousePosition { get; private set; }
 
-    private void OnMouseButtonsHandler()
-    {
-        if (Input.GetMouseButtonDown(0))
+        public void GameUpdate()
         {
-            SelectPlaceEvent?.Invoke();
+            GetMousePosition();
+            OnKeyboardHandler();
+            OnMouseButtonsHandler();
+            OnScroll();
+            OnRotate();
         }
 
-        if (Input.GetMouseButtonDown(1))
+        private void GetMousePosition()
         {
-            CancelSelectPlaceEvent?.Invoke();
-        }
-    }
-
-    private void OnKeyboardHandler()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            TurnCameraLeftEvent?.Invoke(true);
+            MousePosition = Input.mousePosition;
         }
 
-        if (Input.GetKeyUp(KeyCode.Q))
+        private void OnMouseButtonsHandler()
         {
-            TurnCameraLeftEvent?.Invoke(false);
+            if (Input.GetMouseButtonDown(0))
+            {
+                SelectPlaceEvent?.Invoke();
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                CancelSelectPlaceEvent?.Invoke();
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        private void OnKeyboardHandler()
         {
-            TurnCameraRightEvent?.Invoke(true);
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                TurnCameraLeftEvent?.Invoke(true);
+            }
+
+            if (Input.GetKeyUp(KeyCode.Q))
+            {
+                TurnCameraLeftEvent?.Invoke(false);
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                TurnCameraRightEvent?.Invoke(true);
+            }
+
+            if (Input.GetKeyUp(KeyCode.E))
+            {
+                TurnCameraRightEvent?.Invoke(false);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                GamePauseEvent?.Invoke();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                TowerPlacesEvent?.Invoke(true);
+            }
+
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                TowerPlacesEvent?.Invoke(false);
+            }
         }
 
-        if (Input.GetKeyUp(KeyCode.E))
+        private void OnScroll()
         {
-            TurnCameraRightEvent?.Invoke(false);
+            if (Input.mouseScrollDelta.y != 0)
+            {
+                ScrollEvent?.Invoke(Input.mouseScrollDelta.y);
+            }
+            else
+            {
+                ScrollEvent?.Invoke(0f);
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        private void OnRotate()
         {
-            GamePauseEvent?.Invoke();
+            if (Input.GetMouseButton(1))
+            {
+                RotateCameraEvent?.Invoke(Input.GetAxis("Mouse X"));
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        public void SetPlayerMap()
         {
-            TowerPlacesEvent?.Invoke(true);
+            Debug.Log("not implemented");
         }
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        public void SetUIMap()
         {
-            TowerPlacesEvent?.Invoke(false);
+            Debug.Log("not implemented");
         }
-    }
 
-    private void OnScroll()
-    {
-        if (Input.mouseScrollDelta.y != 0)
+        public void SetAllMaps()
         {
-            ScrollEvent?.Invoke(Input.mouseScrollDelta.y);
+            Debug.Log("not implemented");
         }
-        else
-        {
-            ScrollEvent?.Invoke(0f);
-        }
-    }
-
-    private void OnRotate()
-    {
-        if (Input.GetMouseButton(1))
-        {
-            RotateCameraEvent?.Invoke(Input.GetAxis("Mouse X"));
-        }
-    }
-
-    public void SetPlayerMap()
-    {
-        Debug.Log("not implemented");
-    }
-
-    public void SetUIMap()
-    {
-        Debug.Log("not implemented");
-    }
-
-    public void SetAllMaps()
-    {
-        Debug.Log("not implemented");
     }
 }

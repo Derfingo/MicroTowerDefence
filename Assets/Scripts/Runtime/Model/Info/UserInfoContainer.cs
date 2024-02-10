@@ -1,6 +1,9 @@
-public class UserInfoContainer
+namespace MicroTowerDefence
 {
-    public string Id {  get; set; }
-    public string Name { get; set; }
-    public string AvatarPath { get; set; }
+    public class UserInfoContainer
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string AvatarPath { get; set; }
+    }
 }

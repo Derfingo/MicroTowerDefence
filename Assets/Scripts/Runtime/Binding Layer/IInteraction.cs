@@ -1,4 +1,7 @@
-public interface IInteraction
+namespace MicroTowerDefence
 {
-    void Interact();
+    public interface IInteraction
+    {
+        void Interact();
+    }
 }

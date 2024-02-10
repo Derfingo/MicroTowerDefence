@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AppStartup : MonoBehaviour
+namespace MicroTowerDefence
 {
-    private void Start()
+    public class AppStartup : MonoBehaviour
     {
-        var loadingOperations = new Queue<ILoadingOperation>();
-        loadingOperations.Enqueue(new MenuLoadingOperation());
-        GetComponent<LoadingScreen>().Load(loadingOperations);
-        Debug.Log("boot");
+        private void Start()
+        {
+            var loadingOperations = new Queue<ILoadingOperation>();
+            loadingOperations.Enqueue(new MenuLoadingOperation());
+            GetComponent<LoadingScreen>().Load(loadingOperations);
+            Debug.Log("boot");
+        }
     }
 }

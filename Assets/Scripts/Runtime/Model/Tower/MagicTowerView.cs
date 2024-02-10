@@ -1,8 +1,11 @@
 using UnityEngine;
 
-public class MagicTowerView : TowerViewBase
+namespace MicroTowerDefence
 {
-    protected override void Animate()
+    public class MagicTowerView : TowerViewBase
     {
+        protected override void Animate()
+        {
+        }
     }
 }

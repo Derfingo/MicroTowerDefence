@@ -4,45 +4,48 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Image))]
-public class BuildTowerButton : ViewBase, ISubmitHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
+namespace MicroTowerDefence
 {
-    [SerializeField] private TowerType _type;
-
-    public Action<TowerType> ClickEvent;
-    public Action<TowerType> PointerEnterEvent;
-    public Action<TowerType> PointerExitEvent;
-    public TowerType Type => _type;
-
-    private TMP_Text _costText;
-
-    private void OnEnable()
+    [RequireComponent(typeof(Image))]
+    public class BuildTowerButton : ViewBase, ISubmitHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
     {
-        _costText = GetComponentInChildren<TMP_Text>();
-    }
+        [SerializeField] private TowerType _type;
 
-    public void SetCost(uint cost)
-    {
-        _costText.text = cost.ToString();
-    }
+        public Action<TowerType> ClickEvent;
+        public Action<TowerType> PointerEnterEvent;
+        public Action<TowerType> PointerExitEvent;
+        public TowerType Type => _type;
 
-    public void OnSubmit(BaseEventData eventData)
-    {
-        ClickEvent?.Invoke(_type);
-    }
+        private TMP_Text _costText;
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        PointerEnterEvent?.Invoke(_type);
-    }
+        private void OnEnable()
+        {
+            _costText = GetComponentInChildren<TMP_Text>();
+        }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        PointerExitEvent?.Invoke(_type);
-    }
+        public void SetCost(uint cost)
+        {
+            _costText.text = cost.ToString();
+        }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        ClickEvent?.Invoke(_type);
+        public void OnSubmit(BaseEventData eventData)
+        {
+            ClickEvent?.Invoke(_type);
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            PointerEnterEvent?.Invoke(_type);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            PointerExitEvent?.Invoke(_type);
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            ClickEvent?.Invoke(_type);
+        }
     }
 }

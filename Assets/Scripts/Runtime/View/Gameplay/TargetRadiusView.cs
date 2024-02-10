@@ -1,20 +1,23 @@
 using UnityEngine;
 
-public class TargetRadiusView : MonoBehaviour
+namespace MicroTowerDefence
 {
-    public void SetRadius(float radius)
+    public class TargetRadiusView : MonoBehaviour
     {
-        var diameter = radius * 2f;
-        transform.localScale = new Vector3(diameter, diameter, 1f);
-    }
+        public void SetRadius(float radius)
+        {
+            var diameter = radius * 2f;
+            transform.localScale = new Vector3(diameter, diameter, 1f);
+        }
 
-    public void Hide()
-    {
-        gameObject.SetActive(false);
-    }
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
 
-    public void Show()
-    {
-        gameObject.SetActive(true);
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
     }
 }

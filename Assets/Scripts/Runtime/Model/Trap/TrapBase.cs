@@ -1,14 +1,17 @@
-public class TrapBase : TileContent
+namespace MicroTowerDefence
 {
-    public  void Initialize(GameObjectFactory factory, int level)
+    public class TrapBase : TileContent
     {
-    }
+        public void Initialize(GameObjectFactory factory, int level)
+        {
+        }
 
-    public override void Interact()
-    {
-    }
+        public override void Interact()
+        {
+        }
 
-    public override void Undo()
-    {
+        public override void Undo()
+        {
+        }
     }
 }

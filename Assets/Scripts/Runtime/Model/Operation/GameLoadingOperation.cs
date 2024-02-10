@@ -2,19 +2,22 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
-public class GameLoadingOperation : ILoadingOperation
+namespace MicroTowerDefence
 {
-    public string GetName => "Game loading";
-
-    public async Task Load(Action<float> onProgress)
+    public class GameLoadingOperation : ILoadingOperation
     {
-        onProgress?.Invoke(0.5f);
-        var loadOp = SceneManager.LoadSceneAsync(Constants.Scenes.TEST_LEVEL, LoadSceneMode.Single);
+        public string GetName => "Game loading";
 
-        while (loadOp.isDone == false)
+        public async Task Load(Action<float> onProgress)
         {
-            await Task.Delay(1);
+            onProgress?.Invoke(0.5f);
+            var loadOp = SceneManager.LoadSceneAsync(Constants.Scenes.TEST_LEVEL, LoadSceneMode.Single);
+
+            while (loadOp.isDone == false)
+            {
+                await Task.Delay(1);
+            }
+            onProgress?.Invoke(1f);
         }
-        onProgress?.Invoke(1f);
     }
 }

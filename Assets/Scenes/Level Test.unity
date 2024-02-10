@@ -7665,13 +7665,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40da5043b52927469a2451d6b7a4031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectileController: {fileID: 1233792664}
-  _tilemapController: {fileID: 782842631}
-  _buildingController: {fileID: 98841627}
-  _cameraController: {fileID: 1177465228}
   _enemyController: {fileID: 250740639}
   _gameScenario: {fileID: 11400000, guid: 0df6968ad275edf41ac44ed686258ce9, type: 2}
-  _input: {fileID: 769756009}
   _health: {fileID: 1761680644}
   _coins: {fileID: 2088420226}
 --- !u!4 &1550305078
@@ -10230,7 +10225,7 @@ GameObject:
   - component: {fileID: 1943920052}
   - component: {fileID: 1943920051}
   m_Layer: 0
-  m_Name: Init
+  m_Name: Entry Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10248,6 +10243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07377e8978fb03448a28588d38d5efb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _projectileController: {fileID: 1233792664}
+  _enemyController: {fileID: 250740639}
   _towerFactory: {fileID: 11400000, guid: 8b7976d0dda20974cbc5fbf7d1cb0bd5, type: 2}
   _cameraController: {fileID: 1177465228}
   _towerController: {fileID: 98841627}
@@ -12125,6 +12122,7 @@ MeshFilter:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1943920052}
   - {fileID: 795768357}
   - {fileID: 6124800284441008176}
   - {fileID: 137816888}
@@ -12138,7 +12136,6 @@ SceneRoots:
   - {fileID: 2036691436}
   - {fileID: 1761680645}
   - {fileID: 2088420227}
-  - {fileID: 1943920052}
   - {fileID: 7273697}
   - {fileID: 543450653442771741}
   - {fileID: 844599221}

@@ -6,69 +6,71 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LoadingScreen : MonoBehaviour
+namespace MicroTowerDefence
 {
-    [SerializeField] private Canvas _canvas;
-    [SerializeField] private Slider _progressFill;
-    [SerializeField] private TextMeshProUGUI _loadingInfo;
-    [SerializeField] private float _barSpeed;
-
-    private float _toFill;
-    private Coroutine _progressBarRoutine;
-
-    public static LoadingScreen Instance { get; private set; }
-
-    public async void Load(Queue<ILoadingOperation> loadingOperations/* Action onComplete*/)
+    public class LoadingScreen : MonoBehaviour
     {
-        _canvas.enabled = true;
-        foreach (var operation in loadingOperations)
+        [SerializeField] private Canvas _canvas;
+        [SerializeField] private Slider _progressFill;
+        [SerializeField] private TextMeshProUGUI _loadingInfo;
+        [SerializeField] private float _barSpeed;
+
+        private float _toFill;
+        private Coroutine _progressBarRoutine;
+
+        public static LoadingScreen Instance { get; private set; }
+
+        public async void Load(Queue<ILoadingOperation> loadingOperations/* Action onComplete*/)
         {
-            ResetFill();
-            _loadingInfo.text = operation.GetName;
+            _canvas.enabled = true;
+            foreach (var operation in loadingOperations)
+            {
+                ResetFill();
+                _loadingInfo.text = operation.GetName;
 
-            if (_progressBarRoutine != null)
-                StopCoroutine(_progressBarRoutine);
-            _progressBarRoutine = StartCoroutine(UpdateProgressBar());
+                if (_progressBarRoutine != null)
+                    StopCoroutine(_progressBarRoutine);
+                _progressBarRoutine = StartCoroutine(UpdateProgressBar());
 
-            await operation.Load(OnProgress);
-            await WaitForBarFill();
+                await operation.Load(OnProgress);
+                await WaitForBarFill();
+            }
+
+            StopCoroutine(_progressBarRoutine);
+
+            _canvas.enabled = false;
+            //onComplete?.Invoke();
         }
 
-        StopCoroutine(_progressBarRoutine);
-
-        _canvas.enabled = false;
-        //onComplete?.Invoke();
-    }
-
-    private void ResetFill()
-    {
-        _progressFill.value = 0;
-        _toFill = 0;
-    }
-
-    private void OnProgress(float progress)
-    {
-        _toFill = progress;
-    }
-
-    private async Task WaitForBarFill()
-    {
-        while (_progressFill.value < _toFill)
+        private void ResetFill()
         {
-            await Task.Delay(1);
+            _progressFill.value = 0;
+            _toFill = 0;
         }
 
-        await Task.Delay(TimeSpan.FromSeconds(0.3f));
-    }
-
-    private IEnumerator UpdateProgressBar()
-    {
-        while (true)
+        private void OnProgress(float progress)
         {
-            if (_progressFill.value < _toFill)
-                _progressFill.value += Time.deltaTime * _barSpeed;
-            yield return null;
+            _toFill = progress;
+        }
+
+        private async Task WaitForBarFill()
+        {
+            while (_progressFill.value < _toFill)
+            {
+                await Task.Delay(1);
+            }
+
+            await Task.Delay(TimeSpan.FromSeconds(0.3f));
+        }
+
+        private IEnumerator UpdateProgressBar()
+        {
+            while (true)
+            {
+                if (_progressFill.value < _toFill)
+                    _progressFill.value += Time.deltaTime * _barSpeed;
+                yield return null;
+            }
         }
     }
 }
-

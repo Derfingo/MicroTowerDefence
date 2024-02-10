@@ -2,122 +2,125 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameplayButtonsView : ViewBase, IGameplayButtonsView
+namespace MicroTowerDefence
 {
-    [SerializeField] private TowerButtonsView _towerButtonsView;
-    [SerializeField] private BuildTowerButtonsView _buildTowerButtonsView;
-
-    public event Action<TowerType> BuildTowerEvent;
-    public event Action<TowerType> EnterPreviewTowerEvent;
-    public event Action<TowerType> ExitPreviewTowerEvent;
-
-    public event Action UpgradeTowerEvent;
-    public event Action SellTowerEvent;
-
-    public event Action PointerEnterEvent;
-    public event Action PointerExitEvent;
-
-    private ViewBase _currentView;
-
-    public void Initialize()
+    public class GameplayButtonsView : ViewBase, IGameplayButtonsView
     {
-        _buildTowerButtonsView.TowerButtons.ForEach(click => click.ClickEvent += OnBuildTower);
-        _buildTowerButtonsView.TowerButtons.ForEach(enter => enter.PointerEnterEvent += OnEnterPreviewTower);
-        _buildTowerButtonsView.TowerButtons.ForEach(exit => exit.PointerExitEvent += OnExitPreviewTower);
+        [SerializeField] private TowerButtonsView _towerButtonsView;
+        [SerializeField] private BuildTowerButtonsView _buildTowerButtonsView;
 
-        _towerButtonsView.UpgradeButton.ClickEvent += OnUpgradeTower;
-        _towerButtonsView.UpgradeButton.PointerEnterEvent += OnPointerEnter;
-        _towerButtonsView.UpgradeButton.PointerExitEvent += OnPointerExit;
+        public event Action<TowerType> BuildTowerEvent;
+        public event Action<TowerType> EnterPreviewTowerEvent;
+        public event Action<TowerType> ExitPreviewTowerEvent;
 
-        _towerButtonsView.SellButton.ClickEvent += OnSellTower;
-        _towerButtonsView.SellButton.PointerEnterEvent += OnPointerEnter;
-        _towerButtonsView.SellButton.PointerExitEvent += OnPointerExit;
-        
-        _currentView = _buildTowerButtonsView;
-        HideButtonViews();
-    }
+        public event Action UpgradeTowerEvent;
+        public event Action SellTowerEvent;
 
-    // state views
+        public event Action PointerEnterEvent;
+        public event Action PointerExitEvent;
 
-    public void ShowBuildTowerView()
-    {
-        _currentView.Hide();
-        _currentView = _buildTowerButtonsView;
-        _currentView.Show();
-    }
+        private ViewBase _currentView;
 
-    public void ShowTowerView(uint upgradeCost, uint sellCost)
-    {
-        _currentView.Hide();
-        _towerButtonsView.SetCosts(upgradeCost, sellCost);
-        _currentView = _towerButtonsView;
-        _towerButtonsView.Show();
-    }
-
-    public void HideButtonViews()
-    {
-        _buildTowerButtonsView.Hide();
-        _towerButtonsView.Hide();
-    }
-
-    // cost config
-
-    public void SetCost(Dictionary<TowerType, uint> costTowers)
-    {
-        if (_buildTowerButtonsView.TowerButtons == null)
+        public void Initialize()
         {
-            Debug.Log("null");
+            _buildTowerButtonsView.TowerButtons.ForEach(click => click.ClickEvent += OnBuildTower);
+            _buildTowerButtonsView.TowerButtons.ForEach(enter => enter.PointerEnterEvent += OnEnterPreviewTower);
+            _buildTowerButtonsView.TowerButtons.ForEach(exit => exit.PointerExitEvent += OnExitPreviewTower);
+
+            _towerButtonsView.UpgradeButton.ClickEvent += OnUpgradeTower;
+            _towerButtonsView.UpgradeButton.PointerEnterEvent += OnPointerEnter;
+            _towerButtonsView.UpgradeButton.PointerExitEvent += OnPointerExit;
+
+            _towerButtonsView.SellButton.ClickEvent += OnSellTower;
+            _towerButtonsView.SellButton.PointerEnterEvent += OnPointerEnter;
+            _towerButtonsView.SellButton.PointerExitEvent += OnPointerExit;
+
+            _currentView = _buildTowerButtonsView;
+            HideButtonViews();
         }
 
-        foreach (var button in _buildTowerButtonsView.TowerButtons)
+        // state views
+
+        public void ShowBuildTowerView()
         {
-            if (costTowers.TryGetValue(button.Type, out var cost))
+            _currentView.Hide();
+            _currentView = _buildTowerButtonsView;
+            _currentView.Show();
+        }
+
+        public void ShowTowerView(uint upgradeCost, uint sellCost)
+        {
+            _currentView.Hide();
+            _towerButtonsView.SetCosts(upgradeCost, sellCost);
+            _currentView = _towerButtonsView;
+            _towerButtonsView.Show();
+        }
+
+        public void HideButtonViews()
+        {
+            _buildTowerButtonsView.Hide();
+            _towerButtonsView.Hide();
+        }
+
+        // cost config
+
+        public void SetCost(Dictionary<TowerType, uint> costTowers)
+        {
+            if (_buildTowerButtonsView.TowerButtons == null)
             {
-                button.SetCost(cost);
+                Debug.Log("null");
             }
-            else
+
+            foreach (var button in _buildTowerButtonsView.TowerButtons)
             {
-                throw new NotImplementedException();
+                if (costTowers.TryGetValue(button.Type, out var cost))
+                {
+                    button.SetCost(cost);
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
             }
         }
-    }
 
-    // button click
+        // button click
 
-    private void OnBuildTower(TowerType type)
-    {
-        BuildTowerEvent?.Invoke(type);
-    }
+        private void OnBuildTower(TowerType type)
+        {
+            BuildTowerEvent?.Invoke(type);
+        }
 
-    private void OnUpgradeTower()
-    {
-        UpgradeTowerEvent?.Invoke();
-    }
+        private void OnUpgradeTower()
+        {
+            UpgradeTowerEvent?.Invoke();
+        }
 
-    private void OnSellTower()
-    {
-        SellTowerEvent?.Invoke();
-    }
+        private void OnSellTower()
+        {
+            SellTowerEvent?.Invoke();
+        }
 
-    // state pointer on button
+        // state pointer on button
 
-    private void OnEnterPreviewTower(TowerType type)
-    {
-        EnterPreviewTowerEvent?.Invoke(type);
-    }
+        private void OnEnterPreviewTower(TowerType type)
+        {
+            EnterPreviewTowerEvent?.Invoke(type);
+        }
 
-    private void OnExitPreviewTower(TowerType type)
-    {
-        ExitPreviewTowerEvent?.Invoke(type);
-    }
+        private void OnExitPreviewTower(TowerType type)
+        {
+            ExitPreviewTowerEvent?.Invoke(type);
+        }
 
-    private void OnPointerEnter()
-    {
-        PointerEnterEvent?.Invoke();
-    }
+        private void OnPointerEnter()
+        {
+            PointerEnterEvent?.Invoke();
+        }
 
-    private void OnPointerExit()
-    {
-        PointerExitEvent?.Invoke();
+        private void OnPointerExit()
+        {
+            PointerExitEvent?.Invoke();
+        }
     }
 }
