@@ -28,7 +28,7 @@ namespace MicroTowerDefence
         [Header("Presenters"), Space]
         [SerializeField] private ScorePresenter _scorePresenter;
         [SerializeField] private GameplayPresenter _gameplayPresenter;
-        [SerializeField] private SelectionPresenter _selectionPresenter;
+        [SerializeField] private InteractionPresenter _selectionPresenter;
 
         private void Awake()
         {
@@ -40,7 +40,7 @@ namespace MicroTowerDefence
             _tilemapController.Initialize();
             _towerController.Initialize(_towerFactory);
             _contentSelection.Initialize(_actionMapReader);
-            _gamecycle.Initialize(config.PrepareTime, _actionMapReader, GetResets(), GetUpdates(), GetLateUpdates());
+            _gamecycle.Initialize(config.PrepareTime, _actionMapReader, GetResets(), GetUpdates(), GetLateUpdates(), _pathPointsView.GetConfig());
 
             _scorePresenter.Initialize(_healthView, _coinsView, _health, _coins);
             _selectionPresenter.Initialize(_contentSelection,

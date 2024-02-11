@@ -8,22 +8,24 @@ namespace MicroTowerDefence
     {
         [SerializeField] private EnemyWave[] _waves;
 
-        public State Begin(EnemyContorller controller) => new(this, controller);
+        public State Begin(EnemyContorller controller, PathConfig config) => new(this, controller, config);
 
         [Serializable]
         public struct State
         {
             private EnemyContorller _controller;
             private GameScenario _scenario;
+            private PathConfig _config;
             private int _index;
             private EnemyWave.State _wave;
 
-            public State(GameScenario scenario, EnemyContorller controller)
+            public State(GameScenario scenario, EnemyContorller controller, PathConfig config)
             {
                 _controller = controller;
                 _scenario = scenario;
+                _config = config;
                 _index = 0;
-                _wave = scenario._waves[0].Begin(controller);
+                _wave = scenario._waves[0].Begin(controller, config);
             }
 
             public bool Progress()
@@ -37,7 +39,7 @@ namespace MicroTowerDefence
                         return false;
                     }
 
-                    _wave = _scenario._waves[_index].Begin(_controller);
+                    _wave = _scenario._waves[_index].Begin(_controller, _config);
                     deltaTime = _wave.Progress(deltaTime);
                 }
 

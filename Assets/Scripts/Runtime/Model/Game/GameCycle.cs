@@ -23,12 +23,16 @@ namespace MicroTowerDefence
         private IUpdate[] _updates;
         private ILateUpdate[] _lateUpdates;
 
-        public void Initialize(float prepareTime, IInputActions input, IReset[] resets, IUpdate[] updates, ILateUpdate[] lateUpdates)  // view
+        private PathConfig _pathConfig;
+
+        public void Initialize(float prepareTime, IInputActions input, IReset[] resets, IUpdate[] updates, ILateUpdate[] lateUpdates, PathConfig config)  // fix
         {
             _input = input;
             _resets = resets;
             _updates = updates;
             _lateUpdates = lateUpdates;
+
+            _pathConfig = config;
 
             _prepareTime = prepareTime;
             _input.GamePauseEvent += OnPause;
@@ -118,14 +122,14 @@ namespace MicroTowerDefence
                 StopCoroutine(_prepareRoutine);
             }
             Cleanup();
-            _activeScenario = _gameScenario.Begin(_enemyController);
+            _activeScenario = _gameScenario.Begin(_enemyController, _pathConfig);
             _prepareRoutine = StartCoroutine(PrepareRoutine());
         }
 
         private IEnumerator PrepareRoutine()
         {
             yield return new WaitForSeconds(_prepareTime);
-            _activeScenario = _gameScenario.Begin(_enemyController);
+            _activeScenario = _gameScenario.Begin(_enemyController, _pathConfig);
             _scenarioInProgress = true;
         }
 

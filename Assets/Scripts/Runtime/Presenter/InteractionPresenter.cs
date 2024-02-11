@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace MicroTowerDefence
 {
-    public class SelectionPresenter : MonoBehaviour
+    public class InteractionPresenter : MonoBehaviour
     {
         private IGrid _grid;
         private IRaycast _raycast;
@@ -16,7 +16,7 @@ namespace MicroTowerDefence
             _selection = selection;
             _selectionView = selectionView;
 
-            _selectionView.RaycastHitEvent += _raycast.CheckHit;
+            _raycast.OnGround += _selectionView.IsEnableCursor;
 
             _selectionView.CellCenterPositionEvent += _grid.GetCellCenterPosition;
 
@@ -26,10 +26,10 @@ namespace MicroTowerDefence
             _selectionView.ShowPreviewEvent += _selection.OnShowPreview;
             _selectionView.HidePreviewEvent += _selection.OnHidePreview;
 
-            _selection.SelectedContentEvent += _selectionView.OnSelectedContent;
+            _selection.SelectedEvent += _selectionView.OnSelectedContent;
+            _selection.CancelSelectedEvent += _selectionView.OnCancelSelected;
             _selection.ShowTowerMenuEvent += _selectionView.ShowTowerMenu;
             _selection.SelectToBuildEvent += _selectionView.ShowMenuToBuild;
-            _selection.CancelSelectedEvent += _selectionView.OnCancelSelected;
         }
     }
 }

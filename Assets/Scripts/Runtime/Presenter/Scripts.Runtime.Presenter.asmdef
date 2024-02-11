@@ -1,0 +1,16 @@
+{
+    "name": "Scripts.Runtime.Presenter",
+    "rootNamespace": "",
+    "references": [
+        "GUID:308f726acc949c048ae4ba3cc595d343"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace MicroTowerDefence
@@ -7,6 +8,8 @@ namespace MicroTowerDefence
         [SerializeField] private Camera _camera;
         [SerializeField] private LayerMask _groundMask;
         [SerializeField] private LayerMask _contentMask;
+
+        public event Action<bool> OnGround;
 
         private const float MAX_DISTANCE = 100f;
         private Vector3 _hitPosition;
@@ -26,6 +29,7 @@ namespace MicroTowerDefence
         public Vector3 GetPosition()
         {
             var ray = _camera.ScreenPointToRay(_input.MousePosition);
+            bool isHit = false;
 
             if (Physics.Raycast(ray, out RaycastHit hit, MAX_DISTANCE, _groundMask))
             {
@@ -33,13 +37,19 @@ namespace MicroTowerDefence
 
                 switch (hit.normal.y)
                 {
-                    case 0: _isHit = false; break;
-                    case 1: _isHit = true; break;
+                    case 0: isHit = false; break;
+                    case 1: isHit = true; break;
                 };
             }
             else
             {
-                _isHit = false;
+                isHit = false;
+            }
+
+            if (_isHit != isHit)
+            {
+                _isHit = isHit;
+                OnGround?.Invoke(_isHit);
             }
 
             return _hitPosition;

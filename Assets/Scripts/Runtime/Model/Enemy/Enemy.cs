@@ -14,8 +14,6 @@ namespace MicroTowerDefence
         public EnemyFactory OriginFactory { get; set; }
         public Vector3 Velocity => _movement.Velocity;
 
-        private PathPointsView _pathPoints;
-
         private float _health;
         public float Scale { get; private set; }
         private float _speed;
@@ -36,10 +34,9 @@ namespace MicroTowerDefence
             SetSpeed(_speed);
         }
 
-        public void SetPath(PathPointsView pathPoints)
+        public void SetPath(PathConfig config)
         {
-            _pathPoints = pathPoints;
-            _movement.Initialize(_pathPoints.Points, MovementType.Move, _pathPoints.LeastDistance, _speed);
+            _movement.Initialize(config.Points, config.MovementType, config.LeastDistance, _speed);
         }
 
         public void SetPosition(Vector3 position)

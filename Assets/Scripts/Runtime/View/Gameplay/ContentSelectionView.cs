@@ -16,9 +16,9 @@ namespace MicroTowerDefence
         public event Action<TowerType> HidePreviewEvent;
 
         public event Func<Vector3> CellCenterPositionEvent;
-        public event Func<bool> RaycastHitEvent;
 
         private IInputActions _input;
+        private bool _isEnableCursor;
         private bool _isSelected;
 
         public void Initialize(IInputActions input)
@@ -46,6 +46,11 @@ namespace MicroTowerDefence
             UpdateTargetCellView();
         }
 
+        public void IsEnableCursor(bool isEnable)
+        {
+            _isEnableCursor = isEnable;
+        }
+
         public void OnSelectedContent(bool isSelected)
         {
             _isSelected = isSelected;
@@ -59,9 +64,10 @@ namespace MicroTowerDefence
             }
         }
 
-        public void OnCancelSelected()
+        public void OnCancelSelected(bool isSelected)
         {
             _gameplayButtonsView.HideButtonViews();
+            _isSelected = isSelected;
         }
 
         public void ShowMenuToBuild()
@@ -121,7 +127,7 @@ namespace MicroTowerDefence
 
             var position = CellCenterPositionEvent.Invoke();     // func
             _targetCellView.UpdatePosition(position);
-            _targetCellView.Display(RaycastHitEvent.Invoke());   // func
+            _targetCellView.Display(_isEnableCursor);   // func
         }
     }
 }

@@ -5,8 +5,6 @@ namespace MicroTowerDefence
 {
     public class EnemyContorller : MonoBehaviour, IUpdate, IReset
     {
-        [SerializeField] private PathPointsView _enemyPathView; // view
-
         public event Action<uint> OnEnemyFinish;
         public event Action<uint> OnEnemyDie;
 
@@ -14,11 +12,11 @@ namespace MicroTowerDefence
 
         public bool IsEmpty => _enemies.IsEmpty;
 
-        public void Spawn(EnemyFactory factory, EnemyType type)
+        public void Spawn(EnemyFactory factory, EnemyType type, PathConfig config)
         {
             Enemy enemy = factory.Get(type);
-            enemy.SetPath(_enemyPathView);
-            enemy.SetPosition(_enemyPathView.InitialPoint);
+            enemy.SetPath(config);
+            enemy.SetPosition(config.InitialPoint);
             enemy.OnFinish += OnEnemyFinish;
             enemy.OnDie += OnEnemyDie;
             _enemies.Add(enemy);
