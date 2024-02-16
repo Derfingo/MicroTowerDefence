@@ -36,8 +36,8 @@ namespace MicroTowerDefence
 
             _prepareTime = prepareTime;
             _input.GamePauseEvent += OnPause;
-            _enemyController.OnEnemyFinish += TakeDamage;
-            _enemyController.OnEnemyDie += AddCoins;
+            _enemyController.EnemyFinishEvent += TakeDamage;
+            _enemyController.EnemyDieEvent += AddCoins;
             BeginNewGame();
         }
 

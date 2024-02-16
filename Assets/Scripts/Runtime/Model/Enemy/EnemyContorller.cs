@@ -5,8 +5,8 @@ namespace MicroTowerDefence
 {
     public class EnemyContorller : MonoBehaviour, IUpdate, IReset
     {
-        public event Action<uint> OnEnemyFinish;
-        public event Action<uint> OnEnemyDie;
+        public event Action<uint> EnemyFinishEvent;
+        public event Action<uint> EnemyDieEvent;
 
         private readonly GameBehaviourCollection _enemies = new();
 
@@ -17,8 +17,8 @@ namespace MicroTowerDefence
             Enemy enemy = factory.Get(type);
             enemy.SetPath(config);
             enemy.SetPosition(config.InitialPoint);
-            enemy.OnFinish += OnEnemyFinish;
-            enemy.OnDie += OnEnemyDie;
+            enemy.OnFinish += EnemyFinishEvent;
+            enemy.OnDie += EnemyDieEvent;
             _enemies.Add(enemy);
         }
 
