@@ -29,7 +29,7 @@ namespace MicroTowerDefence
         public void OnSpawnAnimationFinished()
         {
             IsInited = true;
-            GetComponent<TargetPoint>().IsEnabled = true;
+            GetComponentInParent<TargetPoint>().IsEnabled = true;
         }
     }
 }

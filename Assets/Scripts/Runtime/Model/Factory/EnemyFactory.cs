@@ -7,7 +7,7 @@ namespace MicroTowerDefence
     {
         [SerializeField] private EnemyConfig _small, _medium, _large;
 
-        private EnemyConfig GetConfig(EnemyType type)
+        public EnemyConfig GetConfig(EnemyType type)
         {
             switch (type)
             {

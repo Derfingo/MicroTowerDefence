@@ -38,7 +38,7 @@ namespace MicroTowerDefence
 
             if (_movementType == MovementType.Move)
             {
-                transform.Translate(direction.normalized * _speed * Time.deltaTime, Space.World);
+                transform.Translate(_velocity * Time.deltaTime, Space.World);
             }
             else if (_movementType == MovementType.Lerp)
             {
@@ -65,7 +65,7 @@ namespace MicroTowerDefence
         {
             var aim = _target - transform.position;
 
-            if (aim.magnitude > 0.5f)
+            if (aim.magnitude > 0.1f)
             {
                 _velocity = aim.normalized * _speed;
             }

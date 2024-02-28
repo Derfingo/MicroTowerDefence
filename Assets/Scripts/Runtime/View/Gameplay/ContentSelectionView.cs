@@ -25,7 +25,7 @@ namespace MicroTowerDefence
         {
             _input = input;
 
-            _input.TowerPlacesEvent += OnDisplayTowerPlaces;
+            //_input.TowerPlacesEvent += OnDisplayTowerPlaces;
 
             _gameplayButtonsView.BuildTowerEvent += OnBuildTower;
             _gameplayButtonsView.SellTowerEvent += OnSellSelectedTower;
@@ -58,9 +58,16 @@ namespace MicroTowerDefence
 
         private void OnDisplayTowerPlaces(bool isEnable)
         {
-            foreach (var place in _towerPlaces)
+            if (_towerPlaces.Length > 0)
             {
-                place.Display(isEnable);
+                foreach (var place in _towerPlaces)
+                {
+                    place.Display(isEnable);
+                }
+            }
+            else
+            {
+                Debug.Log("No tower places");
             }
         }
 

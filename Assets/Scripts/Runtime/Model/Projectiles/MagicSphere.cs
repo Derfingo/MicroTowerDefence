@@ -25,8 +25,7 @@ namespace MicroTowerDefence
 
         protected override void Move()
         {
-            float deltaTime = _speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, _targetPosition, deltaTime);
+            transform.forward = _rigidbBody.velocity;
         }
 
         protected override void Rotate()

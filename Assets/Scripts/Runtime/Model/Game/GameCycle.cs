@@ -32,7 +32,7 @@ namespace MicroTowerDefence
             _updates = updates;
             _lateUpdates = lateUpdates;
 
-            _pathConfig = config;
+            _pathConfig = config; // fix
 
             _prepareTime = prepareTime;
             _input.GamePauseEvent += OnPause;

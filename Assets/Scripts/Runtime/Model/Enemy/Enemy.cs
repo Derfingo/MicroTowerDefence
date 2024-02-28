@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace MicroTowerDefence
 {
+    [SelectionBase]
     public class Enemy : GameBehaviour
     {
         [SerializeField] private PathMovement _movement;
@@ -86,8 +87,8 @@ namespace MicroTowerDefence
 
         private void DisableView()
         {
-            _view.GetComponentInChildren<Collider>().enabled = false;
-            _view.GetComponentInChildren<TargetPoint>().enabled = false;
+            _view.GetComponentInParent<Collider>().enabled = false;
+            _view.GetComponentInParent<TargetPoint>().enabled = false;
         }
 
         public override void Destroy()

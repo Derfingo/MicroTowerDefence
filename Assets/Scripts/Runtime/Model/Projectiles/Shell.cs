@@ -14,14 +14,13 @@ namespace MicroTowerDefence
             }
 
             Move();
-            Rotate();
 
             return true;
         }
 
         protected override void Move()
         {
-            MoveByBezier();
+            transform.forward = _rigidbBody.velocity;
         }
 
         protected override void Rotate()

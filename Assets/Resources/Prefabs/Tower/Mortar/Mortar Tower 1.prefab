@@ -429,7 +429,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _towerType: 1
   _targetRange: 5
-  _speedProjectile: 4
   _cannon: {fileID: 7702362687281950428}
   _cover: {fileID: 9128091685230001989}
   _damage: 40

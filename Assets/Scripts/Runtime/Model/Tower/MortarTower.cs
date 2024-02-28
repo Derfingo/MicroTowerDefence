@@ -9,9 +9,11 @@ namespace MicroTowerDefence
         [SerializeField, Range(1f, 100f)] private float _damage = 50f;
         [SerializeField, Range(0.1f, 3f)] private float _shellBlastRadius = 1f;
         [SerializeField, Range(0.1f, 3f)] private float _shootPerSecond = 1.0f;
-        [SerializeField, Range(0.1f, 5f)] private float _aimThreshold = 5f;
 
         private float _launchProgress = 0f;
+        private float _aimThreshold = 5f; // 5
+        private float _cannonSpeed = 6f; // 4
+        private float _coverSpeed = 80f; // 60
         private bool _isAimed = false;
 
         protected override void SetStats(TowerConfig config)
@@ -28,16 +30,16 @@ namespace MicroTowerDefence
 
             if (IsAcquireTarget(out TargetPoint unit))
             {
-                var predict = PredictPosition(_cannon.position, unit.Position, unit.Velocity);
+                var predict = PredictPosition(_cannon.position, unit.Position, unit.Velocity, _projectileSpeed);
+                _isAimed = GetAngleToTarget(predict) < _aimThreshold;
 
-                _isAimed = GetAngleToTarget(unit.Position) < _aimThreshold;
-
-                RotateCover(unit.Position);
-                RotateCannon(unit.Position);
+                RotateCover(predict);
+                RotateCannon(predict);
 
                 if (_isAimed && _launchProgress >= 1f)
                 {
-                    var config = GetProjectileConfig(_cannon.position, predict, _damage, _shellBlastRadius);
+                    Vector3 movement = MoveParabolically(predict, _cannon.position, _projectileSpeed);
+                    var config = GetProjectileConfig(_cannon.position, predict, movement, _damage, _shellBlastRadius);
                     Shoot(config);
                     _launchProgress = 0f;
                 }
@@ -48,7 +50,7 @@ namespace MicroTowerDefence
 
         private void RotateCannon(Vector3 target)
         {
-            float time = 4f * Time.deltaTime;
+            float time = _cannonSpeed * Time.deltaTime;
             _cannon.rotation = Quaternion.Lerp(_cannon.rotation, Quaternion.LookRotation(target - _cannon.position), time);
             _cannon.localEulerAngles = new Vector3(_cannon.localEulerAngles.x, 0f, 0f);
         }
@@ -62,7 +64,7 @@ namespace MicroTowerDefence
             _cover.rotation = Quaternion.RotateTowards(
                               Quaternion.LookRotation(_cover.forward, coverUp),
                               Quaternion.LookRotation(flattenedCover, coverUp),
-                              60f * Time.deltaTime);
+                              _coverSpeed * Time.deltaTime);
         }
 
         private void Shoot(ProjectileConfig config)

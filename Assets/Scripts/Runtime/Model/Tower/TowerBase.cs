@@ -8,7 +8,8 @@ namespace MicroTowerDefence
     {
         [SerializeField] private TowerType _towerType;
         [SerializeField, Range(1f, 10f)] protected float _targetRange;
-        [SerializeField] protected float _speedProjectile = 4f;
+
+        protected float _projectileSpeed = 4f;
 
         private TargetRadiusView _targetRadiusView;
 
@@ -22,6 +23,7 @@ namespace MicroTowerDefence
         public uint SellCost { get; protected set; }
 
         protected ProjectileController _projectileController;
+        protected float _predictTime;
 
         private BoxCollider _collider;
 
@@ -74,6 +76,24 @@ namespace MicroTowerDefence
 
         protected abstract void SetStats(TowerConfig config);
 
+        protected Vector3 MoveParabolically(Vector3 predict, Vector3 shootPoint, float projectileVelocity)
+        {
+            var aim = predict - shootPoint;
+            aim.y = 0f;
+            float antiGravity = -Physics.gravity.y * _predictTime / 2;
+            float deltaY = (predict.y - shootPoint.y) / _predictTime;
+            Vector3 velocity = aim.normalized * projectileVelocity;
+            velocity.y = antiGravity + deltaY;
+            return velocity;
+        }
+
+        protected Vector3 MoveLinear(Vector3 predict, Vector3 shootPoint, float projectileVelocity)
+        {
+            var aim = predict - shootPoint;
+            Vector3 velocity = aim.normalized * projectileVelocity;
+            return velocity;
+        }
+
         protected bool IsAcquireTarget(out TargetPoint target)
         {
             if (TargetPoint.FillBuffer(transform.localPosition, _targetRange))
@@ -108,27 +128,36 @@ namespace MicroTowerDefence
             return true;
         }
 
-        protected Vector3 PredictPosition(Vector3 startPosition, Vector3 targetPosition, Vector3 targetVelocity)
+        protected Vector3 PredictPosition(Vector3 startPosition, Vector3 targetPosition, Vector3 targetVelocity, float projectileVelocity)
         {
             Vector3 targetDistance = targetPosition - startPosition;
 
-            float a = Vector3.Dot(targetPosition, targetPosition) - _speedProjectile * _speedProjectile;
-            float b = 2 * Vector3.Dot(targetVelocity, targetDistance);
+            float a = Vector3.Dot(targetVelocity, targetVelocity) - projectileVelocity * projectileVelocity;
+            float b = 2 * Vector3.Dot(targetDistance, targetVelocity);
             float c = Vector3.Dot(targetDistance, targetDistance);
 
-            float discriminant = Mathf.Sqrt(b * b - 4 * a * c);
+            float discriminant = b * b - 4 * a * c;
+            if (discriminant < 0.1f) return Vector3.zero;
 
-            float t1 = (-b + discriminant) / (2 * a);
-            float t2 = (-b - discriminant) / (2 * a);
+            float sqrt = Mathf.Sqrt(discriminant);
 
-            float time = Mathf.Max(t1, t2);
+            float t1 = (-b + sqrt) / (2 * a);
+            float t2 = (-b - sqrt) / (2 * a);
 
-            return targetPosition + targetVelocity * time;
+            if (t1 < 0f && t2 < 0f) return Vector3.zero;
+            else if (t1 < 0f) _predictTime = t2;
+            else if (t2 < 0f) _predictTime = t1;
+            else _predictTime = Mathf.Max(t1, t2);
+
+            _predictTime = Mathf.Max(t1, t2);
+
+            Vector3 result = targetPosition + targetVelocity * _predictTime;
+            return result;
         }
 
-        protected ProjectileConfig GetProjectileConfig(Vector3 start, Vector3 target, float damage, float blastRadius = 0f)
+        protected ProjectileConfig GetProjectileConfig(Vector3 start, Vector3 target, Vector3 movement, float velocity, float damage, float blastRadius = 0f)
         {
-            return new ProjectileConfig(start, target, damage, blastRadius);
+            return new ProjectileConfig(start, target, movement, velocity, damage, blastRadius);
         }
     }
 }

@@ -12,9 +12,7 @@ GameObject:
   - component: {fileID: 7026728463438281296}
   - component: {fileID: 1496957466217877657}
   - component: {fileID: 7792917834258211169}
-  - component: {fileID: 9068588122876970124}
   - component: {fileID: 2151906049569696013}
-  - component: {fileID: 7945321521235511077}
   m_Layer: 9
   m_Name: Model
   m_TagString: Untagged
@@ -108,27 +106,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!135 &9068588122876970124
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3449507134534593023}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0.08, z: 0}
 --- !u!114 &2151906049569696013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,18 +116,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99b8ad72fe2fbb04faac30fd2a4d670a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7945321521235511077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3449507134534593023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 441b11865dabec243857456372248476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3670715128441212972
@@ -196,6 +161,8 @@ GameObject:
   - component: {fileID: 1262282387567756480}
   - component: {fileID: 8142990288872035872}
   - component: {fileID: 906280957432624276}
+  - component: {fileID: 3410720605341114542}
+  - component: {fileID: 2319895091698542470}
   m_Layer: 9
   m_Name: Medium Slime
   m_TagString: Untagged
@@ -246,3 +213,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 778d9f32ce5a72c4a9155dfe9bfe0a45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3410720605341114542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8935916062474936514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 441b11865dabec243857456372248476, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &2319895091698542470
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8935916062474936514}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Radius: 0.1
+  m_Center: {x: 0, y: 0.08, z: 0}

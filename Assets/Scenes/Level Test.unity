@@ -167,10 +167,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spawn
       objectReference: {fileID: 0}
+    - target: {fileID: 1574129096759722976, guid: 12683a760946ea641aad36dde09ccd9a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4765539185079643644, guid: 12683a760946ea641aad36dde09ccd9a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4765539185079643644, guid: 12683a760946ea641aad36dde09ccd9a,
         type: 3}
@@ -3021,7 +3026,7 @@ PrefabInstance:
     - target: {fileID: 4419830702126055221, guid: af21103b36fb2264d911a7412d64b643,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4419830702126055221, guid: af21103b36fb2264d911a7412d64b643,
         type: 3}
@@ -7875,7 +7880,7 @@ MonoBehaviour:
   _coins: {fileID: 2088420226}
   _contentSelectionView: {fileID: 77270954}
   _gameplayButtonsView: {fileID: 69970605}
-  _levelConfigProvider: {fileID: 11400000, guid: 26e6e1552e5cd594fb4f83d2c2f0da12,
+  _levelConfigProvider: {fileID: 11400000, guid: 2b7ef1d003e215947a192f0748a87f2d,
     type: 2}
   _pathPointsView: {fileID: 1932330184}
   _healthView: {fileID: 4820345256144011465}
@@ -9184,7 +9189,7 @@ PrefabInstance:
     - target: {fileID: 4419830702126055221, guid: af21103b36fb2264d911a7412d64b643,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4419830702126055221, guid: af21103b36fb2264d911a7412d64b643,
         type: 3}
@@ -9194,7 +9199,7 @@ PrefabInstance:
     - target: {fileID: 4419830702126055221, guid: af21103b36fb2264d911a7412d64b643,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4419830702126055221, guid: af21103b36fb2264d911a7412d64b643,
         type: 3}

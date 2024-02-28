@@ -44,6 +44,12 @@ namespace MicroTowerDefence
                 OnCancelSelectedPlace();
                 return;
             }
+            else if (_targetContent != null)
+            {
+                _targetContent.Undo();
+                _isSelected = false;
+            }
+
 
             _targetContent = _raycastController.GetContent();
 
