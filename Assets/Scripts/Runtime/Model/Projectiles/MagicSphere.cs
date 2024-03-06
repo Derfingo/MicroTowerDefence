@@ -6,15 +6,8 @@ namespace MicroTowerDefence
     {
         public override bool GameUpdate()
         {
-            if (DetectCollision())
+            if (_isMoving == false)
             {
-                Destroy();
-                return false;
-            }
-
-            if (DetectGround())
-            {
-                Destroy();
                 return false;
             }
 
@@ -28,29 +21,24 @@ namespace MicroTowerDefence
             transform.forward = _rigidbBody.velocity;
         }
 
-        protected override void Rotate()
+        protected override void DetectGround(Collision collision)
         {
+            if (collision.gameObject.layer == _groundLayer)
+            {
+                Reclaim();
+            }
         }
 
-        private bool DetectCollision()
+        protected override void DetectEnemy(Collision collision)
         {
-            if (TargetPoint.FillBuffer(transform.position, _blastRadious))
+            if (collision.gameObject.layer == _enemyLayer)
             {
-                TargetPoint.GetBuffered(0).Enemy.TakeDamage(_damage);
-                return true;
+                if (collision.gameObject.TryGetComponent(out Enemy enemy))
+                {
+                    enemy.TakeDamage(_damage);
+                    Reclaim();
+                }
             }
-
-            return false;
-        }
-
-        private bool DetectGround()
-        {
-            if (transform.position.y <= 0.1f)
-            {
-                return true;
-            }
-
-            return false;
         }
     }
 }

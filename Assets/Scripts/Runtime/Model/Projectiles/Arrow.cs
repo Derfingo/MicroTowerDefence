@@ -4,17 +4,12 @@ namespace MicroTowerDefence
 {
     public class Arrow : ProjectileBase
     {
+        private float _reclaimDelay = 1f;
+
         public override bool GameUpdate()
         {
-            if (DetectCollision())
+            if(_isMoving == false)
             {
-                Destroy();
-                return false;
-            }
-
-            if (DetectGround())
-            {
-                Destroy();
                 return false;
             }
 
@@ -25,47 +20,30 @@ namespace MicroTowerDefence
 
         protected override void Move()
         {
-            transform.forward = _rigidbBody.velocity;
-        }
-
-        protected override void Rotate()
-        {
-            Vector3 relativePosition = _middlePoint - transform.position;
-            if (relativePosition == Vector3.zero)
+            if(_isMoving)
             {
-                return;
+                transform.forward = _rigidbBody.velocity;
             }
-            Quaternion rotation = Quaternion.LookRotation(relativePosition, Vector3.up);
-            transform.rotation = rotation;
         }
 
-        private void MoveByBezier()
+        protected override void DetectGround(Collision collision)
         {
-            float delta = _speed * Time.deltaTime;
-
-            _middlePoint = Vector3.MoveTowards(_middlePoint, _targetPosition, delta);
-            transform.position = Vector3.MoveTowards(transform.position, _middlePoint, delta);
-        }
-
-        private bool DetectCollision()
-        {
-            if (TargetPoint.FillBuffer(transform.position, _blastRadious))
+            if (collision.gameObject.layer == _groundLayer)
             {
-                TargetPoint.GetBuffered(0).Enemy.TakeDamage(_damage);
-                return true;
+                Reclaim(_reclaimDelay);
             }
-
-            return false;
         }
 
-        private bool DetectGround()
+        protected override void DetectEnemy(Collision collision)
         {
-            if (transform.position.y <= 0.1f)
+            if (collision.gameObject.layer == _enemyLayer)
             {
-                return true;
+                if (collision.gameObject.TryGetComponent(out Enemy enemy))
+                {
+                    enemy.TakeDamage(_damage);
+                    Reclaim();
+                }
             }
-
-            return false;
         }
     }
 }

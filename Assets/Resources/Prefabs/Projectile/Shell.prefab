@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 3018826411528123996}
   - component: {fileID: 2973602105575201436}
   - component: {fileID: 8415293274211613017}
-  m_Layer: 0
+  - component: {fileID: 2792383715384178984}
+  m_Layer: 11
   m_Name: Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,6 +74,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &2792383715384178984
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46506807550937897}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7482968351545565092
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,7 +107,7 @@ GameObject:
   - component: {fileID: 5446363286614759524}
   - component: {fileID: 4347016392817049648}
   - component: {fileID: 6316651826387224119}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}

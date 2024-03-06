@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.UI.CanvasScaler;
 
 namespace MicroTowerDefence
 {
@@ -11,11 +12,15 @@ namespace MicroTowerDefence
         [SerializeField] private Transform _cannon;
         [SerializeField] private Transform _cover;
 
-        private float _collisionRadius = 0.2f; // 0.1
-        private float _damage;
-        float _shootDelay = _delayReset;
-        static float _delayReset = 1f;
-        private float _coverSpeedRotation = 12.0f;
+        private float _shellBlastRadius = 1f;
+        private float _shootPerSecond = 1f;
+        private float _damage = 100f;
+
+        private float _launchProgress = 0f;
+        private float _aimThreshold = 5f; // 5
+        private float _cannonSpeed = 6f; // 4
+        private float _coverSpeed = 80f; // 60
+        private bool _isAimed = false;
 
         private TowerConfig _config;
 
@@ -47,70 +52,53 @@ namespace MicroTowerDefence
 
         public override bool GameUpdate()
         {
-            _shootDelay -= Time.deltaTime;
+            _launchProgress += Time.deltaTime * _shootPerSecond;
 
-            RotateCover();
-            float? angle = CalculateAngle();
-            RotateCannon(angle);
+            var predict = PredictPosition(_cannon.position, _enemy.transform.position, _enemy.Velocity, _projectileSpeed);
+            _isAimed = GetAngleToTarget(predict) < _aimThreshold;
 
-            if (angle != null && _shootDelay <= 0.0f)
+            RotateCover(predict);
+            RotateCannon(predict);
+
+            if (_isAimed && _launchProgress >= 1f)
             {
-                var predict = PredictPosition(_cannon.position, _enemy.transform.position, _enemy.Velocity, _projectileSpeed);
                 Vector3 movement = MoveParabolically(predict, _cannon.position, _projectileSpeed);
-                var config = GetProjectileConfig(_cannon.position, predict, movement, _projectileSpeed, _damage, _collisionRadius);
+                var config = GetProjectileConfig(_cannon.position, predict, movement, _projectileSpeed, _damage, _shellBlastRadius);
                 Shoot(config);
-                _shootDelay = _delayReset;
+                _launchProgress = 0f;
             }
 
             return true;
         }
 
-        protected void Shoot(ProjectileConfig config)
+        private void RotateCannon(Vector3 target)
         {
-            var arrow = _projectileController.GetArrow();
-            arrow.Initialize(_projectiles, config);
+            float time = _cannonSpeed * Time.deltaTime;
+            _cannon.rotation = Quaternion.Lerp(_cannon.rotation, Quaternion.LookRotation(target - _cannon.position), time);
+            _cannon.localEulerAngles = new Vector3(_cannon.localEulerAngles.x, 0f, 0f);
         }
 
-        private void RotateCover()
+        private void RotateCover(Vector3 target)
         {
-            Vector3 direction = (_enemy.transform.position - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-            _cover.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * _coverSpeedRotation);
+            Vector3 coverUp = transform.up;
+            Vector3 direction = target - _cover.position;
+            Vector3 flattenedCover = Vector3.ProjectOnPlane(direction, coverUp);
+
+            _cover.rotation = Quaternion.RotateTowards(
+                              Quaternion.LookRotation(_cover.forward, coverUp),
+                              Quaternion.LookRotation(flattenedCover, coverUp),
+                              _coverSpeed * Time.deltaTime);
         }
 
-        private void RotateCannon(float? angle)
+        private void Shoot(ProjectileConfig config)
         {
-            if (angle != null)
-            {
-                _cannon.localEulerAngles = new Vector3(360.0f - (float)angle, 0f, 0f);
-            }
+            _projectileController.GetShell().Initialize(_projectileController, config);
         }
 
-        private float? CalculateAngle()
+        private float GetAngleToTarget(Vector3 target)
         {
-            Vector3 targetDir = _enemy.transform.position - _cannon.transform.position;
-            float y = targetDir.y;
-            targetDir.y = 0.0f;
-            float x = targetDir.magnitude - 0f; // default - 1, rotation by X
-            float gravity = 9.8f;
-            float sSqr = _projectileSpeed * _projectileSpeed;
-            float underTheSqrRoot = (sSqr * sSqr) - gravity * (gravity * x * x + 2 * y * sSqr);
-
-            if (underTheSqrRoot >= 0f) // default >= 0f
-            {
-                float root = Mathf.Sqrt(underTheSqrRoot);
-                float highAngle = sSqr + root;
-                float lowAngle = sSqr - root;
-
-                //if (low) return (Mathf.Atan2(lowAngle, gravity * x) * Mathf.Rad2Deg);
-                //else return (Mathf.Atan2(highAngle, gravity * x) * Mathf.Rad2Deg);
-
-                return Mathf.LerpAngle(Mathf.Atan2(highAngle, gravity * x) * Mathf.Rad2Deg,
-                                       Mathf.Atan2(lowAngle, gravity * x) * Mathf.Rad2Deg,
-                                       x);
-            }
-            else
-                return null;
+            float angle = Vector3.Angle(target - _cannon.position, _cannon.forward);
+            return angle;
         }
     }
 }

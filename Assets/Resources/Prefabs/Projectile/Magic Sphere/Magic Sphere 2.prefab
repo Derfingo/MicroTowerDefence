@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 4436751026686430185}
   - component: {fileID: 8027435645924631251}
   - component: {fileID: 4074807388992443753}
-  m_Layer: 0
+  - component: {fileID: 1409399195219294379}
+  m_Layer: 11
   m_Name: Magic Sphere 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,6 +74,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &1409399195219294379
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3833710824605369141}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.18, y: 0.18, z: 0.18}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5999438928652111197
 GameObject:
   m_ObjectHideFlags: 0
@@ -84,7 +106,7 @@ GameObject:
   - component: {fileID: 8701781344135482677}
   - component: {fileID: 836852067266982862}
   - component: {fileID: 1824652595942717796}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}

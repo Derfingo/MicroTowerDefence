@@ -6,6 +6,6 @@ namespace MicroTowerDefence
     {
         public virtual bool GameUpdate() => true;
 
-        public abstract void Destroy();
+        public abstract void Reclaim(float delay = 0);
     }
 }

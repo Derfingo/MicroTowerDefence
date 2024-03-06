@@ -49,7 +49,7 @@ namespace MicroTowerDefence
             }
             else
             {
-                tower.Destroy();
+                tower.Reclaim();
             }
         }
 
@@ -58,7 +58,7 @@ namespace MicroTowerDefence
             var tower = content.GetComponent<TowerBase>();
             tower.SelectedEvent -= TowerSelectedEvent;
             _towers.Remove(tower);
-            tower.Destroy();
+            tower.Reclaim();
             _coins.Add(coins);
         }
 
@@ -77,7 +77,7 @@ namespace MicroTowerDefence
                 var newTower = _towerFactory.Get(tower.TowerType, tower.Level + 1);
                 var position = tower.Position;
                 _towers.Remove(tower);
-                tower.Destroy();
+                tower.Reclaim();
 
                 newTower.SetProjectile(_projectileController);
                 newTower.SelectedEvent += TowerSelectedEvent;

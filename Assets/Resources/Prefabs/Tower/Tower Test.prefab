@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 5413855754589622068}
   - component: {fileID: 7270330611676210795}
   - component: {fileID: 3766030550365679752}
+  - component: {fileID: 9107313930338224179}
   m_Layer: 0
   m_Name: Tower Test
   m_TagString: Untagged
@@ -180,13 +181,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14e5e0bdec127749a9fbc8311a63307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _towerType: 2
+  _towerType: 1
   _targetRange: 10
   _factory: {fileID: 11400000, guid: 8b7976d0dda20974cbc5fbf7d1cb0bd5, type: 2}
   _enemy: {fileID: 0}
   _projectiles: {fileID: 0}
   _cannon: {fileID: 7091783624199454846}
   _cover: {fileID: 7539380908859208770}
+--- !u!65 &9107313930338224179
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8084076490233543915}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.64000005, y: 0.48000002, z: 0.64000005}
+  m_Center: {x: 0, y: 0.24000001, z: 0}
 --- !u!1 &8798820468292982818
 GameObject:
   m_ObjectHideFlags: 0

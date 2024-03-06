@@ -69,7 +69,7 @@ namespace MicroTowerDefence
 
             if (_movement.IsFinish)
             {
-                Destroy();
+                Reclaim();
                 OnFinish?.Invoke(_damage);
                 OnDie = null;
                 return false;
@@ -91,7 +91,7 @@ namespace MicroTowerDefence
             _view.GetComponentInParent<TargetPoint>().enabled = false;
         }
 
-        public override void Destroy()
+        public override void Reclaim(float delay = 0f)
         {
             Destroy(gameObject);
         }

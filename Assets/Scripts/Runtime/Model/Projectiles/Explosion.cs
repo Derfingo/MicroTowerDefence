@@ -19,20 +19,18 @@ namespace MicroTowerDefence
             _meshRenderer = GetComponent<MeshRenderer>();
         }
 
-        public void Initialize(Vector3 position, float blastRadious, float damage = 0f)
+        public void Initialize(Vector3 position, float blastRadious, float damage)
         {
-            if (damage > 0f)
-            {
-                TargetPoint.FillBuffer(position, blastRadious);
+            TargetPoint.FillBuffer(position, blastRadious);
 
-                for (int i = 0; i < TargetPoint.BufferedCount; i++)
-                {
-                    TargetPoint.GetBuffered(i).Enemy.TakeDamage(damage);
-                }
+            for (int i = 0; i < TargetPoint.BufferedCount; i++)
+            {
+                TargetPoint.GetBuffered(i).Enemy.TakeDamage(damage);
             }
 
             transform.localPosition = position;
             _scale = 2f * blastRadious;
+            print("explosion");
         }
 
         public override bool GameUpdate()
@@ -41,7 +39,7 @@ namespace MicroTowerDefence
 
             if (_age >= _duration)
             {
-                Destroy();
+                Reclaim();
                 return false;
             }
 
@@ -57,9 +55,9 @@ namespace MicroTowerDefence
             return true;
         }
 
-        public override void Destroy()
+        public override void Reclaim(float delay = 0f)
         {
-            Destroy(gameObject);
+            Destroy(gameObject, delay);
         }
     }
 }

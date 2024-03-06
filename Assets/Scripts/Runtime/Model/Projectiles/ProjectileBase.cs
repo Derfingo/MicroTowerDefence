@@ -18,6 +18,10 @@ namespace MicroTowerDefence
         protected float _damage;
         protected float _speed;
 
+        protected bool _isMoving;
+        protected int _groundLayer = 6;
+        protected int _enemyLayer = 9;
+
         public void Initialize(ProjectileController projectile, ProjectileConfig config)
         {
             _projectile = projectile;
@@ -31,29 +35,28 @@ namespace MicroTowerDefence
             SetupRigidBody(config.Movement);
         }
 
-        protected abstract void Move();
-        protected abstract void Rotate();
-
-        private void SetMiddlePoint()
+        public override void Reclaim(float delay = 0f)
         {
-            _middlePoint = _targetPosition / 2f; // 2f
-            _middlePoint.y = (_targetPosition - _startPosition).magnitude * _middleY;
-            //Debug.Log("height: " + _middlePoint.y);
+            _rigidbBody.isKinematic = true;
+            _isMoving = false;
+            Destroy(gameObject, delay);
+        }
+
+        protected abstract void Move();
+        protected abstract void DetectGround(Collision collision);
+        protected abstract void DetectEnemy(Collision collision);
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            DetectGround(collision);
+            DetectEnemy(collision);
         }
 
         private void SetupRigidBody(Vector3 velocity)
         {
             _rigidbBody = GetComponent<Rigidbody>();
-            
-            if (_rigidbBody.isKinematic == false)
-            {
-                _rigidbBody.velocity = velocity;
-            }
-        }
-
-        public override void Destroy()
-        {
-            Destroy(gameObject);
+            _rigidbBody.velocity = velocity;
+            _isMoving = true;
         }
     }
 

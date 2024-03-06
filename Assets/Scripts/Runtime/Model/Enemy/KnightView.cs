@@ -4,7 +4,7 @@ namespace MicroTowerDefence
     {
         public void OnDieAnimationFinished()
         {
-            _enemy.Destroy();
+            _enemy.Reclaim();
         }
     }
 }

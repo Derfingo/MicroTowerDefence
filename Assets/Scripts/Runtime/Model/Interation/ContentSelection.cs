@@ -133,7 +133,7 @@ namespace MicroTowerDefence
             }
             else
             {
-                _previewContent.Destroy();
+                _previewContent.Reclaim();
                 // show not enough coins
             }
         }
@@ -142,7 +142,7 @@ namespace MicroTowerDefence
         {
             if (_previewContent != null)
             {
-                _previewContent.Destroy();
+                _previewContent.Reclaim();
                 _previewContent = null;
             }
 

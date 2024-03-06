@@ -24,7 +24,7 @@ namespace MicroTowerDefence
             gameObject.SetActive(false);
         }
 
-        public override void Destroy()
+        public override void Reclaim(float delay = 0f)
         {
             Destroy(gameObject);
         }

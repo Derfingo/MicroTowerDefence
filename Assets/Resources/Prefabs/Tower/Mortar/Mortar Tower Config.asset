@@ -21,7 +21,7 @@ MonoBehaviour:
     Damage: 20
     UpgradeCost: 110
     SellCost: 50
-    ShellBlastRadius: 0.5
+    ShellBlastRadius: 1
     ShootPerSecond: 0.7
     DamagePerSecond: 30
   _level2:

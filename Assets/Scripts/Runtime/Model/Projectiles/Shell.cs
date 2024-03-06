@@ -6,10 +6,8 @@ namespace MicroTowerDefence
     {
         public override bool GameUpdate()
         {
-            if (DetectGround())
+            if(_isMoving == false)
             {
-                _projectile.GetExplosion().Initialize(transform.position, _blastRadious, _damage);
-                Destroy();
                 return false;
             }
 
@@ -23,33 +21,23 @@ namespace MicroTowerDefence
             transform.forward = _rigidbBody.velocity;
         }
 
-        protected override void Rotate()
+        protected override void DetectGround(Collision collision)
         {
-            Vector3 relativePosition = _middlePoint - transform.position;
-            if (relativePosition == Vector3.zero)
+            if (collision.gameObject.layer == _groundLayer)
             {
-                return;
+                print(_blastRadious);
+                _projectile.GetExplosion().Initialize(transform.position, _blastRadious, _damage);
+                Reclaim();
             }
-            Quaternion rotation = Quaternion.LookRotation(relativePosition, Vector3.up);
-            transform.rotation = rotation;
         }
 
-        private void MoveByBezier()
+        protected override void DetectEnemy(Collision collision)
         {
-            float delta = _speed * Time.deltaTime;
-
-            _middlePoint = Vector3.MoveTowards(_middlePoint, _targetPosition, delta);
-            transform.position = Vector3.MoveTowards(transform.position, _middlePoint, delta);
-        }
-
-        private bool DetectGround()
-        {
-            if (transform.position.y <= 0.2f)
+            if (collision.gameObject.layer == _enemyLayer)
             {
-                return true;
+                _projectile.GetExplosion().Initialize(transform.position, _blastRadious, _damage);
+                Reclaim();
             }
-
-            return false;
         }
     }
 }
