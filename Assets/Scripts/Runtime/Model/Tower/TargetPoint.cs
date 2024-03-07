@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace MicroTowerDefence
 {
+    [RequireComponent(typeof(SphereCollider))]
     public class TargetPoint : MonoBehaviour
     {
         public Vector3 Position => transform.position;

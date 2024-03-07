@@ -149,8 +149,6 @@ namespace MicroTowerDefence
             else if (t2 < 0f) _predictTime = t1;
             else _predictTime = Mathf.Max(t1, t2);
 
-            _predictTime = Mathf.Max(t1, t2);
-
             Vector3 result = targetPosition + targetVelocity * _predictTime;
             return result;
         }

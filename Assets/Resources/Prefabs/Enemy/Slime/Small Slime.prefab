@@ -12,9 +12,7 @@ GameObject:
   - component: {fileID: 3191786849948456417}
   - component: {fileID: 4857034275259290656}
   - component: {fileID: 9117562308472376177}
-  - component: {fileID: 3157840383125749078}
   - component: {fileID: 5410276219273053342}
-  - component: {fileID: 5068034956784205344}
   m_Layer: 9
   m_Name: Model
   m_TagString: Untagged
@@ -108,27 +106,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!135 &3157840383125749078
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2965911160888730425}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0.08, z: 0}
 --- !u!114 &5410276219273053342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,18 +116,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99b8ad72fe2fbb04faac30fd2a4d670a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5068034956784205344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2965911160888730425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 441b11865dabec243857456372248476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3242474922699732105
@@ -164,6 +129,8 @@ GameObject:
   - component: {fileID: 8812784674728710535}
   - component: {fileID: 7149406886531677756}
   - component: {fileID: 1831649666591236346}
+  - component: {fileID: 112110270381782531}
+  - component: {fileID: 6139664709553217184}
   m_Layer: 9
   m_Name: Small Slime
   m_TagString: Untagged
@@ -212,6 +179,39 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 778d9f32ce5a72c4a9155dfe9bfe0a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &112110270381782531
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3242474922699732105}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Radius: 0.1
+  m_Center: {x: 0, y: 0.08, z: 0}
+--- !u!114 &6139664709553217184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3242474922699732105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 441b11865dabec243857456372248476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3623458190268598753

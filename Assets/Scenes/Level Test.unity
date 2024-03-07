@@ -175,7 +175,7 @@ PrefabInstance:
     - target: {fileID: 4765539185079643644, guid: 12683a760946ea641aad36dde09ccd9a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.5
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4765539185079643644, guid: 12683a760946ea641aad36dde09ccd9a,
         type: 3}
@@ -2728,7 +2728,7 @@ PrefabInstance:
     - target: {fileID: 4243228619702770879, guid: a9098b6fe56818c4f95630f8c52e0bc9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4243228619702770879, guid: a9098b6fe56818c4f95630f8c52e0bc9,
         type: 3}
@@ -3026,7 +3026,7 @@ PrefabInstance:
     - target: {fileID: 4419830702126055221, guid: af21103b36fb2264d911a7412d64b643,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.5
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4419830702126055221, guid: af21103b36fb2264d911a7412d64b643,
         type: 3}
@@ -4437,7 +4437,7 @@ PrefabInstance:
     - target: {fileID: 4419830702126055221, guid: af21103b36fb2264d911a7412d64b643,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4419830702126055221, guid: af21103b36fb2264d911a7412d64b643,
         type: 3}
@@ -6201,7 +6201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyController: {fileID: 250740639}
-  _gameScenario: {fileID: 11400000, guid: 0df6968ad275edf41ac44ed686258ce9, type: 2}
+  _gameScenario: {fileID: 11400000, guid: e99272a7120796144ab98e7f805a43f5, type: 2}
   _health: {fileID: 1761680644}
   _coins: {fileID: 2088420226}
 --- !u!4 &1550305078
@@ -9189,7 +9189,7 @@ PrefabInstance:
     - target: {fileID: 4419830702126055221, guid: af21103b36fb2264d911a7412d64b643,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.5
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4419830702126055221, guid: af21103b36fb2264d911a7412d64b643,
         type: 3}
@@ -9199,7 +9199,7 @@ PrefabInstance:
     - target: {fileID: 4419830702126055221, guid: af21103b36fb2264d911a7412d64b643,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.5
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4419830702126055221, guid: af21103b36fb2264d911a7412d64b643,
         type: 3}

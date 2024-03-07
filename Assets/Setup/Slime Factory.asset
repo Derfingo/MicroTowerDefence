@@ -42,8 +42,8 @@ MonoBehaviour:
       _min: 0.8
       _max: 0.8
     Health:
-      _min: 50
-      _max: 80
+      _min: 80
+      _max: 100
     Coins: 20
     Damage: 2
   _large:

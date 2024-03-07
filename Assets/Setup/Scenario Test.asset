@@ -10,11 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f33c3c693bddcf24a8dcd3d2cbcb5191, type: 3}
-  m_Name: Sceraio
+  m_Name: Scenario Test
   m_EditorClassIdentifier: 
   _waves:
-  - {fileID: 11400000, guid: 9ba5e9b3d203fd44bb35ff4c8a3411ba, type: 2}
-  - {fileID: 11400000, guid: 7ea5c9ebc9ee6124081ab4a459ac3f8c, type: 2}
   - {fileID: 11400000, guid: d51ce12ce92035c4d8ee821b064fdd37, type: 2}
-  - {fileID: 11400000, guid: d439513ff57cafb4f90894b0cebc4b64, type: 2}
-  - {fileID: 11400000, guid: 7e42dd7424a0dbc4abb0fa55e07775c7, type: 2}
