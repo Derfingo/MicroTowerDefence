@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace MicroTowerDefence
 {
+    [CreateAssetMenu]
     public class EnemyFactory : GameObjectFactory
     {
         [SerializeField] private EnemyConfig _small, _medium, _large;
