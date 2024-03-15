@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEngine.UI.CanvasScaler;
 
 namespace MicroTowerDefence
 {
@@ -14,7 +13,7 @@ namespace MicroTowerDefence
 
         private float _shellBlastRadius = 1f;
         private float _shootPerSecond = 1f;
-        private float _damage = 100f;
+        private int _damage = 100;
 
         private float _launchProgress = 0f;
         private float _aimThreshold = 5f; // 5

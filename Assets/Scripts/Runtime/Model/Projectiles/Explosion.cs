@@ -19,7 +19,7 @@ namespace MicroTowerDefence
             _meshRenderer = GetComponent<MeshRenderer>();
         }
 
-        public void Initialize(Vector3 position, float blastRadious, float damage)
+        public void Initialize(Vector3 position, float blastRadious, int damage)
         {
             TargetPoint.FillBuffer(position, blastRadious);
 
@@ -30,7 +30,6 @@ namespace MicroTowerDefence
 
             transform.localPosition = position;
             _scale = 2f * blastRadious;
-            print("explosion");
         }
 
         public override bool GameUpdate()

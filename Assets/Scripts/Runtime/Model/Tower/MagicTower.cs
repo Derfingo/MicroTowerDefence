@@ -5,9 +5,9 @@ namespace MicroTowerDefence
     public class MagicTower : TowerBase
     {
         [SerializeField] private Transform _spere;
-        [SerializeField, Range(0.2f, 3f)] private float _shootPerSecond = 2.0f;
-        [SerializeField, Range(1f, 100f)] private float _damage = 25f;
 
+        private int _damage = 25;
+        private float _shootPerSecond = 2.0f;
         private float _launchProgress;
 
         protected override void SetStats(TowerConfig config)

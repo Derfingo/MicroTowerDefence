@@ -21,19 +21,16 @@ namespace MicroTowerDefence
             transform.forward = _rigidbBody.velocity;
         }
 
-        protected override void DetectGround(Collision collision)
+        protected override void Collide(Collision collision, int layerIndex)
         {
-            if (collision.gameObject.layer == _groundLayer)
+            if (layerIndex == _groundLayer)
             {
                 Reclaim();
             }
-        }
 
-        protected override void DetectEnemy(Collision collision)
-        {
-            if (collision.gameObject.layer == _enemyLayer)
+            if (layerIndex == _enemyLayer)
             {
-                if (collision.gameObject.TryGetComponent(out Enemy enemy))
+                if (collision.gameObject.TryGetComponent(out IDamage enemy))
                 {
                     enemy.TakeDamage(_damage);
                     Reclaim();

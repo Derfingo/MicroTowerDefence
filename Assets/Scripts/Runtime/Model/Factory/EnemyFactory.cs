@@ -6,32 +6,32 @@ namespace MicroTowerDefence
     [CreateAssetMenu]
     public class EnemyFactory : GameObjectFactory
     {
-        [SerializeField] private EnemyConfig _small, _medium, _large;
+        [SerializeField] private EnemyConfig[] _enemies;
 
-        public EnemyConfig GetConfig(EnemyType type)
+        private EnemyConfig GetConfig(EnemyType type)
         {
-            switch (type)
+            foreach (var config in _enemies)
             {
-                case EnemyType.Large: return _large;
-                case EnemyType.Medium: return _medium;
-                case EnemyType.Small: return _small;
-                case EnemyType.Slime: return _medium;
+                if (config.Type == type)
+                {
+                    return config;
+                }
             }
 
             Debug.LogError($"No config for {type}");
-            return _medium;
+            return null;
         }
 
-        public Enemy Get(EnemyType type)
+        public EnemyBase Get(EnemyType type)
         {
             var config = GetConfig(type);
-            Enemy instance = CreateGameObjectInstance(config.Prefab);
+            EnemyBase instance = CreateGameObjectInstance(config.Prefab);
             instance.OriginFactory = this;
             instance.Initialize(config);
             return instance;
         }
 
-        public void Reclaim(Enemy enemy)
+        public void Reclaim(EnemyBase enemy)
         {
             Destroy(enemy.gameObject);
         }
@@ -40,12 +40,14 @@ namespace MicroTowerDefence
     [Serializable]
     public class EnemyConfig
     {
-        public Enemy Prefab;
-        [FloatRangeSlider(0.5f, 2f)] public FloatRange Scale = new(1f);
-        [FloatRangeSlider(-0.4f, 0.4f)] public FloatRange PathOffset = new(0f);
-        [FloatRangeSlider(0.2f, 5f)] public FloatRange Speed = new(1f);
-        [FloatRangeSlider(10f, 1000f)] public FloatRange Health = new(100f);
-        [SerializeField, Range(10, 50)] public uint Coins = 10;
-        [SerializeField, Range(1, 5)] public uint Damage = 1;
+        public EnemyBase Prefab;
+        public EnemyType Type;
+        [FloatRangeSlider(0.5f, 2f)] public RandomRange Scale = new(1f);
+        [FloatRangeSlider(-0.5f, 0.5f)] public RandomRange PathOffset = new(0f);
+        [FloatRangeSlider(0.2f, 2f)] public RandomRange Speed = new(1f);
+        [FloatRangeSlider(10f, 1000f)] public RandomRange Health = new(100f);
+        [FloatRangeSlider(0f, 1000f)] public RandomRange Shield = new(100f);
+        [Range(10, 100)] public uint Coins = 10;
+        [Range(1, 5)] public uint Damage = 1;
     }
 }

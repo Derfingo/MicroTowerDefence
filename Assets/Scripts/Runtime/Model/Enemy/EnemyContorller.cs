@@ -8,13 +8,13 @@ namespace MicroTowerDefence
         public event Action<uint> EnemyFinishEvent;
         public event Action<uint> EnemyDieEvent;
 
-        private readonly GameBehaviourCollection _enemies = new();
-
         public bool IsEmpty => _enemies.IsEmpty;
+
+        private readonly GameBehaviourCollection _enemies = new();
 
         public void Spawn(EnemyFactory factory, EnemyType type, PathConfig config)
         {
-            Enemy enemy = factory.Get(type);
+            EnemyBase enemy = factory.Get(type);
             enemy.SetPath(config);
             enemy.SetPosition(config.InitialPoint);
             enemy.OnFinish += EnemyFinishEvent;

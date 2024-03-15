@@ -8,22 +8,25 @@ namespace MicroTowerDefence
         protected ProjectileController _projectile;
         protected Rigidbody _rigidbBody;
 
-        protected Vector3 _middlePoint;
+        private Collider _collider;
+
         protected Vector3 _startPosition;
         protected Vector3 _targetPosition;
         protected Vector3 _movement;
 
         protected float _blastRadious;
-        protected float _middleY = 0.9f;  // 0.9f
-        protected float _damage;
+        protected int _damage;
         protected float _speed;
-
         protected bool _isMoving;
+
         protected int _groundLayer = 6;
         protected int _enemyLayer = 9;
+        protected int _shieldLayer = 12;
 
         public void Initialize(ProjectileController projectile, ProjectileConfig config)
         {
+            _collider = GetComponent<Collider>();
+
             _projectile = projectile;
             _damage = config.Damage;
             _startPosition = config.StartPosition;
@@ -37,19 +40,18 @@ namespace MicroTowerDefence
 
         public override void Reclaim(float delay = 0f)
         {
-            _rigidbBody.isKinematic = true;
+            //_rigidbBody.isKinematic = true;
+            _collider.enabled = false;
             _isMoving = false;
             Destroy(gameObject, delay);
         }
 
         protected abstract void Move();
-        protected abstract void DetectGround(Collision collision);
-        protected abstract void DetectEnemy(Collision collision);
+        protected abstract void Collide(Collision collision, int layerIndex);
 
         private void OnCollisionEnter(Collision collision)
         {
-            DetectGround(collision);
-            DetectEnemy(collision);
+            Collide(collision, collision.gameObject.layer);
         }
 
         private void SetupRigidBody(Vector3 velocity)
@@ -67,9 +69,9 @@ namespace MicroTowerDefence
         public Vector3 Movement;
         public float Velocity;
         public float BlastRadius;
-        public float Damage;
+        public int Damage;
 
-        public ProjectileConfig(Vector3 startPosition, Vector3 targetPosition, Vector3 movement, float velocity, float damage, float blastRadius = 0f)
+        public ProjectileConfig(Vector3 startPosition, Vector3 targetPosition, Vector3 movement, float velocity, int damage, float blastRadius = 0f)
         {
             StartPosition = startPosition;
             TargetPosition = targetPosition;

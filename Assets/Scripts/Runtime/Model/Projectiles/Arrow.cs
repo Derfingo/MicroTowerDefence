@@ -4,7 +4,7 @@ namespace MicroTowerDefence
 {
     public class Arrow : ProjectileBase
     {
-        private float _reclaimDelay = 1f;
+        private readonly float _reclaimDelay = 1f;
 
         public override bool GameUpdate()
         {
@@ -26,19 +26,25 @@ namespace MicroTowerDefence
             }
         }
 
-        protected override void DetectGround(Collision collision)
+        protected override void Collide(Collision collision, int layerIndex)
         {
-            if (collision.gameObject.layer == _groundLayer)
+            if (layerIndex == _groundLayer)
             {
                 Reclaim(_reclaimDelay);
             }
-        }
 
-        protected override void DetectEnemy(Collision collision)
-        {
-            if (collision.gameObject.layer == _enemyLayer)
+            if (layerIndex == _shieldLayer)
             {
-                if (collision.gameObject.TryGetComponent(out Enemy enemy))
+                if (collision.gameObject.TryGetComponent(out IDamage enemy))
+                {
+                    enemy.TakeDamage(_damage);
+                    Reclaim(_reclaimDelay);
+                }
+            }
+
+            if (layerIndex == _enemyLayer)
+            {
+                if (collision.gameObject.TryGetComponent(out IDamage enemy))
                 {
                     enemy.TakeDamage(_damage);
                     Reclaim();

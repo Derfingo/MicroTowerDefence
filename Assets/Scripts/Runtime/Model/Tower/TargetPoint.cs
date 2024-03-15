@@ -7,7 +7,7 @@ namespace MicroTowerDefence
     {
         public Vector3 Position => transform.position;
         public Vector3 Velocity => Enemy.Velocity;
-        public Enemy Enemy { get; private set; }
+        public EnemyBase Enemy { get; private set; }
         public float ColliderSize { get; private set; }
         public static int BufferedCount { get; private set; }
 
@@ -28,7 +28,7 @@ namespace MicroTowerDefence
 
         private void Awake()
         {
-            Enemy = transform.root.GetComponent<Enemy>();
+            Enemy = transform.root.GetComponent<EnemyBase>();
             _collider = GetComponent<SphereCollider>();
             ColliderSize = GetComponent<SphereCollider>().radius * transform.localScale.x;
         }

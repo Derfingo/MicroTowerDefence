@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2d987f25f220546a9bb4d3bcf5f5ed, type: 3}
   m_Name: Mortar Tower Config
   m_EditorClassIdentifier: 
-  Type: 102
+  Type: 1
   CostToBuild: 70
   _level1:
     Prefab: {fileID: 5187168687205909870, guid: 885d21bb7366dd647b7c6c8de364a4d9,

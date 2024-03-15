@@ -21,19 +21,9 @@ namespace MicroTowerDefence
             transform.forward = _rigidbBody.velocity;
         }
 
-        protected override void DetectGround(Collision collision)
+        protected override void Collide(Collision collision, int layerIndex)
         {
-            if (collision.gameObject.layer == _groundLayer)
-            {
-                print(_blastRadious);
-                _projectile.GetExplosion().Initialize(transform.position, _blastRadious, _damage);
-                Reclaim();
-            }
-        }
-
-        protected override void DetectEnemy(Collision collision)
-        {
-            if (collision.gameObject.layer == _enemyLayer)
+            if (layerIndex == _groundLayer || layerIndex == _enemyLayer)
             {
                 _projectile.GetExplosion().Initialize(transform.position, _blastRadious, _damage);
                 Reclaim();

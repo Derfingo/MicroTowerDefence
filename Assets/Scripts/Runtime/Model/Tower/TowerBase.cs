@@ -153,7 +153,7 @@ namespace MicroTowerDefence
             return result;
         }
 
-        protected ProjectileConfig GetProjectileConfig(Vector3 start, Vector3 target, Vector3 movement, float velocity, float damage, float blastRadius)
+        protected ProjectileConfig GetProjectileConfig(Vector3 start, Vector3 target, Vector3 movement, float velocity, int damage, float blastRadius)
         {
             return new ProjectileConfig(start, target, movement, velocity, damage, blastRadius);
         }

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Scenario Test
   m_EditorClassIdentifier: 
   _waves:
-  - {fileID: 11400000, guid: d51ce12ce92035c4d8ee821b064fdd37, type: 2}
+  - {fileID: 11400000, guid: d7564c46581e44d4081d13aad1300ae6, type: 2}

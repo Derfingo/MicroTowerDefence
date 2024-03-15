@@ -4,11 +4,13 @@ using UnityEngine;
 namespace MicroTowerDefence
 {
     [SelectionBase]
-    public class Enemy : GameBehaviour
+    public abstract class EnemyBase : GameBehaviour, IDamage
     {
-        [SerializeField] private PathMovement _movement;
         [SerializeField] private Transform _model;
-        [SerializeField] private EnemyView _view;
+        private TargetPoint _targetPoint;
+        private PathMovement _movement;
+        private EnemyViewBase _view;
+        private Collider _collider;
 
         public event Action<uint> OnFinish;
         public event Action<uint> OnDie;
@@ -22,16 +24,10 @@ namespace MicroTowerDefence
         private uint _damage;
         private float _originalSpeed;
 
-        public void Initialize(EnemyConfig config)
+        public virtual void Initialize(EnemyConfig config)
         {
-            _model.localScale *= config.Scale.RandomValueInRange;
-            _originalSpeed = config.Speed.RandomValueInRange;
-            _speed = config.Speed.RandomValueInRange;
-            _health = config.Health.RandomValueInRange;
-            Scale = config.Scale.RandomValueInRange;
-            _damage = config.Damage;
-            _coins = config.Coins;
-            _view.Initialize(this);
+            GetComponents();
+            SetStats(config);
             SetSpeed(_speed);
         }
 
@@ -49,6 +45,11 @@ namespace MicroTowerDefence
         {
             _speed = _originalSpeed * factor;
             _view.SetSpeedFactor(factor);
+        }
+
+        public void TakeDamage(float damage)
+        {
+            _health -= damage;
         }
 
         public override bool GameUpdate()
@@ -80,20 +81,37 @@ namespace MicroTowerDefence
             return true;
         }
 
-        public void TakeDamage(float damage)
-        {
-            _health -= damage;
-        }
-
         private void DisableView()
         {
-            _view.GetComponentInParent<Collider>().enabled = false;
-            _view.GetComponentInParent<TargetPoint>().enabled = false;
+            _collider.enabled = false;
+            _targetPoint.enabled = false;
+            //_view.GetComponentInParent<Collider>().enabled = false;
+            //_view.GetComponentInParent<TargetPoint>().enabled = false;
         }
 
         public override void Reclaim(float delay = 0f)
         {
             Destroy(gameObject);
+        }
+
+        private void GetComponents()
+        {
+            _movement = GetComponentInChildren<PathMovement>();
+            _view = GetComponentInChildren<EnemyViewBase>();
+            _targetPoint = GetComponent<TargetPoint>();
+            _collider = GetComponent<Collider>();
+            _view.Initialize(this);
+        }
+
+        private void SetStats(EnemyConfig config)
+        {
+            _model.localScale *= config.Scale.RandomValueInRange;
+            _originalSpeed = config.Speed.RandomValueInRange;
+            _speed = config.Speed.RandomValueInRange;
+            _health = (int)config.Health.RandomValueInRange;
+            Scale = config.Scale.RandomValueInRange;
+            _damage = config.Damage;
+            _coins = config.Coins;
         }
     }
 }

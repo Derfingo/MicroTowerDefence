@@ -1,6 +1,4 @@
-using MicroTowerDefence;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MicroTowerDefence
@@ -35,6 +33,6 @@ namespace MicroTowerDefence
         [Range(20, 300)] public uint SellCost;
         [Range(0.1f, 1f)] public float ShellBlastRadius;
         [Range(0.2f, 3f)] public float ShootPerSecond;
-        [Range(1f, 100f)] public float DamagePerSecond;
+        [Range(1, 100)] public int DamagePerSecond;
     }
 }

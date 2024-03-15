@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ffdebf6327bf7a4fadd84d487ce5b3c, type: 3}
   m_Name: Wizard Factory
   m_EditorClassIdentifier: 
-  _small:
-    Prefab: {fileID: 0}
+  _enemies:
+  - Prefab: {fileID: 6625422143885562435, guid: 254e646983910d34b93539594d9da070,
+      type: 3}
+    Type: 3
     Scale:
       _min: 1
       _max: 1
@@ -21,42 +23,13 @@ MonoBehaviour:
       _min: 0
       _max: 0
     Speed:
-      _min: 1
-      _max: 1
+      _min: 0.9
+      _max: 0.9
     Health:
-      _min: 100
-      _max: 100
-    Coins: 10
-    Damage: 1
-  _medium:
-    Prefab: {fileID: 0}
-    Scale:
-      _min: 1
-      _max: 1
-    PathOffset:
-      _min: 0
-      _max: 0
-    Speed:
-      _min: 1
-      _max: 1
-    Health:
-      _min: 100
-      _max: 100
-    Coins: 10
-    Damage: 1
-  _large:
-    Prefab: {fileID: 0}
-    Scale:
-      _min: 1
-      _max: 1
-    PathOffset:
-      _min: 0
-      _max: 0
-    Speed:
-      _min: 1
-      _max: 1
-    Health:
-      _min: 100
-      _max: 100
-    Coins: 10
+      _min: 50
+      _max: 50
+    Shield:
+      _min: 250
+      _max: 250
+    Coins: 50
     Damage: 1

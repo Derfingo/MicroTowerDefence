@@ -5,9 +5,9 @@ namespace MicroTowerDefence
     public class ArcherTower : TowerBase
     {
         [SerializeField] private Transform _archer;
-        [SerializeField, Range(1f, 100f)] private float _damage = 25f;
-        [SerializeField, Range(0.1f, 3f)] private float _shootPerSecond = 2.0f;
 
+        private int _damage = 25;
+        private float _shootPerSecond = 2.0f;
         private float _collisionRadius = 0.1f;
         private float _launchProgress;
 
@@ -22,20 +22,16 @@ namespace MicroTowerDefence
         {
             _launchProgress += Time.deltaTime * _shootPerSecond;
 
-            while (_launchProgress >= 1f)
+            if (IsAcquireTarget(out TargetPoint target))
             {
-                if (IsAcquireTarget(out TargetPoint target))
+                if(_launchProgress >= 1f)
                 {
                     var predict = PredictPosition(_archer.position, target.Position, target.Velocity, _projectileSpeed);
                     Vector3 movement = MoveParabolically(predict, _archer.position, _projectileSpeed);
-                    var config = GetProjectileConfig(_archer.position, predict, movement, _projectileSpeed , _damage, _collisionRadius); // fix radius
-                    //Debug.Log($"target: {target}, pridict: {predict}");
+                    var config = GetProjectileConfig(_archer.position, predict, movement, _projectileSpeed, _damage, _collisionRadius); // fix radius
+                                                                                                                                        //Debug.Log($"target: {target}, pridict: {predict}");
                     Shoot(config);
-                    _launchProgress -= 1f;
-                }
-                else
-                {
-                    _launchProgress = 0.999f;
+                    _launchProgress = 0f;
                 }
             }
 

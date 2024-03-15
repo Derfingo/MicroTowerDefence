@@ -12,54 +12,100 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ffdebf6327bf7a4fadd84d487ce5b3c, type: 3}
   m_Name: Slime Factory
   m_EditorClassIdentifier: 
-  _small:
-    Prefab: {fileID: 7149406886531677756, guid: b8d3a96741280954297413110608e036,
-      type: 3}
+  _enemies:
+  - Prefab: {fileID: 0}
+    Type: 0
     Scale:
-      _min: 0.5
-      _max: 0.8
+      _min: 0
+      _max: 0
     PathOffset:
       _min: 0
       _max: 0
     Speed:
-      _min: 1.2
-      _max: 1.6
+      _min: 0
+      _max: 0
     Health:
-      _min: 50
-      _max: 100
-    Coins: 15
-    Damage: 1
-  _medium:
-    Prefab: {fileID: 8142990288872035872, guid: 833a453e02e3f3043b4a75570159385e,
-      type: 3}
+      _min: 0
+      _max: 0
+    Coins: 0
+    Damage: 0
+  - Prefab: {fileID: 0}
+    Type: 0
     Scale:
-      _min: 1
-      _max: 1
+      _min: 0
+      _max: 0
     PathOffset:
       _min: 0
       _max: 0
     Speed:
-      _min: 0.8
-      _max: 0.8
+      _min: 0
+      _max: 0
     Health:
-      _min: 80
-      _max: 100
-    Coins: 20
-    Damage: 2
-  _large:
-    Prefab: {fileID: 6820808880408376390, guid: 7b4f35b0370a5aa49a2923e8fc2807de,
-      type: 3}
+      _min: 0
+      _max: 0
+    Coins: 0
+    Damage: 0
+  - Prefab: {fileID: 0}
+    Type: 0
     Scale:
-      _min: 1.5
-      _max: 2
+      _min: 0
+      _max: 0
     PathOffset:
       _min: 0
       _max: 0
     Speed:
-      _min: 0.6
-      _max: 0.8
+      _min: 0
+      _max: 0
     Health:
-      _min: 500
-      _max: 800
-    Coins: 40
-    Damage: 3
+      _min: 0
+      _max: 0
+    Coins: 0
+    Damage: 0
+  - Prefab: {fileID: 0}
+    Type: 0
+    Scale:
+      _min: 0
+      _max: 0
+    PathOffset:
+      _min: 0
+      _max: 0
+    Speed:
+      _min: 0
+      _max: 0
+    Health:
+      _min: 0
+      _max: 0
+    Coins: 0
+    Damage: 0
+  - Prefab: {fileID: 0}
+    Type: 0
+    Scale:
+      _min: 0
+      _max: 0
+    PathOffset:
+      _min: 0
+      _max: 0
+    Speed:
+      _min: 0
+      _max: 0
+    Health:
+      _min: 0
+      _max: 0
+    Coins: 0
+    Damage: 0
+  - Prefab: {fileID: 0}
+    Type: 0
+    Scale:
+      _min: 0
+      _max: 0
+    PathOffset:
+      _min: 0
+      _max: 0
+    Speed:
+      _min: 0
+      _max: 0
+    Health:
+      _min: 0
+      _max: 0
+    Coins: 0
+    Damage: 0

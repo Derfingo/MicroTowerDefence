@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 namespace MicroTowerDefence
 {
     [Serializable]
-    public struct FloatRange
+    public struct RandomRange
     {
         [SerializeField] private float _min, _max;
 
@@ -17,12 +17,12 @@ namespace MicroTowerDefence
             get => Random.Range(_min, _max);
         }
 
-        public FloatRange(float value)
+        public RandomRange(float value)
         {
             _min = _max = value;
         }
 
-        public FloatRange(float min, float max)
+        public RandomRange(float min, float max)
         {
             _min = min;
             _max = max;

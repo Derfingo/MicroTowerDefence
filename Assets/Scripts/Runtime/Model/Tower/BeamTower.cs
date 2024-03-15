@@ -6,8 +6,10 @@ namespace MicroTowerDefence
     {
         [SerializeField] private Transform _turret;
         [SerializeField] private Transform _laserBeam;
-        [SerializeField, Range(1f, 100f)] private float _damagePerSecond = 10f;
 
+        private float _launchProgress;
+        private float _shootPerDelay = 0.2f;
+        private int _damagePerSecond = 10;
         private Vector3 _laserBeamScale;
         private TargetPoint _target;
 
@@ -24,6 +26,8 @@ namespace MicroTowerDefence
 
         public override bool GameUpdate()
         {
+            _launchProgress += Time.deltaTime;
+
             if (IsTargetTracked(ref _target) || IsAcquireTarget(out _target))
             {
                 Shoot();
@@ -36,7 +40,7 @@ namespace MicroTowerDefence
             return true;
         }
 
-        private void Shoot()
+        private void Shoot()  // fix
         {
             var point = _target.Position;
             _turret.LookAt(point);
@@ -46,7 +50,12 @@ namespace MicroTowerDefence
             _laserBeamScale.z = distacne;
             _laserBeam.localScale = _laserBeamScale;
             _laserBeam.localPosition = _turret.localPosition + 0.5f * distacne * _laserBeam.forward;
-            _target.Enemy.TakeDamage(_damagePerSecond * Time.deltaTime);
+
+            if (_launchProgress >= _shootPerDelay)
+            {
+                _target.Enemy.TakeDamage(_damagePerSecond);
+                _launchProgress = 0f;
+            }
         }
     }
 }

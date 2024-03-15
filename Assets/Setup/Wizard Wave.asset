@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53b98e79f0844914c97bb96f31d56b5c, type: 3}
   m_Name: Wizard Wave
   m_EditorClassIdentifier: 
-  _spawnSequences: []
+  _spawnSequences:
+  - _factory: {fileID: 11400000, guid: a8ed452379c4b78488b187460ca2dc8b, type: 2}
+    _type: 3
+    _amount: 10
+    _cooldown: 3

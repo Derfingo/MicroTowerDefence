@@ -6,10 +6,10 @@ namespace MicroTowerDefence
     {
         [SerializeField] private Transform _cannon;
         [SerializeField] private Transform _cover;
-        [SerializeField, Range(1f, 100f)] private float _damage = 50f;
-        [SerializeField, Range(0.1f, 3f)] private float _shellBlastRadius = 1f;
-        [SerializeField, Range(0.1f, 3f)] private float _shootPerSecond = 1.0f;
 
+        private int _damage = 50;
+        private float _shellBlastRadius = 1f;
+        private float _shootPerSecond = 1.0f;
         private float _launchProgress = 0f;
         private float _aimThreshold = 5f; // 5
         private float _cannonSpeed = 6f; // 4

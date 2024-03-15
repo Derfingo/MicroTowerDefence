@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2d987f25f220546a9bb4d3bcf5f5ed, type: 3}
   m_Name: Archer Tower Config
   m_EditorClassIdentifier: 
-  Type: 103
+  Type: 2
   CostToBuild: 50
   _level1:
     Prefab: {fileID: 404256357162471880, guid: f031cced4edfadd4b99665f7d9e58d45, type: 3}

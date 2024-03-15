@@ -1,9 +1,9 @@
 public enum EnemyType
 {
-    Small,
-    Medium,
-    Large,
-    Slime,
+    SmallSlime,
+    MediumSlime,
+    LargeSlime,
+    Wizard,
 }
 
 public enum ProjectileType
@@ -27,4 +27,11 @@ public enum MovementType
 {
     Move,
     Lerp
+}
+
+public enum LayerType
+{
+    Ground,
+    Enemy,
+    Armor
 }

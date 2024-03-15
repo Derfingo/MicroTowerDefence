@@ -1,35 +1,10 @@
-using UnityEngine;
-
 namespace MicroTowerDefence
 {
-    public abstract class EnemyView : MonoBehaviour
+    public class EnemyView : EnemyViewBase
     {
-        public bool IsInited { get; protected set; }
-
-        protected const string DIED_KEY = "Died";
-        protected Animator _animator;
-        protected Enemy _enemy;
-
-        public virtual void Initialize(Enemy enemy)
+        public void OnDieAnimationFinished()
         {
-            _animator = GetComponent<Animator>();
-            _enemy = enemy;
-        }
-
-        public void SetSpeedFactor(float factor)
-        {
-            _animator.speed = factor;
-        }
-
-        public virtual void Die()
-        {
-            _animator.SetBool(DIED_KEY, true);
-        }
-
-        public void OnSpawnAnimationFinished()
-        {
-            IsInited = true;
-            GetComponentInParent<TargetPoint>().IsEnabled = true;
+            _enemy.Reclaim();
         }
     }
 }

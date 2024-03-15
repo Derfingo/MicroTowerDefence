@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2d987f25f220546a9bb4d3bcf5f5ed, type: 3}
   m_Name: Beam Tower Config
   m_EditorClassIdentifier: 
-  Type: 101
+  Type: 0
   CostToBuild: 80
   _level1:
     Prefab: {fileID: 5478110801795154581, guid: 312004f727ea1464c992488e167e950a,

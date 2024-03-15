@@ -7,7 +7,7 @@ namespace MicroTowerDefence
     public class EnemySpawnSequence
     {
         [SerializeField] private EnemyFactory _factory;
-        [SerializeField] private EnemyType _type = EnemyType.Medium;
+        [SerializeField] private EnemyType _type = EnemyType.MediumSlime;
         [SerializeField, Range(1, 100)] private int _amount = 1;
         [SerializeField, Range(0.1f, 10f)] private float _cooldown = 1f;
 
