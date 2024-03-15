@@ -6,12 +6,7 @@ namespace MicroTowerDefence
     [SelectionBase]
     public abstract class TowerBase : TileContent
     {
-        [SerializeField] private TowerType _towerType;
         [SerializeField, Range(1f, 10f)] protected float _targetRange;
-
-        protected float _projectileSpeed = 4f;
-
-        private TargetRadiusView _targetRadiusView;
 
         public event Action<TileContent> SelectedEvent;
 
@@ -23,9 +18,13 @@ namespace MicroTowerDefence
         public uint SellCost { get; protected set; }
 
         protected ProjectileController _projectileController;
+        protected TowerType _towerType;
+        protected ElementType _elementType;
+        protected float _projectileSpeed = 4f;
         protected float _predictTime;
 
         private BoxCollider _collider;
+        private TargetRadiusView _targetRadiusView;
 
         public bool IsInit
         {
@@ -35,6 +34,8 @@ namespace MicroTowerDefence
 
         public void Initialize(TowerConfig config, uint level)
         {
+            _towerType = config.Tower;
+            _elementType = config.Element;
             Level = level;
             UpgradeCost = config.UpgradeCost;
             SellCost = config.SellCost;
@@ -153,9 +154,9 @@ namespace MicroTowerDefence
             return result;
         }
 
-        protected ProjectileConfig GetProjectileConfig(Vector3 start, Vector3 target, Vector3 movement, float velocity, int damage, float blastRadius)
+        protected ProjectileConfig GetProjectileConfig(ElementType type, Vector3 start, Vector3 target, Vector3 movement, float velocity, int damage, float blastRadius)
         {
-            return new ProjectileConfig(start, target, movement, velocity, damage, blastRadius);
+            return new ProjectileConfig(type, start, target, movement, velocity, damage, blastRadius);
         }
     }
 }

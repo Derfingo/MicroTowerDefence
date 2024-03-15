@@ -39,7 +39,7 @@ namespace MicroTowerDefence
                 if (_isAimed && _launchProgress >= 1f)
                 {
                     Vector3 movement = MoveParabolically(predict, _cannon.position, _projectileSpeed);
-                    var config = GetProjectileConfig(_cannon.position, predict, movement, _projectileSpeed, _damage, _shellBlastRadius);
+                    var config = GetProjectileConfig(_elementType, _cannon.position, predict, movement, _projectileSpeed, _damage, _shellBlastRadius);
                     Shoot(config);
                     _launchProgress = 0f;
                 }

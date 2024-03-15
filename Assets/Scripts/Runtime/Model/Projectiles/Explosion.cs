@@ -14,6 +14,8 @@ namespace MicroTowerDefence
         private float _scale;
         private float _age;
 
+        private ElementType _elementType = ElementType.Physical;
+
         private void Awake()
         {
             _meshRenderer = GetComponent<MeshRenderer>();
@@ -25,7 +27,7 @@ namespace MicroTowerDefence
 
             for (int i = 0; i < TargetPoint.BufferedCount; i++)
             {
-                TargetPoint.GetBuffered(i).Enemy.TakeDamage(damage);
+                TargetPoint.GetBuffered(i).Enemy.TakeDamage(damage, _elementType);
             }
 
             transform.localPosition = position;

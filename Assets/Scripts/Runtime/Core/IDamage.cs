@@ -2,6 +2,6 @@ namespace MicroTowerDefence
 {
     public interface IDamage
     {
-        void TakeDamage(float damage);
+        void TakeDamage(float value, ElementType type);
     }
 }

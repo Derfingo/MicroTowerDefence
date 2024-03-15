@@ -11,6 +11,7 @@ namespace MicroTowerDefence
         private PathMovement _movement;
         private EnemyViewBase _view;
         private Collider _collider;
+        private ElementType _elementType;
 
         public event Action<uint> OnFinish;
         public event Action<uint> OnDie;
@@ -47,9 +48,12 @@ namespace MicroTowerDefence
             _view.SetSpeedFactor(factor);
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(float value, ElementType type)
         {
+            float factor = ElementFactor.GetFactor(type, _elementType);
+            float damage = value * factor;
             _health -= damage;
+            //print($"value: {value} factor: {factor} damage: {damage}");
         }
 
         public override bool GameUpdate()
@@ -105,6 +109,7 @@ namespace MicroTowerDefence
 
         private void SetStats(EnemyConfig config)
         {
+            _elementType = config.Element;
             _model.localScale *= config.Scale.RandomValueInRange;
             _originalSpeed = config.Speed.RandomValueInRange;
             _speed = config.Speed.RandomValueInRange;

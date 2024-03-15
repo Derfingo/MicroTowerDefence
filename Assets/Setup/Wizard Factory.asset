@@ -15,7 +15,8 @@ MonoBehaviour:
   _enemies:
   - Prefab: {fileID: 6625422143885562435, guid: 254e646983910d34b93539594d9da070,
       type: 3}
-    Type: 3
+    Enemy: 3
+    Element: 1
     Scale:
       _min: 1
       _max: 1

@@ -53,7 +53,7 @@ namespace MicroTowerDefence
 
             if (_launchProgress >= _shootPerDelay)
             {
-                _target.Enemy.TakeDamage(_damagePerSecond);
+                _target.Enemy.TakeDamage(_damagePerSecond, _elementType);
                 _launchProgress = 0f;
             }
         }

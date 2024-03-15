@@ -27,7 +27,7 @@ namespace MicroTowerDefence
                 {
                     var predict = PredictPosition(_spere.position, target.Position, target.Velocity, _projectileSpeed);
                     Vector3 movement = MoveLinear(predict, _spere.position, _projectileSpeed);
-                    var config = GetProjectileConfig(_spere.position, predict, movement, _projectileSpeed, _damage, 0f);
+                    var config = GetProjectileConfig(_elementType, _spere.position, predict, movement, _projectileSpeed, _damage, 0f);
                     Shoot(config);
                     _launchProgress -= 1f;
                 }

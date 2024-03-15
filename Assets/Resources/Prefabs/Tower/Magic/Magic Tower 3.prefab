@@ -49,11 +49,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _towerType: 3
+  _elementType: 1
   _targetRange: 2
-  _speedProjectile: 4
   _spere: {fileID: 816626011107751559}
-  _shootPerSecond: 2
-  _damage: 25
 --- !u!65 &1323115923149718814
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -14,98 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemies:
   - Prefab: {fileID: 0}
-    Type: 0
+    Enemy: 1
+    Element: 2
     Scale:
-      _min: 0
-      _max: 0
+      _min: 1
+      _max: 1
     PathOffset:
       _min: 0
       _max: 0
     Speed:
-      _min: 0
-      _max: 0
+      _min: 1
+      _max: 1
     Health:
       _min: 0
       _max: 0
-    Coins: 0
-    Damage: 0
-  - Prefab: {fileID: 0}
-    Type: 0
-    Scale:
-      _min: 0
-      _max: 0
-    PathOffset:
-      _min: 0
-      _max: 0
-    Speed:
-      _min: 0
-      _max: 0
-    Health:
-      _min: 0
-      _max: 0
-    Coins: 0
-    Damage: 0
-  - Prefab: {fileID: 0}
-    Type: 0
-    Scale:
-      _min: 0
-      _max: 0
-    PathOffset:
-      _min: 0
-      _max: 0
-    Speed:
-      _min: 0
-      _max: 0
-    Health:
-      _min: 0
-      _max: 0
-    Coins: 0
-    Damage: 0
-  - Prefab: {fileID: 0}
-    Type: 0
-    Scale:
-      _min: 0
-      _max: 0
-    PathOffset:
-      _min: 0
-      _max: 0
-    Speed:
-      _min: 0
-      _max: 0
-    Health:
-      _min: 0
-      _max: 0
-    Coins: 0
-    Damage: 0
-  - Prefab: {fileID: 0}
-    Type: 0
-    Scale:
-      _min: 0
-      _max: 0
-    PathOffset:
-      _min: 0
-      _max: 0
-    Speed:
-      _min: 0
-      _max: 0
-    Health:
-      _min: 0
-      _max: 0
-    Coins: 0
-    Damage: 0
-  - Prefab: {fileID: 0}
-    Type: 0
-    Scale:
-      _min: 0
-      _max: 0
-    PathOffset:
-      _min: 0
-      _max: 0
-    Speed:
-      _min: 0
-      _max: 0
-    Health:
-      _min: 0
-      _max: 0
+    Shield:
+      _min: 100
+      _max: 100
     Coins: 0
     Damage: 0

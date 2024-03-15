@@ -12,7 +12,7 @@ namespace MicroTowerDefence
         {
             foreach (var config in _enemies)
             {
-                if (config.Type == type)
+                if (config.Enemy == type)
                 {
                     return config;
                 }
@@ -41,7 +41,8 @@ namespace MicroTowerDefence
     public class EnemyConfig
     {
         public EnemyBase Prefab;
-        public EnemyType Type;
+        public EnemyType Enemy;
+        public ElementType Element;
         [FloatRangeSlider(0.5f, 2f)] public RandomRange Scale = new(1f);
         [FloatRangeSlider(-0.5f, 0.5f)] public RandomRange PathOffset = new(0f);
         [FloatRangeSlider(0.2f, 2f)] public RandomRange Speed = new(1f);

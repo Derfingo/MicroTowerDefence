@@ -134,11 +134,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _towerType: 0
+  _elementType: 1
   _targetRange: 1.8
-  _speedProjectile: 4
   _turret: {fileID: 1851773776861527254}
   _laserBeam: {fileID: 2462652063595041313}
-  _damagePerSecond: 25
 --- !u!65 &2236540700478712080
 BoxCollider:
   m_ObjectHideFlags: 0

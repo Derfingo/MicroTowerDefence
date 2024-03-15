@@ -37,7 +37,7 @@ namespace MicroTowerDefence
             {
                 if (collision.gameObject.TryGetComponent(out IDamage enemy))
                 {
-                    enemy.TakeDamage(_damage);
+                    enemy.TakeDamage(_damage, _elementType);
                     Reclaim(_reclaimDelay);
                 }
             }
@@ -46,7 +46,7 @@ namespace MicroTowerDefence
             {
                 if (collision.gameObject.TryGetComponent(out IDamage enemy))
                 {
-                    enemy.TakeDamage(_damage);
+                    enemy.TakeDamage(_damage, _elementType);
                     Reclaim();
                 }
             }

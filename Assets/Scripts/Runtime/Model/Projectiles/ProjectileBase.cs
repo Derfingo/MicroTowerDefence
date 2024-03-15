@@ -7,6 +7,7 @@ namespace MicroTowerDefence
     {
         protected ProjectileController _projectile;
         protected Rigidbody _rigidbBody;
+        protected ElementType _elementType;
 
         private Collider _collider;
 
@@ -26,7 +27,7 @@ namespace MicroTowerDefence
         public void Initialize(ProjectileController projectile, ProjectileConfig config)
         {
             _collider = GetComponent<Collider>();
-
+            _elementType = config.Element;
             _projectile = projectile;
             _damage = config.Damage;
             _startPosition = config.StartPosition;
@@ -64,6 +65,7 @@ namespace MicroTowerDefence
 
     public struct ProjectileConfig
     {
+        public ElementType Element;
         public Vector3 StartPosition;
         public Vector3 TargetPosition;
         public Vector3 Movement;
@@ -71,8 +73,9 @@ namespace MicroTowerDefence
         public float BlastRadius;
         public int Damage;
 
-        public ProjectileConfig(Vector3 startPosition, Vector3 targetPosition, Vector3 movement, float velocity, int damage, float blastRadius = 0f)
+        public ProjectileConfig(ElementType type, Vector3 startPosition, Vector3 targetPosition, Vector3 movement, float velocity, int damage, float blastRadius = 0f)
         {
+            Element = type;
             StartPosition = startPosition;
             TargetPosition = targetPosition;
             BlastRadius = blastRadius;

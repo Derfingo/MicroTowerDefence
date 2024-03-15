@@ -28,7 +28,7 @@ namespace MicroTowerDefence
                 {
                     var predict = PredictPosition(_archer.position, target.Position, target.Velocity, _projectileSpeed);
                     Vector3 movement = MoveParabolically(predict, _archer.position, _projectileSpeed);
-                    var config = GetProjectileConfig(_archer.position, predict, movement, _projectileSpeed, _damage, _collisionRadius); // fix radius
+                    var config = GetProjectileConfig(_elementType, _archer.position, predict, movement, _projectileSpeed, _damage, _collisionRadius); // fix radius
                                                                                                                                         //Debug.Log($"target: {target}, pridict: {predict}");
                     Shoot(config);
                     _launchProgress = 0f;

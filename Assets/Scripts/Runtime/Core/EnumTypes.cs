@@ -23,6 +23,19 @@ public enum TowerType
     Magic,
 }
 
+public enum ElementType : byte
+{
+    None = 0,
+    Physical,
+    Magic,
+    Fire,
+    Water,
+    Ice,
+    Electro,
+    Dark,
+    Holy
+}
+
 public enum MovementType
 {
     Move,

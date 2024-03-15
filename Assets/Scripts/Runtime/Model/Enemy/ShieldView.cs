@@ -7,6 +7,7 @@ namespace MicroTowerDefence
         private SphereCollider _collider;
         private MeshRenderer _renderer;
         private float _shieldValue;
+        private ElementType _elementType = ElementType.Magic;
 
         public void Initialize(float shieldValue)
         {
@@ -16,10 +17,12 @@ namespace MicroTowerDefence
             _shieldValue = shieldValue;
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(float value, ElementType type)
         {
+            float factor = ElementFactor.GetFactor(type, _elementType);
+            float damage = value * factor;
             _shieldValue -= damage;
-
+            //print($"value: {value} factor: {factor} damage: {damage}");
             if (_shieldValue <= 0 )
             {
                 gameObject.SetActive(false);

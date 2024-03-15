@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2d987f25f220546a9bb4d3bcf5f5ed, type: 3}
   m_Name: Magic Tower Config
   m_EditorClassIdentifier: 
-  Type: 3
+  Tower: 3
+  Element: 2
   CostToBuild: 40
   _level1:
     Prefab: {fileID: 2835667209765803658, guid: cc8b8c92d01961e4c9b7f3e170c77e1d,
