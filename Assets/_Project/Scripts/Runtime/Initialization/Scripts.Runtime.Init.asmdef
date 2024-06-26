@@ -1,0 +1,22 @@
+{
+    "name": "Scripts.Runtime.Init",
+    "rootNamespace": "",
+    "references": [
+        "GUID:308f726acc949c048ae4ba3cc595d343",
+        "GUID:fd3d03e2404cec346b751d44e395edfc",
+        "GUID:7d2e638e8251cf144b93b7f7883d8b93",
+        "GUID:7337ee5301c62254ab7360145c3b877e",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
