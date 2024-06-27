@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace MicroTowerDefence
 {
@@ -10,6 +11,7 @@ namespace MicroTowerDefence
         private uint _initialCoins;
         private uint _coins;
 
+        [Inject]
         public void Initialize(uint initialCoins)
         {
             _initialCoins = initialCoins;

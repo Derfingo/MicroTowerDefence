@@ -5,10 +5,8 @@ namespace MicroTowerDefence
 {
     public class LevelsView : ViewBase
     {
-        [SerializeField] private Button[] _levelButtons;
+        [SerializeField] private LevelButton[] _levelButtons;
 
-        public Button[] LevelButtons => _levelButtons;
-
-
+        public LevelButton[] LevelButtons => _levelButtons;
     }
 }

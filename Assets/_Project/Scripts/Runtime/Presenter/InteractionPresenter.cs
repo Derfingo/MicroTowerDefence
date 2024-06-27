@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 namespace MicroTowerDefence
 {
@@ -9,6 +10,7 @@ namespace MicroTowerDefence
         private ISelection _selection;
         private ISelectionView _selectionView;
 
+        [Inject]
         public void Initialize(ISelection selection, IGrid grid, IRaycast raycast, ISelectionView selectionView)
         {
             _grid = grid;

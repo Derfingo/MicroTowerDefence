@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace MicroTowerDefence
 {
@@ -16,6 +17,7 @@ namespace MicroTowerDefence
         private IInputActions _input;
         private bool _isHit;
 
+        [Inject]
         public void Initialize(IInputActions input)
         {
             _input = input;

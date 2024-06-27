@@ -16,6 +16,6 @@ MonoBehaviour:
     Level: 0
     Name: Level Test
     Description: 
-    PrepareTime: 12
-    Coins: 2000
-    Health: 20
+    PrepareTime: 3
+    Coins: 500
+    Health: 5

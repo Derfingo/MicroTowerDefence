@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace MicroTowerDefence
 {
@@ -21,6 +22,7 @@ namespace MicroTowerDefence
 
         private ViewBase _currentView;
 
+        [Inject]
         public void Initialize()
         {
             _buildTowerButtonsView.TowerButtons.ForEach(click => click.ClickEvent += OnBuildTower);

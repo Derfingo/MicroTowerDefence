@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace MicroTowerDefence
 {
@@ -25,6 +26,7 @@ namespace MicroTowerDefence
 
         private PathConfig _pathConfig;
 
+        [Inject]
         public void Initialize(float prepareTime, IInputActions input, IReset[] resets, IUpdate[] updates, ILateUpdate[] lateUpdates, PathConfig config)  // fix
         {
             _input = input;

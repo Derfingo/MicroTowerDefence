@@ -12,15 +12,16 @@ namespace MicroTowerDefence
             SceneManager.UnloadSceneAsync(Constants.Scenes.Bootstrap);
             print("Bootstrap is unloaded");
 
-            foreach (var level in _levelsView.LevelButtons)
+            for (int i = 0; i < _levelsView.LevelButtons.Length; i++)
             {
-                level.onClick.AddListener(LoadLevel);
+                _levelsView.LevelButtons[i].Initialize((i + 1).ToString());
+                _levelsView.LevelButtons[i].OnClickEvent += LoadLevel;
             }
         }
 
-        private void LoadLevel()
+        private void LoadLevel(string nameLevel)
         {
-            SceneManager.LoadScene(Constants.Scenes.TEST_LEVEL, LoadSceneMode.Single);
+            SceneManager.LoadScene(nameLevel, LoadSceneMode.Single);
             Debug.Log("Level loading");
         }
     }

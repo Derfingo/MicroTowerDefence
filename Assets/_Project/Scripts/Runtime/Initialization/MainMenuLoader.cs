@@ -3,6 +3,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace MicroTowerDefence
 {
@@ -12,7 +13,8 @@ namespace MicroTowerDefence
 
         private AsyncOperation _loadingOperation;
 
-        private void Start()
+        [Inject]
+        public void Initialize()
         {
             Load();
             AppearLabel();

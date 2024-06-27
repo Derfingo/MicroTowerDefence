@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 namespace MicroTowerDefence
 {
@@ -20,6 +21,7 @@ namespace MicroTowerDefence
         private bool _isTurnLeft;
         private bool _isTurnRight;
 
+        [Inject]
         public void Initialize(IInputActions input)
         {
             _input = input;

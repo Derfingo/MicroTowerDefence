@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 using static InputActionMaps;
 
 namespace MicroTowerDefence
@@ -21,6 +22,7 @@ namespace MicroTowerDefence
         private InputActionMaps _inputActionMaps;
         private bool _isRotateCamera;
 
+        [Inject]
         public void Initialize()
         {
             _inputActionMaps = new InputActionMaps();

@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 namespace MicroTowerDefence
 {
@@ -10,6 +11,7 @@ namespace MicroTowerDefence
         private IHealth _health;
         private ICoins _coins;
 
+        [Inject]
         public void Initialize(IHealthView healthView, ICoinsView coinsView, IHealth health, ICoins coins)
         {
             _healthView = healthView;

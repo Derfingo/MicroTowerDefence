@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Zenject;
 
 namespace MicroTowerDefence
 {
@@ -14,6 +15,7 @@ namespace MicroTowerDefence
         private Tilemap _targetTilemap;
         private float _heightTilemap;
 
+        [Inject]
         public void Initialize()
         {
             InitializeTilemaps();

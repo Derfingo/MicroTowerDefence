@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace MicroTowerDefence
 {
@@ -10,7 +11,7 @@ namespace MicroTowerDefence
         private uint _initialHealth;
         private uint _health;
 
-
+        [Inject]
         public void Initialize(uint health)
         {
             _initialHealth = health;

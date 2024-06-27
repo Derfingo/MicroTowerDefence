@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace MicroTowerDefence
 {
@@ -14,6 +15,7 @@ namespace MicroTowerDefence
         private TowerFactory _towerFactory;
         private readonly GameBehaviourCollection _towers = new();
 
+        [Inject]
         public void Initialize(TowerFactory contentFactory)
         {
             _towerFactory = contentFactory;

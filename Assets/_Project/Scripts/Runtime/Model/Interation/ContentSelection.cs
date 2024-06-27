@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace MicroTowerDefence
 {
@@ -27,6 +28,7 @@ namespace MicroTowerDefence
         private bool _isSelected;
         private bool _isGround;
 
+        [Inject]
         public void Initialize(IInputActions input)
         {
             _input = input;

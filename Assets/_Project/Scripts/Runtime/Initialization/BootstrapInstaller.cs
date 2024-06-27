@@ -9,6 +9,8 @@ namespace MicroTowerDefence
 
         public override void InstallBindings()
         {
+            Container.BindInstance(_mainMenuLoader).AsSingle();
+            Container.QueueForInject(_mainMenuLoader);
         }
     }
 }
