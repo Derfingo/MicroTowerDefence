@@ -23,10 +23,7 @@ namespace MicroTowerDefence
             _input = input;
         }
 
-        public bool CheckHit()
-        {
-            return _isHit;
-        }
+        public bool CheckHit() => _isHit;
 
         public Vector3 GetPosition()
         {

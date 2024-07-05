@@ -6,12 +6,12 @@ namespace MicroTowerDefence
 {
     public class GameCycle : MonoBehaviour
     {
-        [SerializeField] private EnemyContorller _enemyController;
         [SerializeField] private GameScenario _gameScenario;
-        [SerializeField] private Health _health;
-        [SerializeField] private Coins _coins;
 
         private IInputActions _input;
+        private EnemyContorller _enemyController;
+        private Health _health;
+        private Coins _coins;
 
         private GameScenario.State _activeScenario;
         private Coroutine _prepareRoutine;
@@ -27,12 +27,23 @@ namespace MicroTowerDefence
         private PathConfig _pathConfig;
 
         [Inject]
-        public void Initialize(float prepareTime, IInputActions input, IReset[] resets, IUpdate[] updates, ILateUpdate[] lateUpdates, PathConfig config)  // fix
+        public void Initialize(float prepareTime,
+                               IInputActions input,
+                               IReset[] resets,
+                               IUpdate[] updates,
+                               ILateUpdate[] lateUpdates,
+                               PathConfig config,
+                               Health health,
+                               Coins coins,
+                               EnemyContorller enemyContorller)
         {
             _input = input;
+            _coins = coins;
+            _health = health;
             _resets = resets;
             _updates = updates;
             _lateUpdates = lateUpdates;
+            _enemyController = enemyContorller;
 
             _pathConfig = config; // fix
 
@@ -40,6 +51,7 @@ namespace MicroTowerDefence
             _input.GamePauseEvent += OnPause;
             _enemyController.EnemyFinishEvent += TakeDamage;
             _enemyController.EnemyDieEvent += AddCoins;
+
             BeginNewGame();
         }
 

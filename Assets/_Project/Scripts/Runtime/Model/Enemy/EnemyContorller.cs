@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MicroTowerDefence
 {
-    public class EnemyContorller : MonoBehaviour, IUpdate, IReset
+    public class EnemyContorller : IUpdate, IReset
     {
         public event Action<uint> EnemyFinishEvent;
         public event Action<uint> EnemyDieEvent;

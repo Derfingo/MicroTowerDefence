@@ -1,17 +1,10 @@
 using System;
 using UnityEngine;
-using Zenject;
 
 namespace MicroTowerDefence
 {
-    public class ContentSelection : MonoBehaviour, ISelection
+    public class ContentSelection : ISelection
     {
-        [SerializeField] private TilemapController _tilemapController;
-        [SerializeField] private RaycastController _raycastController;
-        [SerializeField] private TowerController _towerController;
-        [SerializeField] private TowerFactory _towerFactory;
-        [SerializeField] private Coins _coins;
-
         public event Action<TileContent, Vector3> BuildEvent;
         public event Action<TileContent, uint> SellEvent;
         public event Action<TileContent> UpgradeEvent;
@@ -21,23 +14,37 @@ namespace MicroTowerDefence
         public event Action<uint, uint> ShowTowerMenuEvent;
         public event Action SelectToBuildEvent;
 
+        private readonly TilemapController _tilemapController;
+        private readonly RaycastController _raycastController;
+        private readonly ITowerController _towerController;
+        private readonly TowerFactory _towerFactory;
+        private readonly IInputActions _input;
+        private readonly Coins _coins;
+
         private TileContent _previewContent;
         private TileContent _targetContent;
         private Vector3 _previewPosition;
-        private IInputActions _input;
         private bool _isSelected;
         private bool _isGround;
 
-        [Inject]
-        public void Initialize(IInputActions input)
-        {
+       public ContentSelection(IInputActions input,
+                               RaycastController raycastController,
+                               TilemapController tilemapController,
+                               TowerFactory factory,
+                               Coins coins)
+       {
             _input = input;
+            //_towerController = towerController;
+            _raycastController = raycastController;
+            _tilemapController = tilemapController;
+            _towerFactory = factory;
+            _coins = coins;
 
             _input.SelectPlaceEvent += OnSelectPlace;
             _input.CancelSelectPlaceEvent += OnCancelSelectedPlace;
-            _towerController.TowerSelectedEvent += SelectTower;
+            //_towerController.TowerSelectedEvent += SelectTower; // fix
             _raycastController.OnGround += (isGound) => _isGround = isGound;
-        }
+       }
 
         private void OnSelectPlace()
         {
@@ -149,6 +156,14 @@ namespace MicroTowerDefence
             }
 
             _input.SetPlayerMap();
+        }
+
+        ~ContentSelection()
+        {
+            _input.SelectPlaceEvent -= OnSelectPlace;
+            _input.CancelSelectPlaceEvent -= OnCancelSelectedPlace;
+            _towerController.TowerSelectedEvent -= SelectTower;
+            _raycastController.OnGround -= (isGound) => _isGround = isGound;
         }
     }
 }

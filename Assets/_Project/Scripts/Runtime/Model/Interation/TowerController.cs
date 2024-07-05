@@ -1,24 +1,28 @@
 using System;
 using UnityEngine;
-using Zenject;
 
 namespace MicroTowerDefence
 {
-    public class TowerController : MonoBehaviour, ITowerController, IUpdate, IReset
+    public class TowerController : ITowerController, IUpdate, IReset
     {
-        [SerializeField] private ProjectileController _projectileController;
-        [SerializeField] private ContentSelection _contentSelection;
-        [SerializeField] private Coins _coins;
-
         public event Action<TileContent> TowerSelectedEvent;
 
-        private TowerFactory _towerFactory;
+        private readonly ProjectileController _projectileController;
+        private readonly ContentSelection _contentSelection;
+        private readonly TowerFactory _towerFactory;
+        private readonly Coins _coins;
+
         private readonly GameBehaviourCollection _towers = new();
 
-        [Inject]
-        public void Initialize(TowerFactory contentFactory)
+        public TowerController(TowerFactory contentFactory,
+                               ProjectileController projectileController,
+                               ContentSelection contentSelection,
+                               Coins coins)
         {
             _towerFactory = contentFactory;
+            _projectileController = projectileController;
+            _contentSelection = contentSelection;
+            _coins = coins;
 
             _contentSelection.UpgradeEvent += OnUpgrade;
             _contentSelection.BuildEvent += OnBuild;
@@ -88,6 +92,13 @@ namespace MicroTowerDefence
                 newTower.Undo();
                 _towers.Add(newTower);
             }
+        }
+
+        ~TowerController()
+        {
+            _contentSelection.UpgradeEvent -= OnUpgrade;
+            _contentSelection.BuildEvent -= OnBuild;
+            _contentSelection.SellEvent -= OnSell;
         }
     }
 }

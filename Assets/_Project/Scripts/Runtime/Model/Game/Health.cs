@@ -1,18 +1,16 @@
 using System;
 using UnityEngine;
-using Zenject;
 
 namespace MicroTowerDefence
 {
-    public class Health : MonoBehaviour, IHealth, IReset
+    public class Health : IHealth, IReset
     {
         public event Action<uint> UpdateHealthEvent;
 
-        private uint _initialHealth;
+        private readonly uint _initialHealth;
         private uint _health;
 
-        [Inject]
-        public void Initialize(uint health)
+        public Health(uint health)
         {
             _initialHealth = health;
             _health = health;

@@ -1,27 +1,29 @@
 using UnityEngine;
-using Zenject;
 
 namespace MicroTowerDefence
 {
-    public class ScorePresenter : MonoBehaviour
+    public class ScorePresenter
     {
-        private IHealthView _healthView;
-        private ICoinsView _coinsView;
+        private readonly IHealthView _healthView;
+        private readonly ICoinsView _coinsView;
+        private readonly IHealth _health;
+        private readonly ICoins _coins;
 
-        private IHealth _health;
-        private ICoins _coins;
-
-        [Inject]
-        public void Initialize(IHealthView healthView, ICoinsView coinsView, IHealth health, ICoins coins)
+        public ScorePresenter(IHealthView healthView, ICoinsView coinsView, IHealth health, ICoins coins)
         {
             _healthView = healthView;
             _coinsView = coinsView;
-
             _health = health;
             _coins = coins;
 
             _health.UpdateHealthEvent += _healthView.UpdateHealth;
             _coins.UpdateCoinsEvent += _coinsView.UpdateCoins;
+        }
+
+        ~ScorePresenter()
+        {
+            _health.UpdateHealthEvent -= _healthView.UpdateHealth;
+            _coins.UpdateCoinsEvent -= _coinsView.UpdateCoins;
         }
     }
 }

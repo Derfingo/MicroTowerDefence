@@ -5,30 +5,23 @@ namespace MicroTowerDefence
 {
     public class LevelInstaller : MonoInstaller
     {
-        [Header("Models")]
-        [SerializeField] private ProjectileController _projectileController;
-        [SerializeField] private EnemyContorller _enemyController;
+        [Header("Factory")]
+        [SerializeField] private ProjectileFactory _projectileFactory;
         [SerializeField] private TowerFactory _towerFactory;
+        [Space]
+        [Header("Model")]
         [SerializeField] private CameraController _cameraController;
-        [SerializeField] private TowerController _towerController;
         [SerializeField] private RaycastController _raycastController;
-        [SerializeField] private ActionMapReader _actionMapReader;
         [SerializeField] private TilemapController _tilemapController;
-        [SerializeField] private ContentSelection _contentSelection;
         [SerializeField] private GameCycle _gamecycle;
-        [SerializeField] private Health _health;
-        [SerializeField] private Coins _coins;
-        [Header("Views"), Space]
+        [Space]
+        [Header("View")]
         [SerializeField] private ContentSelectionView _contentSelectionView;
         [SerializeField] private GameplayButtonsView _gameplayButtonsView;
         [SerializeField] private LevelConfigProvider _levelConfigProvider;
         [SerializeField] private PathPointsView _pathPointsView;
         [SerializeField] private HealthView _healthView;
         [SerializeField] private CoinsView _coinsView;
-        [Header("Presenters"), Space]
-        [SerializeField] private ScorePresenter _scorePresenter;
-        [SerializeField] private GameplayPresenter _gameplayPresenter;
-        [SerializeField] private InteractionPresenter _selectionPresenter;
 
         private LevelConfig _config;
 
@@ -43,38 +36,60 @@ namespace MicroTowerDefence
 
         private void BindModels()
         {
-            Container.BindInstances(_config.PrepareTime,
-                                    _pathPointsView.GetConfig());
+            BindInput();
+            BindFactory();
+            BindScore();
+            BindControllers();
+            BindGameCycle();
+        }
 
-            Container.BindInterfacesTo<EnemyContorller>().FromInstance(_enemyController).AsSingle();
-            Container.BindInterfacesTo<TilemapController>().FromInstance(_tilemapController).AsSingle();
-            Container.BindInterfacesTo<Health>().FromInstance(_health).AsSingle();
-            Container.BindInterfacesTo<Coins>().FromInstance(_coins).AsSingle();
-            Container.BindInstance(_config.Health).WhenInjectedInto<Health>();
-            Container.BindInstance(_config.Coins).WhenInjectedInto<Coins>();
-            Container.Bind<IInputActions>().FromInstance(_actionMapReader).AsSingle();
-            Container.Bind<IRaycast>().FromInstance(_raycastController).AsSingle();
-            Container.Bind<ILateUpdate>().FromInstance(_cameraController).AsSingle();
-            Container.Bind<ISelection>().FromInstance(_contentSelection).AsSingle();
+        private void BindInput()
+        {
+            Container.Bind<IInputActions>().To<ActionMapReader>().AsSingle();
+        }
+
+        private void BindFactory()
+        {
             Container.Bind<TowerFactory>().FromInstance(_towerFactory).AsSingle();
-            Container.BindInterfacesTo<TowerController>().FromInstance(_towerController).AsSingle();
-            Container.Bind<GameCycle>().FromInstance(_gamecycle).AsSingle().WithArguments(_config.PrepareTime, _pathPointsView.GetConfig());
+            Container.Bind<ProjectileFactory>().FromInstance(_projectileFactory).AsSingle();
+        }
+
+        private void BindScore()
+        {
+            Container.BindInterfacesAndSelfTo<Health>().AsSingle().WithArguments(_config.Health);
+            Container.BindInterfacesAndSelfTo<Coins>().AsSingle().WithArguments(_config.Coins);
+        }
+
+        private void BindGameCycle()
+        {
+            Container.Bind<GameCycle>().FromInstance(_gamecycle).AsSingle();
+            Container.BindInstance(_config.PrepareTime).WhenInjectedInto<GameCycle>();
+            Container.BindInstance(_pathPointsView.GetConfig()).WhenInjectedInto<GameCycle>();
+        }
+
+        private void BindControllers()
+        {
+            Container.BindInterfacesAndSelfTo<TowerController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ProjectileController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EnemyContorller>().AsSingle();
+            Container.BindInterfacesAndSelfTo<TilemapController>().FromInstance(_tilemapController).AsSingle();
+            Container.BindInterfacesAndSelfTo<ContentSelection>().AsSingle();
+            Container.BindInterfacesAndSelfTo<RaycastController>().FromInstance(_raycastController).AsSingle();
+            Container.Bind<ILateUpdate>().FromInstance(_cameraController).AsSingle();
         }
 
         private void BindPresenters()
         {
-            Container.Bind<ScorePresenter>().FromInstance(_scorePresenter).AsSingle().NonLazy();
-            Container.Bind<GameplayPresenter>().FromInstance(_gameplayPresenter).AsSingle().NonLazy();
-            Container.Bind<InteractionPresenter>().FromInstance(_selectionPresenter).AsSingle().NonLazy();
+            Container.Bind<ScorePresenter>().AsSingle().NonLazy();
+            Container.Bind<InteractionPresenter>().AsSingle().NonLazy();
         }
 
         private void BindViews()
         {
-            Container.Bind<IHealthView>().FromInstance(_healthView).AsSingle().NonLazy();
-            Container.Bind<ICoinsView>().FromInstance(_coinsView).AsSingle().NonLazy();
-            Container.Bind<IGameplayButtonsView>().FromInstance(_gameplayButtonsView).AsSingle().NonLazy();
-            Container.BindInterfacesTo<ContentSelectionView>().FromInstance(_contentSelectionView).AsSingle().NonLazy();
-            Container.BindInterfacesTo<ProjectileController>().FromInstance(_projectileController).AsSingle().NonLazy();
+            Container.Bind<IHealthView>().FromInstance(_healthView).AsSingle();
+            Container.Bind<ICoinsView>().FromInstance(_coinsView).AsSingle();
+            Container.Bind<IGameplayButtonsView>().FromInstance(_gameplayButtonsView).AsSingle();
+            Container.BindInterfacesTo<ContentSelectionView>().FromInstance(_contentSelectionView).AsSingle();
         }
     }
 }

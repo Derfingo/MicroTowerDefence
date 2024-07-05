@@ -1,12 +1,15 @@
-using UnityEngine;
-
 namespace MicroTowerDefence
 {
-    public class ProjectileController : MonoBehaviour, IUpdate, IReset
+    public class ProjectileController : IUpdate, IReset
     {
-        [SerializeField] private ProjectileFactory _factory;
+        private readonly ProjectileFactory _factory;
 
         private readonly GameBehaviourCollection _projectiles = new();
+        
+        public ProjectileController(ProjectileFactory factory)
+        {
+            _factory = factory;
+        }
 
         public Shell GetShell()
         {

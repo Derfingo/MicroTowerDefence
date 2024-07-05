@@ -1,12 +1,11 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Zenject;
 using static InputActionMaps;
 
 namespace MicroTowerDefence
 {
-    public class ActionMapReader : MonoBehaviour, IPlayerActions, IUIActions, IInputActions
+    public class ActionMapReader : IPlayerActions, IUIActions, IInputActions
     {
         public event Action<float> RotateCameraEvent;
         public event Action<float> ScrollEvent;
@@ -19,11 +18,10 @@ namespace MicroTowerDefence
 
         public Vector3 MousePosition { get; private set; }
 
-        private InputActionMaps _inputActionMaps;
+        private readonly InputActionMaps _inputActionMaps;
         private bool _isRotateCamera;
 
-        [Inject]
-        public void Initialize()
+        public ActionMapReader()
         {
             _inputActionMaps = new InputActionMaps();
             SetPlayerMap();

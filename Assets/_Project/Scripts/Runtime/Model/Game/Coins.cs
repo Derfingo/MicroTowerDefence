@@ -4,15 +4,14 @@ using Zenject;
 
 namespace MicroTowerDefence
 {
-    public class Coins : MonoBehaviour, ICoins, IReset
+    public class Coins : ICoins, IReset
     {
         public event Action<uint> UpdateCoinsEvent;
 
         private uint _initialCoins;
         private uint _coins;
 
-        [Inject]
-        public void Initialize(uint initialCoins)
+        public Coins(uint initialCoins)
         {
             _initialCoins = initialCoins;
             _coins = initialCoins;
