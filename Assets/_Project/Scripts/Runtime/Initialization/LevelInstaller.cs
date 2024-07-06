@@ -71,7 +71,7 @@ namespace MicroTowerDefence
         {
             Container.BindInterfacesAndSelfTo<TowerController>().AsSingle();
             Container.BindInterfacesAndSelfTo<ProjectileController>().AsSingle();
-            Container.BindInterfacesAndSelfTo<EnemyContorller>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EnemyContorller>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<TilemapController>().FromInstance(_tilemapController).AsSingle();
             Container.BindInterfacesAndSelfTo<ContentSelection>().AsSingle();
             Container.BindInterfacesAndSelfTo<RaycastController>().FromInstance(_raycastController).AsSingle();

@@ -10,7 +10,7 @@ namespace MicroTowerDefence
         public event Action<bool> TurnCameraLeftEvent;
         public event Action<bool> TurnCameraRightEvent;
         public event Action GamePauseEvent;
-        public event Action SelectPlaceEvent;
+        public event Action OnSelectEvent;
         public event Action CancelSelectPlaceEvent;
         public event Action<bool> TowerPlacesEvent;
 
@@ -34,7 +34,7 @@ namespace MicroTowerDefence
         {
             if (Input.GetMouseButtonDown(0))
             {
-                SelectPlaceEvent?.Invoke();
+                OnSelectEvent?.Invoke();
             }
 
             if (Input.GetMouseButtonDown(1))

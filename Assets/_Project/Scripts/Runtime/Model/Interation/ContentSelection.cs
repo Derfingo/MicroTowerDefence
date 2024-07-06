@@ -9,14 +9,11 @@ namespace MicroTowerDefence
         public event Action<TileContent, uint> SellEvent;
         public event Action<TileContent> UpgradeEvent;
 
-        public event Action<bool> SelectedEvent;
-        public event Action<bool> CancelSelectedEvent;
-        public event Action<uint, uint> ShowTowerMenuEvent;
+        public event Action OnCancelSelectedEvent;
         public event Action SelectToBuildEvent;
 
         private readonly TilemapController _tilemapController;
         private readonly RaycastController _raycastController;
-        private readonly ITowerController _towerController;
         private readonly TowerFactory _towerFactory;
         private readonly IInputActions _input;
         private readonly Coins _coins;
@@ -24,7 +21,6 @@ namespace MicroTowerDefence
         private TileContent _previewContent;
         private TileContent _targetContent;
         private Vector3 _previewPosition;
-        private bool _isSelected;
         private bool _isGround;
 
        public ContentSelection(IInputActions input,
@@ -34,41 +30,30 @@ namespace MicroTowerDefence
                                Coins coins)
        {
             _input = input;
-            //_towerController = towerController;
             _raycastController = raycastController;
             _tilemapController = tilemapController;
             _towerFactory = factory;
             _coins = coins;
 
-            _input.SelectPlaceEvent += OnSelectPlace;
+            _input.OnSelectEvent += OnSelect;
             _input.CancelSelectPlaceEvent += OnCancelSelectedPlace;
-            //_towerController.TowerSelectedEvent += SelectTower; // fix
             _raycastController.OnGround += (isGound) => _isGround = isGound;
        }
 
-        private void OnSelectPlace()
+        private void OnSelect()
         {
-            if (_isSelected && _raycastController.GetContent() == null && _previewContent == null)
+            if (_raycastController.GetContent(out TileContent content))
             {
-                OnCancelSelectedPlace();
-                return;
+                _targetContent = content;
+                content.Interact();
             }
-            else if (_targetContent != null)
-            {
-                _targetContent.Undo();
-                _isSelected = false;
-            }
-
-
-            _targetContent = _raycastController.GetContent();
-
-            if (_targetContent == null && _isGround)
+            else if (_isGround)
             {
                 SelectToBuild();
             }
-            else if (_targetContent != null)
+            else
             {
-                _targetContent.Interact();
+                OnCancelSelectedPlace();
             }
         }
 
@@ -76,27 +61,14 @@ namespace MicroTowerDefence
         {
             _targetContent?.Undo();
             _targetContent = null;
-            _isSelected = false;
-            SelectedEvent.Invoke(_isSelected);
-            CancelSelectedEvent?.Invoke(false);
+            OnCancelSelectedEvent?.Invoke();
             _input.SetPlayerMap();
         }
 
         private void SelectToBuild()
         {
-            _isSelected = true;
             _previewPosition = _tilemapController.GetCellCenterPosition();
             SelectToBuildEvent?.Invoke();
-        }
-
-        public void SelectTower(TileContent content)
-        {
-            _isSelected = true;
-            _targetContent = content;
-            var tower = content.GetComponent<TowerBase>();
-            tower.Show();
-            ShowTowerMenuEvent?.Invoke(tower.UpgradeCost, tower.SellCost);
-            SelectedEvent?.Invoke(_isSelected);
         }
 
         public void OnBuildTower(TowerType type)
@@ -160,9 +132,8 @@ namespace MicroTowerDefence
 
         ~ContentSelection()
         {
-            _input.SelectPlaceEvent -= OnSelectPlace;
+            _input.OnSelectEvent -= OnSelect;
             _input.CancelSelectPlaceEvent -= OnCancelSelectedPlace;
-            _towerController.TowerSelectedEvent -= SelectTower;
             _raycastController.OnGround -= (isGound) => _isGround = isGound;
         }
     }

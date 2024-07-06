@@ -20,7 +20,6 @@ namespace MicroTowerDefence
 
         private IInputActions _input;
         private bool _isEnableCursor;
-        private bool _isSelected;
 
         [Inject]
         public void Initialize(IInputActions input)
@@ -53,11 +52,6 @@ namespace MicroTowerDefence
             _isEnableCursor = isEnable;
         }
 
-        public void OnSelectedContent(bool isSelected)
-        {
-            _isSelected = isSelected;
-        }
-
         private void OnDisplayTowerPlaces(bool isEnable)
         {
             if (_towerPlaces.Length > 0)
@@ -73,10 +67,9 @@ namespace MicroTowerDefence
             }
         }
 
-        public void OnCancelSelected(bool isSelected)
+        public void OnHideButtons()
         {
             _gameplayButtonsView.HideButtonViews();
-            _isSelected = isSelected;
         }
 
         public void ShowMenuToBuild()
@@ -129,14 +122,9 @@ namespace MicroTowerDefence
 
         private void UpdateTargetCellView()
         {
-            if (_isSelected)
-            {
-                return;
-            }
-
-            var position = CellCenterPositionEvent.Invoke();     // func
+            var position = CellCenterPositionEvent.Invoke();
             _targetCellView.UpdatePosition(position);
-            _targetCellView.Display(_isEnableCursor);   // func
+            _targetCellView.Display(_isEnableCursor);
         }
     }
 }

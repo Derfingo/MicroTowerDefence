@@ -27,8 +27,8 @@ MonoBehaviour:
       _min: 1
       _max: 1
     Health:
-      _min: 80
-      _max: 80
+      _min: 50
+      _max: 50
     Shield:
       _min: 0
       _max: 0

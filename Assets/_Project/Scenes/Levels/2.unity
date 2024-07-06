@@ -2654,7 +2654,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3ea813598c30894f931c80f80aab895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _raycast: {fileID: 533964236}
   _tilemapArray:
   - {fileID: 1896739357}
 --- !u!1 &792435227
@@ -5297,7 +5296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c40da5043b52927469a2451d6b7a4031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameScenario: {fileID: 11400000, guid: e99272a7120796144ab98e7f805a43f5, type: 2}
+  _gameScenario: {fileID: 11400000, guid: 0df6968ad275edf41ac44ed686258ce9, type: 2}
 --- !u!4 &1550305078
 Transform:
   m_ObjectHideFlags: 0

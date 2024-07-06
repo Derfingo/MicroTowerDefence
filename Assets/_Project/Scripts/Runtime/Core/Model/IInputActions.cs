@@ -5,7 +5,7 @@ namespace MicroTowerDefence
 {
     public interface IInputActions
     {
-        public event Action SelectPlaceEvent;
+        public event Action OnSelectEvent;
         public event Action GamePauseEvent;
         public event Action CancelSelectPlaceEvent;
         public event Action<float> RotateCameraEvent;

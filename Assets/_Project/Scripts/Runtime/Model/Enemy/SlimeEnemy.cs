@@ -1,6 +1,6 @@
 namespace MicroTowerDefence
 {
-    public class SimpleEnemy : EnemyBase
+    public class SlimeEnemy : EnemyBase
     {
     }
 }

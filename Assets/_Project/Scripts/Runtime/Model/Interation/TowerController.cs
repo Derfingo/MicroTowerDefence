@@ -5,7 +5,7 @@ namespace MicroTowerDefence
 {
     public class TowerController : ITowerController, IUpdate, IReset
     {
-        public event Action<TileContent> TowerSelectedEvent;
+        public event Action<uint, uint> OnTowerCostEvent;
 
         private readonly ProjectileController _projectileController;
         private readonly ContentSelection _contentSelection;
@@ -47,7 +47,7 @@ namespace MicroTowerDefence
             if (_coins.TrySpend(cost))
             {
                 tower.SetProjectile(_projectileController);
-                tower.SelectedEvent += TowerSelectedEvent;
+                tower.OnInteractEvent += OnTowerCost;
                 tower.Undo();
                 tower.Position = position;
                 tower.IsInit = true;
@@ -62,7 +62,7 @@ namespace MicroTowerDefence
         public void OnSell(TileContent content, uint coins)
         {
             var tower = content.GetComponent<TowerBase>();
-            tower.SelectedEvent -= TowerSelectedEvent;
+            tower.OnInteractEvent -= OnTowerCost;
             _towers.Remove(tower);
             tower.Reclaim();
             _coins.Add(coins);
@@ -86,12 +86,17 @@ namespace MicroTowerDefence
                 tower.Reclaim();
 
                 newTower.SetProjectile(_projectileController);
-                newTower.SelectedEvent += TowerSelectedEvent;
+                newTower.OnInteractEvent += OnTowerCost;
                 newTower.Position = position;
                 newTower.IsInit = true;
                 newTower.Undo();
                 _towers.Add(newTower);
             }
+        }
+
+        private void OnTowerCost(TowerBase tower)
+        {
+            OnTowerCostEvent?.Invoke(tower.UpgradeCost, tower.SellCost);
         }
 
         ~TowerController()

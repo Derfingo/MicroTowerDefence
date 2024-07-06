@@ -13,8 +13,7 @@ namespace MicroTowerDefence
         public event Action<TowerType> HidePreviewEvent;
         public event Func<Vector3> CellCenterPositionEvent;
 
-        void OnSelectedContent(bool isSelected);
-        void OnCancelSelected(bool isSelected);
+        void OnHideButtons();
         void ShowTowerMenu(uint upgradeCost, uint sellCost);
         void ShowMenuToBuild();
 

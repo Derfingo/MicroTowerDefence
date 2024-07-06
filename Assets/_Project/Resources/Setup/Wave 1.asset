@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wave 1
   m_EditorClassIdentifier: 
   _spawnSequences:
-  - _factory: {fileID: 11400000, guid: 675564c76d9dffd46806cd169fd00043, type: 2}
+  - _factory: {fileID: 11400000, guid: 2e9ce2e6ff6d310419d76650b9b74098, type: 2}
     _type: 1
     _amount: 10
-    _cooldown: 5
+    _cooldown: 1.5

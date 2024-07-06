@@ -4,9 +4,7 @@ namespace MicroTowerDefence
 {
     public interface ISelection
     {
-        public event Action<bool> SelectedEvent;
-        public event Action<bool> CancelSelectedEvent;
-        public event Action<uint, uint> ShowTowerMenuEvent;
+        public event Action OnCancelSelectedEvent;
         public event Action SelectToBuildEvent;
 
         void OnBuildTower(TowerType type);

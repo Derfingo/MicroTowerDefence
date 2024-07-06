@@ -6,13 +6,19 @@ namespace MicroTowerDefence
         private readonly IRaycast _raycast;
         private readonly ISelection _selection;
         private readonly ISelectionView _selectionView;
+        private readonly ITowerController _towerController;
 
-        public InteractionPresenter(IGrid grid, IRaycast raycast, ISelection selection, ISelectionView selectionView)
+        public InteractionPresenter(IGrid grid,
+                                    IRaycast raycast,
+                                    ISelection selection,
+                                    ISelectionView selectionView,
+                                    ITowerController towerController)
         {
             _grid = grid;
             _raycast = raycast;
             _selection = selection;
             _selectionView = selectionView;
+            _towerController = towerController;
 
             _raycast.OnGround += _selectionView.IsEnableCursor;
             _selectionView.CellCenterPositionEvent += _grid.GetCellCenterPosition;
@@ -22,11 +28,11 @@ namespace MicroTowerDefence
             _selectionView.SellClickEvent += _selection.OnSellTower;
             _selectionView.ShowPreviewEvent += _selection.OnShowPreview;
             _selectionView.HidePreviewEvent += _selection.OnHidePreview;
-
-            _selection.SelectedEvent += _selectionView.OnSelectedContent;
-            _selection.CancelSelectedEvent += _selectionView.OnCancelSelected;
-            _selection.ShowTowerMenuEvent += _selectionView.ShowTowerMenu;
+            
+            _selection.OnCancelSelectedEvent += _selectionView.OnHideButtons;
             _selection.SelectToBuildEvent += _selectionView.ShowMenuToBuild;
+
+            _towerController.OnTowerCostEvent += _selectionView.ShowTowerMenu;
         }
 
         ~InteractionPresenter()
@@ -39,11 +45,11 @@ namespace MicroTowerDefence
             _selectionView.SellClickEvent -= _selection.OnSellTower;
             _selectionView.ShowPreviewEvent -= _selection.OnShowPreview;
             _selectionView.HidePreviewEvent -= _selection.OnHidePreview;
-
-            _selection.SelectedEvent -= _selectionView.OnSelectedContent;
-            _selection.CancelSelectedEvent -= _selectionView.OnCancelSelected;
-            _selection.ShowTowerMenuEvent -= _selectionView.ShowTowerMenu;
+           
+            _selection.OnCancelSelectedEvent -= _selectionView.OnHideButtons;
             _selection.SelectToBuildEvent -= _selectionView.ShowMenuToBuild;
+
+            _towerController.OnTowerCostEvent -= _selectionView.ShowTowerMenu;
         }
     }
 }

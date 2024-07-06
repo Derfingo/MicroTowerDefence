@@ -8,7 +8,7 @@ namespace MicroTowerDefence
     {
         [SerializeField, Range(1f, 10f)] protected float _targetRange;
 
-        public event Action<TileContent> SelectedEvent;
+        public event Action<TowerBase> OnInteractEvent;
 
         public readonly uint MaxLevel = 2;
         public TowerType TowerType => _towerType;
@@ -54,7 +54,7 @@ namespace MicroTowerDefence
 
         public override void Interact()
         {
-            SelectedEvent?.Invoke(this);
+            OnInteractEvent?.Invoke(this);
             ShowTargetRadius(true);
         }
 

@@ -7,17 +7,18 @@ namespace MicroTowerDefence
 {
     public class TilemapController : MonoBehaviour, IGrid, IUpdate
     {
-        [SerializeField] private RaycastController _raycast;
         [SerializeField] private Tilemap[] _tilemapArray;
 
+        private RaycastController _raycast;
         private Dictionary<float, Tilemap> _tilemaps;
         private Vector3Int _worldGridPosition;
         private Tilemap _targetTilemap;
         private float _heightTilemap;
 
         [Inject]
-        public void Initialize()
+        public void Initialize(RaycastController raycastController)
         {
+            _raycast = raycastController;
             InitializeTilemaps();
         }
 

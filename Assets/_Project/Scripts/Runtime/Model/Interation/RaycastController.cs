@@ -54,19 +54,21 @@ namespace MicroTowerDefence
             return _hitPosition;
         }
 
-        public TileContent GetContent()
+        public bool GetContent(out TileContent content)
         {
             var ray = _camera.ScreenPointToRay(_input.MousePosition);
 
             if (Physics.Raycast(ray, out RaycastHit hit, MAX_DISTANCE, _contentMask))
             {
-                if (hit.collider.TryGetComponent(out TileContent content))
+                if (hit.collider.TryGetComponent(out TileContent tileContent))
                 {
-                    return content;
+                    content = tileContent;
+                    return true;
                 }
             }
 
-            return null;
+            content = null;
+            return false;
         }
     }
 }
