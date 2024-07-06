@@ -40,7 +40,7 @@ namespace MicroTowerDefence
 
         protected void Shoot(ProjectileConfig config)
         {
-            _projectileController.GetArrow().Initialize(_projectileController, config);
+            _projectileController.Get(ProjectileType.Arrow, Level).Initialize(config);
         }
     }
 }

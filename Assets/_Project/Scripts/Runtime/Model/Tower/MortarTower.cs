@@ -69,7 +69,7 @@ namespace MicroTowerDefence
 
         private void Shoot(ProjectileConfig config)
         {
-            _projectileController.GetShell().Initialize(_projectileController, config);
+            _projectileController.Get(ProjectileType.Shell, Level).Initialize(config);
         }
 
         private float GetAngleToTarget(Vector3 target)

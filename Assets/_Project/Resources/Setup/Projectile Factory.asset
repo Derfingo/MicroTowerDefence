@@ -14,14 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shellPrefab:
   - {fileID: 2973602105575201436, guid: 20c3864008e674b4c869faf68c248e2b, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2973602105575201436, guid: 20c3864008e674b4c869faf68c248e2b, type: 3}
+  - {fileID: 2973602105575201436, guid: 20c3864008e674b4c869faf68c248e2b, type: 3}
   _arrowPrefab:
   - {fileID: 5248649696323108207, guid: c48a5172acfe97f439b12040ac187a53, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  _explosionPrefab: {fileID: 3187970650182742161, guid: 50bd0c0373f076241aa587b540dcda80,
-    type: 3}
+  - {fileID: 5248649696323108207, guid: c48a5172acfe97f439b12040ac187a53, type: 3}
+  - {fileID: 5248649696323108207, guid: c48a5172acfe97f439b12040ac187a53, type: 3}
   _magicSpherePrefabs:
   - {fileID: 8027435645924631251, guid: e67f05cd597b6ca41a9c1d7fa3e57424, type: 3}
   - {fileID: 8027435645924631251, guid: 67d1e6780953cfe4ea3916a4f4bb7c8f, type: 3}

@@ -42,7 +42,7 @@ namespace MicroTowerDefence
 
         private void Shoot(ProjectileConfig config)
         {
-            _projectileController.GetSphere(Level).Initialize(_projectileController, config);
+            _projectileController.Get(ProjectileType.Sphere, Level).Initialize(config);
         }
     }
 }

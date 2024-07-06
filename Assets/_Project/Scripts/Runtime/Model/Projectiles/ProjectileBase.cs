@@ -5,7 +5,6 @@ namespace MicroTowerDefence
     [SelectionBase]
     public abstract class ProjectileBase : GameBehaviour
     {
-        protected ProjectileController _projectile;
         protected Rigidbody _rigidbBody;
         protected ElementType _elementType;
 
@@ -24,11 +23,10 @@ namespace MicroTowerDefence
         protected int _enemyLayer = 9;
         protected int _shieldLayer = 12;
 
-        public void Initialize(ProjectileController projectile, ProjectileConfig config)
+        public void Initialize(ProjectileConfig config)
         {
             _collider = GetComponent<Collider>();
             _elementType = config.Element;
-            _projectile = projectile;
             _damage = config.Damage;
             _startPosition = config.StartPosition;
             _targetPosition = config.TargetPosition;

@@ -7,12 +7,7 @@ namespace MicroTowerDefence
     {
         [SerializeField] private Shell[] _shellPrefab;
         [SerializeField] private Arrow[] _arrowPrefab;
-        [SerializeField] private Explosion _explosionPrefab;
         [SerializeField] private MagicSphere[] _magicSpherePrefabs;
-
-        public Shell Shell => Get(_shellPrefab[0]);
-        public Arrow Arrow => Get(_arrowPrefab[0]);
-        public Explosion Explosion => Instantiate(_explosionPrefab);
 
         public ProjectileBase Get(ProjectileType type, uint level)
         {
