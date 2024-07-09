@@ -6,9 +6,8 @@ namespace MicroTowerDefence
 {
     public class GameCycle : MonoBehaviour
     {
-        [SerializeField] private GameScenario _gameScenario;
-
         private IInputActions _input;
+        private GameScenario _scenario;
         private EnemyContorller _enemyController;
         private Health _health;
         private Coins _coins;
@@ -35,13 +34,15 @@ namespace MicroTowerDefence
                                PathConfig config,
                                Health health,
                                Coins coins,
-                               EnemyContorller enemyContorller)
+                               EnemyContorller enemyContorller,
+                               GameScenario scenario)
         {
             _input = input;
             _coins = coins;
             _health = health;
             _resets = resets;
             _updates = updates;
+            _scenario = scenario;
             _lateUpdates = lateUpdates;
             _enemyController = enemyContorller;
 
@@ -136,14 +137,14 @@ namespace MicroTowerDefence
                 StopCoroutine(_prepareRoutine);
             }
             Cleanup();
-            _activeScenario = _gameScenario.Begin(_enemyController, _pathConfig);
+            _activeScenario = _scenario.Begin(_enemyController, _pathConfig);
             _prepareRoutine = StartCoroutine(PrepareRoutine());
         }
 
         private IEnumerator PrepareRoutine()
         {
             yield return new WaitForSeconds(_prepareTime);
-            _activeScenario = _gameScenario.Begin(_enemyController, _pathConfig);
+            _activeScenario = _scenario.Begin(_enemyController, _pathConfig);
             _scenarioInProgress = true;
         }
 

@@ -18,17 +18,17 @@ MonoBehaviour:
     Enemy: 2
     Element: 2
     Scale:
-      _min: 2
-      _max: 2
+      _min: 3
+      _max: 3
     PathOffset:
       _min: 0
       _max: 0
     Speed:
-      _min: 0.5
-      _max: 0.5
+      _min: 0.9
+      _max: 0.9
     Health:
-      _min: 80
-      _max: 80
+      _min: 250
+      _max: 250
     Shield:
       _min: 0
       _max: 0

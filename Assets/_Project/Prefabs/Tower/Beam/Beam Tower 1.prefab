@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1679102649375825440}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.45, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -116,8 +116,8 @@ Transform:
   m_Children:
   - {fileID: 2892771070542352290}
   - {fileID: 2484237029336111386}
-  - {fileID: 8321063077639912425}
   - {fileID: 7595527499472988892}
+  - {fileID: 8321063077639912425}
   - {fileID: 438201482266141751}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -133,8 +133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c3ebdcd86d7a584aab67dd871a8b9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _towerType: 0
-  _elementType: 1
   _targetRange: 1.8
   _turret: {fileID: 7595527499472988892}
   _laserBeam: {fileID: 438201482266141751}
@@ -369,7 +367,7 @@ GameObject:
   - component: {fileID: 8392042107441710044}
   - component: {fileID: 5977635503641801188}
   m_Layer: 8
-  m_Name: LaserBeam
+  m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -384,8 +382,8 @@ Transform:
   m_GameObject: {fileID: 5378021414620186560}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0.45, z: 0}
+  m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6033226082365624168}

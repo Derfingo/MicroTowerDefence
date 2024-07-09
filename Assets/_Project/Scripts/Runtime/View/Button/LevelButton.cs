@@ -22,7 +22,6 @@ namespace MicroTowerDefence
         public void OnPointerDown(PointerEventData eventData)
         {
             OnClickEvent?.Invoke(_nameLevel);
-            print("click");
         }
     }
 }

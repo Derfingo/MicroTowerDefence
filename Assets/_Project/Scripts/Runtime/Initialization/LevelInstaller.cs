@@ -5,9 +5,10 @@ namespace MicroTowerDefence
 {
     public class LevelInstaller : MonoInstaller
     {
-        [Header("Factory")]
+        [Header("Setup")]
         [SerializeField] private ProjectileFactory _projectileFactory;
         [SerializeField] private TowerFactory _towerFactory;
+        [SerializeField] private GameScenario _gameScenario;
         [Space]
         [Header("Model")]
         [SerializeField] private CameraController _cameraController;
@@ -40,6 +41,7 @@ namespace MicroTowerDefence
             BindFactory();
             BindScore();
             BindControllers();
+            BindScenario();
             BindGameCycle();
         }
 
@@ -60,6 +62,11 @@ namespace MicroTowerDefence
             Container.BindInterfacesAndSelfTo<Coins>().AsSingle().WithArguments(_config.Coins);
         }
 
+        private void BindScenario()
+        {
+            Container.Bind<GameScenario>().FromInstance(_gameScenario).AsSingle();
+        }
+
         private void BindGameCycle()
         {
             Container.Bind<GameCycle>().FromInstance(_gamecycle).AsSingle();
@@ -71,7 +78,7 @@ namespace MicroTowerDefence
         {
             Container.BindInterfacesAndSelfTo<TowerController>().AsSingle();
             Container.BindInterfacesAndSelfTo<ProjectileController>().AsSingle();
-            Container.BindInterfacesAndSelfTo<EnemyContorller>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<EnemyContorller>().AsSingle();
             Container.BindInterfacesAndSelfTo<TilemapController>().FromInstance(_tilemapController).AsSingle();
             Container.BindInterfacesAndSelfTo<ContentSelection>().AsSingle();
             Container.BindInterfacesAndSelfTo<RaycastController>().FromInstance(_raycastController).AsSingle();

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ffdebf6327bf7a4fadd84d487ce5b3c, type: 3}
-  m_Name: Slime Factory
+  m_Name: Wizard FActory
   m_EditorClassIdentifier: 
   _enemies:
-  - Prefab: {fileID: 6761251400536092992, guid: 833a453e02e3f3043b4a75570159385e,
+  - Prefab: {fileID: 6625422143885562435, guid: 254e646983910d34b93539594d9da070,
       type: 3}
-    Enemy: 1
-    Element: 2
+    Enemy: 3
+    Element: 1
     Scale:
       _min: 1
       _max: 1
@@ -24,13 +24,13 @@ MonoBehaviour:
       _min: 0
       _max: 0
     Speed:
-      _min: 1.2
-      _max: 1.2
+      _min: 0.8
+      _max: 0.8
     Health:
-      _min: 100
-      _max: 100
+      _min: 150
+      _max: 150
     Shield:
-      _min: 0
-      _max: 0
-    Coins: 25
-    Damage: 1
+      _min: 300
+      _max: 300
+    Coins: 80
+    Damage: 2

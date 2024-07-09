@@ -12,13 +12,11 @@ namespace MicroTowerDefence
         [SerializeField] private TMP_Text _label;
 
         private AsyncOperation _loadingOperation;
-
-        [Inject]
-        public void Initialize()
+        
+        public void Start()
         {
             Load();
             AppearLabel();
-            print("init");
         }
 
         private void Load()

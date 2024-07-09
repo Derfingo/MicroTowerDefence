@@ -23,7 +23,7 @@ MonoBehaviour:
     SellCost: 30
     ShellBlastRadius: 0.5
     ShootPerSecond: 0.9
-    DamagePerSecond: 25
+    DamagePerSecond: 30
   _level2:
     Prefab: {fileID: 240080371973959801, guid: 34af1f1464e0b0c40bb7e8459f81ad00, type: 3}
     TargetRange: 2.3

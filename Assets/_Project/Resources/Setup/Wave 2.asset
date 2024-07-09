@@ -15,5 +15,5 @@ MonoBehaviour:
   _spawnSequences:
   - _factory: {fileID: 11400000, guid: d3d97041fdd638046b94d72fe0ae853a, type: 2}
     _type: 2
-    _amount: 8
+    _amount: 15
     _cooldown: 2
