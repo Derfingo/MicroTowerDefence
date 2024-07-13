@@ -6,6 +6,7 @@ namespace MicroTowerDefence
     public class CameraController : MonoBehaviour, ILateUpdate
     {
         [SerializeField] private Transform _cameraTransform;
+        [SerializeField] private CameraType _cameraType;
         [Space]
         [SerializeField] private bool _isMovement = false;
         [SerializeField] private float _moveSpeed = 0.1f;
@@ -18,8 +19,6 @@ namespace MicroTowerDefence
         public Vector3 Zoom;
 
         private IInputActions _input;
-        private bool _isTurnLeft;
-        private bool _isTurnRight;
 
         [Inject]
         public void Initialize(IInputActions input)
@@ -28,20 +27,36 @@ namespace MicroTowerDefence
 
             _input.ScrollEvent += OnMouseZoom;
             _input.RotateCameraEvent += OnTurnWithMouse;
-            _input.TurnCameraLeftEvent += (isTurnLeft) => _isTurnLeft = isTurnLeft;
-            _input.TurnCameraRightEvent += (isTurnRight) => _isTurnRight = isTurnRight;
+
+            _input.TurnCameraLeftEvent += OnTurnLeft;
+            _input.TurnCameraRightEvent += OnTurnRight;
 
             Target = transform.position;
             Rotation = transform.rotation;
             Zoom = _cameraTransform.localPosition;
+
+            SetCameraType();
         }
 
         public void GameLateUpdate()
         {
             HandleKeyboard(_isMovement);
             HandleMovement();
-            OnTurnLeft();
-            OnTurnRight();
+        }
+
+        private void SetCameraType()
+        {
+            switch (_cameraType)
+            {
+                case CameraType.Isometric:
+                    _cameraTransform.rotation = Quaternion.Euler(30f, 45f, 0f);
+                    _cameraTransform.GetComponent<Camera>().orthographic = true;
+                    break;
+                case CameraType.Perspective:
+                    _cameraTransform.rotation = Quaternion.Euler(45f, 0f, 0f);
+                    _cameraTransform.GetComponent<Camera>().orthographic = false;
+                    break;
+            }
         }
 
         private void HandleKeyboard(bool isMovement)
@@ -74,17 +89,25 @@ namespace MicroTowerDefence
 
         private void OnTurnLeft()
         {
-            if (_isTurnLeft)
+            if (_cameraType == CameraType.Perspective)
             {
                 Rotation *= Quaternion.Euler(Vector3.up * _rotationAmount / 3);
+            }
+            else
+            {
+                Rotation *= Quaternion.Euler(0f, 90f, 0f);
             }
         }
 
         private void OnTurnRight()
         {
-            if (_isTurnRight)
+            if (_cameraType == CameraType.Perspective)
             {
                 Rotation *= Quaternion.Euler(Vector3.up * -_rotationAmount / 3);
+            }
+            else
+            {
+                Rotation *= Quaternion.Euler(0f, -90f, 0f);
             }
         }
 

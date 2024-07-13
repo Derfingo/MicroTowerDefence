@@ -9,8 +9,8 @@ namespace MicroTowerDefence
     {
         public event Action<float> RotateCameraEvent;
         public event Action<float> ScrollEvent;
-        public event Action<bool> TurnCameraLeftEvent;
-        public event Action<bool> TurnCameraRightEvent;
+        public event Action TurnCameraLeftEvent;
+        public event Action TurnCameraRightEvent;
         public event Action<bool> TowerPlacesEvent;
         public event Action GamePauseEvent;
         public event Action OnSelectEvent;
@@ -67,12 +67,7 @@ namespace MicroTowerDefence
         {
             if (context.started)
             {
-                TurnCameraLeftEvent?.Invoke(true);
-            }
-
-            if (context.canceled)
-            {
-                TurnCameraLeftEvent?.Invoke(false);
+                TurnCameraLeftEvent?.Invoke();
             }
         }
 
@@ -80,12 +75,7 @@ namespace MicroTowerDefence
         {
             if (context.started)
             {
-                TurnCameraRightEvent?.Invoke(true);
-            }
-
-            if (context.canceled)
-            {
-                TurnCameraRightEvent?.Invoke(false);
+                TurnCameraRightEvent?.Invoke();
             }
         }
 

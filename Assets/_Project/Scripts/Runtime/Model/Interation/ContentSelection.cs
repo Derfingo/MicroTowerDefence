@@ -21,7 +21,7 @@ namespace MicroTowerDefence
         private TileContent _previewContent;
         private TileContent _targetContent;
         private Vector3 _previewPosition;
-        private bool _isGround;
+        private bool _isGround = false;
 
        public ContentSelection(IInputActions input,
                                RaycastController raycastController,

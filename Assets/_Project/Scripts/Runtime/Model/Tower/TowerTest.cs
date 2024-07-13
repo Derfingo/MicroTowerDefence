@@ -4,12 +4,12 @@ namespace MicroTowerDefence
 {
     public class TowerTest : TowerBase
     {
-        [SerializeField] private TowerFactory _factory;
+        [SerializeField] private ProjectileFactory _projectileFactory;
         [SerializeField] private EnemyTest _enemy;
-        [SerializeField] private ProjectileController _projectiles;
-        [Space]
         [SerializeField] private Transform _cannon;
         [SerializeField] private Transform _cover;
+
+        private ProjectileController _projectiles;
 
         private float _shellBlastRadius = 1f;
         private float _shootPerSecond = 1f;
@@ -34,13 +34,14 @@ namespace MicroTowerDefence
                 DamagePerSecond = 1,
             };
             Initialize(_config, 0);
-            SetProjectile(_projectiles);
+            _projectileController = new ProjectileController(_projectileFactory);
             IsInit = true;
         }
 
         private void Update()
         {
             GameUpdate();
+            _projectileController.GameUpdate();
         }
 
         protected override void SetStats(TowerConfig config)
@@ -53,18 +54,21 @@ namespace MicroTowerDefence
         {
             _launchProgress += Time.deltaTime * _shootPerSecond;
 
-            var predict = PredictPosition(_cannon.position, _enemy.transform.position, _enemy.Velocity, _projectileSpeed);
-            _isAimed = GetAngleToTarget(predict) < _aimThreshold;
-
-            RotateCover(predict);
-            RotateCannon(predict);
-
-            if (_isAimed && _launchProgress >= 1f)
+            if (IsAcquireTarget(out TargetPoint unit) && IsObstacle(_cannon.position, _enemy.transform.position) == false)
             {
-                Vector3 movement = MoveParabolically(predict, _cannon.position, _projectileSpeed);
-                var config = GetProjectileConfig(_elementType, _cannon.position, predict, movement, _projectileSpeed, _damage, _shellBlastRadius);
-                Shoot(config);
-                _launchProgress = 0f;
+                var predict = PredictPosition(_cannon.position, _enemy.transform.position, _enemy.Velocity, _projectileSpeed);
+                _isAimed = GetAngleToTarget(predict) < _aimThreshold;
+
+                RotateCover(predict);
+                RotateCannon(predict);
+
+                if (_isAimed && _launchProgress >= 1f)
+                {
+                    Vector3 movement = MoveParabolically(predict, _cannon.position, _projectileSpeed);
+                    var config = GetProjectileConfig(_elementType, _cannon.position, predict, movement, _projectileSpeed, _damage, _shellBlastRadius);
+                    Shoot(config);
+                    _launchProgress = 0f;
+                }
             }
 
             return true;

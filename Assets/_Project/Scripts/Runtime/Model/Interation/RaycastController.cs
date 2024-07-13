@@ -15,7 +15,7 @@ namespace MicroTowerDefence
         private const float MAX_DISTANCE = 100f;
         private Vector3 _hitPosition;
         private IInputActions _input;
-        private bool _isHit;
+        private bool _isHit = false;
 
         [Inject]
         public void Initialize(IInputActions input)

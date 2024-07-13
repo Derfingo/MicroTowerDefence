@@ -11,8 +11,8 @@ namespace MicroTowerDefence
         public event Action<float> RotateCameraEvent;
         public event Action<float> ScrollEvent;
         public event Action<bool> TowerPlacesEvent;
-        public event Action<bool> TurnCameraLeftEvent;
-        public event Action<bool> TurnCameraRightEvent;
+        public event Action TurnCameraLeftEvent;
+        public event Action TurnCameraRightEvent;
 
         void SetAllMaps();
         void SetPlayerMap();

@@ -7,6 +7,7 @@ namespace MicroTowerDefence
     public abstract class TowerBase : TileContent
     {
         [SerializeField, Range(1f, 10f)] protected float _targetRange;
+        [SerializeField] private LayerMask _layerMask;
 
         public event Action<TowerBase> OnInteractEvent;
 
@@ -40,7 +41,7 @@ namespace MicroTowerDefence
             UpgradeCost = config.UpgradeCost;
             SellCost = config.SellCost;
             SetStats(config);
-            SetScale(config.Scale);
+            //SetScale(config.Scale);
             _collider = GetComponent<BoxCollider>();
             _targetRadiusView = GetComponentInChildren<TargetRadiusView>();
             _collider.size = new Vector3(0.9f, 1f, 0.9f);
@@ -153,6 +154,19 @@ namespace MicroTowerDefence
 
             Vector3 result = targetPosition + targetVelocity * _predictTime;
             return result;
+        }
+
+        protected bool IsObstacle(Vector3 start, Vector3 target)
+        {
+            var direction = target - start;
+            Ray ray = new(start, direction.normalized);
+
+            if (Physics.Raycast(ray, direction.magnitude, _layerMask))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         protected ProjectileConfig GetProjectileConfig(ElementType type, Vector3 start, Vector3 target, Vector3 movement, float velocity, int damage, float blastRadius)

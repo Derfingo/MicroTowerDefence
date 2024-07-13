@@ -4,7 +4,6 @@ namespace MicroTowerDefence
 {
     public class EnemyTest : MonoBehaviour
     {
-        [SerializeField] private EnemyFactory _factory;
         [SerializeField] private RaycastController _raycast;
 
         public Vector3 Velocity;

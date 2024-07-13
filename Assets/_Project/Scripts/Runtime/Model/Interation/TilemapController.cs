@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
@@ -10,16 +9,14 @@ namespace MicroTowerDefence
         [SerializeField] private Tilemap[] _tilemapArray;
 
         private RaycastController _raycast;
-        private Dictionary<float, Tilemap> _tilemaps;
         private Vector3Int _worldGridPosition;
         private Tilemap _targetTilemap;
-        private float _heightTilemap;
 
         [Inject]
         public void Initialize(RaycastController raycastController)
         {
             _raycast = raycastController;
-            InitializeTilemaps();
+            _targetTilemap = _tilemapArray[0];
         }
 
         public void GameUpdate()
@@ -33,19 +30,6 @@ namespace MicroTowerDefence
             return _targetTilemap.GetCellCenterWorld(_worldGridPosition);
         }
 
-        private void InitializeTilemaps()
-        {
-            _tilemaps = new Dictionary<float, Tilemap>();
-
-            for (int i = 0; i < _tilemapArray.Length; i++)
-            {
-                var height = _tilemapArray[i].transform.position.y;
-                _tilemaps.Add(height, _tilemapArray[i]);
-            }
-
-            _targetTilemap = _tilemapArray[0];
-        }
-
         private void DetectPosition(Vector3 position)
         {
             if (GetTilamap(position.y))
@@ -56,11 +40,15 @@ namespace MicroTowerDefence
 
         private bool GetTilamap(float mouseHeight)
         {
-            if (_tilemaps.ContainsKey(mouseHeight))
+            foreach (var tilemap in _tilemapArray)
             {
-                _heightTilemap = mouseHeight;
-                _targetTilemap = _tilemaps[mouseHeight];
-                return true;
+                float tilemapHeight = tilemap.transform.position.y;
+
+                if (Mathf.Approximately(mouseHeight, tilemapHeight))
+                {
+                    _targetTilemap = _tilemapArray[0];
+                    return true;
+                }
             }
 
             return false;
