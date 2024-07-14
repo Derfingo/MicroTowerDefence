@@ -484,7 +484,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "28c5f4c1a4ac4e13a8b008057648a887",
     "m_Id": 0,
-    "m_DisplayName": "Depth Compare Distance",
+    "m_DisplayName": "Distance",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -752,10 +752,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 771.199951171875,
-            "y": -153.6000518798828,
-            "width": 86.40008544921875,
-            "height": 76.80004119873047
+            "x": 481.6000671386719,
+            "y": -124.79998779296875,
+            "width": 86.39987182617188,
+            "height": 76.79995727539063
         }
     },
     "m_Slots": [
@@ -1312,10 +1312,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -172.79998779296876,
-            "y": 40.0,
-            "width": 206.39996337890626,
-            "height": 33.600006103515628
+            "x": -168.80001831054688,
+            "y": 16.799978256225587,
+            "width": 121.60000610351563,
+            "height": 33.60002136230469
         }
     },
     "m_Slots": [
@@ -1451,10 +1451,10 @@
     "m_Guid": {
         "m_GuidSerialized": "88fbd2ca-f184-45be-b4fb-0ae957a4c25e"
     },
-    "m_Name": "Depth Compare Distance",
+    "m_Name": "Distance",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Depth Compare Distance",
-    "m_DefaultReferenceName": "_Depth_Compare_Distance",
+    "m_RefNameGeneratedByDisplayName": "Distance",
+    "m_DefaultReferenceName": "_Distance",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,

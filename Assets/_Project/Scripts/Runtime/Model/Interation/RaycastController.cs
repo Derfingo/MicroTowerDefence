@@ -28,17 +28,20 @@ namespace MicroTowerDefence
         public Vector3 GetPosition()
         {
             var ray = _camera.ScreenPointToRay(_input.MousePosition);
-            bool isHit = false;
+            bool isHit;
 
             if (Physics.Raycast(ray, out RaycastHit hit, MAX_DISTANCE, _groundMask))
             {
                 _hitPosition = hit.point;
 
-                switch (hit.normal.y)
+                if(Mathf.Approximately(1f, hit.normal.y))
                 {
-                    case 0: isHit = false; break;
-                    case 1: isHit = true; break;
-                };
+                    isHit = true;
+                }
+                else
+                {
+                    isHit = false;
+                }
             }
             else
             {
