@@ -48,9 +48,3 @@ public enum LayerType
     Enemy,
     Armor
 }
-
-public enum CameraType
-{
-    Isometric,
-    Perspective
-}

@@ -6,24 +6,25 @@ namespace MicroTowerDefence
     public class CameraController : MonoBehaviour, ILateUpdate
     {
         [SerializeField] private Transform _cameraTransform;
-        [SerializeField] private CameraType _cameraType;
+        [SerializeField] private bool _isOrthographicCamera;
         [Space]
-        [SerializeField] private bool _isMovement = false;
-        [SerializeField] private float _moveSpeed = 0.1f;
         [SerializeField] private float _moveTime = 10f;
-        [SerializeField] private float _rotationAmount = 2.5f;
-        [SerializeField] private Vector3 _zoomAmount = new(0, -0.3f, 0.3f);
+        [SerializeField] private float _zoomVelocity = 0.1f;
+        [SerializeField] private float _rotationVelocity = 2.5f;
 
         public Quaternion Rotation;
-        public Vector3 Target;
-        public Vector3 Zoom;
+        public float Zoom;
 
         private IInputActions _input;
+        private Camera _camera;
+        private Quaternion _orthographicRotation = Quaternion.Euler(30f, 45f, 0f);
+        private Quaternion _perspectiveRotation = Quaternion.Euler(45f, 0f, 0f);
 
         [Inject]
         public void Initialize(IInputActions input)
         {
             _input = input;
+            _camera = _cameraTransform.GetComponent<Camera>();
 
             _input.ScrollEvent += OnMouseZoom;
             _input.RotateCameraEvent += OnTurnWithMouse;
@@ -31,97 +32,62 @@ namespace MicroTowerDefence
             _input.TurnCameraLeftEvent += OnTurnLeft;
             _input.TurnCameraRightEvent += OnTurnRight;
 
-            Target = transform.position;
             Rotation = transform.rotation;
-            Zoom = _cameraTransform.localPosition;
+            Zoom = _camera.orthographicSize;
 
-            SetCameraType();
+            SetCameraType(_isOrthographicCamera);
         }
 
         public void GameLateUpdate()
         {
-            HandleKeyboard(_isMovement);
             HandleMovement();
         }
 
-        private void SetCameraType()
+        private void SetCameraType(bool isOrthographic)
         {
-            switch (_cameraType)
-            {
-                case CameraType.Isometric:
-                    _cameraTransform.rotation = Quaternion.Euler(30f, 45f, 0f);
-                    _cameraTransform.GetComponent<Camera>().orthographic = true;
-                    break;
-                case CameraType.Perspective:
-                    _cameraTransform.rotation = Quaternion.Euler(45f, 0f, 0f);
-                    _cameraTransform.GetComponent<Camera>().orthographic = false;
-                    break;
-            }
-        }
-
-        private void HandleKeyboard(bool isMovement)
-        {
-            if (isMovement)
-            {
-                if (Input.GetKey(KeyCode.W))
-                {
-                    Target += transform.forward * _moveSpeed;
-                }
-                if (Input.GetKey(KeyCode.S))
-                {
-                    Target += transform.forward * -_moveSpeed;
-                }
-                if (Input.GetKey(KeyCode.D))
-                {
-                    Target += transform.right * _moveSpeed;
-                }
-                if (Input.GetKey(KeyCode.A))
-                {
-                    Target += transform.right * -_moveSpeed;
-                }
-            }
+            _camera.orthographic = isOrthographic;
+            _cameraTransform.rotation = isOrthographic ? _orthographicRotation : _perspectiveRotation;
         }
 
         private void OnMouseZoom(float zoom)
         {
-            Zoom += zoom * _zoomAmount;
+            Zoom = Mathf.Clamp(Zoom + zoom * _zoomVelocity, 3f, 5f);
+            _camera.orthographicSize = Zoom;
         }
 
         private void OnTurnLeft()
         {
-            if (_cameraType == CameraType.Perspective)
+            if (_isOrthographicCamera)
             {
-                Rotation *= Quaternion.Euler(Vector3.up * _rotationAmount / 3);
+                Rotation *= Quaternion.Euler(0f, 90f, 0f);
             }
             else
             {
-                Rotation *= Quaternion.Euler(0f, 90f, 0f);
+                Rotation *= Quaternion.Euler(Vector3.up * _rotationVelocity / 3);
             }
         }
 
         private void OnTurnRight()
         {
-            if (_cameraType == CameraType.Perspective)
+            if (_isOrthographicCamera)
             {
-                Rotation *= Quaternion.Euler(Vector3.up * -_rotationAmount / 3);
+                Rotation *= Quaternion.Euler(0f, -90f, 0f);
             }
             else
             {
-                Rotation *= Quaternion.Euler(0f, -90f, 0f);
+                Rotation *= Quaternion.Euler(Vector3.up * -_rotationVelocity / 3);
             }
         }
 
         private void OnTurnWithMouse(float rotation)
         {
             Vector3 turn = new(0f, rotation, 0f);
-            Rotation *= Quaternion.Euler(turn * _rotationAmount);
+            Rotation *= Quaternion.Euler(turn * _rotationVelocity);
         }
 
         private void HandleMovement()
         {
-            transform.position = Vector3.Lerp(transform.position, Target, Time.deltaTime * _moveTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, Rotation, Time.deltaTime * _moveTime);
-            _cameraTransform.localPosition = Vector3.Lerp(_cameraTransform.localPosition, Zoom, Time.deltaTime * _moveTime);
         }
     }
 }

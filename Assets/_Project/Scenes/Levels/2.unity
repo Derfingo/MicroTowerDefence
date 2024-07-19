@@ -2615,10 +2615,40 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4304307903579522862, guid: 3b5ceb2a466c7e34c95bab0ce6a30575,
+        type: 3}
+      propertyPath: far clip plane
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304307903579522862, guid: 3b5ceb2a466c7e34c95bab0ce6a30575,
+        type: 3}
+      propertyPath: near clip plane
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304307903579522862, guid: 3b5ceb2a466c7e34c95bab0ce6a30575,
+        type: 3}
+      propertyPath: orthographic size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4875411382175605127, guid: 3b5ceb2a466c7e34c95bab0ce6a30575,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4875411382175605127, guid: 3b5ceb2a466c7e34c95bab0ce6a30575,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6
+      objectReference: {fileID: 0}
     - target: {fileID: 6395015230940988385, guid: 3b5ceb2a466c7e34c95bab0ce6a30575,
         type: 3}
       propertyPath: m_Name
       value: Camera Contorller
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579427623420081099, guid: 3b5ceb2a466c7e34c95bab0ce6a30575,
+        type: 3}
+      propertyPath: _isOrthographicCamera
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
