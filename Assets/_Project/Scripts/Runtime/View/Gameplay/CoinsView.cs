@@ -17,7 +17,7 @@ namespace MicroTowerDefence
 
         private void AddCoinsAnimate()
         {
-            _coinModel.DOLocalRotate(new Vector3(0f, -180f, 0f), 0.8f, RotateMode.WorldAxisAdd).SetEase(Ease.InOutBack);
+            _coinModel.DOLocalRotate(new Vector3(0f, -180f, 0f), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.InOutBack);
         }
     }
 }

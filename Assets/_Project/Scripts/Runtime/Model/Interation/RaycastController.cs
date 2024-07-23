@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Zenject;
 
 namespace MicroTowerDefence
 {
-    public class RaycastController : MonoBehaviour, IRaycast
+    public class RaycastController : MonoBehaviour, IRaycast, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private Camera _camera;
         [SerializeField] private LayerMask _groundMask;
@@ -16,6 +17,7 @@ namespace MicroTowerDefence
         private Vector3 _hitPosition;
         private IInputActions _input;
         private bool _isHit = false;
+        private bool _isUI = false;
 
         [Inject]
         public void Initialize(IInputActions input)
@@ -24,6 +26,9 @@ namespace MicroTowerDefence
         }
 
         public bool CheckHit() => _isHit;
+        public bool CheckOverUI() => _isUI;
+
+        public bool SetOverUI(bool isUI) => _isUI = isUI;
 
         public Vector3 GetPosition()
         {
@@ -72,6 +77,16 @@ namespace MicroTowerDefence
 
             content = null;
             return false;
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            _isUI = true;
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            _isUI = false;
         }
     }
 }

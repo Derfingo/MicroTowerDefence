@@ -20,6 +20,7 @@ namespace MicroTowerDefence
         [SerializeField] private ContentSelectionView _contentSelectionView;
         [SerializeField] private GameplayButtonsView _gameplayButtonsView;
         [SerializeField] private LevelConfigProvider _levelConfigProvider;
+        [SerializeField] private ReadyToStartView _readyToStartView;
         [SerializeField] private PathPointsView _pathPointsView;
         [SerializeField] private HealthView _healthView;
         [SerializeField] private CoinsView _coinsView;
@@ -97,6 +98,7 @@ namespace MicroTowerDefence
             Container.Bind<ICoinsView>().FromInstance(_coinsView).AsSingle();
             Container.Bind<IGameplayButtonsView>().FromInstance(_gameplayButtonsView).AsSingle();
             Container.BindInterfacesTo<ContentSelectionView>().FromInstance(_contentSelectionView).AsSingle();
+            Container.BindInterfacesAndSelfTo<ReadyToStartView>().FromInstance(_readyToStartView).AsSingle();
         }
     }
 }

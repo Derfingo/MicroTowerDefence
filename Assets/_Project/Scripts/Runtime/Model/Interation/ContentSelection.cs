@@ -51,7 +51,7 @@ namespace MicroTowerDefence
             {
                 SelectToBuild();
             }
-            else
+            else if (_raycastController.CheckOverUI() == false)
             {
                 OnCancelSelectedPlace();
             }

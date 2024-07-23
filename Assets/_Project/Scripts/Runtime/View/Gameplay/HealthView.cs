@@ -17,7 +17,7 @@ namespace MicroTowerDefence
 
         private void Animate()
         {
-            _healthModel.DOShakeRotation(0.5f, 50f, 10, 30f).SetEase(Ease.InFlash);
+            _healthModel.DOShakeRotation(0.2f, 50f, 0, 30f).SetEase(Ease.InFlash);
         }
     }
 }

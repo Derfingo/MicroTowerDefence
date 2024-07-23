@@ -15,6 +15,7 @@ namespace MicroTowerDefence
         public event Action GamePauseEvent;
         public event Action OnSelectEvent;
         public event Action CancelSelectPlaceEvent;
+        public event Action OnStartEvent;
 
         public Vector3 MousePosition { get; private set; }
 
@@ -27,13 +28,13 @@ namespace MicroTowerDefence
             SetPlayerMap();
         }
 
-        public void SetAllMaps()
-        {
-            _inputActionMaps.Player.SetCallbacks(this);
-            _inputActionMaps.UI.SetCallbacks(this);
-            _inputActionMaps.Player.Enable();
-            _inputActionMaps.UI.Enable();
-        }
+        //public void SetAllMaps()
+        //{
+        //    _inputActionMaps.Player.SetCallbacks(this);
+        //    _inputActionMaps.UI.SetCallbacks(this);
+        //    _inputActionMaps.Player.Enable();
+        //    _inputActionMaps.UI.Enable();
+        //}
 
         public void SetPlayerMap()
         {
@@ -172,6 +173,14 @@ namespace MicroTowerDefence
 
         public void OnTrackedDeviceOrientation(InputAction.CallbackContext context)
         {
+        }
+
+        public void OnStartLevel(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                OnStartEvent?.Invoke();
+            }
         }
     }
 }

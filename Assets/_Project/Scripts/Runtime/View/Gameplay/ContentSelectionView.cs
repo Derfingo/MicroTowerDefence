@@ -8,7 +8,6 @@ namespace MicroTowerDefence
     {
         [SerializeField] private GameplayButtonsView _gameplayButtonsView;
         [SerializeField] private TargetCellView _targetCellView;
-        [SerializeField] private TowerPlaceView[] _towerPlaces;
 
         public event Action<TowerType> BuildClickEvent;
         public event Action UpgradeClickEvent;
@@ -18,15 +17,13 @@ namespace MicroTowerDefence
 
         public event Func<Vector3> CellCenterPositionEvent;
 
-        private IInputActions _input;
+        private IRaycast _raycast;
         private bool _isEnableCursor;
 
         [Inject]
-        public void Initialize(IInputActions input)
+        public void Initialize(IRaycast raycast)
         {
-            _input = input;
-
-            //_input.TowerPlacesEvent += OnDisplayTowerPlaces;
+            _raycast = raycast;
 
             _gameplayButtonsView.BuildTowerEvent += OnBuildTower;
             _gameplayButtonsView.SellTowerEvent += OnSellSelectedTower;
@@ -39,7 +36,6 @@ namespace MicroTowerDefence
             _gameplayButtonsView.PointerExitEvent += OnPointerOutButton;
 
             _targetCellView.Show();
-            //OnDisplayTowerPlaces(false);
         }
 
         public void GameUpdate()
@@ -50,21 +46,6 @@ namespace MicroTowerDefence
         public void IsEnableCursor(bool isEnable)
         {
             _isEnableCursor = isEnable;
-        }
-
-        private void OnDisplayTowerPlaces(bool isEnable)
-        {
-            if (_towerPlaces.Length > 0)
-            {
-                foreach (var place in _towerPlaces)
-                {
-                    place.Display(isEnable);
-                }
-            }
-            else
-            {
-                Debug.Log("No tower places");
-            }
         }
 
         public void OnHideButtons()
@@ -112,12 +93,12 @@ namespace MicroTowerDefence
 
         private void OnPointerOverButton()
         {
-            _input.SetUIMap();
+            _raycast.SetOverUI(true);
         }
 
         private void OnPointerOutButton()
         {
-            _input.SetPlayerMap();
+            _raycast.SetOverUI(false);
         }
 
         private void UpdateTargetCellView()

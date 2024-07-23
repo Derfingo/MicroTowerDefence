@@ -19,6 +19,7 @@ namespace MicroTowerDefence
         private bool _isDefeat;
         private bool _isPause;
 
+        private IStart _start;
         private IReset[] _resets;
         private IUpdate[] _updates;
         private ILateUpdate[] _lateUpdates;
@@ -31,6 +32,7 @@ namespace MicroTowerDefence
                                IReset[] resets,
                                IUpdate[] updates,
                                ILateUpdate[] lateUpdates,
+                               IStart start,
                                PathConfig config,
                                Health health,
                                Coins coins,
@@ -39,6 +41,7 @@ namespace MicroTowerDefence
         {
             _input = input;
             _coins = coins;
+            _start = start;
             _health = health;
             _resets = resets;
             _updates = updates;
@@ -50,10 +53,9 @@ namespace MicroTowerDefence
 
             _prepareTime = prepareTime;
             _input.GamePauseEvent += OnPause;
+            _start.OnStartEvent += OnBeginLevel;
             _enemyController.EnemyFinishEvent += TakeDamage;
             _enemyController.EnemyDieEvent += AddCoins;
-
-            BeginNewGame();
         }
 
         private void Update()
@@ -91,13 +93,13 @@ namespace MicroTowerDefence
                 if (_isDefeat)
                 {
                     Debug.Log("Defeated");
-                    BeginNewGame();
+                    OnBeginLevel();
                 }
 
                 if (_activeScenario.Progress() == false && _enemyController.IsEmpty)
                 {
                     Debug.Log("Win");
-                    BeginNewGame();
+                    OnBeginLevel();
                     _activeScenario.Progress();
                 }
             }
@@ -129,7 +131,7 @@ namespace MicroTowerDefence
             }
         }
 
-        private void BeginNewGame()
+        private void OnBeginLevel()
         {
             _scenarioInProgress = false;
             if (_prepareRoutine != null)

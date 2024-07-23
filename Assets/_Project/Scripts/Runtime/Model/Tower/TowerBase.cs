@@ -41,10 +41,10 @@ namespace MicroTowerDefence
             UpgradeCost = config.UpgradeCost;
             SellCost = config.SellCost;
             SetStats(config);
-            //SetScale(config.Scale);
             _collider = GetComponent<BoxCollider>();
             _targetRadiusView = GetComponentInChildren<TargetRadiusView>();
-            _collider.size = new Vector3(0.9f, 1f, 0.9f);
+            _collider.size = new Vector3(0.7f, 0.8f, 0.7f);
+            _collider.center = new Vector3(0f, 0.4f, 0f);
             _collider.enabled = false;
         }
 
@@ -172,11 +172,6 @@ namespace MicroTowerDefence
         protected ProjectileConfig GetProjectileConfig(ElementType type, Vector3 start, Vector3 target, Vector3 movement, float velocity, int damage, float blastRadius)
         {
             return new ProjectileConfig(type, start, target, movement, velocity, damage, blastRadius);
-        }
-
-        private void SetScale(float scale)
-        {
-            transform.localScale *= scale;
         }
     }
 }
