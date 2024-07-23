@@ -16,18 +16,18 @@ namespace MicroTowerDefence
         public void Start()
         {
             Load();
-            AppearLabel();
         }
 
         private void Load()
         {
             _loadingOperation = SceneManager.LoadSceneAsync(Constants.Scenes.MAIN_MENU, LoadSceneMode.Additive);
             _loadingOperation.allowSceneActivation = false;
+            ActivateSceneAsync();
         }
 
         private void AppearLabel()
         {
-            _label.rectTransform.DOLocalMoveY(0f, 0.8f)
+            _label.rectTransform.DOLocalMoveY(250f, 0.7f)
                 .SetEase(Ease.InOutQuart)
                 .SetLink(gameObject)
                 .OnKill(ActivateSceneAsync);

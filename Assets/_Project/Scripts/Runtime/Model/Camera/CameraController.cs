@@ -6,7 +6,7 @@ namespace MicroTowerDefence
     public class CameraController : MonoBehaviour, ILateUpdate
     {
         [SerializeField] private Transform _cameraTransform;
-        [SerializeField] private bool _isOrthographicCamera;
+        [SerializeField] private bool _isOrthographicCamera = true;
         [Space]
         [SerializeField] private float _moveTime = 10f;
         [SerializeField] private float _zoomVelocity = 0.1f;
