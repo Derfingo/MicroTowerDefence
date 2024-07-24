@@ -26,8 +26,8 @@ namespace MicroTowerDefence
             _input = input;
             _camera = _cameraTransform.GetComponent<Camera>();
 
-            _input.ScrollEvent += OnMouseZoom;
-            _input.RotateCameraEvent += OnTurnWithMouse;
+            _input.ScrollEvent += OnZoom;
+            _input.RotateCameraEvent += OnTurnDelta;
 
             _input.TurnCameraLeftEvent += OnTurnLeft;
             _input.TurnCameraRightEvent += OnTurnRight;
@@ -49,9 +49,9 @@ namespace MicroTowerDefence
             _cameraTransform.rotation = isOrthographic ? _orthographicRotation : _perspectiveRotation;
         }
 
-        private void OnMouseZoom(float zoom)
+        private void OnZoom(float zoom)
         {
-            Zoom = Mathf.Clamp(Zoom + zoom * _zoomVelocity, 3f, 5f);
+            Zoom = Mathf.Clamp(Zoom - zoom * _zoomVelocity, 3f, 5f);
             _camera.orthographicSize = Zoom;
         }
 
@@ -79,7 +79,7 @@ namespace MicroTowerDefence
             }
         }
 
-        private void OnTurnWithMouse(float rotation)
+        private void OnTurnDelta(float rotation)
         {
             Vector3 turn = new(0f, rotation, 0f);
             Rotation *= Quaternion.Euler(turn * _rotationVelocity);

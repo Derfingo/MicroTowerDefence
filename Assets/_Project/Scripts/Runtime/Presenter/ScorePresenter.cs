@@ -16,13 +16,13 @@ namespace MicroTowerDefence
             _health = health;
             _coins = coins;
 
-            _health.UpdateHealthEvent += _healthView.UpdateHealth;
+            _health.OnChangeHealthEvent += _healthView.UpdateHealth;
             _coins.UpdateCoinsEvent += _coinsView.UpdateCoins;
         }
 
         ~ScorePresenter()
         {
-            _health.UpdateHealthEvent -= _healthView.UpdateHealth;
+            _health.OnChangeHealthEvent -= _healthView.UpdateHealth;
             _coins.UpdateCoinsEvent -= _coinsView.UpdateCoins;
         }
     }

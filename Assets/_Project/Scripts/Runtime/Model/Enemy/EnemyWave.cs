@@ -7,23 +7,21 @@ namespace MicroTowerDefence
     {
         [SerializeField] private EnemySpawnSequence[] _spawnSequences;
 
-        public State Begin(EnemyContorller contorller, PathConfig config) => new(this, contorller, config);
+        public State Begin(EnemyContorller contorller) => new(this, contorller);
 
         public struct State
         {
             private EnemyContorller _contorller;
-            private PathConfig _config;
             private EnemyWave _wave;
             private int _index;
             private EnemySpawnSequence.State _sequence;
 
-            public State(EnemyWave wave, EnemyContorller contorller, PathConfig config)
+            public State(EnemyWave wave, EnemyContorller contorller)
             {
                 _contorller = contorller;
-                _config = config;
                 _wave = wave;
                 _index = 0;
-                _sequence = _wave._spawnSequences[0].Begin(contorller, config);
+                _sequence = _wave._spawnSequences[0].Begin(contorller);
             }
 
             public float Progress(float deltaTime)
@@ -37,7 +35,7 @@ namespace MicroTowerDefence
                         return deltaTime;
                     }
 
-                    _sequence = _wave._spawnSequences[_index].Begin(_contorller, _config);
+                    _sequence = _wave._spawnSequences[_index].Begin(_contorller);
                     deltaTime = _sequence.Progress(deltaTime);
                 }
 

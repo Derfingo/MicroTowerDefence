@@ -5,7 +5,8 @@ namespace MicroTowerDefence
 {
     public class Health : IHealth, IReset
     {
-        public event Action<uint> UpdateHealthEvent;
+        public event Action<uint> OnChangeHealthEvent;
+        public event Action OnHealthOverEvent;
 
         private readonly uint _initialHealth;
         private uint _health;
@@ -14,34 +15,33 @@ namespace MicroTowerDefence
         {
             _initialHealth = health;
             _health = health;
-            UpdateHealthEvent?.Invoke(_initialHealth);
+            OnChangeHealthEvent?.Invoke(_initialHealth);
         }
 
         public void Add(uint health)
         {
             _health += health;
-            UpdateHealthEvent?.Invoke(_health);
+            OnChangeHealthEvent?.Invoke(_health);
         }
 
-        public bool TryTakeDamage(uint damage)
+        public void TakeDamage(uint damage)
         {
             if (_health <= damage)
             {
                 _health = 0;
                 Debug.Log($"health = {_health}");
-                UpdateHealthEvent?.Invoke(_health);
-                return true;
+                OnChangeHealthEvent?.Invoke(_health);
+                OnHealthOverEvent?.Invoke();
             }
 
             _health -= damage;
-            UpdateHealthEvent?.Invoke(_health);
-            return false;
+            OnChangeHealthEvent?.Invoke(_health);
         }
 
         void IReset.Reset()
         {
             _health = _initialHealth;
-            UpdateHealthEvent?.Invoke(_health);
+            OnChangeHealthEvent?.Invoke(_health);
         }
     }
 }

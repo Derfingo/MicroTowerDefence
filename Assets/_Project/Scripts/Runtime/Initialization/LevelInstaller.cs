@@ -14,7 +14,8 @@ namespace MicroTowerDefence
         [SerializeField] private CameraController _cameraController;
         [SerializeField] private RaycastController _raycastController;
         [SerializeField] private TilemapController _tilemapController;
-        [SerializeField] private GameCycle _gamecycle;
+        [SerializeField] private LevelState _levelState;
+        [SerializeField] private LevelCycle _levelCycle;
         [Space]
         [Header("View")]
         [SerializeField] private ContentSelectionView _contentSelectionView;
@@ -43,7 +44,15 @@ namespace MicroTowerDefence
             BindScore();
             BindControllers();
             BindScenario();
-            BindGameCycle();
+            BindLevelCycle();
+            BindLevelState();
+        }
+
+        private void BindLevelState()
+        {
+            Container.BindInterfacesAndSelfTo<LevelState>().FromInstance(_levelState).AsSingle();
+            Container.BindInstance(_config.PrepareTime).WhenInjectedInto<LevelState>();
+            Container.BindInstance(_pathPointsView.GetConfig()).WhenInjectedInto<LevelState>();
         }
 
         private void BindInput()
@@ -68,18 +77,16 @@ namespace MicroTowerDefence
             Container.Bind<GameScenario>().FromInstance(_gameScenario).AsSingle();
         }
 
-        private void BindGameCycle()
+        private void BindLevelCycle()
         {
-            Container.Bind<GameCycle>().FromInstance(_gamecycle).AsSingle();
-            Container.BindInstance(_config.PrepareTime).WhenInjectedInto<GameCycle>();
-            Container.BindInstance(_pathPointsView.GetConfig()).WhenInjectedInto<GameCycle>();
+            Container.Bind<LevelCycle>().FromInstance(_levelCycle).AsSingle();
         }
 
         private void BindControllers()
         {
             Container.BindInterfacesAndSelfTo<TowerController>().AsSingle();
             Container.BindInterfacesAndSelfTo<ProjectileController>().AsSingle();
-            Container.BindInterfacesAndSelfTo<EnemyContorller>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EnemyContorller>().AsSingle().WithArguments(_pathPointsView.GetConfig());
             Container.BindInterfacesAndSelfTo<TilemapController>().FromInstance(_tilemapController).AsSingle();
             Container.BindInterfacesAndSelfTo<ContentSelection>().AsSingle();
             Container.BindInterfacesAndSelfTo<RaycastController>().FromInstance(_raycastController).AsSingle();
