@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace MicroTowerDefence
 {
-    public class MainViewController : ViewBase
+    public class MenuTransition : ViewBase
     {
         [SerializeField] private MainView _mainView;
-        [SerializeField] private SettingView _settingView;
+        [SerializeField] private SettingsView _settingsView;
         [SerializeField] private LevelsView _levelsView;
 
         ViewBase _currentView;
@@ -15,16 +15,6 @@ namespace MicroTowerDefence
         {
             SetInitialView();
             AddListeners();
-
-            Application.targetFrameRate = 60;
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                ShowMain();
-            }
         }
 
         private void SetInitialView()
@@ -37,7 +27,7 @@ namespace MicroTowerDefence
         {
             _mainView.StartButton.onClick.AddListener(ShowLevels);
             _mainView.SettingButton.onClick.AddListener(ShowSetting);
-            _mainView.QuitButton.onClick.AddListener(() => Application.Quit());
+            _mainView.QuitButton.onClick.AddListener(QuitGame);
         }
 
         private void ShowMain()
@@ -50,8 +40,8 @@ namespace MicroTowerDefence
         private void ShowSetting()
         {
             _currentView.Hide();
-            _settingView.Show();
-            _currentView = _settingView;
+            _settingsView.Show();
+            _currentView = _settingsView;
         }
 
         private void ShowLevels()
@@ -60,6 +50,16 @@ namespace MicroTowerDefence
             _levelsView.Show();
             _currentView = _levelsView;
         }
+
+        private void QuitGame()
+        {
+#if UNITY_EDITOR
+            EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
+
     }
 
     public enum MainViewState

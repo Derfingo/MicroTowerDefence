@@ -48,9 +48,9 @@ namespace MicroTowerDefence
             {
                 tower.SetProjectile(_projectileController);
                 tower.OnInteractEvent += OnTowerCost;
-                tower.Undo();
                 tower.Position = position;
                 tower.IsInit = true;
+                tower.Undo();
                 _towers.Add(tower);
             }
             else

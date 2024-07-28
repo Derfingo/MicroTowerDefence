@@ -4,13 +4,15 @@ using Zenject;
 
 namespace MicroTowerDefence
 {
-    public class TilemapController : MonoBehaviour, IGrid, IUpdate
+    public class TilemapController : MonoBehaviour, IGrid, IUpdate, IPause
     {
         [SerializeField] private Tilemap[] _tilemapArray;
 
         private RaycastController _raycast;
         private Vector3Int _worldGridPosition;
         private Tilemap _targetTilemap;
+
+        private bool _isPause;
 
         [Inject]
         public void Initialize(RaycastController raycastController)
@@ -21,8 +23,15 @@ namespace MicroTowerDefence
 
         public void GameUpdate()
         {
+            if (_isPause) return;
+
             var position = _raycast.GetPosition();
             DetectPosition(position);
+        }
+
+        public void Pause(bool isPause)
+        {
+            _isPause = isPause;
         }
 
         public Vector3 GetCellCenterPosition()

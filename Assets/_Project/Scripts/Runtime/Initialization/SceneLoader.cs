@@ -1,28 +1,46 @@
+﻿using System;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace MicroTowerDefence
 {
-    public class SceneLoader : MonoBehaviour
+    public class SceneLoader : MonoBehaviour, ILoader
     {
-        [SerializeField] private LevelsView _levelsView;
+        [SerializeField, Range(0.5f, 2.5f)] private float _fadeVelocity;
+        [SerializeField] private CanvasGroup _canvasGroup;
 
-        private void Start()
+        private const int MILLISECOND = 1;
+        private const float FADE_OUT = 0f;
+        private const float FADE_IN = 1f;
+        private float _currentAlpha;
+
+        [Inject]
+        public void Initialize()
         {
-            SceneManager.UnloadSceneAsync(Constants.Scenes.Bootstrap);
-            print("Bootstrap is unloaded");
-
-            for (int i = 0; i < _levelsView.LevelButtons.Length; i++)
-            {
-                _levelsView.LevelButtons[i].Initialize((i + 1).ToString());
-                _levelsView.LevelButtons[i].OnClickEvent += LoadLevel;
-            }
+            _canvasGroup.alpha = 0f;
         }
 
-        private void LoadLevel(string nameLevel)
+        public async void LoadAsync(string name, Action onComplete = null)
         {
-            SceneManager.LoadScene(nameLevel, LoadSceneMode.Single);
-            Debug.Log("Level loading");
+            await FadeAsync(FADE_IN, _fadeVelocity);
+            await SceneManager.LoadSceneAsync(name);
+            await FadeAsync(FADE_OUT, _fadeVelocity);
+            onComplete?.Invoke();
+        }
+
+        private async Task<Task> FadeAsync(float endValue, float fadeVelocity)
+        {
+            while (!Mathf.Approximately(_currentAlpha, endValue))
+            {
+                _currentAlpha = Mathf.MoveTowards(_currentAlpha, endValue, fadeVelocity * Time.deltaTime);
+                _canvasGroup.alpha = _currentAlpha;
+                await Task.Delay(MILLISECOND);
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

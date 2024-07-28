@@ -7,16 +7,14 @@ namespace MicroTowerDefence
     {
         public event Action OnSelectEvent;
         public event Action GamePauseEvent;
-        public event Action CancelSelectPlaceEvent;
         public event Action<float> RotateCameraEvent;
         public event Action<float> ScrollEvent;
-        public event Action<bool> TowerPlacesEvent;
         public event Action TurnCameraLeftEvent;
         public event Action TurnCameraRightEvent;
-        public event Action OnStartEvent;
 
-        void SetPlayerMap();
-        void SetUIMap();
+        void Dispose();
+        void Disable();
+        void Enable();
 
         Vector3 MousePosition { get; }
     }

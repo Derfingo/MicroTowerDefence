@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4105013528138061556
+--- !u!114 &-3516532717088026543
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   mode:
-    m_OverrideState: 1
-    m_Value: 2
+    m_OverrideState: 0
+    m_Value: 0
   gaussianStart:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 10
   gaussianEnd:
     m_OverrideState: 0
@@ -29,13 +29,13 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   focusDistance:
-    m_OverrideState: 1
-    m_Value: 0.1
+    m_OverrideState: 0
+    m_Value: 10
   aperture:
     m_OverrideState: 0
     m_Value: 5.6
   focalLength:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 50
   bladeCount:
     m_OverrideState: 0
@@ -56,7 +56,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
-  m_Name: Global Post-Processing Profile
+  m_Name: Blur Profile
   m_EditorClassIdentifier: 
   components:
-  - {fileID: -4105013528138061556}
+  - {fileID: -3516532717088026543}

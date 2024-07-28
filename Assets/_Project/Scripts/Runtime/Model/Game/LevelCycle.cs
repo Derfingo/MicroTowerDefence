@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -16,7 +17,6 @@ namespace MicroTowerDefence
                                IUpdate[] updates,
                                ILateUpdate[] lateUpdates)
         {
-            
             _resets = resets;
             _updates = updates;
             _lateUpdates = lateUpdates;
@@ -24,10 +24,7 @@ namespace MicroTowerDefence
 
         private void Update()
         {
-            if (_isPause)
-            {
-                return;
-            }
+            if (_isPause) return;
 
             UpdateControllers();
             Physics.SyncTransforms();

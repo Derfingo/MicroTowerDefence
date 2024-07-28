@@ -76,24 +76,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Tower Places",
-                    "type": "Button",
-                    "id": "199187b1-77c4-4a70-8581-0dcad171778c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Start Level",
-                    "type": "Button",
-                    "id": "d06fe4ae-4de1-4304-afb9-068071913a8d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -248,28 +230,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Game Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "102315b9-9cb4-487a-a24d-695da3bf07c0",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Tower Places",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "720780e0-4620-4308-9b39-01b18cac5b86",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Start Level",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

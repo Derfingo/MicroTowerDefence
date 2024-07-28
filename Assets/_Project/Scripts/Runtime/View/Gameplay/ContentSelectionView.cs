@@ -19,6 +19,7 @@ namespace MicroTowerDefence
 
         private IRaycast _raycast;
         private bool _isEnableCursor;
+        private bool _isPrepareToStart;
 
         [Inject]
         public void Initialize(IRaycast raycast)
@@ -32,10 +33,8 @@ namespace MicroTowerDefence
             _gameplayButtonsView.EnterPreviewTowerEvent += OnShowPreview;
             _gameplayButtonsView.ExitPreviewTowerEvent += OnHidePreview;
 
-            _gameplayButtonsView.PointerEnterEvent += OnPointerOverButton;
-            _gameplayButtonsView.PointerExitEvent += OnPointerOutButton;
-
-            _targetCellView.Show();
+            _gameplayButtonsView.PointerEnterEvent += OnPointerEnterButton;
+            _gameplayButtonsView.PointerExitEvent += OnPointerExitButton;
         }
 
         public void GameUpdate()
@@ -46,6 +45,12 @@ namespace MicroTowerDefence
         public void IsEnableCursor(bool isEnable)
         {
             _isEnableCursor = isEnable;
+        }
+
+        public void IsPrepareToStart(bool isPrepare)
+        {
+            _isPrepareToStart = isPrepare;
+            Debug.Log(isPrepare);
         }
 
         public void OnHideButtons()
@@ -71,6 +76,8 @@ namespace MicroTowerDefence
 
         private void OnShowPreview(TowerType type)
         {
+            if (_isPrepareToStart) return;
+
             ShowPreviewEvent?.Invoke(type);
         }
 
@@ -91,12 +98,12 @@ namespace MicroTowerDefence
             _gameplayButtonsView.HideButtonViews();
         }
 
-        private void OnPointerOverButton()
+        private void OnPointerEnterButton()
         {
             _raycast.SetOverUI(true);
         }
 
-        private void OnPointerOutButton()
+        private void OnPointerExitButton()
         {
             _raycast.SetOverUI(false);
         }

@@ -5,18 +5,24 @@ namespace MicroTowerDefence
         private readonly IGrid _grid;
         private readonly IRaycast _raycast;
         private readonly ISelection _selection;
+        private readonly IStateView _stateView;
+        private readonly ILevelState _levelState;
         private readonly ISelectionView _selectionView;
         private readonly ITowerController _towerController;
 
         public InteractionPresenter(IGrid grid,
                                     IRaycast raycast,
                                     ISelection selection,
+                                    IStateView stateView,
+                                    ILevelState levelState,
                                     ISelectionView selectionView,
                                     ITowerController towerController)
         {
             _grid = grid;
             _raycast = raycast;
             _selection = selection;
+            _stateView = stateView;
+            _levelState = levelState;
             _selectionView = selectionView;
             _towerController = towerController;
 
@@ -33,6 +39,10 @@ namespace MicroTowerDefence
             _selection.SelectToBuildEvent += _selectionView.ShowMenuToBuild;
 
             _towerController.OnTowerCostEvent += _selectionView.ShowTowerMenu;
+
+            _stateView.OnMianMenuEvent += _levelState.OnMainMenu;
+
+            _levelState.OnPrepareToStartEvent += _selectionView.IsPrepareToStart;
         }
 
         ~InteractionPresenter()
@@ -50,6 +60,10 @@ namespace MicroTowerDefence
             _selection.SelectToBuildEvent -= _selectionView.ShowMenuToBuild;
 
             _towerController.OnTowerCostEvent -= _selectionView.ShowTowerMenu;
+
+            _stateView.OnMianMenuEvent -= _levelState.OnMainMenu;
+
+            _levelState.OnPrepareToStartEvent -= _selectionView.IsPrepareToStart;
         }
     }
 }

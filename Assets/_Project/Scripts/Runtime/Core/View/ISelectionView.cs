@@ -18,5 +18,6 @@ namespace MicroTowerDefence
         void ShowMenuToBuild();
 
         void IsEnableCursor(bool isEnable);
+        void IsPrepareToStart(bool isPrepare);
     }
 }

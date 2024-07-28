@@ -11,6 +11,7 @@ namespace MicroTowerDefence
 
         public void UpdateHealth(uint value)
         {
+            //Debug.Log(value);
             _healthText.text = value.ToString();
             Animate();
         }

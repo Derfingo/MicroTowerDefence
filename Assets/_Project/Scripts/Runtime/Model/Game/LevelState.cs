@@ -8,9 +8,11 @@ namespace MicroTowerDefence
     public class LevelState : MonoBehaviour, ILevelState
     {
         public event Action OnWinEvent;
-        public event Action OnPauseEvent;
         public event Action OnDefeatEvent;
+        public event Action<bool> OnPauseEvent;
+        public event Action<bool> OnPrepareToStartEvent;
 
+        private ILoader _loader;
         private IInputActions _input;
         private IStart _start;
         private Health _health;
@@ -30,6 +32,7 @@ namespace MicroTowerDefence
         public void Initialize(float prepareTime,
                          IStart start,
                          IInputActions input,
+                         ILoader loader,
                          EnemyContorller enemyController,
                          GameScenario scenario,
                          LevelCycle levelCycle,
@@ -38,12 +41,13 @@ namespace MicroTowerDefence
             _input = input;
             _start = start;
             _health = health;
+            _loader = loader;
             _scenario = scenario;
             _levelCycle = levelCycle;
             _prepareTime = prepareTime;
             _enemyController = enemyController;
 
-            _input.GamePauseEvent += OnPause;
+            _input.GamePauseEvent += () => OnPause(true);
             _start.OnStartEvent += OnBeginLevel;
             _health.OnHealthOverEvent += OnDefeat;
 
@@ -52,8 +56,11 @@ namespace MicroTowerDefence
 
         private void PrepareToStart()
         {
+            _input.Disable();
             _levelCycle.ResetValues();
+            _start.Reset();
             _isDefeat = false;
+            OnPrepareToStartEvent?.Invoke(true);
         }
 
         private void Update()
@@ -68,6 +75,8 @@ namespace MicroTowerDefence
 
         private void OnBeginLevel()
         {
+            OnPrepareToStartEvent?.Invoke(false);
+            _input.Enable();
             _scenarioInProgress = false;
             if (_prepareRoutine != null)
             {
@@ -93,17 +102,22 @@ namespace MicroTowerDefence
                 {
                     Debug.Log("Defeated");
                     OnDefeatEvent?.Invoke();
-                    OnPause();
+                    OnPause(false);
                 }
 
                 if (_activeScenario.Progress() == false && _enemyController.IsEmpty)
                 {
                     Debug.Log("Win");
                     OnWinEvent?.Invoke();
-                    OnPause();
-                    _activeScenario.Progress();
+                    OnPause(false);
+                    _activeScenario.Progress(); // ???
                 }
             }
+        }
+
+        public void OnMainMenu()
+        {
+            _loader.LoadAsync(Constants.Scenes.MAIN_MENU);
         }
 
         private void OnDefeat()
@@ -111,12 +125,23 @@ namespace MicroTowerDefence
             _isDefeat = true;
         }
 
-        private void OnPause()
+        public void OnPause(bool isNotify)
         {
             _isPause = !_isPause;
             _levelCycle.Pause(_isPause);
             _enemyController.Pause(_isPause);
-            OnPauseEvent?.Invoke();
+
+            if (isNotify)
+            {
+                OnPauseEvent?.Invoke(_isPause);
+            }
+        }
+
+        public void OnRestart()
+        {
+            OnPause(true);
+            _scenarioInProgress = false;
+            PrepareToStart();
         }
     }
 }

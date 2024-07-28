@@ -98,24 +98,6 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Tower Places"",
-                    ""type"": ""Button"",
-                    ""id"": ""199187b1-77c4-4a70-8581-0dcad171778c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Start Level"",
-                    ""type"": ""Button"",
-                    ""id"": ""d06fe4ae-4de1-4304-afb9-068071913a8d"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -270,28 +252,6 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Game Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""102315b9-9cb4-487a-a24d-695da3bf07c0"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Tower Places"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""720780e0-4620-4308-9b39-01b18cac5b86"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Start Level"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -826,8 +786,6 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
         m_Player_RightMouseButtonHold = m_Player.FindAction("Right Mouse Button Hold", throwIfNotFound: true);
         m_Player_SelectPlace = m_Player.FindAction("Select Place", throwIfNotFound: true);
         m_Player_GamePause = m_Player.FindAction("Game Pause", throwIfNotFound: true);
-        m_Player_TowerPlaces = m_Player.FindAction("Tower Places", throwIfNotFound: true);
-        m_Player_StartLevel = m_Player.FindAction("Start Level", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -909,8 +867,6 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_RightMouseButtonHold;
     private readonly InputAction m_Player_SelectPlace;
     private readonly InputAction m_Player_GamePause;
-    private readonly InputAction m_Player_TowerPlaces;
-    private readonly InputAction m_Player_StartLevel;
     public struct PlayerActions
     {
         private @InputActionMaps m_Wrapper;
@@ -923,8 +879,6 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
         public InputAction @RightMouseButtonHold => m_Wrapper.m_Player_RightMouseButtonHold;
         public InputAction @SelectPlace => m_Wrapper.m_Player_SelectPlace;
         public InputAction @GamePause => m_Wrapper.m_Player_GamePause;
-        public InputAction @TowerPlaces => m_Wrapper.m_Player_TowerPlaces;
-        public InputAction @StartLevel => m_Wrapper.m_Player_StartLevel;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -958,12 +912,6 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
             @GamePause.started += instance.OnGamePause;
             @GamePause.performed += instance.OnGamePause;
             @GamePause.canceled += instance.OnGamePause;
-            @TowerPlaces.started += instance.OnTowerPlaces;
-            @TowerPlaces.performed += instance.OnTowerPlaces;
-            @TowerPlaces.canceled += instance.OnTowerPlaces;
-            @StartLevel.started += instance.OnStartLevel;
-            @StartLevel.performed += instance.OnStartLevel;
-            @StartLevel.canceled += instance.OnStartLevel;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -992,12 +940,6 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
             @GamePause.started -= instance.OnGamePause;
             @GamePause.performed -= instance.OnGamePause;
             @GamePause.canceled -= instance.OnGamePause;
-            @TowerPlaces.started -= instance.OnTowerPlaces;
-            @TowerPlaces.performed -= instance.OnTowerPlaces;
-            @TowerPlaces.canceled -= instance.OnTowerPlaces;
-            @StartLevel.started -= instance.OnStartLevel;
-            @StartLevel.performed -= instance.OnStartLevel;
-            @StartLevel.canceled -= instance.OnStartLevel;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1143,8 +1085,6 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
         void OnRightMouseButtonHold(InputAction.CallbackContext context);
         void OnSelectPlace(InputAction.CallbackContext context);
         void OnGamePause(InputAction.CallbackContext context);
-        void OnTowerPlaces(InputAction.CallbackContext context);
-        void OnStartLevel(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

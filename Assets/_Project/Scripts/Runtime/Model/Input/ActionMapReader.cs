@@ -11,11 +11,8 @@ namespace MicroTowerDefence
         public event Action<float> ScrollEvent;
         public event Action TurnCameraLeftEvent;
         public event Action TurnCameraRightEvent;
-        public event Action<bool> TowerPlacesEvent;
         public event Action GamePauseEvent;
         public event Action OnSelectEvent;
-        public event Action CancelSelectPlaceEvent;
-        public event Action OnStartEvent;
 
         public Vector3 MousePosition { get; private set; }
 
@@ -25,34 +22,26 @@ namespace MicroTowerDefence
         public ActionMapReader()
         {
             _inputActionMaps = new InputActionMaps();
-            SetPlayerMap();
-        }
-
-        //public void SetAllMaps()
-        //{
-        //    _inputActionMaps.Player.SetCallbacks(this);
-        //    _inputActionMaps.UI.SetCallbacks(this);
-        //    _inputActionMaps.Player.Enable();
-        //    _inputActionMaps.UI.Enable();
-        //}
-
-        public void SetPlayerMap()
-        {
-            _inputActionMaps.UI.Disable();
-            _inputActionMaps.UI.RemoveCallbacks(this);
-            _inputActionMaps.Player.Enable();
             _inputActionMaps.Player.SetCallbacks(this);
-            //Debug.Log("player map");
         }
 
-        public void SetUIMap()
+        public void Dispose()
         {
-            _inputActionMaps.Player.Disable();
-            _inputActionMaps.Player.RemoveCallbacks(this);
-            _inputActionMaps.UI.Enable();
-            _inputActionMaps.UI.SetCallbacks(this);
-            //Debug.Log("ui map");
+            _inputActionMaps.Dispose();
+            //Debug.Log($"disposed : {GetType().Name}");
         }
+
+        public void Enable()
+        {
+            _inputActionMaps.Enable();
+        }
+
+        public void Disable()
+        {
+            _inputActionMaps.Disable();
+        }
+
+        // Gamaplay Actions
 
         public void OnMousePosition(InputAction.CallbackContext context)
         {
@@ -109,78 +98,66 @@ namespace MicroTowerDefence
             }
         }
 
-        public void OnTowerPlaces(InputAction.CallbackContext context)
-        {
-            if (context.started)
-            {
-                TowerPlacesEvent?.Invoke(true);
-            }
-
-            if (context.canceled)
-            {
-                TowerPlacesEvent?.Invoke(false);
-            }
-
-        }
-
         public void OnGamePause(InputAction.CallbackContext context)
         {
             GamePauseEvent?.Invoke();
         }
 
+        // Ui Actions
+
         public void OnNavigate(InputAction.CallbackContext context)
         {
+            throw new NotImplementedException();
         }
 
         public void OnSubmit(InputAction.CallbackContext context)
         {
+            throw new NotImplementedException();
         }
 
         public void OnCancel(InputAction.CallbackContext context)
         {
+            throw new NotImplementedException();
         }
 
         public void OnPoint(InputAction.CallbackContext context)
         {
+            throw new NotImplementedException();
         }
 
         public void OnClick(InputAction.CallbackContext context)
         {
-            if (context.performed)
-            {
-            }
+            throw new NotImplementedException();
         }
 
         public void OnScrollWheel(InputAction.CallbackContext context)
         {
+            throw new NotImplementedException();
         }
 
         public void OnMiddleClick(InputAction.CallbackContext context)
         {
-        }
-
-        public void OnRightClick(InputAction.CallbackContext context)
-        {
-            if (context.canceled)
-            {
-                CancelSelectPlaceEvent?.Invoke();
-            }
+            throw new NotImplementedException();
         }
 
         public void OnTrackedDevicePosition(InputAction.CallbackContext context)
         {
+            throw new NotImplementedException();
         }
 
         public void OnTrackedDeviceOrientation(InputAction.CallbackContext context)
         {
+            throw new NotImplementedException();
         }
 
-        public void OnStartLevel(InputAction.CallbackContext context)
+        public void OnRightClick(InputAction.CallbackContext context)
         {
-            if (context.started)
-            {
-                OnStartEvent?.Invoke();
-            }
+            throw new NotImplementedException();
+        }
+
+        ~ActionMapReader()
+        {
+            _inputActionMaps.Dispose();
         }
     }
 }

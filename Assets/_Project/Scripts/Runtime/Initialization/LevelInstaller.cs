@@ -1,3 +1,4 @@
+using Codice.Client.BaseCommands;
 using UnityEngine;
 using Zenject;
 
@@ -24,6 +25,7 @@ namespace MicroTowerDefence
         [SerializeField] private ReadyToStartView _readyToStartView;
         [SerializeField] private PathPointsView _pathPointsView;
         [SerializeField] private HealthView _healthView;
+        [SerializeField] private StateView _stateView;
         [SerializeField] private CoinsView _coinsView;
 
         private LevelConfig _config;
@@ -97,6 +99,7 @@ namespace MicroTowerDefence
         {
             Container.Bind<ScorePresenter>().AsSingle().NonLazy();
             Container.Bind<InteractionPresenter>().AsSingle().NonLazy();
+            Container.Bind<StateLevelPresenter>().AsSingle().NonLazy();
         }
 
         private void BindViews()
@@ -106,6 +109,31 @@ namespace MicroTowerDefence
             Container.Bind<IGameplayButtonsView>().FromInstance(_gameplayButtonsView).AsSingle();
             Container.BindInterfacesTo<ContentSelectionView>().FromInstance(_contentSelectionView).AsSingle();
             Container.BindInterfacesAndSelfTo<ReadyToStartView>().FromInstance(_readyToStartView).AsSingle();
+            Container.BindInterfacesAndSelfTo<StateView>().FromInstance(_stateView).AsSingle();
+        }
+
+        private void OnDestroy()
+        {
+            Container.Resolve<IInputActions>().Dispose();
+            Container.UnbindAll();
+            //_projectileFactory = null;
+            //_towerFactory = null;
+            //_gameScenario = null;
+
+            //_cameraController = null;
+            //_raycastController = null;
+            //_tilemapController = null;
+            //_levelState = null;
+            //_levelCycle = null;
+            
+            //_contentSelectionView = null;
+            //_gameplayButtonsView = null;
+            //_levelConfigProvider = null;
+            //_readyToStartView = null;
+            //_pathPointsView = null;
+            //_healthView = null;
+            //_stateView = null;
+            //_coinsView = null;
         }
     }
 }

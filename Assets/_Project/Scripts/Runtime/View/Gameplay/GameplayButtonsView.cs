@@ -38,7 +38,6 @@ namespace MicroTowerDefence
             _towerButtonsView.SellButton.PointerExitEvent += OnPointerExit;
 
             _currentView = _buildTowerButtonsView;
-            HideButtonViews();
         }
 
         // state views

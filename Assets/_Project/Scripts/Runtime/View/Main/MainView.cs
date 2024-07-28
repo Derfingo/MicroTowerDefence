@@ -19,12 +19,13 @@ namespace MicroTowerDefence
 
         private void Start()
         {
+            MoveLabel();
             AppeareButtons();
         }
 
         private void MoveLabel()
         {
-            _label.rectTransform.DOLocalMoveY(250f, 1f)
+            _label.rectTransform.DOLocalMoveY(550f, 0.5f)
                 .SetEase(Ease.InOutQuart)
                 .SetLink(gameObject)
                 .OnKill(AppeareButtons);
@@ -33,7 +34,7 @@ namespace MicroTowerDefence
         private void AppeareButtons()
         {
             DOTween.Sequence()
-                .Append(_buttonsPanel.DOLocalMoveY(0f, 0.2f))
+                .Append(_buttonsPanel.DOLocalMoveY(100f, 0.2f))
                 .SetEase(Ease.InOutQuart)
                 .Append(_startButton.image.DOFade(1f, 0.2f))
                 .Append(_settingButton.image.DOFade(1f, 0.2f))

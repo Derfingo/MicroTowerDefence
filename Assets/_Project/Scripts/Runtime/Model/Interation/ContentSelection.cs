@@ -36,33 +36,36 @@ namespace MicroTowerDefence
             _coins = coins;
 
             _input.OnSelectEvent += OnSelect;
-            _input.CancelSelectPlaceEvent += OnCancelSelectedPlace;
             _raycastController.OnGround += (isGound) => _isGround = isGound;
        }
 
         private void OnSelect()
         {
-            if (_raycastController.GetContent(out TileContent content))
+            if (_raycastController.CheckOverUI())
             {
-                _targetContent = content;
-                content.Interact();
+                return;
             }
-            else if (_isGround)
+            else
             {
-                SelectToBuild();
-            }
-            else if (_raycastController.CheckOverUI() == false)
-            {
-                OnCancelSelectedPlace();
+                if (_raycastController.GetContent(out TileContent content))
+                {
+                    _targetContent = content;
+                    content.Interact();
+                }
+                else if (_isGround)
+                {
+                    SelectToBuild();
+                }
+
+                CancelSelected();
             }
         }
 
-        private void OnCancelSelectedPlace()
+        private void CancelSelected()
         {
             _targetContent?.Undo();
             _targetContent = null;
             OnCancelSelectedEvent?.Invoke();
-            _input.SetPlayerMap();
         }
 
         private void SelectToBuild()
@@ -82,25 +85,24 @@ namespace MicroTowerDefence
                 Debug.Log("preview is null");
             }
 
-            OnCancelSelectedPlace();
+            CancelSelected();
         }
 
         public void OnUpgradeTower()
         {
             UpgradeEvent?.Invoke(_targetContent);
-            OnCancelSelectedPlace();
+            CancelSelected();
         }
 
         public void OnSellTower()
         {
             var tower = _targetContent.GetComponent<TowerBase>();
             SellEvent?.Invoke(_targetContent, tower.SellCost);
-            OnCancelSelectedPlace();
+            CancelSelected();
         }
 
         public void OnShowPreview(TowerType type)
         {
-            _input.SetUIMap();
             _previewContent = _towerFactory.Get(type);
             TowerBase tower = _previewContent.GetComponent<TowerBase>();
             var cost = _towerFactory.GetCostToBuild(tower.TowerType);
@@ -126,14 +128,11 @@ namespace MicroTowerDefence
                 _previewContent.Reclaim();
                 _previewContent = null;
             }
-
-            _input.SetPlayerMap();
         }
 
         ~ContentSelection()
         {
             _input.OnSelectEvent -= OnSelect;
-            _input.CancelSelectPlaceEvent -= OnCancelSelectedPlace;
             _raycastController.OnGround -= (isGound) => _isGround = isGound;
         }
     }

@@ -16,6 +16,6 @@ MonoBehaviour:
     Level: 0
     Name: Any
     Description: Test
-    PrepareTime: 0
+    PrepareTime: 60
     Coins: 3000
-    Health: 20
+    Health: 10

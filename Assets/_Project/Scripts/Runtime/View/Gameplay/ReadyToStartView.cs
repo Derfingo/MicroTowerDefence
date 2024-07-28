@@ -9,29 +9,35 @@ namespace MicroTowerDefence
     public class ReadyToStartView : ViewBase, IStart
     {
         [SerializeField] private TMP_Text _readyToStartText;
+        [SerializeField] private SimpleButton _startButton;
 
         public event Action OnStartEvent;
 
-        private IInputActions _input;
+        private Tween _tween;
 
         [Inject]
-        public void Initialize(IInputActions input)
+        public void Initialize()
         {
-            _input = input;
-
-            _input.OnStartEvent += OnStart;
+            _startButton.ClickEvent += OnStart;
             PulseText();
+        }
+
+        void IStart.Reset()
+        {
+            _startButton.Show();
         }
 
         private void PulseText()
         {
-            _readyToStartText.rectTransform.DOScale(Vector3.one * 1.1f, 0.4f).SetLoops(-1, LoopType.Yoyo)
+            _tween = _readyToStartText.rectTransform.DOScale(Vector3.one * 1.1f, 0.4f).SetLoops(-1, LoopType.Yoyo)
                 .SetLink(gameObject);
         }
 
         private void OnStart()
         {
-            _readyToStartText.enabled = false;
+            _tween.Kill();
+            _readyToStartText.rectTransform.DOScale(0f, 0.3f);
+            _startButton.Hide();
             OnStartEvent?.Invoke();
         }
     }

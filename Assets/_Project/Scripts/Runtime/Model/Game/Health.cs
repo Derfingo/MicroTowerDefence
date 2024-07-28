@@ -29,7 +29,7 @@ namespace MicroTowerDefence
             if (_health <= damage)
             {
                 _health = 0;
-                Debug.Log($"health = {_health}");
+                //Debug.Log($"health = {damage}");
                 OnChangeHealthEvent?.Invoke(_health);
                 OnHealthOverEvent?.Invoke();
             }

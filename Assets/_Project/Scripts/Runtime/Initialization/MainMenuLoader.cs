@@ -27,7 +27,7 @@ namespace MicroTowerDefence
 
         private void AppearLabel()
         {
-            _label.rectTransform.DOLocalMoveY(250f, 0.7f)
+            _label.rectTransform.DOLocalMoveY(250, 0.7f)
                 .SetEase(Ease.InOutQuart)
                 .SetLink(gameObject)
                 .OnKill(ActivateSceneAsync);
