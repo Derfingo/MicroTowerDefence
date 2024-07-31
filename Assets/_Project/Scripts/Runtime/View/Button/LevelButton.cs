@@ -1,31 +1,29 @@
 using System;
+using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace MicroTowerDefence
 {
-    public class LevelButton : ViewBase, IPointerDownHandler
+    [RequireComponent(typeof(Image))]
+    public class LevelButton : Selectable, IPointerDownHandler
     {
         public event Action<string> OnClickEvent;
-        public Image Image => _image;
 
-        private string _nameLevel;
-        private Image _image;
+        private TextMeshProUGUI _numberLevel;
 
-        public void Initialize(string nameLevel)
+        public void Initialize(int level)
         {
-            _nameLevel = nameLevel;
-            _image = GetComponent<Image>();
+            image = GetComponent<Image>();
+            _numberLevel = GetComponentInChildren<TextMeshProUGUI>();
+            _numberLevel.text = level.ToString();
+            gameObject.name = $"Level Button {_numberLevel.text}";
         }
 
-        public override string ToString()
+        public override void OnPointerDown(PointerEventData eventData)
         {
-            return _nameLevel;
-        }
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            OnClickEvent?.Invoke(_nameLevel);
+            OnClickEvent?.Invoke(_numberLevel.text);
         }
     }
 }

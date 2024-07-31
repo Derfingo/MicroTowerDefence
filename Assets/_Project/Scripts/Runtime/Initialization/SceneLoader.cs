@@ -23,9 +23,18 @@ namespace MicroTowerDefence
             _canvasGroup.alpha = 0f;
         }
 
-        public async void LoadAsync(string name, Action onComplete = null)
+        public async void LoadAsync(string name, bool isFadeIn = true, Action onComplete = null)
         {
-            await FadeAsync(FADE_IN, _fadeVelocity);
+            if (isFadeIn)
+            {
+                await FadeAsync(FADE_IN, _fadeVelocity);
+            }
+            else
+            {
+                _currentAlpha = FADE_IN;
+                _canvasGroup.alpha = FADE_IN;
+            }
+
             await SceneManager.LoadSceneAsync(name);
             await FadeAsync(FADE_OUT, _fadeVelocity);
             onComplete?.Invoke();

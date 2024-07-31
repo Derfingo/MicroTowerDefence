@@ -15,8 +15,8 @@ namespace MicroTowerDefence
         private void Start()
         {
             _image = GetComponent<Image>();
-            PointerEnterEvent += FadeIn;
-            PointerExitEvent += FadeOut;
+            OnPointerEnterEvent += FadeIn;
+            OnPointerExitEvent += FadeOut;
         }
 
         private void FadeIn()

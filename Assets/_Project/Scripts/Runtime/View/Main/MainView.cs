@@ -1,7 +1,7 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using Zenject;
 
 namespace MicroTowerDefence
 {
@@ -9,18 +9,27 @@ namespace MicroTowerDefence
     {
         [SerializeField] private TMP_Text _label;
         [SerializeField] private RectTransform _buttonsPanel;
-        [SerializeField] private Button _startButton;
-        [SerializeField] private Button _settingButton;
-        [SerializeField] private Button _quitButton;
+        [SerializeField] private ButtonView _startButton;
+        [SerializeField] private ButtonView _settingButton;
+        [SerializeField] private ButtonView _quitButton;
 
-        public Button StartButton => _startButton;
-        public Button SettingButton => _settingButton;
-        public Button QuitButton => _quitButton;
+        public ButtonView StartButton => _startButton;
+        public ButtonView SettingButton => _settingButton;
+        public ButtonView QuitButton => _quitButton;
 
-        private void Start()
+        [Inject]
+        public void Initialize()
         {
+            InitializeButtons();
             MoveLabel();
             AppeareButtons();
+        }
+
+        private void InitializeButtons()
+        {
+            _startButton.Initialize();
+            _settingButton.Initialize();
+            _quitButton.Initialize();
         }
 
         private void MoveLabel()

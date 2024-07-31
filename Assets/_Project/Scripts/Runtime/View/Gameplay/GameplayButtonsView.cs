@@ -29,13 +29,13 @@ namespace MicroTowerDefence
             _buildTowerButtonsView.TowerButtons.ForEach(enter => enter.PointerEnterEvent += OnEnterPreviewTower);
             _buildTowerButtonsView.TowerButtons.ForEach(exit => exit.PointerExitEvent += OnExitPreviewTower);
 
-            _towerButtonsView.UpgradeButton.ClickEvent += OnUpgradeTower;
-            _towerButtonsView.UpgradeButton.PointerEnterEvent += OnPointerEnter;
-            _towerButtonsView.UpgradeButton.PointerExitEvent += OnPointerExit;
+            _towerButtonsView.UpgradeButton.OnClickEvent += OnUpgradeTower;
+            _towerButtonsView.UpgradeButton.OnPointerEnterEvent += OnPointerEnter;
+            _towerButtonsView.UpgradeButton.OnPointerExitEvent += OnPointerExit;
 
-            _towerButtonsView.SellButton.ClickEvent += OnSellTower;
-            _towerButtonsView.SellButton.PointerEnterEvent += OnPointerEnter;
-            _towerButtonsView.SellButton.PointerExitEvent += OnPointerExit;
+            _towerButtonsView.SellButton.OnClickEvent += OnSellTower;
+            _towerButtonsView.SellButton.OnPointerEnterEvent += OnPointerEnter;
+            _towerButtonsView.SellButton.OnPointerExitEvent += OnPointerExit;
 
             _currentView = _buildTowerButtonsView;
         }

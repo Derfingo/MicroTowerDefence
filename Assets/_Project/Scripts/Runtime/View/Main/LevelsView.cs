@@ -1,16 +1,29 @@
 using DG.Tweening;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
+using Zenject;
 
 namespace MicroTowerDefence
 {
     public class LevelsView : ViewBase
     {
         [SerializeField] private RectTransform _buttonsPanel;
-        [SerializeField] private LevelButton[] _levelButtons;
+        [SerializeField] private GridLayoutGroup _buttonsGroup;
 
-        public LevelButton[] LevelButtons => _levelButtons;
+        public List<LevelButton> LevelButtons { get; private set; } = new();
+
+        [Inject]
+        public void Initialize()
+        {
+            for (int i = 0; i < _buttonsGroup.transform.childCount; i++)
+            {
+                var button = _buttonsGroup.transform.GetChild(i).GetComponent<LevelButton>();
+                button.Initialize(i + 1);
+                LevelButtons.Add(button);
+            }
+        }
 
         public override void Show()
         {
@@ -24,9 +37,9 @@ namespace MicroTowerDefence
 
             await Task.Delay(200);
 
-            foreach (var button in _levelButtons)
+            foreach (var button in LevelButtons)
             {
-                button.Image.DOFade(1f, 0.5f).SetLink(gameObject);
+                button.image.DOFade(1f, 0.5f).SetLink(gameObject);
             }
         }
     }

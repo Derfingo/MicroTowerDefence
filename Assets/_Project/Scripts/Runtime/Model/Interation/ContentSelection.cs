@@ -65,7 +65,7 @@ namespace MicroTowerDefence
         {
             _targetContent?.Undo();
             _targetContent = null;
-            OnCancelSelectedEvent?.Invoke();
+            //OnCancelSelectedEvent?.Invoke();
         }
 
         private void SelectToBuild()

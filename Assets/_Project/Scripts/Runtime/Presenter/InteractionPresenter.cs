@@ -26,44 +26,44 @@ namespace MicroTowerDefence
             _selectionView = selectionView;
             _towerController = towerController;
 
-            _raycast.OnGround += _selectionView.IsEnableCursor;
-            _selectionView.CellCenterPositionEvent += _grid.GetCellCenterPosition;
+            //_raycast.OnGround += _selectionView.IsEnableCursor;
+            //_selectionView.CellCenterPositionEvent += _grid.GetCellCenterPosition;
 
-            _selectionView.UpgradeClickEvent += _selection.OnUpgradeTower;
-            _selectionView.BuildClickEvent += _selection.OnBuildTower;
-            _selectionView.SellClickEvent += _selection.OnSellTower;
-            _selectionView.ShowPreviewEvent += _selection.OnShowPreview;
-            _selectionView.HidePreviewEvent += _selection.OnHidePreview;
+            //_selectionView.UpgradeClickEvent += _selection.OnUpgradeTower;
+            //_selectionView.BuildClickEvent += _selection.OnBuildTower;
+            //_selectionView.SellClickEvent += _selection.OnSellTower;
+            //_selectionView.ShowPreviewEvent += _selection.OnShowPreview;
+            //_selectionView.HidePreviewEvent += _selection.OnHidePreview;
             
-            _selection.OnCancelSelectedEvent += _selectionView.OnHideButtons;
-            _selection.SelectToBuildEvent += _selectionView.ShowMenuToBuild;
+            //_selection.OnCancelSelectedEvent += _selectionView.OnHideButtons;
+            //_selection.SelectToBuildEvent += _selectionView.ShowMenuToBuild;
 
-            _towerController.OnTowerCostEvent += _selectionView.ShowTowerMenu;
+            //_towerController.OnTowerCostEvent += _selectionView.ShowTowerMenu;
 
-            _stateView.OnMianMenuEvent += _levelState.OnMainMenu;
+            //_stateView.OnMianMenuEvent += _levelState.OnMainMenu;
 
-            _levelState.OnPrepareToStartEvent += _selectionView.IsPrepareToStart;
+            //_levelState.OnPrepareToStartEvent += _selectionView.IsPrepareToStart;
         }
 
         ~InteractionPresenter()
         {
-            _raycast.OnGround -= _selectionView.IsEnableCursor;
-            _selectionView.CellCenterPositionEvent -= _grid.GetCellCenterPosition;
+            //_raycast.OnGround -= _selectionView.IsEnableCursor;
+            //_selectionView.CellCenterPositionEvent -= _grid.GetCellCenterPosition;
 
-            _selectionView.UpgradeClickEvent -= _selection.OnUpgradeTower;
-            _selectionView.BuildClickEvent -= _selection.OnBuildTower;
-            _selectionView.SellClickEvent -= _selection.OnSellTower;
-            _selectionView.ShowPreviewEvent -= _selection.OnShowPreview;
-            _selectionView.HidePreviewEvent -= _selection.OnHidePreview;
+            //_selectionView.UpgradeClickEvent -= _selection.OnUpgradeTower;
+            //_selectionView.BuildClickEvent -= _selection.OnBuildTower;
+            //_selectionView.SellClickEvent -= _selection.OnSellTower;
+            //_selectionView.ShowPreviewEvent -= _selection.OnShowPreview;
+            //_selectionView.HidePreviewEvent -= _selection.OnHidePreview;
            
-            _selection.OnCancelSelectedEvent -= _selectionView.OnHideButtons;
-            _selection.SelectToBuildEvent -= _selectionView.ShowMenuToBuild;
+            //_selection.OnCancelSelectedEvent -= _selectionView.OnHideButtons;
+            //_selection.SelectToBuildEvent -= _selectionView.ShowMenuToBuild;
 
-            _towerController.OnTowerCostEvent -= _selectionView.ShowTowerMenu;
+            //_towerController.OnTowerCostEvent -= _selectionView.ShowTowerMenu;
 
-            _stateView.OnMianMenuEvent -= _levelState.OnMainMenu;
+            //_stateView.OnMianMenuEvent -= _levelState.OnMainMenu;
 
-            _levelState.OnPrepareToStartEvent -= _selectionView.IsPrepareToStart;
+            //_levelState.OnPrepareToStartEvent -= _selectionView.IsPrepareToStart;
         }
     }
 }

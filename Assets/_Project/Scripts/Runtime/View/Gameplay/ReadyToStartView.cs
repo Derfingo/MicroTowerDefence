@@ -9,7 +9,7 @@ namespace MicroTowerDefence
     public class ReadyToStartView : ViewBase, IStart
     {
         [SerializeField] private TMP_Text _readyToStartText;
-        [SerializeField] private SimpleButton _startButton;
+        [SerializeField] private ButtonView _startButton;
 
         public event Action OnStartEvent;
 
@@ -18,7 +18,7 @@ namespace MicroTowerDefence
         [Inject]
         public void Initialize()
         {
-            _startButton.ClickEvent += OnStart;
+            _startButton.OnClickEvent += OnStart;
             PulseText();
         }
 

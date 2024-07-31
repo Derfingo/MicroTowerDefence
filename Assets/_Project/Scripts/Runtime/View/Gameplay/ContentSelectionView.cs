@@ -39,7 +39,7 @@ namespace MicroTowerDefence
 
         public void GameUpdate()
         {
-            UpdateTargetCellView();
+            //UpdateTargetCellView();
         }
 
         public void IsEnableCursor(bool isEnable)
@@ -71,7 +71,7 @@ namespace MicroTowerDefence
         private void OnBuildTower(TowerType type)
         {
             BuildClickEvent?.Invoke(type);
-            _gameplayButtonsView.HideButtonViews();
+            //_gameplayButtonsView.HideButtonViews();
         }
 
         private void OnShowPreview(TowerType type)

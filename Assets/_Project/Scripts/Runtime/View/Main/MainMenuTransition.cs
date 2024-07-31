@@ -1,17 +1,19 @@
 using UnityEditor;
 using UnityEngine;
+using Zenject;
 
 namespace MicroTowerDefence
 {
-    public class MenuTransition : ViewBase
+    public class MainMenuTransition : ViewBase
     {
         [SerializeField] private MainView _mainView;
         [SerializeField] private SettingsView _settingsView;
         [SerializeField] private LevelsView _levelsView;
 
-        ViewBase _currentView;
+        private ViewBase _currentView;
 
-        private void Start()
+        [Inject]
+        public void Initialize()
         {
             SetInitialView();
             AddListeners();
@@ -21,13 +23,15 @@ namespace MicroTowerDefence
         {
             _mainView.Show();
             _currentView = _mainView;
+            _levelsView.Hide();
+            _settingsView.Hide();
         }
 
         private void AddListeners()
         {
-            _mainView.StartButton.onClick.AddListener(ShowLevels);
-            _mainView.SettingButton.onClick.AddListener(ShowSetting);
-            _mainView.QuitButton.onClick.AddListener(QuitGame);
+            _mainView.StartButton.OnClickEvent += ShowLevels;
+            _mainView.SettingButton.OnClickEvent += ShowSetting;
+            _mainView.QuitButton.OnClickEvent += QuitGame;
         }
 
         private void ShowMain()
@@ -59,7 +63,6 @@ namespace MicroTowerDefence
             Application.Quit();
 #endif
         }
-
     }
 
     public enum MainViewState

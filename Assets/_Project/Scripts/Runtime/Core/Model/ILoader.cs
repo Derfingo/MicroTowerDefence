@@ -3,6 +3,6 @@ namespace MicroTowerDefence
 {
     public interface ILoader
     {
-        void LoadAsync(string name, Action onComplete = null);
+        void LoadAsync(string name, bool isFadeIn = true, Action onComplete = null);
     }
 }

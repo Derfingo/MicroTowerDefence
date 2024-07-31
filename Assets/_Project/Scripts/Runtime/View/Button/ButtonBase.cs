@@ -5,28 +5,28 @@ namespace MicroTowerDefence
 {
     public abstract class ButtonBase : ViewBase, ISubmitHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
     {
-        public event Action ClickEvent;
-        public event Action PointerEnterEvent;
-        public event Action PointerExitEvent;
+        public event Action OnClickEvent;
+        public event Action OnPointerEnterEvent;
+        public event Action OnPointerExitEvent;
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            ClickEvent?.Invoke();
+            OnClickEvent?.Invoke();
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            PointerEnterEvent?.Invoke();
+            OnPointerEnterEvent?.Invoke();
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            PointerExitEvent?.Invoke();
+            OnPointerExitEvent?.Invoke();
         }
 
         public void OnSubmit(BaseEventData eventData)
         {
-            ClickEvent?.Invoke();
+            OnClickEvent?.Invoke();
         }
     }
 }
