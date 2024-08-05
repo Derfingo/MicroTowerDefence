@@ -36,29 +36,29 @@ namespace MicroTowerDefence
             _coins = coins;
 
             _input.OnSelectEvent += OnSelect;
-            _raycastController.OnGround += (isGound) => _isGround = isGound;
+            //_raycastController.OnGround += (isGound) => _isGround = isGound;
        }
 
         private void OnSelect()
         {
-            if (_raycastController.CheckOverUI())
-            {
-                return;
-            }
-            else
-            {
-                if (_raycastController.GetContent(out TileContent content))
-                {
-                    _targetContent = content;
-                    content.Interact();
-                }
-                else if (_isGround)
-                {
-                    SelectToBuild();
-                }
+            //if (_raycastController.CheckOverUI())
+            //{
+            //    return;
+            //}
+            //else
+            //{
+            //    if (_raycastController.GetContent(out TileContent content))
+            //    {
+            //        _targetContent = content;
+            //        content.Interact();
+            //    }
+            //    else if (_isGround)
+            //    {
+            //        SelectToBuild();
+            //    }
 
-                CancelSelected();
-            }
+            //    CancelSelected();
+            //}
         }
 
         private void CancelSelected()
@@ -70,7 +70,7 @@ namespace MicroTowerDefence
 
         private void SelectToBuild()
         {
-            _previewPosition = _tilemapController.GetCellCenterPosition();
+            //_previewPosition = _tilemapController.GetCellCenterPosition();
             SelectToBuildEvent?.Invoke();
         }
 
@@ -133,7 +133,7 @@ namespace MicroTowerDefence
         ~ContentSelection()
         {
             _input.OnSelectEvent -= OnSelect;
-            _raycastController.OnGround -= (isGound) => _isGround = isGound;
+            //_raycastController.OnGround -= (isGound) => _isGround = isGound;
         }
     }
 }

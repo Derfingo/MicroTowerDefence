@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 
 namespace MicroTowerDefence
 {
     public interface IGrid
     {
-        Vector3 GetCellCenterPosition();
+        event Action<Vector3, bool> OnUpdateCursorEvent;
     }
 }

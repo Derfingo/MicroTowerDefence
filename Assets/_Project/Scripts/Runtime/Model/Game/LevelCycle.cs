@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Zenject;
 
@@ -10,7 +9,7 @@ namespace MicroTowerDefence
         private IUpdate[] _updates;
         private ILateUpdate[] _lateUpdates;
 
-        private bool _isPause;
+        private bool _isPause = false;
 
         [Inject]
         public void Initialize(IReset[] resets,
@@ -24,7 +23,11 @@ namespace MicroTowerDefence
 
         private void Update()
         {
-            if (_isPause) return;
+            if (_isPause)
+            {
+                Debug.Log("pause");
+                return;
+            }
 
             UpdateControllers();
             Physics.SyncTransforms();

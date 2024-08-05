@@ -1,8 +1,8 @@
 {
-    "name": "Scripts.Runtime.Core",
+    "name": "Scripts.Runtime.ViewModel",
     "rootNamespace": "",
     "references": [
-        "GUID:560b04d1a97f54a4e82edc0cbbb69285"
+        "GUID:308f726acc949c048ae4ba3cc595d343"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -7,7 +7,7 @@ namespace MicroTowerDefence
     public class ContentSelectionView : ViewBase, ISelectionView, IUpdate
     {
         [SerializeField] private GameplayButtonsView _gameplayButtonsView;
-        [SerializeField] private TargetCellView _targetCellView;
+        [SerializeField] private CursorView _targetCellView;
 
         public event Action<TowerType> BuildClickEvent;
         public event Action UpgradeClickEvent;
@@ -100,19 +100,19 @@ namespace MicroTowerDefence
 
         private void OnPointerEnterButton()
         {
-            _raycast.SetOverUI(true);
+            //_raycast.SetOverUI(true);
         }
 
         private void OnPointerExitButton()
         {
-            _raycast.SetOverUI(false);
+            //_raycast.SetOverUI(false);
         }
 
         private void UpdateTargetCellView()
         {
-            var position = CellCenterPositionEvent.Invoke();
-            _targetCellView.UpdatePosition(position);
-            _targetCellView.Display(_isEnableCursor);
+            //var position = CellCenterPositionEvent.Invoke();
+            //_targetCellView.UpdatePosition(position);
+            //_targetCellView.Display(_isEnableCursor);
         }
     }
 }

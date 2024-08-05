@@ -3,8 +3,9 @@ using Zenject;
 
 namespace MicroTowerDefence
 {
-    public class LevelInstaller : MonoInstaller
+    public class LevelInstaller : MonoInstaller, IInitializable
     {
+        [SerializeField] private ViewModelTest _viewModelTest;
         [Header("Setup")]
         [SerializeField] private ProjectileFactory _projectileFactory;
         [SerializeField] private TowerFactory _towerFactory;
@@ -23,11 +24,23 @@ namespace MicroTowerDefence
         [SerializeField] private LevelConfigProvider _levelConfigProvider;
         [SerializeField] private ReadyToStartView _readyToStartView;
         [SerializeField] private PathPointsView _pathPointsView;
+        [SerializeField] private CursorView _cursorView;
         [SerializeField] private HealthView _healthView;
         [SerializeField] private StateView _stateView;
         [SerializeField] private CoinsView _coinsView;
 
         private LevelConfig _config;
+
+        public void Initialize()
+        {
+            ResolveModelView();
+        }
+
+        private void ResolveModelView()
+        {
+            CursorViewModel viewModel = Container.Resolve<CursorViewModel>();
+            
+        }
 
         public override void InstallBindings()
         {
@@ -36,6 +49,12 @@ namespace MicroTowerDefence
             BindModels();
             BindViews();
             BindPresenters();
+            BindViewModels();
+        }
+
+        private void BindViewModels()
+        {
+            Container.BindInterfacesAndSelfTo<CursorViewModel>().AsSingle().NonLazy();
         }
 
         private void BindModels()
@@ -109,30 +128,14 @@ namespace MicroTowerDefence
             Container.BindInterfacesTo<ContentSelectionView>().FromInstance(_contentSelectionView).AsSingle();
             Container.BindInterfacesAndSelfTo<ReadyToStartView>().FromInstance(_readyToStartView).AsSingle();
             Container.BindInterfacesAndSelfTo<StateView>().FromInstance(_stateView).AsSingle();
+
+            Container.BindInterfacesAndSelfTo<CursorView>().FromInstance(_cursorView).AsSingle();
         }
 
         private void OnDestroy()
         {
             Container.Resolve<IInputActions>().Dispose();
             Container.UnbindAll();
-            //_projectileFactory = null;
-            //_towerFactory = null;
-            //_gameScenario = null;
-
-            //_cameraController = null;
-            //_raycastController = null;
-            //_tilemapController = null;
-            //_levelState = null;
-            //_levelCycle = null;
-            
-            //_contentSelectionView = null;
-            //_gameplayButtonsView = null;
-            //_levelConfigProvider = null;
-            //_readyToStartView = null;
-            //_pathPointsView = null;
-            //_healthView = null;
-            //_stateView = null;
-            //_coinsView = null;
         }
     }
 }

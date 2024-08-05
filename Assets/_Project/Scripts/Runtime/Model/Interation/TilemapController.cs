@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
@@ -7,6 +8,8 @@ namespace MicroTowerDefence
     public class TilemapController : MonoBehaviour, IGrid, IUpdate, IPause
     {
         [SerializeField] private Tilemap[] _tilemapArray;
+
+        public event Action<Vector3, bool> OnUpdateCursorEvent;
 
         private RaycastController _raycast;
         private Vector3Int _worldGridPosition;
@@ -23,7 +26,10 @@ namespace MicroTowerDefence
 
         public void GameUpdate()
         {
-            if (_isPause) return;
+            if (_isPause)
+            {
+                return;
+            }
 
             var position = _raycast.GetPosition();
             DetectPosition(position);
@@ -34,17 +40,17 @@ namespace MicroTowerDefence
             _isPause = isPause;
         }
 
-        public Vector3 GetCellCenterPosition()
-        {
-            return _targetTilemap.GetCellCenterWorld(_worldGridPosition);
-        }
-
         private void DetectPosition(Vector3 position)
         {
-            if (GetTilamap(position.y))
+            bool isGround = GetTilamap(position.y);
+            Vector3 cursorPosition = Vector3.zero;
+
+            if (isGround)
             {
-                GetGridPosition(position);
+                cursorPosition = GetGridPosition(position);
             }
+
+            OnUpdateCursorEvent?.Invoke(cursorPosition, isGround);
         }
 
         private bool GetTilamap(float mouseHeight)
@@ -63,9 +69,10 @@ namespace MicroTowerDefence
             return false;
         }
 
-        private void GetGridPosition(Vector3 position)
+        private Vector3 GetGridPosition(Vector3 position)
         {
             _worldGridPosition = _targetTilemap.WorldToCell(position);
+            return _targetTilemap.GetCellCenterWorld(_worldGridPosition);
         }
     }
 }

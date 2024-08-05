@@ -47,11 +47,12 @@ namespace MicroTowerDefence
             _prepareTime = prepareTime;
             _enemyController = enemyController;
 
-            _input.GamePauseEvent += () => OnPause(true);
+            _input.GamePauseEvent += () => OnPause(false);
             _start.OnStartEvent += OnBeginLevel;
             _health.OnHealthOverEvent += OnDefeat;
 
             PrepareToStart();
+            OnPause(false); // return
         }
 
         private void PrepareToStart()
@@ -127,13 +128,13 @@ namespace MicroTowerDefence
 
         public void OnPause(bool isNotify)
         {
-            _isPause = !_isPause;
-            _levelCycle.Pause(_isPause);
+            //_isPause = !_isPause;
+            //_levelCycle.Pause(_isPause);
             _enemyController.Pause(_isPause);
 
             if (isNotify)
             {
-                OnPauseEvent?.Invoke(_isPause);
+                //OnPauseEvent?.Invoke(_isPause);
             }
         }
 
