@@ -7,19 +7,20 @@ using UnityEngine.UI;
 namespace MicroTowerDefence
 {
     [RequireComponent(typeof(Image))]
-    public class BuildTowerButton : ViewBase, ISubmitHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
+    public class BuildTowerButton : Selectable, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private TowerType _type;
 
-        public Action<TowerType> ClickEvent;
-        public Action<TowerType> PointerEnterEvent;
-        public Action<TowerType> PointerExitEvent;
-        public TowerType Type => _type;
+        public Action<TowerType> OnClickEvent;
+        public Action<TowerType> OnPointerEnterEvent;
+        public Action<TowerType> OnPointerExitEvent;
+        public TowerType TowerType => _type;
 
         private TMP_Text _costText;
 
-        private void OnEnable()
+        public void Initialize()
         {
+            image = GetComponent<Image>();
             _costText = GetComponentInChildren<TMP_Text>();
         }
 
@@ -28,24 +29,19 @@ namespace MicroTowerDefence
             _costText.text = cost.ToString();
         }
 
-        public void OnSubmit(BaseEventData eventData)
+        public override void OnPointerDown(PointerEventData eventData)
         {
-            ClickEvent?.Invoke(_type);
+            OnClickEvent?.Invoke(_type);
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
+        public override void OnPointerEnter(PointerEventData eventData)
         {
-            PointerEnterEvent?.Invoke(_type);
+            OnPointerEnterEvent?.Invoke(_type);
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        public override void OnPointerExit(PointerEventData eventData)
         {
-            PointerExitEvent?.Invoke(_type);
-        }
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            ClickEvent?.Invoke(_type);
+            OnPointerExitEvent?.Invoke(_type);
         }
     }
 }

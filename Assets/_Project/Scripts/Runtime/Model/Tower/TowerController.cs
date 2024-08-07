@@ -7,26 +7,24 @@ namespace MicroTowerDefence
     {
         public event Action<uint, uint> OnTowerCostEvent;
 
+        private readonly TowerPreview _preview;
         private readonly ProjectileController _projectileController;
-        private readonly ContentSelection _contentSelection;
         private readonly TowerFactory _towerFactory;
         private readonly Coins _coins;
 
         private readonly GameBehaviourCollection _towers = new();
 
-        public TowerController(TowerFactory contentFactory,
+        public TowerController(TowerPreview preview,
+                               TowerFactory contentFactory,
                                ProjectileController projectileController,
-                               ContentSelection contentSelection,
                                Coins coins)
         {
+            _coins = coins;
+            _preview = preview;
             _towerFactory = contentFactory;
             _projectileController = projectileController;
-            _contentSelection = contentSelection;
-            _coins = coins;
 
-            _contentSelection.UpgradeEvent += OnUpgrade;
-            _contentSelection.BuildEvent += OnBuild;
-            _contentSelection.SellEvent += OnSell;
+            _preview.OnBuildEvent += OnBuild;
         }
 
         public void GameUpdate()
@@ -39,16 +37,14 @@ namespace MicroTowerDefence
             _towers.Clear();
         }
 
-        public void OnBuild(TileContent content, Vector3 position)
+        private void OnBuild(TowerBase tower)
         {
-            var tower = content.GetComponent<TowerBase>();
             var cost = _towerFactory.GetCostToBuild(tower.TowerType);
 
             if (_coins.TrySpend(cost))
             {
                 tower.SetProjectile(_projectileController);
                 tower.OnInteractEvent += OnTowerCost;
-                tower.Position = position;
                 tower.IsInit = true;
                 tower.Undo();
                 _towers.Add(tower);
@@ -63,8 +59,8 @@ namespace MicroTowerDefence
         {
             var tower = content.GetComponent<TowerBase>();
             tower.OnInteractEvent -= OnTowerCost;
-            _towers.Remove(tower);
             tower.Reclaim();
+            _towers.Remove(tower);
             _coins.Add(coins);
         }
 
@@ -101,9 +97,7 @@ namespace MicroTowerDefence
 
         ~TowerController()
         {
-            _contentSelection.UpgradeEvent -= OnUpgrade;
-            _contentSelection.BuildEvent -= OnBuild;
-            _contentSelection.SellEvent -= OnSell;
+            _preview.OnBuildEvent -= OnBuild;
         }
     }
 }

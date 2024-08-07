@@ -21,7 +21,7 @@ namespace MicroTowerDefence
         private bool _isEnableCursor;
         private bool _isPrepareToStart;
 
-        [Inject]
+        
         public void Initialize(IRaycast raycast)
         {
             _raycast = raycast;
@@ -39,7 +39,7 @@ namespace MicroTowerDefence
 
         public void GameUpdate()
         {
-            //UpdateTargetCellView();
+
         }
 
         public void IsEnableCursor(bool isEnable)

@@ -9,7 +9,7 @@ namespace MicroTowerDefence
         private IUpdate[] _updates;
         private ILateUpdate[] _lateUpdates;
 
-        private bool _isPause = false;
+        private bool _isPause = true;
 
         [Inject]
         public void Initialize(IReset[] resets,
@@ -23,11 +23,7 @@ namespace MicroTowerDefence
 
         private void Update()
         {
-            if (_isPause)
-            {
-                Debug.Log("pause");
-                return;
-            }
+            if (_isPause) return;
 
             UpdateControllers();
             Physics.SyncTransforms();
@@ -35,10 +31,7 @@ namespace MicroTowerDefence
 
         private void LateUpdate()
         {
-            if (_isPause)
-            {
-                return;
-            }
+            if (_isPause) return;
 
             LateUpdateControllers();
         }

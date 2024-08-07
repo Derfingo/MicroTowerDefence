@@ -6,9 +6,9 @@ namespace MicroTowerDefence
 {
     public class ButtonView : Selectable, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        public event Action OnClickEvent;
-        public event Action OnPointerEnterEvent;
-        public event Action OnPointerExitEvent;
+        public virtual event Action OnClickEvent;
+        public virtual event Action OnPointerEnterEvent;
+        public virtual event Action OnPointerExitEvent;
 
         public void Initialize()
         {

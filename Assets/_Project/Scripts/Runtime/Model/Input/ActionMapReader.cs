@@ -23,6 +23,19 @@ namespace MicroTowerDefence
         {
             _inputActionMaps = new InputActionMaps();
             _inputActionMaps.Player.SetCallbacks(this);
+            _inputActionMaps.UI.SetCallbacks(this);
+        }
+
+        public void SetUIInput()
+        {
+            _inputActionMaps.Player.Disable();
+            _inputActionMaps.UI.Enable();
+        }
+
+        public void SetPlayerInput()
+        {
+            _inputActionMaps.UI.Disable();
+            _inputActionMaps.Player.Enable();
         }
 
         public void Dispose()
@@ -107,52 +120,42 @@ namespace MicroTowerDefence
 
         public void OnNavigate(InputAction.CallbackContext context)
         {
-            throw new NotImplementedException();
         }
 
         public void OnSubmit(InputAction.CallbackContext context)
         {
-            throw new NotImplementedException();
         }
 
         public void OnCancel(InputAction.CallbackContext context)
         {
-            throw new NotImplementedException();
         }
 
         public void OnPoint(InputAction.CallbackContext context)
         {
-            throw new NotImplementedException();
         }
 
         public void OnClick(InputAction.CallbackContext context)
         {
-            throw new NotImplementedException();
         }
 
         public void OnScrollWheel(InputAction.CallbackContext context)
         {
-            throw new NotImplementedException();
         }
 
         public void OnMiddleClick(InputAction.CallbackContext context)
         {
-            throw new NotImplementedException();
         }
 
         public void OnTrackedDevicePosition(InputAction.CallbackContext context)
         {
-            throw new NotImplementedException();
         }
 
         public void OnTrackedDeviceOrientation(InputAction.CallbackContext context)
         {
-            throw new NotImplementedException();
         }
 
         public void OnRightClick(InputAction.CallbackContext context)
         {
-            throw new NotImplementedException();
         }
 
         ~ActionMapReader()

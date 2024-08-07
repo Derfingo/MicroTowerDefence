@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace MicroTowerDefence
@@ -50,13 +51,17 @@ namespace MicroTowerDefence
             _input.GamePauseEvent += () => OnPause(false);
             _start.OnStartEvent += OnBeginLevel;
             _health.OnHealthOverEvent += OnDefeat;
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
 
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
             PrepareToStart();
-            OnPause(false); // return
         }
 
         private void PrepareToStart()
         {
+            OnPause(false);
             _input.Disable();
             _levelCycle.ResetValues();
             _start.Reset();
@@ -66,10 +71,7 @@ namespace MicroTowerDefence
 
         private void Update()
         {
-            if (_isPause)
-            {
-                return;
-            }
+            if (_isPause) return;
 
             UpdateScenario();
         }
@@ -78,6 +80,7 @@ namespace MicroTowerDefence
         {
             OnPrepareToStartEvent?.Invoke(false);
             _input.Enable();
+            OnPause(false);
             _scenarioInProgress = false;
             if (_prepareRoutine != null)
             {
@@ -128,13 +131,13 @@ namespace MicroTowerDefence
 
         public void OnPause(bool isNotify)
         {
-            //_isPause = !_isPause;
-            //_levelCycle.Pause(_isPause);
+            _isPause = !_isPause;
+            _levelCycle.Pause(_isPause);
             _enemyController.Pause(_isPause);
 
             if (isNotify)
             {
-                //OnPauseEvent?.Invoke(_isPause);
+                OnPauseEvent?.Invoke(_isPause);
             }
         }
 
@@ -143,6 +146,14 @@ namespace MicroTowerDefence
             OnPause(true);
             _scenarioInProgress = false;
             PrepareToStart();
+        }
+
+        private void OnDestroy()
+        {
+            _input.GamePauseEvent -= () => OnPause(false);
+            _start.OnStartEvent -= OnBeginLevel;
+            _health.OnHealthOverEvent -= OnDefeat;
+            SceneManager.sceneLoaded -= OnSceneLoaded;
         }
     }
 }

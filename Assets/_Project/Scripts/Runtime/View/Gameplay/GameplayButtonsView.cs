@@ -25,19 +25,19 @@ namespace MicroTowerDefence
         [Inject]
         public void Initialize()
         {
-            _buildTowerButtonsView.TowerButtons.ForEach(click => click.ClickEvent += OnBuildTower);
-            _buildTowerButtonsView.TowerButtons.ForEach(enter => enter.PointerEnterEvent += OnEnterPreviewTower);
-            _buildTowerButtonsView.TowerButtons.ForEach(exit => exit.PointerExitEvent += OnExitPreviewTower);
+            //_buildTowerButtonsView.TowerButtons.ForEach(click => click.ClickEvent += OnBuildTower);
+            //_buildTowerButtonsView.TowerButtons.ForEach(enter => enter.PointerEnterEvent += OnEnterPreviewTower);
+            //_buildTowerButtonsView.TowerButtons.ForEach(exit => exit.PointerExitEvent += OnExitPreviewTower);
 
-            _towerButtonsView.UpgradeButton.OnClickEvent += OnUpgradeTower;
-            _towerButtonsView.UpgradeButton.OnPointerEnterEvent += OnPointerEnter;
-            _towerButtonsView.UpgradeButton.OnPointerExitEvent += OnPointerExit;
+            //_towerButtonsView.UpgradeButton.OnClickEvent += OnUpgradeTower;
+            //_towerButtonsView.UpgradeButton.OnPointerEnterEvent += OnPointerEnter;
+            //_towerButtonsView.UpgradeButton.OnPointerExitEvent += OnPointerExit;
 
-            _towerButtonsView.SellButton.OnClickEvent += OnSellTower;
-            _towerButtonsView.SellButton.OnPointerEnterEvent += OnPointerEnter;
-            _towerButtonsView.SellButton.OnPointerExitEvent += OnPointerExit;
+            //_towerButtonsView.SellButton.OnClickEvent += OnSellTower;
+            //_towerButtonsView.SellButton.OnPointerEnterEvent += OnPointerEnter;
+            //_towerButtonsView.SellButton.OnPointerExitEvent += OnPointerExit;
 
-            _currentView = _buildTowerButtonsView;
+            //_currentView = _buildTowerButtonsView;
         }
 
         // state views
@@ -74,7 +74,7 @@ namespace MicroTowerDefence
 
             foreach (var button in _buildTowerButtonsView.TowerButtons)
             {
-                if (costTowers.TryGetValue(button.Type, out var cost))
+                if (costTowers.TryGetValue(button.TowerType, out var cost))
                 {
                     button.SetCost(cost);
                 }

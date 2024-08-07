@@ -9,12 +9,13 @@ namespace MicroTowerDefence
     {
         [SerializeField] private Tilemap[] _tilemapArray;
 
-        public event Action<Vector3, bool> OnUpdateCursorEvent;
+        public event Action<Vector3, bool> OnGridEvent;
 
         private RaycastController _raycast;
         private Vector3Int _worldGridPosition;
         private Tilemap _targetTilemap;
 
+        private Vector3 _gridPosition;
         private bool _isPause;
 
         [Inject]
@@ -26,13 +27,9 @@ namespace MicroTowerDefence
 
         public void GameUpdate()
         {
-            if (_isPause)
-            {
-                return;
-            }
+            if (_isPause) return;
 
-            var position = _raycast.GetPosition();
-            DetectPosition(position);
+            DefineGridPosition();
         }
 
         public void Pause(bool isPause)
@@ -40,17 +37,12 @@ namespace MicroTowerDefence
             _isPause = isPause;
         }
 
-        private void DetectPosition(Vector3 position)
+        private void DefineGridPosition()
         {
-            bool isGround = GetTilamap(position.y);
-            Vector3 cursorPosition = Vector3.zero;
-
-            if (isGround)
-            {
-                cursorPosition = GetGridPosition(position);
-            }
-
-            OnUpdateCursorEvent?.Invoke(cursorPosition, isGround);
+            var position = _raycast.GetPosition();
+            var isGround = GetTilamap(position.y);
+            if (isGround) _gridPosition = GetGridPosition(position);
+            OnGridEvent?.Invoke(_gridPosition, isGround);
         }
 
         private bool GetTilamap(float mouseHeight)

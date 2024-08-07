@@ -16,6 +16,9 @@ namespace MicroTowerDefence
         void Disable();
         void Enable();
 
+        void SetUIInput();
+        void SetPlayerInput();
+
         Vector3 MousePosition { get; }
     }
 }

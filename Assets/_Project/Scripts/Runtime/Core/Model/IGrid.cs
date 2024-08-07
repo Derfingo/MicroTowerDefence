@@ -5,6 +5,6 @@ namespace MicroTowerDefence
 {
     public interface IGrid
     {
-        event Action<Vector3, bool> OnUpdateCursorEvent;
+        event Action<Vector3, bool> OnGridEvent;
     }
 }
