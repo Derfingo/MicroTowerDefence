@@ -6,12 +6,12 @@ using Zenject;
 
 namespace MicroTowerDefence
 {
-    public class LevelState : MonoBehaviour, ILevelState
+    public class LevelState : MonoBehaviour, ILevelState, IPrepare
     {
         public event Action OnWinEvent;
         public event Action OnDefeatEvent;
+        public event Action OnPrepareEvent;
         public event Action<bool> OnPauseEvent;
-        public event Action<bool> OnPrepareToStartEvent;
 
         private ILoader _loader;
         private IInputActions _input;
@@ -48,7 +48,7 @@ namespace MicroTowerDefence
             _prepareTime = prepareTime;
             _enemyController = enemyController;
 
-            _input.GamePauseEvent += () => OnPause(false);
+            _input.GamePauseEvent += () => OnPause(true);
             _start.OnStartEvent += OnBeginLevel;
             _health.OnHealthOverEvent += OnDefeat;
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -66,7 +66,7 @@ namespace MicroTowerDefence
             _levelCycle.ResetValues();
             _start.Reset();
             _isDefeat = false;
-            OnPrepareToStartEvent?.Invoke(true);
+            OnPrepareEvent?.Invoke();
         }
 
         private void Update()
@@ -78,7 +78,6 @@ namespace MicroTowerDefence
 
         private void OnBeginLevel()
         {
-            OnPrepareToStartEvent?.Invoke(false);
             _input.Enable();
             OnPause(false);
             _scenarioInProgress = false;
@@ -129,7 +128,7 @@ namespace MicroTowerDefence
             _isDefeat = true;
         }
 
-        public void OnPause(bool isNotify)
+        public void OnPause(bool isNotify) // fix signature
         {
             _isPause = !_isPause;
             _levelCycle.Pause(_isPause);

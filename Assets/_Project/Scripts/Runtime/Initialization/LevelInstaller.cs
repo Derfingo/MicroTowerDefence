@@ -6,6 +6,7 @@ namespace MicroTowerDefence
     public class LevelInstaller : MonoInstaller, IInitializable
     {
         [Header("Setup")]
+        [SerializeField] private LevelConfigProvider _levelConfigProvider;
         [SerializeField] private ProjectileFactory _projectileFactory;
         [SerializeField] private TowerFactory _towerFactory;
         [SerializeField] private GameScenario _gameScenario;
@@ -18,8 +19,8 @@ namespace MicroTowerDefence
         [SerializeField] private LevelCycle _levelCycle;
         [Space]
         [Header("View")]
-        [SerializeField] private ButtonsToBuildContainer _buttonsToBuildContainer;
-        [SerializeField] private LevelConfigProvider _levelConfigProvider;
+        [SerializeField] private TowerInterationView _towerInterationView;
+        [SerializeField] private TowerBuildingView _towerBuildingView;
         [SerializeField] private ReadyToStartView _readyToStartView;
         [SerializeField] private PathPointsView _pathPointsView;
         [SerializeField] private CursorView _cursorView;
@@ -51,7 +52,9 @@ namespace MicroTowerDefence
         private void BindViewModels()
         {
             Container.BindInterfacesAndSelfTo<CursorViewModel>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<TowerViewModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<TowerBuildingViewModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<TowerInteractionViewModel>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<TowerMenuTransitionViewModel>().AsSingle().NonLazy();
         }
 
         private void BindModels()
@@ -79,7 +82,7 @@ namespace MicroTowerDefence
 
         private void BindFactory()
         {
-            Container.Bind<TowerFactory>().FromInstance(_towerFactory).AsSingle();
+            Container.BindInterfacesAndSelfTo<TowerFactory>().FromInstance(_towerFactory).AsSingle();
             Container.Bind<ProjectileFactory>().FromInstance(_projectileFactory).AsSingle();
         }
 
@@ -108,7 +111,6 @@ namespace MicroTowerDefence
             Container.BindInterfacesAndSelfTo<TowerController>().AsSingle();
             Container.BindInterfacesAndSelfTo<ContentSelection>().AsSingle();
             Container.Bind<ILateUpdate>().FromInstance(_cameraController).AsSingle();
-
             Container.BindInterfacesAndSelfTo<TowerPreview>().AsSingle().NonLazy();
         }
 
@@ -124,9 +126,9 @@ namespace MicroTowerDefence
             Container.Bind<ICoinsView>().FromInstance(_coinsView).AsSingle();
             Container.BindInterfacesAndSelfTo<ReadyToStartView>().FromInstance(_readyToStartView).AsSingle();
             Container.BindInterfacesAndSelfTo<StateView>().FromInstance(_stateView).AsSingle();
-
             Container.BindInterfacesAndSelfTo<CursorView>().FromInstance(_cursorView).AsSingle();
-            Container.BindInterfacesAndSelfTo<ButtonsToBuildContainer>().FromInstance(_buttonsToBuildContainer).AsSingle();
+            Container.BindInterfacesAndSelfTo<TowerBuildingView>().FromInstance(_towerBuildingView).AsSingle();
+            Container.BindInterfacesAndSelfTo<TowerInterationView>().FromInstance(_towerInterationView).AsSingle();
         }
 
         private void OnDestroy()

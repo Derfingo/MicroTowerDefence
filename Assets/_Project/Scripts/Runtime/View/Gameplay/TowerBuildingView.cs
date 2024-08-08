@@ -4,7 +4,7 @@ using Zenject;
 
 namespace MicroTowerDefence
 {
-    public class ButtonsToBuildContainer : ViewBase, IButtonsToBuildView
+    public class TowerBuildingView : ViewBase, ITowerBuildingView
     {
         public event Action<TowerType> BuildTowerEvent;
         public event Action<TowerType> EnterPreviewTowerEvent;
@@ -13,7 +13,7 @@ namespace MicroTowerDefence
         private readonly List<BuildTowerButton> _buildTowerButtons = new ();
 
         [Inject]
-        public void Initialize()
+        public void Initialize() 
         {
             for (int i = 0; i < transform.childCount; i++)
             {

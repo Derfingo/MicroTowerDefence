@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MicroTowerDefence
 {
-    public class TowerController : ITowerController, IUpdate, IReset
+    public class TowerController : ITowerInteraction, IUpdate, IReset
     {
         public event Action<uint, uint> OnTowerCostEvent;
 
@@ -15,13 +15,13 @@ namespace MicroTowerDefence
         private readonly GameBehaviourCollection _towers = new();
 
         public TowerController(TowerPreview preview,
-                               TowerFactory contentFactory,
+                               TowerFactory towerFactory,
                                ProjectileController projectileController,
                                Coins coins)
         {
             _coins = coins;
             _preview = preview;
-            _towerFactory = contentFactory;
+            _towerFactory = towerFactory;
             _projectileController = projectileController;
 
             _preview.OnBuildEvent += OnBuild;
@@ -55,19 +55,17 @@ namespace MicroTowerDefence
             }
         }
 
-        public void OnSell(TileContent content, uint coins)
+        public void OnSell(TowerBase tower)
         {
-            var tower = content.GetComponent<TowerBase>();
+            var coins = tower.SellCost;
             tower.OnInteractEvent -= OnTowerCost;
             tower.Reclaim();
             _towers.Remove(tower);
             _coins.Add(coins);
         }
 
-        public void OnUpgrade(TileContent content)
+        public void OnUpgrade(TowerBase tower)
         {
-            var tower = content.GetComponent<TowerBase>();
-
             if (tower.Level >= tower.MaxLevel)
             {
                 Debug.Log("max level");

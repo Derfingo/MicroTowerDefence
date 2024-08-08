@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Zenject;
 
 namespace MicroTowerDefence
 {
@@ -18,6 +19,7 @@ namespace MicroTowerDefence
 
         private TMP_Text _costText;
 
+        [Inject]
         public void Initialize()
         {
             image = GetComponent<Image>();

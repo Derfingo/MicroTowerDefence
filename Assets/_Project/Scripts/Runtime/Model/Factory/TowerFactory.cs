@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MicroTowerDefence
 {
-    public class TowerFactory : GameObjectFactory
+    public class TowerFactory : GameObjectFactory, ITowerCost
     {
         [SerializeField] private TowerLevelConfig _beamConfig;
         [SerializeField] private TowerLevelConfig _mortarConfig;

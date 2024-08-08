@@ -55,8 +55,8 @@ namespace MicroTowerDefence
 
         public override void Interact()
         {
-            OnInteractEvent?.Invoke(this);
             ShowTargetRadius(true);
+            OnInteractEvent?.Invoke(this);
         }
 
         public override void Undo()

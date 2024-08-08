@@ -2,7 +2,7 @@ using System;
 
 namespace MicroTowerDefence
 {
-    public interface ITowerController
+    public interface ITowerInteraction
     {
         event Action<uint, uint> OnTowerCostEvent;
     }

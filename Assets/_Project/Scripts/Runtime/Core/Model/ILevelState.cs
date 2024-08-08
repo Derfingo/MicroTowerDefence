@@ -4,7 +4,6 @@ namespace MicroTowerDefence
 {
     public interface ILevelState
     {
-        event Action<bool> OnPrepareToStartEvent;
         event Action<bool> OnPauseEvent;
         event Action OnDefeatEvent;
         event Action OnWinEvent;

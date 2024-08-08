@@ -6,24 +6,31 @@ namespace MicroTowerDefence
     public class ContentSelection : ISelection
     {
         public event Action<bool> OnBuildingEvent;
+        public event Action<bool> OnInteractionEvent;
         public Vector3 GridPosition => _gridPosition;
 
         private readonly IInputActions _input;
         private readonly TowerPreview _towerPreview;
+        private readonly TowerController _towerController;
         private readonly TilemapController _tilemapController;
         private readonly RaycastController _raycastController;
 
         private bool _isGround;
         private bool _isBuilding;
+        private bool _isInteraction;
         private Vector3 _gridPosition;
+
+        private TileContent _target;
 
         public ContentSelection(IInputActions input,
                                 RaycastController raycastController,
                                 TilemapController tilemapController,
+                                TowerController teachController,
                                 TowerPreview towerPreview)
        {
             _input = input;
             _towerPreview = towerPreview;
+            _towerController = teachController;
             _raycastController = raycastController;
             _tilemapController = tilemapController;
 
@@ -32,17 +39,40 @@ namespace MicroTowerDefence
             _towerPreview.OnBuildEvent += (isBuilding) => SetBuildingState(false);
         }
 
+        public void OnSellTower()
+        {
+            _towerController.OnSell(_target.GetComponent<TowerBase>());
+            DeselectContent();
+        }
+
+        public void OnUpgradeTower()
+        {
+            _towerController.OnUpgrade(_target.GetComponent<TowerBase>());
+            DeselectContent();
+        }
+
         private void OnSelectToBuild()
         {
-            if (_isGround && _raycastController.GetContent(out TileContent content) == false)
+            if (_raycastController.GetContent(out TileContent content))
             {
-                //Debug.Log($"select to build: Position {_gridPosition}, Ground {_isGround}");
+                SetInteractionState(true);
+                _target = content;
+                _target.Interact();
+            }
+            else if (_isGround)
+            {
                 SetBuildingState(true);
             }
             else
             {
-                SetBuildingState(false);
+                DeselectContent();
             }
+        }
+
+        private void SetInteractionState(bool isInteraction)
+        {
+            _isInteraction = isInteraction;
+            OnInteractionEvent?.Invoke(isInteraction);
         }
 
         private void SetBuildingState(bool isBuilding)
@@ -51,10 +81,19 @@ namespace MicroTowerDefence
             OnBuildingEvent?.Invoke(isBuilding);
         }
 
+        private void DeselectContent()
+        {
+            SetBuildingState(false);
+            SetInteractionState(false);
+            _target?.Undo();
+            _target = null;
+            _input.SetPlayerInput();
+        }
+
         private void GetGridState(Vector3 position, bool isGround)
         {
             _isGround = isGround;
-            if (_isBuilding) return;
+            if (_isBuilding || _isInteraction) return;
             _gridPosition = position;
         }
 
