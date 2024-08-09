@@ -9,9 +9,10 @@ namespace MicroTowerDefence
         [SerializeField] private LevelConfigProvider _levelConfigProvider;
         [SerializeField] private ProjectileFactory _projectileFactory;
         [SerializeField] private TowerFactory _towerFactory;
-        [SerializeField] private GameScenario _gameScenario;
+        [SerializeField] private EnemyFactory _enemyFactory;
         [Space]
         [Header("Model")]
+        [SerializeField] private Scenario _scenario;
         [SerializeField] private CameraController _cameraController;
         [SerializeField] private RaycastController _raycastController;
         [SerializeField] private TilemapController _tilemapController;
@@ -94,7 +95,7 @@ namespace MicroTowerDefence
 
         private void BindScenario()
         {
-            Container.Bind<GameScenario>().FromInstance(_gameScenario).AsSingle();
+            Container.BindInterfacesAndSelfTo<Scenario>().FromInstance(_scenario).AsSingle().NonLazy();
         }
 
         private void BindLevelCycle()
@@ -112,6 +113,8 @@ namespace MicroTowerDefence
             Container.BindInterfacesAndSelfTo<ContentSelection>().AsSingle();
             Container.Bind<ILateUpdate>().FromInstance(_cameraController).AsSingle();
             Container.BindInterfacesAndSelfTo<TowerPreview>().AsSingle().NonLazy();
+
+            Container.Bind<EnemyFactory>().FromInstance(_enemyFactory).AsSingle();
         }
 
         private void BindPresenters()

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f33c3c693bddcf24a8dcd3d2cbcb5191, type: 3}
+  m_Script: {fileID: 11500000, guid: 173869c9e29dbab4eabf0fa910a4ab4c, type: 3}
   m_Name: Scenario
   m_EditorClassIdentifier: 
   _waves:

@@ -9,13 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea4c967335ec991468a53cdd702fe407, type: 3}
-  m_Name: Level Config
+  m_Script: {fileID: 11500000, guid: 973984f6d81b6e74587f5c412a021451, type: 3}
+  m_Name: Enemy Waves Config
   m_EditorClassIdentifier: 
-  _levelConfig:
-    Level: 0
-    Name: Any
-    Description: Test
-    PrepareTime: 10
-    Coins: 3000
-    Health: 10
+  _waves:
+  - _cooldown: 3
+    _amount: 3
+    _type: 1
+  - _cooldown: 2
+    _amount: 2
+    _type: 1
+  - _cooldown: 0
+    _amount: 1
+    _type: 1

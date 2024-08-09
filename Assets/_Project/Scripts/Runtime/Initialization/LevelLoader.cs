@@ -28,7 +28,6 @@ namespace MicroTowerDefence
 
             for (int i = 0; i < _levelsView.LevelButtons.Count; i++)
             {
-                //_levelsView.LevelButtons[i].Initialize((i + 1).ToString());
                 _levelsView.LevelButtons[i].OnClickEvent += (name) => _sceneLoader.LoadAsync(name, true);
             }
         }

@@ -43,11 +43,11 @@ namespace MicroTowerDefence
         public EnemyBase Prefab;
         public EnemyType Enemy;
         public ElementType Element;
-        [FloatRangeSlider(0.5f, 2f)] public RandomRange Scale = new(1f);
-        [FloatRangeSlider(-0.5f, 0.5f)] public RandomRange PathOffset = new(0f);
-        [FloatRangeSlider(0.2f, 2f)] public RandomRange Speed = new(1f);
-        [FloatRangeSlider(10f, 1000f)] public RandomRange Health = new(100f);
-        [FloatRangeSlider(0f, 1000f)] public RandomRange Shield = new(100f);
+        [Range(0.5f, 2f)] public float Scale = 1f;
+        [Range(-0.5f, 0.5f)] public float PathOffset = 0f;
+        [Range(0.2f, 2f)] public float Speed = 1f;
+        [Range(10f, 1000f)] public float Health = 100f;
+        [Range(0f, 1000f)] public float Shield = 100f;
         [Range(10, 100)] public uint Coins = 10;
         [Range(1, 5)] public uint Damage = 1;
     }

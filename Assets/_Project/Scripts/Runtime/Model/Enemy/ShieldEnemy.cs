@@ -9,7 +9,7 @@ namespace MicroTowerDefence
         public override void Initialize(EnemyConfig config)
         {
             base.Initialize(config);
-            _shield.Initialize(config.Shield.RandomValueInRange);
+            _shield.Initialize(config.Shield);
         }
     }
 }

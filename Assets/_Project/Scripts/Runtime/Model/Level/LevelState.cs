@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
@@ -17,27 +17,22 @@ namespace MicroTowerDefence
         private IInputActions _input;
         private IStart _start;
         private Health _health;
+        private Scenario _scenario;
         private LevelCycle _levelCycle;
-        private GameScenario _scenario;
         private EnemyContorller _enemyController;
 
-        private float _prepareTime;
-        private bool _scenarioInProgress;
-        private Coroutine _prepareRoutine;
-        private GameScenario.State _activeScenario;
-
-        private bool _isDefeat;
+        private int _prepareTime;
         private bool _isPause;
 
         [Inject]
-        public void Initialize(float prepareTime,
+        public void Initialize(int prepareTime,
                          IStart start,
                          IInputActions input,
                          ILoader loader,
                          EnemyContorller enemyController,
-                         GameScenario scenario,
                          LevelCycle levelCycle,
-                         Health health)
+                         Health health,
+                         Scenario scenario)
         {
             _input = input;
             _start = start;
@@ -65,7 +60,6 @@ namespace MicroTowerDefence
             _input.Disable();
             _levelCycle.ResetValues();
             _start.Reset();
-            _isDefeat = false;
             OnPrepareEvent?.Invoke();
         }
 
@@ -76,45 +70,22 @@ namespace MicroTowerDefence
             UpdateScenario();
         }
 
-        private void OnBeginLevel()
+        private async void OnBeginLevel()
         {
-            _input.Enable();
+            await Task.Delay(_prepareTime * 1000);
             OnPause(false);
-            _scenarioInProgress = false;
-            if (_prepareRoutine != null)
-            {
-                StopCoroutine(_prepareRoutine);
-            }
-
-            _activeScenario = _scenario.Begin(_enemyController);
-            _prepareRoutine = StartCoroutine(PrepareRoutine());
-        }
-
-        private IEnumerator PrepareRoutine()
-        {
-            yield return new WaitForSeconds(_prepareTime);
-            _activeScenario = _scenario.Begin(_enemyController);
-            _scenarioInProgress = true;
+            _input.Enable();
+            _scenario.Begin();
         }
 
         private void UpdateScenario()
         {
-            if (_scenarioInProgress)
-            {
-                if (_isDefeat)
-                {
-                    Debug.Log("Defeated");
-                    OnDefeatEvent?.Invoke();
-                    OnPause(false);
-                }
+            _scenario.GameUpdate();
 
-                if (_activeScenario.Progress() == false && _enemyController.IsEmpty)
-                {
-                    Debug.Log("Win");
-                    OnWinEvent?.Invoke();
-                    OnPause(false);
-                    _activeScenario.Progress(); // ???
-                }
+            if (_scenario.IsEnd && _enemyController.IsEmpty)
+            {
+                OnWinEvent?.Invoke();
+                OnPause(false);
             }
         }
 
@@ -125,7 +96,8 @@ namespace MicroTowerDefence
 
         private void OnDefeat()
         {
-            _isDefeat = true;
+            OnDefeatEvent?.Invoke();
+            OnPause(false);
         }
 
         public void OnPause(bool isNotify) // fix signature
@@ -143,7 +115,6 @@ namespace MicroTowerDefence
         public void OnRestart()
         {
             OnPause(true);
-            _scenarioInProgress = false;
             PrepareToStart();
         }
 

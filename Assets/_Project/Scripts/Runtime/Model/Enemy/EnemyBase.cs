@@ -110,11 +110,11 @@ namespace MicroTowerDefence
         private void SetStats(EnemyConfig config)
         {
             _elementType = config.Element;
-            _model.localScale *= config.Scale.RandomValueInRange;
-            _originalSpeed = config.Speed.RandomValueInRange;
-            _speed = config.Speed.RandomValueInRange;
-            _health = (int)config.Health.RandomValueInRange;
-            Scale = config.Scale.RandomValueInRange;
+            _model.localScale *= config.Scale;
+            _originalSpeed = config.Speed;
+            _speed = config.Speed;
+            _health = (int)config.Health;
+            Scale = config.Scale;
             _damage = config.Damage;
             _coins = config.Coins;
         }

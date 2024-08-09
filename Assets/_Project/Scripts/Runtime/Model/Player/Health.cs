@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 namespace MicroTowerDefence
 {
@@ -26,6 +25,8 @@ namespace MicroTowerDefence
 
         public void TakeDamage(uint damage)
         {
+            _health -= damage;
+
             if (_health <= damage)
             {
                 _health = 0;
@@ -34,7 +35,6 @@ namespace MicroTowerDefence
                 OnHealthOverEvent?.Invoke();
             }
 
-            _health -= damage;
             OnChangeHealthEvent?.Invoke(_health);
         }
 
