@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Level Config
   m_EditorClassIdentifier: 
   _levelConfig:
-    Level: 0
+    Level: 1
     Name: Any
     Description: Test
-    PrepareTime: 10
+    PrepareTime: 0
     Coins: 3000
     Health: 10

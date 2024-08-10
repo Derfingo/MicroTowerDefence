@@ -41,7 +41,7 @@ namespace MicroTowerDefence
         private void Update()
         {
             GameUpdate();
-            _projectileController.GameUpdate();
+            //_projectileController.GameUpdate();
         }
 
         protected override void SetStats(TowerConfig config)

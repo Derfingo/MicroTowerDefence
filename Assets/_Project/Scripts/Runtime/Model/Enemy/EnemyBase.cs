@@ -48,6 +48,11 @@ namespace MicroTowerDefence
             _view.SetSpeedFactor(factor);
         }
 
+        public void SetPause(bool isPause)
+        {
+            _view.Animator.enabled = isPause;
+        }
+
         public void TakeDamage(float value, ElementType type)
         {
             float factor = ElementFactor.GetFactor(type, _elementType);

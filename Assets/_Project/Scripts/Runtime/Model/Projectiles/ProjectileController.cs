@@ -1,11 +1,12 @@
 namespace MicroTowerDefence
 {
-    public class ProjectileController : IUpdate, IReset
+    public class ProjectileController : IReset, IUpdate, IPause
     {
         private readonly ProjectileFactory _factory;
+        private readonly BehaviourCollection _projectiles = new();
 
-        private readonly GameBehaviourCollection _projectiles = new();
-        
+        private bool _isPause;
+
         public ProjectileController(ProjectileFactory factory)
         {
             _factory = factory;
@@ -20,7 +21,14 @@ namespace MicroTowerDefence
 
         public void GameUpdate()
         {
+            if (_isPause) return;
+
             _projectiles.GameUpdate();
+        }
+
+        public void Pause(bool isPause)
+        {
+            _isPause = isPause;
         }
 
         void IReset.Reset()

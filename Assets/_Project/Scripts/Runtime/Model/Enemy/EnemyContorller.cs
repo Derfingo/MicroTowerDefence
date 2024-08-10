@@ -1,16 +1,14 @@
-using UnityEngine;
-
 namespace MicroTowerDefence
 {
-    public class EnemyContorller : IUpdate, IReset, IPause
+    public class EnemyContorller : IReset, IUpdate, IPause
     {
         public bool IsEmpty => _enemies.IsEmpty;
 
-        private readonly GameBehaviourCollection _enemies = new();
+        private readonly BehaviourCollection _enemies = new();
+        private readonly PathConfig _pathConfig;
         private readonly Health _health;
         private readonly Coins _coins;
-
-        private PathConfig _pathConfig;
+        private bool _isPause;
 
         public EnemyContorller(Health health, Coins coins, PathConfig pathConfig)
         {
@@ -29,22 +27,29 @@ namespace MicroTowerDefence
             _enemies.Add(enemy);
         }
 
+        public void GameUpdate()
+        {
+            if (_isPause) return;
+
+            _enemies.GameUpdate();
+        }
+
         public void Pause(bool isPause)
         {
-            foreach (var enemy in _enemies.Behaviours)
+            _isPause = isPause;
+
+            if (IsEmpty == false)
             {
-                enemy.GetComponentInChildren<Animator>().enabled = !isPause;
+                foreach (var behaviour in _enemies.Behaviours)
+                {
+                    behaviour.GetComponent<EnemyBase>().SetPause(!isPause);
+                }
             }
         }
 
         void IReset.Reset()
         {
             _enemies.Clear();
-        }
-
-        public void GameUpdate()
-        {
-            _enemies.GameUpdate();
         }
     }
 }

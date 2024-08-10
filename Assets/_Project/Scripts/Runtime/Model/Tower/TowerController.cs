@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MicroTowerDefence
 {
-    public class TowerController : ITowerInteraction, IUpdate, IReset
+    public class TowerController : ITowerInteraction, IReset, IUpdate, IPause
     {
         public event Action<uint, uint> OnTowerCostEvent;
 
@@ -12,7 +12,9 @@ namespace MicroTowerDefence
         private readonly TowerFactory _towerFactory;
         private readonly Coins _coins;
 
-        private readonly GameBehaviourCollection _towers = new();
+        private readonly BehaviourCollection _towers = new();
+
+        private bool _isPause;
 
         public TowerController(TowerPreview preview,
                                TowerFactory towerFactory,
@@ -29,12 +31,14 @@ namespace MicroTowerDefence
 
         public void GameUpdate()
         {
+            if (_isPause) return;
+
             _towers.GameUpdate();
         }
 
-        void IReset.Reset()
+        public void Pause(bool isPause)
         {
-            _towers.Clear();
+            _isPause = isPause;
         }
 
         private void OnBuild(TowerBase tower)
@@ -91,6 +95,11 @@ namespace MicroTowerDefence
         private void OnTowerCost(TowerBase tower)
         {
             OnTowerCostEvent?.Invoke(tower.UpgradeCost, tower.SellCost);
+        }
+
+        void IReset.Reset()
+        {
+            _towers.Clear();
         }
 
         ~TowerController()

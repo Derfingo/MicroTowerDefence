@@ -3,20 +3,19 @@ using Zenject;
 
 namespace MicroTowerDefence
 {
-    public class LevelInstaller : MonoInstaller, IInitializable
+    public class LevelInstaller : MonoInstaller
     {
         [Header("Setup")]
+        [SerializeField] private EnemyWavesConfig _enemyWavesConfig;
         [SerializeField] private LevelConfigProvider _levelConfigProvider;
         [SerializeField] private ProjectileFactory _projectileFactory;
         [SerializeField] private TowerFactory _towerFactory;
         [SerializeField] private EnemyFactory _enemyFactory;
         [Space]
         [Header("Model")]
-        [SerializeField] private Scenario _scenario;
         [SerializeField] private CameraController _cameraController;
         [SerializeField] private RaycastController _raycastController;
         [SerializeField] private TilemapController _tilemapController;
-        [SerializeField] private LevelState _levelState;
         [SerializeField] private LevelCycle _levelCycle;
         [Space]
         [Header("View")]
@@ -31,13 +30,14 @@ namespace MicroTowerDefence
 
         private LevelConfig _config;
 
-        public void Initialize()
+        private void Awake()
         {
             ResolveModelView();
         }
 
         private void ResolveModelView()
         {
+            //Debug.Log(Container.ResolveAll<BehaviourCollection>().Count);
         }
 
         public override void InstallBindings()
@@ -61,7 +61,7 @@ namespace MicroTowerDefence
         private void BindModels()
         {
             BindInput();
-            BindFactory();
+            BindFactories();
             BindScore();
             BindControllers();
             BindScenario();
@@ -71,9 +71,8 @@ namespace MicroTowerDefence
 
         private void BindLevelState()
         {
-            Container.BindInterfacesAndSelfTo<LevelState>().FromInstance(_levelState).AsSingle();
+            Container.BindInterfacesAndSelfTo<LevelState>().AsSingle().NonLazy();
             Container.BindInstance(_config.PrepareTime).WhenInjectedInto<LevelState>();
-            Container.BindInstance(_pathPointsView.GetConfig()).WhenInjectedInto<LevelState>();
         }
 
         private void BindInput()
@@ -81,10 +80,11 @@ namespace MicroTowerDefence
             Container.Bind<IInputActions>().To<ActionMapReader>().AsSingle();
         }
 
-        private void BindFactory()
+        private void BindFactories()
         {
             Container.BindInterfacesAndSelfTo<TowerFactory>().FromInstance(_towerFactory).AsSingle();
             Container.Bind<ProjectileFactory>().FromInstance(_projectileFactory).AsSingle();
+            Container.Bind<EnemyFactory>().FromInstance(_enemyFactory).AsSingle();
         }
 
         private void BindScore()
@@ -95,7 +95,8 @@ namespace MicroTowerDefence
 
         private void BindScenario()
         {
-            Container.BindInterfacesAndSelfTo<Scenario>().FromInstance(_scenario).AsSingle().NonLazy();
+            Container.Bind<EnemyWavesConfig>().FromInstance(_enemyWavesConfig).AsSingle();
+            Container.BindInterfacesAndSelfTo<Scenario>().AsSingle().NonLazy();
         }
 
         private void BindLevelCycle()
@@ -105,16 +106,15 @@ namespace MicroTowerDefence
 
         private void BindControllers()
         {
-            Container.BindInterfacesAndSelfTo<EnemyContorller>().AsSingle().WithArguments(_pathPointsView.GetConfig());
-            Container.BindInterfacesAndSelfTo<TilemapController>().FromInstance(_tilemapController).AsSingle();
-            Container.BindInterfacesAndSelfTo<RaycastController>().FromInstance(_raycastController).AsSingle();
             Container.BindInterfacesAndSelfTo<ProjectileController>().AsSingle();
             Container.BindInterfacesAndSelfTo<TowerController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EnemyContorller>().AsSingle().WithArguments(_pathPointsView.GetConfig());
+
+            Container.BindInterfacesAndSelfTo<TilemapController>().FromInstance(_tilemapController).AsSingle();
+            Container.BindInterfacesAndSelfTo<RaycastController>().FromInstance(_raycastController).AsSingle();
             Container.BindInterfacesAndSelfTo<ContentSelection>().AsSingle();
             Container.Bind<ILateUpdate>().FromInstance(_cameraController).AsSingle();
             Container.BindInterfacesAndSelfTo<TowerPreview>().AsSingle().NonLazy();
-
-            Container.Bind<EnemyFactory>().FromInstance(_enemyFactory).AsSingle();
         }
 
         private void BindPresenters()

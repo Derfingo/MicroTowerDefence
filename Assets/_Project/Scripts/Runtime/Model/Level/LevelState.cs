@@ -1,45 +1,45 @@
 using System;
 using System.Threading.Tasks;
-using UnityEngine;
 using UnityEngine.SceneManagement;
-using Zenject;
 
 namespace MicroTowerDefence
 {
-    public class LevelState : MonoBehaviour, ILevelState, IPrepare
+    public class LevelState : ILevelState, IPrepare, IUpdate
     {
         public event Action OnWinEvent;
         public event Action OnDefeatEvent;
         public event Action OnPrepareEvent;
         public event Action<bool> OnPauseEvent;
 
-        private ILoader _loader;
-        private IInputActions _input;
-        private IStart _start;
-        private Health _health;
-        private Scenario _scenario;
-        private LevelCycle _levelCycle;
-        private EnemyContorller _enemyController;
+        private readonly IInputActions _input;
+        private readonly IPause[] _pauses;
+        private readonly IReset[] _resets;
+        private readonly ILoader _loader;
+        private readonly IStart _start;
+        private readonly Health _health;
+        private readonly Scenario _scenario;
+        private readonly EnemyContorller _enemyController;
 
-        private int _prepareTime;
+        private readonly int _prepareTime;
         private bool _isPause;
 
-        [Inject]
-        public void Initialize(int prepareTime,
+        public LevelState(int prepareTime,
                          IStart start,
+                         IPause[] pauses,
+                         IReset[] resets,
                          IInputActions input,
                          ILoader loader,
                          EnemyContorller enemyController,
-                         LevelCycle levelCycle,
                          Health health,
                          Scenario scenario)
         {
             _input = input;
             _start = start;
+            _pauses = pauses;
+            _resets = resets;
             _health = health;
             _loader = loader;
             _scenario = scenario;
-            _levelCycle = levelCycle;
             _prepareTime = prepareTime;
             _enemyController = enemyController;
 
@@ -58,29 +58,22 @@ namespace MicroTowerDefence
         {
             OnPause(false);
             _input.Disable();
-            _levelCycle.ResetValues();
+            ResetValues();
             _start.Reset();
             OnPrepareEvent?.Invoke();
-        }
-
-        private void Update()
-        {
-            if (_isPause) return;
-
-            UpdateScenario();
         }
 
         private async void OnBeginLevel()
         {
             await Task.Delay(_prepareTime * 1000);
-            OnPause(false);
             _input.Enable();
+            OnPause(false);
             _scenario.Begin();
         }
 
-        private void UpdateScenario()
+        public void GameUpdate()
         {
-            _scenario.GameUpdate();
+            if (_isPause) return;
 
             if (_scenario.IsEnd && _enemyController.IsEmpty)
             {
@@ -103,12 +96,23 @@ namespace MicroTowerDefence
         public void OnPause(bool isNotify) // fix signature
         {
             _isPause = !_isPause;
-            _levelCycle.Pause(_isPause);
-            _enemyController.Pause(_isPause);
+
+            foreach (var item in _pauses)
+            {
+                item.Pause(_isPause);
+            }
 
             if (isNotify)
             {
                 OnPauseEvent?.Invoke(_isPause);
+            }
+        }
+
+        private void ResetValues()
+        {
+            foreach (var reset in _resets)
+            {
+                reset.Reset();
             }
         }
 
@@ -118,7 +122,7 @@ namespace MicroTowerDefence
             PrepareToStart();
         }
 
-        private void OnDestroy()
+        ~LevelState()
         {
             _input.GamePauseEvent -= () => OnPause(false);
             _start.OnStartEvent -= OnBeginLevel;

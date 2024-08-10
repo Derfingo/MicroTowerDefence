@@ -1,26 +1,22 @@
-using UnityEngine;
-using Zenject;
-
 namespace MicroTowerDefence
 {
-    public class Scenario : MonoBehaviour, IReset
+    public class Scenario : IReset, IUpdate, IPause
     {
-        [SerializeField] private EnemyWavesConfig _config;
-
         public bool IsEnd { get; private set; }
 
-        private EnemyContorller _enemyContorller;
-        private EnemyFactory _factory;
+        private readonly EnemyWavesConfig _wavesConfig;
+        private readonly EnemyContorller _enemyContorller;
+        private readonly EnemyFactory _factory;
 
         private Wave[] _waves;
-
         private Wave _target;
+        private bool _isPause;
         private int _index;
-
-        [Inject]
-        public void Initialize(EnemyFactory factory, EnemyContorller contorller)
+        
+        public Scenario(EnemyFactory factory, EnemyContorller contorller, EnemyWavesConfig wavesConfig)
         {
             _factory = factory;
+            _wavesConfig = wavesConfig;
             _enemyContorller = contorller;
             _index = 0;
 
@@ -35,6 +31,8 @@ namespace MicroTowerDefence
 
         public void GameUpdate()
         {
+            if (_isPause) return;
+
             _target.Update();
         }
 
@@ -60,7 +58,7 @@ namespace MicroTowerDefence
 
         private void InitializeWaves()
         {
-            _waves = _config.Waves;
+            _waves = _wavesConfig.Waves;
 
             foreach (var wave in _waves)
             {
@@ -77,6 +75,11 @@ namespace MicroTowerDefence
             {
                 wave.Reset();
             }
+        }
+
+        public void Pause(bool isPause)
+        {
+            _isPause = isPause;
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace MicroTowerDefence
 {
     [Serializable]
-    public class GameBehaviourCollection : IUpdate
+    public class BehaviourCollection
     {
         public bool IsEmpty => _behaviours.Count == 0;
         public List<GameBehaviour> Behaviours => _behaviours;

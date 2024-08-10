@@ -5,6 +5,7 @@ namespace MicroTowerDefence
     public abstract class EnemyViewBase : MonoBehaviour
     {
         public bool IsInited { get; protected set; }
+        public Animator Animator => _animator;
 
         protected const string DIED_KEY = "Died";
         protected Animator _animator;
