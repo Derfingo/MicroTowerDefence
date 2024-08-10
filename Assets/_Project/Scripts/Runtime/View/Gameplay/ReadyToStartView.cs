@@ -19,17 +19,18 @@ namespace MicroTowerDefence
         public void Initialize()
         {
             _startButton.OnClickEvent += OnStart;
-            PulseText();
         }
 
         void IStart.Reset()
         {
             _startButton.Show();
+            _readyToStartText.rectTransform.localScale = Vector3.one;
+            PulseText();
         }
 
         private void PulseText()
         {
-            _tween = _readyToStartText.rectTransform.DOScale(Vector3.one * 1.1f, 0.4f).SetLoops(-1, LoopType.Yoyo)
+            _tween = _readyToStartText.rectTransform.DOScale(Vector3.one * 1.15f, 0.4f).SetLoops(-1, LoopType.Yoyo)
                 .SetLink(gameObject);
         }
 
@@ -39,6 +40,11 @@ namespace MicroTowerDefence
             _readyToStartText.rectTransform.DOScale(0f, 0.3f);
             _startButton.Hide();
             OnStartEvent?.Invoke();
+        }
+
+        private void OnDestroy()
+        {
+            _startButton.OnClickEvent -= OnStart;
         }
     }
 }
