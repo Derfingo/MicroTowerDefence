@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MicroTowerDefence
 {
-    public class ContentSelection : ISelection
+    public class ContentSelection : ISelection, IReset
     {
         public event Action<bool> OnBuildingEvent;
         public event Action<bool> OnInteractionEvent;
@@ -95,6 +95,11 @@ namespace MicroTowerDefence
             _isGround = isGround;
             if (_isBuilding || _isInteraction) return;
             _gridPosition = position;
+        }
+
+        public void Reset()
+        {
+            _target = null;
         }
 
         ~ContentSelection()

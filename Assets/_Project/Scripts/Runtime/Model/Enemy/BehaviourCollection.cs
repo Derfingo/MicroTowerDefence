@@ -39,7 +39,10 @@ namespace MicroTowerDefence
         {
             for (int i = 0; i < _behaviours.Count; i++)
             {
-                _behaviours[i].Reclaim();
+                if (_behaviours[i] != null)
+                {
+                    _behaviours[i].Reclaim();
+                }
             }
 
             _behaviours.Clear();

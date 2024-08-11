@@ -18,7 +18,7 @@ MonoBehaviour:
   _level1:
     Prefab: {fileID: 404256357162471880, guid: f031cced4edfadd4b99665f7d9e58d45, type: 3}
     TargetRange: 1.7
-    Damage: 20
+    Damage: 25
     UpgradeCost: 100
     SellCost: 30
     ShellBlastRadius: 0.5

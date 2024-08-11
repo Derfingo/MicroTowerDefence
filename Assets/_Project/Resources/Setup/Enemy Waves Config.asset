@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: Enemy Waves Config
   m_EditorClassIdentifier: 
   _waves:
-  - _cooldown: 1
-    _amount: 3
-    _type: 1
-  - _cooldown: 1
-    _amount: 3
+  - _cooldown: 2
+    _amount: 10
     _type: 4

@@ -39,7 +39,7 @@ namespace MicroTowerDefence
 
         public override void Reclaim(float delay = 0f)
         {
-            //_rigidbBody.isKinematic = true;
+            _rigidbBody.isKinematic = true;
             _collider.enabled = false;
             _isMoving = false;
             Destroy(gameObject, delay);

@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 7688300740127870}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.48, z: 0}
+  m_LocalPosition: {x: 0, y: 0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -427,13 +427,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f287c574fba997b4ba4355a335e52f26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _towerType: 1
   _targetRange: 5
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   _cannon: {fileID: 7702362687281950428}
   _cover: {fileID: 9128091685230001989}
-  _damage: 40
-  _shellBlastRadius: 1.2
-  _shootPerSecond: 0.4
 --- !u!65 &174856093823723962
 BoxCollider:
   m_ObjectHideFlags: 0

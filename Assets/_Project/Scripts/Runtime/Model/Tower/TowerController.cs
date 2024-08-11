@@ -80,8 +80,8 @@ namespace MicroTowerDefence
             {
                 var newTower = _towerFactory.Get(tower.TowerType, tower.Level + 1);
                 var position = tower.Position;
-                _towers.Remove(tower);
                 tower.Reclaim();
+                _towers.Remove(tower);
 
                 newTower.SetProjectile(_projectileController);
                 newTower.OnInteractEvent += OnTowerCost;
