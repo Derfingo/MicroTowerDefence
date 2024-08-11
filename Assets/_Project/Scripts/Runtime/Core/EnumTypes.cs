@@ -4,6 +4,7 @@ public enum EnemyType
     MediumSlime,
     LargeSlime,
     Wizard,
+    Wolf
 }
 
 public enum ProjectileType
