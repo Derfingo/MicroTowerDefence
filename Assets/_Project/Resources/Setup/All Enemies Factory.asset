@@ -19,7 +19,7 @@ MonoBehaviour:
     Element: 2
     Scale: 1
     PathOffset: 0
-    Speed: 2
+    Speed: 1.3
     Health: 50
     Shield: 0
     Coins: 20
@@ -57,3 +57,14 @@ MonoBehaviour:
     Shield: 250
     Coins: 80
     Damage: 3
+  - Prefab: {fileID: 5042517002790603842, guid: 802d74de56c93a0499e67eb60e11c98e,
+      type: 3}
+    Enemy: 4
+    Element: 1
+    Scale: 1
+    PathOffset: 0
+    Speed: 1.1
+    Health: 150
+    Shield: 0
+    Coins: 40
+    Damage: 2

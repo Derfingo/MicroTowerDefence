@@ -9,7 +9,7 @@ namespace MicroTowerDefence
         [SerializeField] private Transform _model;
         private TargetPoint _targetPoint;
         private PathMovement _movement;
-        private EnemyViewBase _view;
+        private AnimationControllerBase _view;
         private Collider _collider;
         private ElementType _elementType;
 
@@ -106,7 +106,7 @@ namespace MicroTowerDefence
         private void GetComponents()
         {
             _movement = GetComponentInChildren<PathMovement>();
-            _view = GetComponentInChildren<EnemyViewBase>();
+            _view = GetComponentInChildren<AnimationControllerBase>();
             _targetPoint = GetComponent<TargetPoint>();
             _collider = GetComponent<Collider>();
             _view.Initialize(this);

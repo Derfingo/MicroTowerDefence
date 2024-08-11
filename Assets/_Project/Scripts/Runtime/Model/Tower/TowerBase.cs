@@ -46,6 +46,7 @@ namespace MicroTowerDefence
             _collider.size = new Vector3(0.7f, 0.8f, 0.7f);
             _collider.center = new Vector3(0f, 0.4f, 0f);
             _collider.enabled = false;
+            _layerMask = LayerMask.GetMask("Obstacle");
         }
 
         public void SetProjectile(ProjectileController projectile)

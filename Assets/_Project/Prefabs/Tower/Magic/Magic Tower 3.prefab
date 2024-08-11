@@ -49,6 +49,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetRange: 2
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   _spere: {fileID: 816626011107751559}
 --- !u!65 &1323115923149718814
 BoxCollider:
@@ -279,7 +282,7 @@ Transform:
   m_GameObject: {fileID: 8494653635999163836}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
