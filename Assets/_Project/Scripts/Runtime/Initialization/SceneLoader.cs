@@ -40,6 +40,13 @@ namespace MicroTowerDefence
             onComplete?.Invoke();
         }
 
+        public void LoadNextLevel()
+        {
+            var sceneNumber = int.Parse(SceneManager.GetActiveScene().name);
+            var nextSceneName = (sceneNumber + 1).ToString();
+            LoadAsync(nextSceneName, true);
+        }
+
         private async Task<Task> FadeAsync(float endValue, float fadeVelocity)
         {
             while (!Mathf.Approximately(_currentAlpha, endValue))

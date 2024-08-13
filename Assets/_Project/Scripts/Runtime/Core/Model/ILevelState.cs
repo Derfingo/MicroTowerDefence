@@ -11,5 +11,6 @@ namespace MicroTowerDefence
         void OnPause(bool isNotify);
         void OnRestart();
         void OnMainMenu();
+        void OnNextLevel();
     }
 }
