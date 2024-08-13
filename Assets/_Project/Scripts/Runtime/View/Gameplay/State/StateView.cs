@@ -13,7 +13,7 @@ namespace MicroTowerDefence
 
         public event Action OnNextLevelEvent;
         public event Action OnContinueEvent;
-        public event Action OnMianMenuEvent;
+        public event Action OnMainMenuEvent;
         public event Action OnSettingsEvent;
         public event Action OnRestartEvent;
 
@@ -83,7 +83,7 @@ namespace MicroTowerDefence
 
         private void OnMainMenu()
         {
-            OnMianMenuEvent?.Invoke();
+            OnMainMenuEvent?.Invoke();
         }
 
         private void OnNextLevel()

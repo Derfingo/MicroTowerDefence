@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace MicroTowerDefence
 {
-    public class CursorViewModel : IViewModel<Vector3>
+    public class CursorViewModel : IViewModel<Vector3>, IDisposable
     {
         public ReactiveProperty<Vector3> Property { get; } = new ();
 
@@ -34,7 +35,7 @@ namespace MicroTowerDefence
             _cursorView.UpdateCursor(position, isVisable);
         }
 
-        ~CursorViewModel()
+        public void Dispose()
         {
             _grid.OnGridEvent -= OnUpdateCursor;
             _selection.OnBuildingEvent -= IsBuilding;

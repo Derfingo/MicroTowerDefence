@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MicroTowerDefence
 {
-    public class ContentSelection : ISelection, IReset
+    public class ContentSelection : ISelection, IReset, IDisposable
     {
         public event Action<bool> OnBuildingEvent;
         public event Action<bool> OnInteractionEvent;
@@ -102,7 +102,7 @@ namespace MicroTowerDefence
             _target = null;
         }
 
-        ~ContentSelection()
+        public void Dispose()
         {
             _input.OnSelectEvent -= OnSelectToBuild;
             _tilemapController.OnGridEvent -= GetGridState;

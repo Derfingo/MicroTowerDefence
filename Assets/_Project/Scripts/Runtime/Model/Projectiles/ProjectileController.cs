@@ -1,6 +1,9 @@
+using System;
+using UnityEngine;
+
 namespace MicroTowerDefence
 {
-    public class ProjectileController : IReset, IUpdate, IPause
+    public class ProjectileController : IReset, IUpdate, IPause, IDisposable
     {
         private readonly ProjectileFactory _factory;
         private readonly BehaviourCollection _projectiles = new();
@@ -32,6 +35,11 @@ namespace MicroTowerDefence
         }
 
         void IReset.Reset()
+        {
+            _projectiles.Clear();
+        }
+
+        public void Dispose()
         {
             _projectiles.Clear();
         }

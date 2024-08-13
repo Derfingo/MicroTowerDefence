@@ -1,6 +1,9 @@
+using System;
+using UnityEngine;
+
 namespace MicroTowerDefence
 {
-    public class EnemyContorller : IReset, IUpdate, IPause
+    public class EnemyContorller : IReset, IUpdate, IPause, IDisposable
     {
         public bool IsEmpty => _enemies.IsEmpty;
 
@@ -48,6 +51,11 @@ namespace MicroTowerDefence
         }
 
         void IReset.Reset()
+        {
+            _enemies.Clear();
+        }
+
+        public void Dispose()
         {
             _enemies.Clear();
         }

@@ -6,7 +6,7 @@ namespace MicroTowerDefence
     {
         event Action OnNextLevelEvent;
         event Action OnContinueEvent;
-        event Action OnMianMenuEvent;
+        event Action OnMainMenuEvent;
         event Action OnSettingsEvent;
         event Action OnRestartEvent;
 

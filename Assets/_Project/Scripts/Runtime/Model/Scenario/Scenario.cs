@@ -1,6 +1,9 @@
+using System;
+using UnityEngine;
+
 namespace MicroTowerDefence
 {
-    public class Scenario : IReset, IUpdate, IPause
+    public class Scenario : IReset, IUpdate, IPause, IDisposable
     {
         public bool IsEnd { get; private set; }
 
@@ -80,6 +83,10 @@ namespace MicroTowerDefence
         public void Pause(bool isPause)
         {
             _isPause = isPause;
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

@@ -30,7 +30,7 @@ namespace MicroTowerDefence
 
         private void PulseText()
         {
-            _tween = _readyToStartText.rectTransform.DOScale(Vector3.one * 1.15f, 0.4f).SetLoops(-1, LoopType.Yoyo)
+            _readyToStartText.rectTransform.DOScale(Vector3.one * 1.15f, 0.4f).SetLoops(-1, LoopType.Yoyo)
                 .SetLink(gameObject);
         }
 
@@ -44,6 +44,7 @@ namespace MicroTowerDefence
 
         private void OnDestroy()
         {
+            _tween.Kill();
             _startButton.OnClickEvent -= OnStart;
         }
     }

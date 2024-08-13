@@ -1,6 +1,9 @@
-﻿namespace MicroTowerDefence
+﻿using System;
+using UnityEngine;
+
+namespace MicroTowerDefence
 {
-    public class TowerMenuTransitionViewModel
+    public class TowerMenuTransitionViewModel : IDisposable
     {
         private readonly IPrepare _prepare;
         private readonly ISelection _selection;
@@ -50,7 +53,7 @@
             }
         }
 
-        ~TowerMenuTransitionViewModel()
+        public void Dispose()
         {
             _prepare.OnPrepareEvent -= () => SetBuildingMenu(true);
             _selection.OnBuildingEvent -= SetBuildingMenu;

@@ -5,7 +5,7 @@ using static InputActionMaps;
 
 namespace MicroTowerDefence
 {
-    public class ActionMapReader : IPlayerActions, IUIActions, IInputActions
+    public class ActionMapReader : IPlayerActions, IUIActions, IInputActions, IDisposable
     {
         public event Action<float> RotateCameraEvent;
         public event Action<float> ScrollEvent;
@@ -36,12 +36,6 @@ namespace MicroTowerDefence
         {
             _inputActionMaps.UI.Disable();
             _inputActionMaps.Player.Enable();
-        }
-
-        public void Dispose()
-        {
-            _inputActionMaps.Dispose();
-            //Debug.Log($"disposed : {GetType().Name}");
         }
 
         public void Enable()
@@ -156,6 +150,12 @@ namespace MicroTowerDefence
 
         public void OnRightClick(InputAction.CallbackContext context)
         {
+        }
+
+        public void Dispose()
+        {
+            _inputActionMaps.Dispose();
+            Debug.Log("dispose");
         }
 
         ~ActionMapReader()

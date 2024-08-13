@@ -1,10 +1,11 @@
 using System;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace MicroTowerDefence
 {
-    public class LevelState : ILevelState, IPrepare, IUpdate
+    public class LevelState : ILevelState, IPrepare, IUpdate, IDisposable
     {
         public event Action OnWinEvent;
         public event Action OnDefeatEvent;
@@ -87,6 +88,11 @@ namespace MicroTowerDefence
             _loader.LoadAsync(Constants.Scenes.MAIN_MENU);
         }
 
+        public void OnNextLevel()
+        {
+            _loader.LoadNextLevel();
+        }
+
         private void OnDefeat()
         {
             OnDefeatEvent?.Invoke();
@@ -122,12 +128,13 @@ namespace MicroTowerDefence
             PrepareToStart();
         }
 
-        ~LevelState()
+        public void Dispose()
         {
             _input.GamePauseEvent -= () => OnPause(false);
             _start.OnStartEvent -= OnBeginLevel;
             _health.OnHealthOverEvent -= OnDefeat;
             SceneManager.sceneLoaded -= OnSceneLoaded;
+            //Debug.Log($"Dispose: {GetType().Name}");
         }
     }
 }

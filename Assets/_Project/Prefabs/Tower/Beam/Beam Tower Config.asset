@@ -23,8 +23,8 @@ MonoBehaviour:
     UpgradeCost: 150
     SellCost: 50
     ShellBlastRadius: 0.5
-    ShootPerSecond: 1.3
-    DamagePerSecond: 20
+    ShootPerSecond: 0.2
+    DamagePerSecond: 4
   _level2:
     Prefab: {fileID: 1982780485478578002, guid: 593c23cff9885bd4cbb398e58c5cb64f,
       type: 3}
@@ -33,8 +33,8 @@ MonoBehaviour:
     UpgradeCost: 250
     SellCost: 80
     ShellBlastRadius: 0.6
-    ShootPerSecond: 1.1
-    DamagePerSecond: 40
+    ShootPerSecond: 0.2
+    DamagePerSecond: 8
   _level3:
     Prefab: {fileID: 4122716746201762980, guid: e226e95ffb34d6e4a8801186938901d8,
       type: 3}
@@ -43,5 +43,5 @@ MonoBehaviour:
     UpgradeCost: 300
     SellCost: 200
     ShellBlastRadius: 0.8
-    ShootPerSecond: 0.8
-    DamagePerSecond: 70
+    ShootPerSecond: 0.2
+    DamagePerSecond: 15

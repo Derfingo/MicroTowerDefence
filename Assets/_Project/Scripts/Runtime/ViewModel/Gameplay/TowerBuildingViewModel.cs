@@ -1,6 +1,8 @@
-﻿namespace MicroTowerDefence
+﻿using System;
+
+namespace MicroTowerDefence
 {
-    public class TowerBuildingViewModel
+    public class TowerBuildingViewModel : IDisposable
     {
         private readonly IPrepare _prepare;
         private readonly IPreview _preview;
@@ -47,7 +49,7 @@
             _towerBuilding.SetTowersCost(_towerCost.GetAllCostTowers());
         }
 
-        ~TowerBuildingViewModel()
+        public void Dispose()
         {
             _selection.OnBuildingEvent -= _towerBuilding.EnableButtons;
             _towerBuilding.EnterPreviewTowerEvent -= OnShowPreview;

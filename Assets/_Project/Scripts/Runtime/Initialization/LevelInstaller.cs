@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -120,7 +121,7 @@ namespace MicroTowerDefence
         private void BindPresenters()
         {
             Container.Bind<ScorePresenter>().AsSingle().NonLazy();
-            Container.Bind<StateLevelPresenter>().AsSingle().NonLazy();
+            Container.Bind<LevelStateViewModel>().AsSingle().NonLazy();
         }
 
         private void BindViews()
@@ -137,6 +138,7 @@ namespace MicroTowerDefence
         private void OnDestroy()
         {
             Container.Resolve<IInputActions>().Dispose();
+            //Container.ResolveAll<IDisposable>().ForEach(x => x.Dispose());
             Container.UnbindAll();
         }
     }

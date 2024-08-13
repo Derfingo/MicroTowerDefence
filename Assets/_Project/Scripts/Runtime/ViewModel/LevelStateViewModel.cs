@@ -1,12 +1,12 @@
 using MicroTowerDefence;
+using System;
 
-public class StateLevelPresenter
+public class LevelStateViewModel : IDisposable
 {
     private readonly ILevelState _levelState;
-
     private readonly IStateView _stateView;
 
-    public StateLevelPresenter(ILevelState levelState, IStateView stateView)
+    public LevelStateViewModel(ILevelState levelState, IStateView stateView)
     {
         _levelState = levelState;
         _stateView = stateView;
@@ -17,14 +17,20 @@ public class StateLevelPresenter
 
         _stateView.OnContinueEvent += () => _levelState.OnPause(true);
         _stateView.OnRestartEvent += _levelState.OnRestart;
+        _stateView.OnMainMenuEvent += _levelState.OnMainMenu;
+        _stateView.OnNextLevelEvent += _levelState.OnNextLevel;
     }
 
-    ~StateLevelPresenter()
+    public void Dispose()
     {
         _levelState.OnWinEvent -= _stateView.ShowWinMenu;
         _levelState.OnPauseEvent -= _stateView.ShowPauseMenu;
         _levelState.OnDefeatEvent -= _stateView.ShowDefeatMenu;
 
         _stateView.OnContinueEvent -= () => _levelState.OnPause(true);
+        _stateView.OnRestartEvent -= _levelState.OnRestart;
+        _stateView.OnMainMenuEvent -= _levelState.OnMainMenu;
+        _stateView.OnNextLevelEvent -= _levelState.OnNextLevel;
+        UnityEngine.Debug.Log($"Dispose: {GetType().Name}");
     }
 }

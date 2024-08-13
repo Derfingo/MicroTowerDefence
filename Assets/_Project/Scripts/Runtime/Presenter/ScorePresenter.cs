@@ -1,8 +1,8 @@
-using UnityEngine;
+using System;
 
 namespace MicroTowerDefence
 {
-    public class ScorePresenter
+    public class ScorePresenter : IDisposable
     {
         private readonly IHealthView _healthView;
         private readonly ICoinsView _coinsView;
@@ -20,7 +20,7 @@ namespace MicroTowerDefence
             _coins.UpdateCoinsEvent += _coinsView.UpdateCoins;
         }
 
-        ~ScorePresenter()
+        public void Dispose()
         {
             _health.OnChangeHealthEvent -= _healthView.UpdateHealth;
             _coins.UpdateCoinsEvent -= _coinsView.UpdateCoins;

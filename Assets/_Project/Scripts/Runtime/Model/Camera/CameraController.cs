@@ -89,5 +89,13 @@ namespace MicroTowerDefence
         {
             transform.rotation = Quaternion.Lerp(transform.rotation, Rotation, Time.deltaTime * _moveTime);
         }
+
+        private void OnDestroy()
+        {
+            _input.ScrollEvent += OnZoom;
+            _input.RotateCameraEvent += OnTurnDelta;
+            _input.TurnCameraLeftEvent += OnTurnLeft;
+            _input.TurnCameraRightEvent += OnTurnRight;
+        }
     }
 }
