@@ -77,26 +77,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac3806fa41e3c504d9aa237e33b18f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectileController: {fileID: 0}
-  _enemyController: {fileID: 0}
-  _towerFactory: {fileID: 11400000, guid: 8b7976d0dda20974cbc5fbf7d1cb0bd5, type: 2}
-  _cameraController: {fileID: 0}
-  _towerController: {fileID: 0}
-  _raycastController: {fileID: 0}
-  _actionMapReader: {fileID: 0}
-  _tilemapController: {fileID: 0}
-  _contentSelection: {fileID: 0}
-  _inputReader: {fileID: 0}
-  _gamecycle: {fileID: 0}
-  _health: {fileID: 0}
-  _coins: {fileID: 0}
-  _contentSelectionView: {fileID: 0}
-  _gameplayButtonsView: {fileID: 0}
+  _enemyWavesConfig: {fileID: 11400000, guid: 430555d18a6698840a15f6b962ccfd24, type: 2}
   _levelConfigProvider: {fileID: 11400000, guid: 2b7ef1d003e215947a192f0748a87f2d,
     type: 2}
+  _projectileFactory: {fileID: 11400000, guid: b4855641958fa3a4fb0248fdf5ecce04, type: 2}
+  _towerFactory: {fileID: 11400000, guid: 8b7976d0dda20974cbc5fbf7d1cb0bd5, type: 2}
+  _enemyFactory: {fileID: 11400000, guid: 3be6c8e74e1c61740a8010b743ac9877, type: 2}
+  _cameraController: {fileID: 0}
+  _raycastController: {fileID: 0}
+  _tilemapController: {fileID: 0}
+  _levelCycle: {fileID: 0}
+  _towerInterationView: {fileID: 0}
+  _towerBuildingView: {fileID: 0}
+  _readyToStartView: {fileID: 0}
   _pathPointsView: {fileID: 0}
+  _cursorView: {fileID: 0}
   _healthView: {fileID: 0}
+  _stateView: {fileID: 0}
   _coinsView: {fileID: 0}
-  _scorePresenter: {fileID: 0}
-  _gameplayPresenter: {fileID: 0}
-  _selectionPresenter: {fileID: 0}
