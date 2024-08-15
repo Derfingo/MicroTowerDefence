@@ -1,7 +1,6 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using Zenject;
 
 namespace MicroTowerDefence
 {
@@ -17,7 +16,6 @@ namespace MicroTowerDefence
         public ButtonView SettingButton => _settingButton;
         public ButtonView QuitButton => _quitButton;
 
-        [Inject]
         public void Initialize()
         {
             InitializeButtons();

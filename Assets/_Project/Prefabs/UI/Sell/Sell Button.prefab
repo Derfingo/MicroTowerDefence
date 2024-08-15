@@ -46,8 +46,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6240024987850297509}
   - component: {fileID: 6846823637357771818}
-  - component: {fileID: 7412875350627763037}
   - component: {fileID: 5726874618790937526}
+  - component: {fileID: 7420462751485929336}
   m_Layer: 5
   m_Name: Sell Button
   m_TagString: Untagged
@@ -84,18 +84,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5979499106726513844}
   m_CullTransparentMesh: 1
---- !u!114 &7412875350627763037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5979499106726513844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d72a31a08eb6dc54b8bd49f236f77e10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5726874618790937526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +114,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7420462751485929336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5979499106726513844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c303b54f70f58384a89fdddb24bd437d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _coinsAmount: {fileID: 1661557951874396976}
+  _coinModel: {fileID: 4255866806961421793}
 --- !u!1 &6261411742236050281
 GameObject:
   m_ObjectHideFlags: 0

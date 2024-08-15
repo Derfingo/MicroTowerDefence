@@ -1,9 +1,10 @@
 ﻿using System;
 using UnityEngine;
-using Cysharp.Threading.Tasks;
-using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 using Zenject;
+using UnityEngine.AddressableAssets;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 namespace MicroTowerDefence
 {
@@ -23,7 +24,7 @@ namespace MicroTowerDefence
             _canvasGroup.alpha = 0f;
         }
 
-        public async void LoadAsync(string name, bool isFadeIn = true, Action onComplete = null)
+        public async Task LoadAddressableAsync(string name, bool isFadeIn = true)
         {
             if (isFadeIn)
             {
@@ -35,16 +36,31 @@ namespace MicroTowerDefence
                 _canvasGroup.alpha = FADE_IN;
             }
 
-            await SceneManager.LoadSceneAsync(name);
+            await Addressables.LoadSceneAsync(name).Task;
             await FadeAsync(FADE_OUT, _fadeVelocity);
-            onComplete?.Invoke();
         }
 
-        public void LoadNextLevel()
+        public async Task LoadAsync(string name, bool isFadeIn = true)
+        {
+            if (isFadeIn)
+            {
+                await FadeAsync(FADE_IN, _fadeVelocity);
+            }
+            else
+            {
+                _currentAlpha = FADE_IN;
+                _canvasGroup.alpha = FADE_IN;
+            }
+
+            await SceneManager.LoadSceneAsync(name).ToUniTask();
+            await FadeAsync(FADE_OUT, _fadeVelocity);
+        }
+
+        public async Task LoadNextLevel()
         {
             var sceneNumber = int.Parse(SceneManager.GetActiveScene().name);
             var nextSceneName = (sceneNumber + 1).ToString();
-            LoadAsync(nextSceneName, true);
+            await LoadAsync(nextSceneName);
         }
 
         private async Task<Task> FadeAsync(float endValue, float fadeVelocity)

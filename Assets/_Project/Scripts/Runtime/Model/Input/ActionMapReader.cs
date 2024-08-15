@@ -155,7 +155,6 @@ namespace MicroTowerDefence
         public void Dispose()
         {
             _inputActionMaps.Dispose();
-            Debug.Log("dispose");
         }
 
         ~ActionMapReader()

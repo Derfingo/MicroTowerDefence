@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace MicroTowerDefence
 {
@@ -14,7 +13,6 @@ namespace MicroTowerDefence
 
         public List<LevelButton> LevelButtons { get; private set; } = new();
 
-        [Inject]
         public void Initialize()
         {
             for (int i = 0; i < _buttonsGroup.transform.childCount; i++)

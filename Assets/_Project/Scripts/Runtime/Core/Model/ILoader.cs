@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 namespace MicroTowerDefence
 {
     public interface ILoader
     {
-        void LoadAsync(string name, bool isFadeIn = true, Action onComplete = null);
-        void LoadNextLevel();
+        Task LoadAsync(string name, bool isFadeIn = true);
+        Task LoadAddressableAsync(string name, bool isFadeIn = true);
+        Task LoadNextLevel();
     }
 }

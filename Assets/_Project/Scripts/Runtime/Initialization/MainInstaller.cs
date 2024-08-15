@@ -5,18 +5,23 @@ namespace MicroTowerDefence
 {
     public class MainInstaller : MonoInstaller
     {
-        [SerializeField] private MainMenuTransition _mainMenuTransition;
         [SerializeField] private LevelLoader _levelLoader;
-        [SerializeField] private LevelsView _levelsView;
 
         [Space]
         [Header("View")]
-        [SerializeField] private MainView _mainView;
+        [SerializeField] private Transform _rootView;
 
         public override void InstallBindings()
         {
             BindLoader();
-            BindView();
+            BindProviders();
+            BindMenuTransition();
+        }
+
+        private void BindMenuTransition()
+        {
+            Container.Bind<Transform>().FromInstance(_rootView).AsSingle().NonLazy();
+            Container.Bind<MainMenuTransition>().AsSingle().NonLazy();
         }
 
         private void BindLoader()
@@ -24,12 +29,11 @@ namespace MicroTowerDefence
             Container.Bind<LevelLoader>().FromInstance(_levelLoader).AsSingle().NonLazy();
         }
 
-        private void BindView()
+        private void BindProviders()
         {
-            Container.Bind<MainView>().FromInstance(_mainView).AsSingle().NonLazy();
-            Container.Bind<MainMenuTransition>().FromInstance(_mainMenuTransition).AsSingle().NonLazy();
-            Container.Bind<LevelsView>().FromInstance(_levelsView).AsSingle().NonLazy();
-
+            Container.Bind<MainViewProvider>().AsSingle().NonLazy();
+            Container.Bind<LevelsViewProvider>().AsSingle().NonLazy();
+            Container.Bind<SettingsViewProvider>().AsSingle().NonLazy();
         }
     }
 }

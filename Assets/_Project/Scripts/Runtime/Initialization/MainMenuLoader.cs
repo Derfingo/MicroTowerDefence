@@ -15,7 +15,12 @@ namespace MicroTowerDefence
 
         private void Start()
         {
-            _loader.LoadAsync(Constants.Scenes.MAIN_MENU, false);
+            LoadMainScene();
+        }
+
+        private void LoadMainScene()
+        {
+            _loader.LoadAddressableAsync(Constants.Scenes.MAIN_MENU, false);
         }
     }
 }
