@@ -1,9 +1,6 @@
-using System;
-using UnityEngine;
-
 namespace MicroTowerDefence
 {
-    public class Scenario : IReset, IUpdate, IPause, IDisposable
+    public class Scenario : IReset, IUpdate, IPause, IDispose
     {
         public bool IsEnd { get; private set; }
 
@@ -87,6 +84,11 @@ namespace MicroTowerDefence
 
         public void Dispose()
         {
+            foreach (var wave in _waves)
+            {
+                wave.OnSpawnEvent -= OnSpawn;
+                wave.OnNextEvent -= OnNext;
+            }
         }
     }
 }

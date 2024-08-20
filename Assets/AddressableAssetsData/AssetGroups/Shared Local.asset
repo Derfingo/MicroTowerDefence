@@ -72,6 +72,51 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e109e11029282d64f9fff86b1312f617
+    m_Address: Assets/_Project/Scripts/Runtime/Model/Input/Input Action Maps.inputactions
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 468dc4d117fbd8649b3cb05c8f758426
+    m_Address: Assets/_Project/Prefabs/UI/Gameplay/Upgrade
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8347192658fb14d4ea7c84f972c60643
+    m_Address: Assets/_Project/Prefabs/UI/Gameplay/Thumbnails
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: acf7e30686363854f88b460bfcd14945
+    m_Address: Assets/_Project/Prefabs/UI/Gameplay/Sell
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3cea4cd988006f44ea5fb558eaecb9aa
+    m_Address: Assets/_Project/Prefabs/UI/Gameplay/Health
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 35f948c7f27d66b47ac3761ebcf1d1f9
+    m_Address: Assets/_Project/Prefabs/UI/Gameplay/Gameplay Canvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5ac02c246e9c2d34ebec7f6f31f69e0b
+    m_Address: Assets/_Project/Prefabs/UI/Gameplay/Frame
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3573c56d8ce375c42a9b990e169cc8cb
+    m_Address: Assets/_Project/Prefabs/UI/Gameplay/Cursor
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 701d770282a2e6a4ca29a702ef06b509
+    m_Address: Assets/_Project/Prefabs/UI/Gameplay/Coin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: ddcb8abc7d76d47429c2dc4d754e67e1, type: 2}
   m_SchemaSet:

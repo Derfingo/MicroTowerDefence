@@ -241,7 +241,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8469494145858465668, guid: c52a480c7fa24324da6d891668d870b1, type: 3}
+  - {fileID: 2100000, guid: 3db8a0ca2786e554e927196e92ee52aa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -498,6 +498,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetRange: 1.8
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   _turret: {fileID: 1093483621667260272}
   _laserBeam: {fileID: 1665652735297103264}
 --- !u!65 &2607818785992752635
