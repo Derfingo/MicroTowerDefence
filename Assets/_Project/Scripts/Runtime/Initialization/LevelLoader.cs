@@ -36,7 +36,7 @@ namespace MicroTowerDefence
 
             for (int i = 0; i < levelsView.LevelButtons.Count; i++)
             {
-                _levelsView.LevelButtons[i].OnClickEvent += async (name) => await _sceneLoader.LoadAsync(name, true);
+                _levelsView.LevelButtons[i].OnClickEvent += async (name) => await _sceneLoader.LoadAddressableAsync(name);
             }
         }
 

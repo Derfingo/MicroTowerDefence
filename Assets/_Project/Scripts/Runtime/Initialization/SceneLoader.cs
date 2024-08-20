@@ -60,7 +60,7 @@ namespace MicroTowerDefence
         {
             var sceneNumber = int.Parse(SceneManager.GetActiveScene().name);
             var nextSceneName = (sceneNumber + 1).ToString();
-            await LoadAsync(nextSceneName);
+            await LoadAddressableAsync(nextSceneName);
         }
 
         private async Task<Task> FadeAsync(float endValue, float fadeVelocity)

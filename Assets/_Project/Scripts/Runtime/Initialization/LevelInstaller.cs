@@ -78,7 +78,7 @@ namespace MicroTowerDefence
 
         private void BindInput()
         {
-            Container.Bind<IInputActions>().To<ActionMapReader>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ActionMapReader>().AsSingle().NonLazy();
         }
 
         private void BindFactories()
@@ -135,10 +135,9 @@ namespace MicroTowerDefence
             Container.BindInterfacesAndSelfTo<TowerInterationView>().FromInstance(_towerInterationView).AsSingle();
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
-            Container.Resolve<IInputActions>().Dispose();
-            //Container.ResolveAll<IDisposable>().ForEach(x => x.Dispose());
+            Container.ResolveAll<IDispose>().ForEach(x => x.Dispose());
             Container.UnbindAll();
         }
     }

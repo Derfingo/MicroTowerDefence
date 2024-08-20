@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MicroTowerDefence
 {
-    public class EnemyContorller : IReset, IUpdate, IPause, IDisposable
+    public class EnemyContorller : IReset, IUpdate, IPause, IDispose
     {
         public bool IsEmpty => _enemies.IsEmpty;
 

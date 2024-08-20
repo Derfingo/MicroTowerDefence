@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace MicroTowerDefence
 {
-    public class LevelState : ILevelState, IPrepare, IUpdate, IDisposable
+    public class LevelState : ILevelState, IPrepare, IUpdate, IDispose
     {
         public event Action OnWinEvent;
         public event Action OnDefeatEvent;
@@ -84,7 +84,7 @@ namespace MicroTowerDefence
 
         public void OnMainMenu()
         {
-            _loader.LoadAsync(Constants.Scenes.MAIN_MENU);
+            _loader.LoadAddressableAsync(Constants.Scenes.MAIN_MENU);
         }
 
         public void OnNextLevel()

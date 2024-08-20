@@ -5,7 +5,7 @@ using static InputActionMaps;
 
 namespace MicroTowerDefence
 {
-    public class ActionMapReader : IPlayerActions, IUIActions, IInputActions, IDisposable
+    public class ActionMapReader : IPlayerActions, IUIActions, IInputActions, IDispose
     {
         public event Action<float> RotateCameraEvent;
         public event Action<float> ScrollEvent;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MicroTowerDefence
 {
-    public class TowerController : ITowerInteraction, IReset, IUpdate, IPause, IDisposable
+    public class TowerController : ITowerInteraction, IReset, IUpdate, IPause, IDispose
     {
         public event Action<uint, uint> OnTowerCostEvent;
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MicroTowerDefence
 {
-    public class ProjectileController : IReset, IUpdate, IPause, IDisposable
+    public class ProjectileController : IReset, IUpdate, IPause, IDispose
     {
         private readonly ProjectileFactory _factory;
         private readonly BehaviourCollection _projectiles = new();

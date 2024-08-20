@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MicroTowerDefence
 {
-    public class ContentSelection : ISelection, IReset, IDisposable
+    public class ContentSelection : ISelection, IReset, IDispose
     {
         public event Action<bool> OnBuildingEvent;
         public event Action<bool> OnInteractionEvent;
