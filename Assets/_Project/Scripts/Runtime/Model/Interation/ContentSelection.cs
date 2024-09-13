@@ -83,11 +83,14 @@ namespace MicroTowerDefence
 
         private void DeselectContent()
         {
-            SetBuildingState(false);
-            SetInteractionState(false);
-            _target?.Undo();
-            _target = null;
-            _input.SetPlayerInput();
+            if(_target != null)
+            {
+                SetBuildingState(false);
+                SetInteractionState(false);
+                _input.SetPlayerInput();
+                _target.Undo();
+                _target = null;
+            }
         }
 
         private void GetGridState(Vector3 position, bool isGround)
