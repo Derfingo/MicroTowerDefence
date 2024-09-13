@@ -3,7 +3,7 @@ using Zenject;
 
 namespace MicroTowerDefence
 {
-    public class CameraController : MonoBehaviour, ILateUpdate
+    public class CameraController : MonoBehaviour, ILateUpdate, IPause
     {
         [SerializeField] private Transform _cameraTransform;
         [SerializeField] private bool _isOrthographicCamera = true;
@@ -19,6 +19,7 @@ namespace MicroTowerDefence
         private Camera _camera;
         private Quaternion _orthographicRotation = Quaternion.Euler(30f, 45f, 0f);
         private Quaternion _perspectiveRotation = Quaternion.Euler(45f, 0f, 0f);
+        private bool _isPause;
 
         [Inject]
         public void Initialize(IInputActions input)
@@ -26,11 +27,11 @@ namespace MicroTowerDefence
             _input = input;
             _camera = _cameraTransform.GetComponent<Camera>();
 
-            _input.ScrollEvent += OnZoom;
-            _input.RotateCameraEvent += OnTurnDelta;
+            _input.OnScrollEvent += OnZoom;
+            _input.OnRotateCameraEvent += OnTurnDelta;
 
-            _input.TurnCameraLeftEvent += OnTurnLeft;
-            _input.TurnCameraRightEvent += OnTurnRight;
+            _input.OnTurnCameraLeftEvent += OnTurnLeft;
+            _input.OnTurnCameraRightEvent += OnTurnRight;
 
             Rotation = transform.rotation;
             Zoom = _camera.orthographicSize;
@@ -38,8 +39,12 @@ namespace MicroTowerDefence
             SetCameraType(_isOrthographicCamera);
         }
 
+        public void Pause(bool isPause) => _isPause = isPause;
+
         public void GameLateUpdate()
         {
+            if (_isPause) return;
+
             HandleMovement();
         }
 
@@ -92,10 +97,10 @@ namespace MicroTowerDefence
 
         private void OnDestroy()
         {
-            _input.ScrollEvent += OnZoom;
-            _input.RotateCameraEvent += OnTurnDelta;
-            _input.TurnCameraLeftEvent += OnTurnLeft;
-            _input.TurnCameraRightEvent += OnTurnRight;
+            _input.OnScrollEvent -= OnZoom;
+            _input.OnRotateCameraEvent -= OnTurnDelta;
+            _input.OnTurnCameraLeftEvent -= OnTurnLeft;
+            _input.OnTurnCameraRightEvent -= OnTurnRight;
         }
     }
 }

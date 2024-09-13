@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace MicroTowerDefence
+﻿namespace MicroTowerDefence
 {
-    public class TowerInteractionViewModel : IDisposable
+    public class TowerInteractionViewModel : IDispose
     {
         private readonly ITowerInteraction _towerInteraction;
         private readonly ITowerInteractionView _towerInterctionView;
@@ -56,10 +54,10 @@ namespace MicroTowerDefence
         public void Dispose()
         {
             _towerInteraction.OnTowerCostEvent -= OnTowerInteract;
-            _towerInterctionView.OnEnterButtonEvent += OnEnterButton;
-            _towerInterctionView.OnExitButtonEvent += OnExitButton;
-            _towerInterctionView.OnSellTowerEvent += OnSellTower;
-            _towerInterctionView.OnUpgradeTowerEvent += OnUpgradeTower;
+            _towerInterctionView.OnEnterButtonEvent -= OnEnterButton;
+            _towerInterctionView.OnExitButtonEvent -= OnExitButton;
+            _towerInterctionView.OnSellTowerEvent -= OnSellTower;
+            _towerInterctionView.OnUpgradeTowerEvent -= OnUpgradeTower;
         }
     }
 }
