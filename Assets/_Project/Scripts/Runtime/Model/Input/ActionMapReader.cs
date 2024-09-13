@@ -7,11 +7,11 @@ namespace MicroTowerDefence
 {
     public class ActionMapReader : IPlayerActions, IUIActions, IInputActions, IDispose
     {
-        public event Action<float> RotateCameraEvent;
-        public event Action<float> ScrollEvent;
-        public event Action TurnCameraLeftEvent;
-        public event Action TurnCameraRightEvent;
-        public event Action GamePauseEvent;
+        public event Action<float> OnRotateCameraEvent;
+        public event Action<float> OnScrollEvent;
+        public event Action OnTurnCameraLeftEvent;
+        public event Action OnTurnCameraRightEvent;
+        public event Action OnPauseEvent;
         public event Action OnSelectEvent;
 
         public Vector3 MousePosition { get; private set; }
@@ -57,14 +57,14 @@ namespace MicroTowerDefence
 
         public void OnMouseScroll(InputAction.CallbackContext context)
         {
-            ScrollEvent?.Invoke(context.ReadValue<Vector2>().y);
+            OnScrollEvent?.Invoke(context.ReadValue<Vector2>().y);
         }
 
         public void OnTurnCameraLeft(InputAction.CallbackContext context)
         {
             if (context.started)
             {
-                TurnCameraLeftEvent?.Invoke();
+                OnTurnCameraLeftEvent?.Invoke();
             }
         }
 
@@ -72,7 +72,7 @@ namespace MicroTowerDefence
         {
             if (context.started)
             {
-                TurnCameraRightEvent?.Invoke();
+                OnTurnCameraRightEvent?.Invoke();
             }
         }
 
@@ -80,7 +80,7 @@ namespace MicroTowerDefence
         {
             if (_isRotateCamera)
             {
-                RotateCameraEvent?.Invoke(context.ReadValue<Vector2>().x);
+                OnRotateCameraEvent?.Invoke(context.ReadValue<Vector2>().x);
             }
         }
 
@@ -105,9 +105,14 @@ namespace MicroTowerDefence
             }
         }
 
-        public void OnGamePause(InputAction.CallbackContext context)
+        // Action for UI and Player
+
+        public void OnPause(InputAction.CallbackContext context)
         {
-            GamePauseEvent?.Invoke();
+            if (context.performed)
+            {
+                OnPauseEvent?.Invoke();
+            }
         }
 
         // Ui Actions

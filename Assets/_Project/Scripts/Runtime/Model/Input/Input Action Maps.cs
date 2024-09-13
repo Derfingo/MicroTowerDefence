@@ -91,13 +91,13 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Game Pause"",
+                    ""name"": ""Pause"",
                     ""type"": ""Button"",
-                    ""id"": ""4f292c29-cad2-417b-9cb0-e2d80ef75e06"",
+                    ""id"": ""8b725ded-adf9-462c-99e1-6c82827152f3"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -246,12 +246,12 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""254cfe25-4293-4251-b0c8-93ba33674eea"",
+                    ""id"": ""faa826c5-7ea7-42c2-bce9-2fea19d48622"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Game Pause"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -347,6 +347,15 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""c48cefbb-5f65-48b7-9801-6e6065e647c5"",
                     ""expectedControlType"": ""Quaternion"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""a179118f-1f4e-41cc-a952-5141c0b5584b"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -770,6 +779,17 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
                     ""action"": ""TrackedDeviceOrientation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""77b93b4e-7a8b-4045-9498-394aa01a5f59"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -785,7 +805,7 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
         m_Player_RotateCamera = m_Player.FindAction("Rotate Camera", throwIfNotFound: true);
         m_Player_RightMouseButtonHold = m_Player.FindAction("Right Mouse Button Hold", throwIfNotFound: true);
         m_Player_SelectPlace = m_Player.FindAction("Select Place", throwIfNotFound: true);
-        m_Player_GamePause = m_Player.FindAction("Game Pause", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -798,6 +818,7 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -866,7 +887,7 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_RotateCamera;
     private readonly InputAction m_Player_RightMouseButtonHold;
     private readonly InputAction m_Player_SelectPlace;
-    private readonly InputAction m_Player_GamePause;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @InputActionMaps m_Wrapper;
@@ -878,7 +899,7 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
         public InputAction @RotateCamera => m_Wrapper.m_Player_RotateCamera;
         public InputAction @RightMouseButtonHold => m_Wrapper.m_Player_RightMouseButtonHold;
         public InputAction @SelectPlace => m_Wrapper.m_Player_SelectPlace;
-        public InputAction @GamePause => m_Wrapper.m_Player_GamePause;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -909,9 +930,9 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
             @SelectPlace.started += instance.OnSelectPlace;
             @SelectPlace.performed += instance.OnSelectPlace;
             @SelectPlace.canceled += instance.OnSelectPlace;
-            @GamePause.started += instance.OnGamePause;
-            @GamePause.performed += instance.OnGamePause;
-            @GamePause.canceled += instance.OnGamePause;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -937,9 +958,9 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
             @SelectPlace.started -= instance.OnSelectPlace;
             @SelectPlace.performed -= instance.OnSelectPlace;
             @SelectPlace.canceled -= instance.OnSelectPlace;
-            @GamePause.started -= instance.OnGamePause;
-            @GamePause.performed -= instance.OnGamePause;
-            @GamePause.canceled -= instance.OnGamePause;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -971,6 +992,7 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_RightClick;
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
+    private readonly InputAction m_UI_Pause;
     public struct UIActions
     {
         private @InputActionMaps m_Wrapper;
@@ -985,6 +1007,7 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
         public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
         public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
+        public InputAction @Pause => m_Wrapper.m_UI_Pause;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1024,6 +1047,9 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -1058,6 +1084,9 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.started -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled -= instance.OnTrackedDeviceOrientation;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1084,7 +1113,7 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
         void OnRotateCamera(InputAction.CallbackContext context);
         void OnRightMouseButtonHold(InputAction.CallbackContext context);
         void OnSelectPlace(InputAction.CallbackContext context);
-        void OnGamePause(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
@@ -1098,5 +1127,6 @@ public partial class @InputActionMaps: IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

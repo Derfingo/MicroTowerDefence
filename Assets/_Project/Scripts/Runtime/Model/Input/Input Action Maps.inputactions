@@ -69,13 +69,13 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Game Pause",
+                    "name": "Pause",
                     "type": "Button",
-                    "id": "4f292c29-cad2-417b-9cb0-e2d80ef75e06",
+                    "id": "8b725ded-adf9-462c-99e1-6c82827152f3",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -224,12 +224,12 @@
                 },
                 {
                     "name": "",
-                    "id": "254cfe25-4293-4251-b0c8-93ba33674eea",
+                    "id": "faa826c5-7ea7-42c2-bce9-2fea19d48622",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Game Pause",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -325,6 +325,15 @@
                     "type": "PassThrough",
                     "id": "c48cefbb-5f65-48b7-9801-6e6065e647c5",
                     "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "a179118f-1f4e-41cc-a952-5141c0b5584b",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -746,6 +755,17 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "77b93b4e-7a8b-4045-9498-394aa01a5f59",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

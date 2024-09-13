@@ -8,7 +8,7 @@ namespace MicroTowerDefence
         event Action OnDefeatEvent;
         event Action OnWinEvent;
 
-        void OnPause(bool isNotify);
+        void OnPause();
         void OnRestart();
         void OnMainMenu();
         void OnNextLevel();

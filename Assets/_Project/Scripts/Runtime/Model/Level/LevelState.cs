@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace MicroTowerDefence
@@ -43,7 +44,7 @@ namespace MicroTowerDefence
             _prepareTime = prepareTime;
             _enemyController = enemyController;
 
-            _input.GamePauseEvent += () => OnPause(true);
+            _input.OnPauseEvent += OnPause;
             _start.OnStartEvent += OnBeginLevel;
             _health.OnHealthOverEvent += OnDefeat;
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -56,7 +57,7 @@ namespace MicroTowerDefence
 
         private void PrepareToStart()
         {
-            OnPause(false);
+            SetPauseInternal(true);
             _input.Disable();
             ResetValues();
             _start.Reset();
@@ -66,8 +67,8 @@ namespace MicroTowerDefence
         private async void OnBeginLevel()
         {
             await Task.Delay(_prepareTime * 1000);
-            _input.Enable();
-            OnPause(false);
+            _input.SetPlayerInput();
+            SetPauseInternal(false);
             _scenario.Begin();
         }
 
@@ -78,7 +79,7 @@ namespace MicroTowerDefence
             if (_scenario.IsEnd && _enemyController.IsEmpty)
             {
                 OnWinEvent?.Invoke();
-                OnPause(false);
+                SetPauseInternal(true);
             }
         }
 
@@ -95,22 +96,37 @@ namespace MicroTowerDefence
         private void OnDefeat()
         {
             OnDefeatEvent?.Invoke();
-            OnPause(false);
+            SetPauseInternal(true);
         }
 
-        public void OnPause(bool isNotify) // fix signature
+        public void OnPause()
         {
             _isPause = !_isPause;
+
+            SetPauseInternal(_isPause);
+
+            if (_isPause)
+            {
+                _input.SetUIInput();
+            }
+            else
+            {
+                _input.SetPlayerInput();
+            }
+
+            OnPauseEvent?.Invoke(_isPause);
+        }
+
+        private void SetPauseInternal(bool isEnable)
+        {
+            _isPause = isEnable;
 
             foreach (var item in _pauses)
             {
                 item.Pause(_isPause);
             }
 
-            if (isNotify)
-            {
-                OnPauseEvent?.Invoke(_isPause);
-            }
+            Debug.Log(_isPause);
         }
 
         private void ResetValues()
@@ -123,13 +139,13 @@ namespace MicroTowerDefence
 
         public void OnRestart()
         {
-            OnPause(true);
+            OnPause();
             PrepareToStart();
         }
 
         public void Dispose()
         {
-            _input.GamePauseEvent -= () => OnPause(false);
+            _input.OnPauseEvent -= OnPause;
             _start.OnStartEvent -= OnBeginLevel;
             _health.OnHealthOverEvent -= OnDefeat;
             SceneManager.sceneLoaded -= OnSceneLoaded;

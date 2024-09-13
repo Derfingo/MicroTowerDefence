@@ -1,7 +1,6 @@
 using MicroTowerDefence;
-using System;
 
-public class LevelStateViewModel : IDisposable
+public class LevelStateViewModel : IDispose
 {
     private readonly ILevelState _levelState;
     private readonly IStateView _stateView;
@@ -15,7 +14,7 @@ public class LevelStateViewModel : IDisposable
         _levelState.OnPauseEvent += _stateView.ShowPauseMenu;
         _levelState.OnDefeatEvent += _stateView.ShowDefeatMenu;
 
-        _stateView.OnContinueEvent += () => _levelState.OnPause(true);
+        _stateView.OnContinueEvent += _levelState.OnPause;
         _stateView.OnRestartEvent += _levelState.OnRestart;
         _stateView.OnMainMenuEvent += _levelState.OnMainMenu;
         _stateView.OnNextLevelEvent += _levelState.OnNextLevel;
@@ -27,7 +26,7 @@ public class LevelStateViewModel : IDisposable
         _levelState.OnPauseEvent -= _stateView.ShowPauseMenu;
         _levelState.OnDefeatEvent -= _stateView.ShowDefeatMenu;
 
-        _stateView.OnContinueEvent -= () => _levelState.OnPause(true);
+        _stateView.OnContinueEvent -= _levelState.OnPause;
         _stateView.OnRestartEvent -= _levelState.OnRestart;
         _stateView.OnMainMenuEvent -= _levelState.OnMainMenu;
         _stateView.OnNextLevelEvent -= _levelState.OnNextLevel;
