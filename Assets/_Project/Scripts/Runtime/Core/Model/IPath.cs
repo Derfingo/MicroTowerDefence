@@ -12,6 +12,7 @@ namespace MicroTowerDefence
     public class PathConfig
     {
         public MovementType MovementType;
+        public Vector3 Direction => (Points[1].position - Points[0].position).normalized;
         public Vector3 InitialPoint => Points[0].position;
         public float LeastDistance = 0.1f;
         public Transform[] Points;

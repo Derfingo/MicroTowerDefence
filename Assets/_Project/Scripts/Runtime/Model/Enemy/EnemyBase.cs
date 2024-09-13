@@ -37,9 +37,10 @@ namespace MicroTowerDefence
             _movement.Initialize(config.Points, config.MovementType, config.LeastDistance, _speed);
         }
 
-        public void SetPosition(Vector3 position)
+        public void SetPosition(Vector3 position, Vector3 dirction)
         {
             transform.position = position;
+            transform.forward = dirction;
         }
 
         public void SetSpeed(float factor)

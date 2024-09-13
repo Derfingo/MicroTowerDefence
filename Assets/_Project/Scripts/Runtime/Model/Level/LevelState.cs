@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace MicroTowerDefence
@@ -125,8 +124,6 @@ namespace MicroTowerDefence
             {
                 item.Pause(_isPause);
             }
-
-            Debug.Log(_isPause);
         }
 
         private void ResetValues()

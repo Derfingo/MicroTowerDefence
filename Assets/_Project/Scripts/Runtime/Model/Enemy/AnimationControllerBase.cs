@@ -15,22 +15,11 @@ namespace MicroTowerDefence
         protected Animator _animator;
         protected EnemyBase _enemy;
 
-        private readonly int _delayAnimation = 1000;
-
         public virtual void Initialize(EnemyBase enemy)
         {
             _animator = GetComponent<Animator>();
             _enemy = enemy;
             Animate();
-        }
-
-        private async void Animate()
-        {
-            _animator.Play(APPEAR_KEY);
-            await Task.Delay(_delayAnimation);
-            _animator.Play(WALK_KEY);
-            GetComponentInParent<TargetPoint>().IsEnabled = true;
-            IsInited = true;
         }
 
         public void SetSpeedFactor(float factor)
@@ -42,8 +31,24 @@ namespace MicroTowerDefence
         {
             _animator.Play(DIE_KEY);
             GetComponentInParent<TargetPoint>().IsEnabled = false;
-            await Task.Delay(_delayAnimation);
+            await Task.Delay(GetLengthAnimation());
             _enemy.Reclaim();
+        }
+
+        private async void Animate()
+        {
+            _animator.Play(APPEAR_KEY);
+            await Task.Delay(GetLengthAnimation());
+            _animator.Play(WALK_KEY);
+            GetComponentInParent<TargetPoint>().IsEnabled = true;
+            IsInited = true;
+        }
+
+        private int GetLengthAnimation()
+        {
+            var clipInfo = _animator.GetCurrentAnimatorClipInfo(0);
+            int delay = Mathf.RoundToInt(clipInfo[0].clip.length * 1000);
+            return delay;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace MicroTowerDefence
         {
             EnemyBase enemy = factory.Get(type);
             enemy.SetPath(_pathConfig);
-            enemy.SetPosition(_pathConfig.InitialPoint);
+            enemy.SetPosition(_pathConfig.InitialPoint, _pathConfig.Direction);
             enemy.OnFinish += _health.TakeDamage;
             enemy.OnDie += _coins.Add;
             _enemies.Add(enemy);
