@@ -12,6 +12,8 @@ namespace MicroTowerDefence
         private float _speed;
         private int _indexPoint;
 
+        private readonly float _speedRotation = 15f;
+
         public bool IsFinish { get; private set; }
         public Vector3 Velocity => _velocity;
 
@@ -28,13 +30,14 @@ namespace MicroTowerDefence
         public void Move()
         {
             CalculateVelocity();
-            Vector3 direction = _target - transform.position;
-            transform.forward = direction;
 
-            if (Vector3.Distance(transform.position, _target) <= _maxDistance)
+            if ((transform.position - _target).sqrMagnitude < _maxDistance)
             {
                 GetNextPoint();
             }
+
+            Vector3 direction = _target - transform.position;
+            transform.forward = Vector3.Lerp(transform.forward, direction, Time.deltaTime * _speedRotation);
 
             if (_movementType == MovementType.Move)
             {
@@ -42,11 +45,8 @@ namespace MicroTowerDefence
             }
             else if (_movementType == MovementType.Lerp)
             {
-                transform.position = Vector3.Lerp(direction.normalized, _target, Time.deltaTime * _speed);
+                transform.position = Vector3.Lerp(transform.position, _target, Time.deltaTime * _speed);
             }
-
-            //var angle = Mathf.Lerp(transform.position.y, _angle, Time.deltaTime / 2);
-            //transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
 
         private void GetNextPoint()

@@ -80,12 +80,12 @@ namespace MicroTowerDefence
 
         protected abstract void SetStats(TowerConfig config);
 
-        protected Vector3 MoveParabolically(Vector3 predict, Vector3 shootPoint, float projectileVelocity)
+        protected Vector3 MoveParabolically(Vector3 target, Vector3 start, float projectileVelocity)
         {
-            var aim = predict - shootPoint;
+            var aim = target - start;
             aim.y = 0f;
             float antiGravity = -Physics.gravity.y * _predictTime / 2;
-            float deltaY = (predict.y - shootPoint.y) / _predictTime;
+            float deltaY = (target.y - start.y) / _predictTime;
             Vector3 velocity = aim.normalized * projectileVelocity;
             velocity.y = antiGravity + deltaY;
             return velocity;
